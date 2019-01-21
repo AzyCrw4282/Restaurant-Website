@@ -1,0 +1,1 @@
+web: gunicorn TeamProject2019_01.wsgi --log-file -

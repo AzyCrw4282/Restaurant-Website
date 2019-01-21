@@ -76,7 +76,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'TeamProject2019_01'
 
 
 # Database

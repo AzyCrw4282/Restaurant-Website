@@ -1,5 +1,4 @@
 import django_heroku
-import dj_database_url
 
 """
 Django settings for TeamProject1 project.
@@ -82,6 +81,7 @@ WSGI_APPLICATION = 'TeamProject1.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -92,8 +92,6 @@ DATABASES = {
         'POST':'',
     }
 }
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
 
 
 # Password validation

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+VIEW TABLES EXAMPLE and their customers here.
+{% for table in tables %}
+{{ table.id }}
+<br>
+{% for customer in customers %}
+{% if customer.table_id == table.id %}
+    {{ customer.name }}
+{% endif %}
+{% endfor %}
+<br><br>
+{% endfor %}
+</body>
+</html>

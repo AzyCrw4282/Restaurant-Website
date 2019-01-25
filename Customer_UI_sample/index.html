@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
+      <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+      <link type="text/css" rel="stylesheet" href="style.css">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+      <title>Resturant Order </title>
+   </head>
+   <body>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+         <a class="navbar-brand" href="#">Resturant</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+               </li>
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item" href="#">Customer UI</a>
+                     <a class="dropdown-item" href="#">Waiter UI</a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#">Kitchen staff UI</a>
+                  </div>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+               </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit"></button>
+            </form>
+         </div>
+      </nav>
+      <div class="wrapper clearfix">
+         <div class="player-0-panel active">
+            <div class="player-name" id="name-0">Pizza</div>
+            <img src="Pizza.jpg">
+            <div class="player-current-box">
+               <div class="player-current-score" id="current-0"></div>
+            </div>
+            <form id='myform' method='POST' action='#'>
+               <input type='button' value='-' class='qtyminus' field='quantity' />
+               <input type='text' name='quantity' value='0' class='qty' />
+               <input type='button' value='+' class='qtyplus' field='quantity' />
+            </form>
+         </div>
+         <div class="player-1-panel">
+            <div class="container">
+               <div class="player-name" id="name-1">Burger</div>
+               <img src="Burger.jpg">               
+               <div
+               <div class="player-current-box">
+                  <div class="player-current-score2" id="current-1"></div>
+               </div>
+            </div>
+            <form id='myform' method='POST' action='#'>
+               <input type='button' value='-' class='qtyminus' field='quantity' />
+               <input type='text' name='quantity' value='0' class='qty' />
+               <input type='button' value='+' class='qtyplus' field='quantity' />
+            </form>
+         </div>
+         <button class="btn-new"><i class="ion-ios-plus-outline"></i>New Order</button>
+         <button class="btn-hold"><i class="ion-ios-download-outline"></i>Order</button>
+         <input class="final-score"type="text" placeholder="Order Status" >
+      </div>
+      <script src="app.js"></script>
+      <script src="challenges.js"></script>
+   </body>
+</html>

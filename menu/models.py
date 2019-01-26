@@ -1,26 +1,36 @@
 from django.db import models
 
-# Create your models here.
+# Create your models here
+# Table( _id , max_customers )
 class Table(models.Model):
-    number_of_customers:models.IntegerField(default=0)
-    reservation_date:models.DateField()
+    max_customers:models.IntegerField(default=0)
 
+# Food( _id, name )
+class Food(models.Model):
+    name:models.CharField(max_length=30)
 
-class Menu(models.Model):
-    menu_item_id:models.IntegerField(default=0)
-    menu_food:models.CharField(max_length=30)
-
-
-
-class Order(models.Model):
-    order_id:models.IntegerField(default=0)
-
-
-
+# Customer ( _id , Table_id)
 class Customer(models.Model):
-    customer_id:models.IntegerField(default=0)
-    table_id =  models.ForeignKey(Table, on_delete=models.CASCADE)
+    name: models.CharField(max_length=20)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
 
-    """name: models.CharField(max_length=20)
-    table = models.ForeignKey(Table,on_delete=models.CASCADE)"""
+# Order( _id , Food_id , Table_id , Customer_id , time_of_order )
+class Order(models.Model):
+    food: models.ForeignKey(Food, on_delete=models.CASCADE)
+    table: models.ForeignKey(Table, on_delete=models.CASCADE)
+    customer: models.ForeignKey(Customer, on_delete=models.CASCADE)
+    time: models.DateTimeField(null=True)
 
+
+
+
+
+# Table( _id , max_customers, )
+#
+# Customer ( _id , name , Table_id)
+#
+# Food( _id, name )
+#
+# Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
+#
+# Waiter_staff( _id , Order_id , Table_id , Customer_id )

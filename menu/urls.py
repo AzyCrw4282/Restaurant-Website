@@ -8,7 +8,10 @@ from django.contrib import admin
 urlpatterns = [
                   path('',views.menu, name='menu'),
                   url(r'^table_list/$', views.table_list, name='table_list'),
-                  url(r'^table_create/$', views.table_create, name='table_create'),
-                  url(r'^table_list/(?P<table>\d+)/add_customer$', views.table_add_customer, name='table_add_customer'),
+
+                  url(r'^add_table/$', views.add_table, name='add_table'),
+                  url(r'^add_customer/$', views.add_customer, name='add_customer'),
+                  url(r'^add_order/$', views.add_order, name='add_order'),
+                  url(r'^add_food/$', views.add_food, name='add_food'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,17 +6,17 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse, redirect, get_object_or_404
 import os, hashlib
 from django.core.files import File
-# from MenuView.models import
-# from MenuView.forms import
+# from menu.models import
+# from menu.forms import
 #---------THESE ARE FUNCTIONS THAT TAKE CARE OF USER'S REQUEST USING FORMS, DATABASE MODELS AND HTML-------------
 
 # HOME/REPORTS/OWNFILES
 
-def home(request):
+def menu(request):
     user = request.user
     context = {'user': user}
     return render(
-        request, 'MenuView/templates/home.html', context
+        request, 'menu/templates/index.html', context
 
     )
 

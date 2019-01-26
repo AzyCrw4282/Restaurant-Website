@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
    <head>
       <meta charset="UTF-8">
       <link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
       <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
-      <link type="text/css" rel="stylesheet" href="style.css">
+
+      <link type="text/css" rel="stylesheet" href="{% static 'menu/css/style.css' %}">
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <!-- Bootstrap CSS -->
@@ -54,7 +57,7 @@
       <div class="wrapper clearfix">
          <div class="player-0-panel active">
             <div class="player-name" id="name-0">Pizza</div>
-            <img src="Pizza.jpg">
+            <img src="{% static 'menu/img/Pizza.jpg' %}">
             <div class="player-current-box">
                <div class="player-current-score" id="current-0"></div>
             </div>
@@ -67,8 +70,8 @@
          <div class="player-1-panel">
             <div class="container">
                <div class="player-name" id="name-1">Burger</div>
-               <img src="Burger.jpg">               
-               <div
+               <img src="{% static 'menu/img/Burger.jpg' %}">
+
                <div class="player-current-box">
                   <div class="player-current-score2" id="current-1"></div>
                </div>
@@ -83,7 +86,7 @@
          <button class="btn-hold"><i class="ion-ios-download-outline"></i>Order</button>
          <input class="final-score"type="text" placeholder="Order Status" >
       </div>
-      <script src="app.js"></script>
+      <script src="{% static 'menu/js/app.js' %}"></script>
       <script src="challenges.js"></script>
    </body>
 </html>

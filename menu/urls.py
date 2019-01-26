@@ -6,5 +6,5 @@ from . import views
 from django.views.generic import RedirectView
 from django.contrib import admin
 urlpatterns = [
-                  path('',views.home, name='menu_home'),
+                  path('',views.menu, name='menu'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -35,7 +35,6 @@ jQuery(document).ready(function(){
     });
     // This button will decrement the value till 0
     $(".qtyminus").click(function(e) {
-        alert("decrementing and posting to url");
 
         // Stop acting like a button
         e.preventDefault();

@@ -1,0 +1,12 @@
+
+Table( _id , max_customers)
+
+Customer ( _id , name , Table_id)
+
+Food( _id, name )
+
+Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
+
+Waiter_staff( _id , Order_id , Table_id , Customer_id )
+
+

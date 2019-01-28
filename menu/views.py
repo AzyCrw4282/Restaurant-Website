@@ -8,6 +8,7 @@ from django.core.files import File
 from .models import Table, Customer, Order, Food
 from .forms import TableForm, CustomerForm
 from datetime import datetime
+from django.http import JsonResponse
 
 
 # from MenuView.models import
@@ -27,7 +28,7 @@ def menu(request):
     user = request.user
     context = {'user': user}
     return render(
-        request, 'menu/templates/index.html', context)
+        request, 'menu/templates/insert_example.html', context)
 
 
 # Customer ( _id , name , Table_id)
@@ -35,40 +36,41 @@ def add_customer(request):
     if request.method == 'POST':
         try:
             temp = Customer(name=request.POST['name'],
-                                           table_id=request.POST['table_id'])
+                            table_id=request.POST['table_id'])
             temp.save()
             response = {
                 'status': 1,
                 'message': 'added customer'
             }
         except Exception as e:
+            print(e)
+
             response = {
                 'status': 0,
                 'message': 'Oops something went wrong - ' + str(e)
             }
-        return HttpResponse(response, mimetype='application/json')
+        return JsonResponse(response)
     else:
         pass
 
 
 # Table( _id , max_customers, )
 def add_table(request):
-    print("FUNCTION ADD TABLE")
     if request.method == 'POST':
-        print("RECIEVED POST TESTING DATA")
         try:
             temp = Table(max_customers=request.POST['max_customers'])
             temp.save()
-            print("OBJECT SAVED REDIRECTING")
-            print("added object to table db")
-            HttpResponseRedirect(reverse('table_list'))
+            response = {
+                'status': 0,
+                'message': 'added table'
+            }
         except Exception as e:
-            print("EXCEPTION THROWN: ",e)
+            print("EXCEPTION THROWN: ", e)
             response = {
                 'status': 0,
                 'message': 'Oops something went wrong - ' + str(e)
             }
-        return HttpResponseRedirect('')
+        return HttpResponse(response)
     else:
         pass
 
@@ -81,14 +83,14 @@ def add_food(request):
             temp.save()
             response = {
                 'status': 1,
-                'message': 'added customer'
+                'message': 'added food'
             }
         except Exception as e:
             response = {
                 'status': 0,
                 'message': 'Oops something went wrong - ' + str(e)
             }
-        return HttpResponse(response, mimetype='application/json')
+        return JsonResponse(response)
     else:
         pass
 
@@ -106,28 +108,28 @@ def add_food(request):
 #  },
 # Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
 def add_order(request):
-    # Order( _id , Food_id , Table_id , Customer_id , time_of_order )
+    print("RECIEVE ORDER REQUEST")
+    # Order( _id , Food_id , Table_id , Customer_id , time )
     if request.method == 'POST':
         try:
-            food = request.POST['food']
-            table = request.POST['table']
-            customer = request.POST['customer']
-            date_time = request.POST['time_of_order']
-            # date time in format: 'Mon, 23 May 2016 08:30:15 GMT'
-            date_object = datetime.strptime(date_time, '%a, %d %B %Y %H:%M:%S GMT')
-            order = Order.objects.create(food=food, table=table, customer=customer,
-                                         time_of_order=date_object)
+            food = request.POST['food_id']
+            customer = request.POST['customer_id']
+            date_time = request.POST['time']
+            print(date_time)
+            order = Order.objects.create(food_id=food,customer_id=customer,
+                                         time=date_time)
             order.save()
             response = {
                 'status': 1,
                 'message': 'Order Successful'
             }
         except Exception as e:
+            print(e)
             response = {
                 'status': 0,
                 'message': 'Oops something went wrong - ' + str(e)
             }
-        return HttpResponse(response, mimetype='application/json')
+        return JsonResponse(response)
     else:
         pass
 

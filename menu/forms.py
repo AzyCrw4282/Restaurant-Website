@@ -1,5 +1,5 @@
 from django import forms
-from MenuView.models import Table, Customer
+from .models import Table, Customer
 
 class TableForm(forms.ModelForm):
     number_of_customers = forms.IntegerField(label='number of people:')

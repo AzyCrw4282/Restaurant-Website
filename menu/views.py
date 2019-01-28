@@ -113,11 +113,10 @@ def add_order(request):
     if request.method == 'POST':
         try:
             food = request.POST['food_id']
-            table = request.POST['table_id']
             customer = request.POST['customer_id']
             date_time = request.POST['time']
             print(date_time)
-            order = Order.objects.create(food_id=food, table_id=table, customer_id=customer,
+            order = Order.objects.create(food_id=food,customer_id=customer,
                                          time=date_time)
             order.save()
             response = {

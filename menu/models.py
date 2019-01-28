@@ -22,7 +22,6 @@ class Customer(models.Model):
 # Order( _id , Food_id , Table_id , Customer_id , time )
 class Order(models.Model):
     food= models.ForeignKey(Food, on_delete=models.CASCADE)
-    table= models.ForeignKey(Table, on_delete=models.CASCADE)
     customer= models.ForeignKey(Customer, on_delete=models.CASCADE)
     time= models.DateTimeField(null=True)
 
@@ -32,6 +31,6 @@ class Order(models.Model):
 #
 # Food( _id, name )
 #
-# Order( _id , Food_id , Table_id , Customer_id , time_of_order )
+# Order( _id , Food_id  , Customer_id , time_of_order )
 #
 # waiter( _id , Order_id , Table_id , Customer_id )

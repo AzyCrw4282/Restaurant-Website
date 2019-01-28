@@ -19,7 +19,7 @@ class Customer(models.Model):
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
 
 
-# Order( _id , Food_id , Table_id , Customer_id , time_of_order )
+# Order( _id , Food_id , Table_id , Customer_id , time )
 class Order(models.Model):
     food= models.ForeignKey(Food, on_delete=models.CASCADE)
     table= models.ForeignKey(Table, on_delete=models.CASCADE)
@@ -32,6 +32,6 @@ class Order(models.Model):
 #
 # Food( _id, name )
 #
-# Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
+# Order( _id , Food_id , Table_id , Customer_id , time_of_order )
 #
-# Waiter_staff( _id , Order_id , Table_id , Customer_id )
+# waiter( _id , Order_id , Table_id , Customer_id )

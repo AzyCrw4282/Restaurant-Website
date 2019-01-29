@@ -58,7 +58,7 @@ body {
   color: #333;
   text-align: left;
   position: relative;
-  background-image: url("src/menu-background.jpg"); }
+  background-image: url("../img/menu-background.jpg"); }
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }

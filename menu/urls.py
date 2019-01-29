@@ -7,11 +7,13 @@ from django.views.generic import RedirectView
 from django.contrib import admin
 urlpatterns = [
                   path('',views.menu, name='menu'),
+                  url(r'^add_stuff/$', views.add_stuff, name='add_stuff'),
+
                   url(r'^table_list/$', views.table_list, name='table_list'),
 
-                  url(r'^add_table/$', views.add_table, name='add_table'),
-                  url(r'^add_customer/$', views.add_customer, name='add_customer'),
-                  url(r'^add_order/$', views.add_order, name='add_order'),
-                  url(r'^add_food/$', views.add_food, name='add_food'),
+                  url(r'^add_stuff/add_table/$', views.add_table, name='add_table'),
+                  url(r'^add_stuff/add_customer/$', views.add_customer, name='add_customer'),
+                  url(r'^add_stuff/add_order/$', views.add_order, name='add_order'),
+                  url(r'^add_stuff/add_food/$', views.add_food, name='add_food'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -25,6 +25,11 @@ from django.http import JsonResponse
 #
 def menu(request):
     print("called menu")
+    context = {'food': Food.objects.all()}
+    return render(
+        request, 'menu/templates/blank.html', context)
+def add_stuff(request):
+    print("called menu")
     user = request.user
     context = {'user': user}
     return render(
@@ -77,6 +82,7 @@ def add_table(request):
 
 # Food( _id, name )
 def add_food(request):
+    print("INSERTING FOOD")
     if request.method == 'POST':
         try:
             temp = Food.objects.create(name=request.POST['name'])

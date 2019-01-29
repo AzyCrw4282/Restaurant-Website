@@ -8,7 +8,6 @@ from django.contrib import admin
 urlpatterns = [
                   path('',views.menu, name='menu'),
                   url(r'^table_list/$', views.table_list, name='table_list'),
-
                   url(r'^add_table/$', views.add_table, name='add_table'),
                   url(r'^add_customer/$', views.add_customer, name='add_customer'),
                   url(r'^add_order/$', views.add_order, name='add_order'),

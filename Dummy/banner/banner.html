@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
 
   <title>Banner</title>
@@ -10,6 +11,28 @@
   <meta name="MattDaniells" content="banner">
 
   <link rel="stylesheet" href="banner.css" type="text/css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $("a").on('click', function(event) {
+
+
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hashlocation = this.hash;
+
+            $('html, body').animate({
+            scrollTop: $(hashlocation).offset().top
+            }, 800, function(){
+
+            window.location.hash = hashlocation;
+
+            });
+           }
+         });
+        });
+    </script>
 
   <div class="banner">
       <img src ="src/Logo.svg" class="banner" id="restaurantLogo">

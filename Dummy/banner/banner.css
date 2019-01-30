@@ -65,20 +65,6 @@
   font-size: 18px;
 }
 
-.tab_menu {
-
-     position: absolute;
-     background-color: #555;
-     color: white;
-     float: left;
-     border: none;
-     outline: none;
-     cursor: pointer;
-     padding: 14px 16px;
-     font-size: 17px;
-     width: 25%;
- }
-
 .tabs_header {
      position: relative;
      top: 54px;

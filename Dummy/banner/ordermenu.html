@@ -2,178 +2,100 @@
 
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Order Menu</title>
-        <link rel="stylesheet" type="text/css" href="ordermenu.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Menu</title>
+    <link rel="stylesheet" type="text/css" href="ordermenu.css">
 
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script>
-            $(function(){
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(function(){
             $("#header").load("banner.html");
-            });
-        </script>
+        });
+    </script>
+    <script>
+
+        var main  = {"mains":[
+                { "foodname":"Tacos with cereal", "price":"£5" },
+                { "foodname":"Tacos", "price":"£2" },
+                { "foodname":"Tacos with toast", "price":"£3" }]}
+
+        var side  = {"sides":[
+                { "sidename":"Cereal with no Tacos", "price":"£5" },
+                { "sidename":"Tacos with no Tacos", "price": "£2" },
+                { "sidename":"Toast with no Tacos", "price":"£3" }]}
+
+        var drink  = {"drinks":[
+                { "drinnkname":"Vodka", "price":"£5" },
+                { "drinkname":"Pepsi", "price":"£2" },
+                { "drinkname":"7up", "price":"£3" }]}
+
+        var deal  = {"deals":[
+                { "dealname":"The non-non-mexican", "deal":"10% off " },
+                { "dealname":"The non-mexican", "deal":"%50 off" },
+                { "dealname":"The mexican", "deal":"100% off" }]}
+
+        function newCard(id,menuitem,price) {
+            console.log("test");
+            var div = document.createElement("div");
+            div.id = id;
+            div.className = "card";
+            div.innerHTML = "<div class='image'><h1>"+ menuitem +"</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
+            return div;
+        }
+
+    </script>
+
+</head>
+<body>
+
+<div class="header" id="header">
+</div>
+
+<div class="main">
+    <section id="mains">
+
+    </section>
+
+    <section id="sides">
+    </section>
+
+    <section id="drinks">
+    </section>
+
+    <section id="deals">
+    </section>
+
+</div>
+<script>
+
+    for (var i in main.mains) {
+        var item = main.mains[i].foodname;
+        var price = main.mains[i].price;
+        var card = newCard(i,item,price);
+        document.getElementById("mains").appendChild(card);
+    }
+    for (var i in side.sides) {
+        var item = side.sides[i].sidename;
+        var price = side.sides[i].price;
+        var card = newCard("side"+i,item,price);
+        document.getElementById("sides").appendChild(card);
+    }
+    for (var i in drink.drinks) {
+        var item = drink.drinks[i].drinkname;
+        var price = drink.drinks[i].price;
+        var card = newCard("drinks"+i,item,price);
+        document.getElementById("drinks").appendChild(card);
+    }
+    for (var i in deal.deals) {
+        var item = deal.deals[i].dealname;
+        var itemdeal = deal.deals[i].deal;
+        var card = newCard("deals"+i,item,itemdeal);
+        document.getElementById("deals").appendChild(card);
+    }
 
 
-    </head>
 
-    <body>
-
-        <div class="header" id="header">
-        </div>
-
-        <div class="main">
-            <section id="mains">
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-                   <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-                   <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                   </div>
-            </section>
-
-              <section id="sides">
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Main Food Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Food Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-            </section>
-
-                 <section id="drinks">
-               <div class="card">
-                    <div class="image">
-                        <h1>
-                            Drinks Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Drink Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-                 <div class="card">
-                    <div class="image">
-                        <h1>
-                            Drinks Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Drink Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-                 <div class="card">
-                    <div class="image">
-                        <h1>
-                            Drinks Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Drink Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-            </section>
-
-
-            <section id="deals">
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Deals On Offer Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Deal Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Deals On Offer Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Deal Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image">
-                        <h1>
-                            Deals On Offer Item Image
-                        </h1>
-                    </div>
-                    <div class="container">
-                        <h4> Deal Description</h4>
-                        <p><button>Add to Order</button></p>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </body>
+</script>
+</body>
 </html>

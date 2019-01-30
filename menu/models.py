@@ -34,3 +34,4 @@ class Order(models.Model):
 # Order( _id , Food_id  , Customer_id , time_of_order )
 #
 # waiter( _id , Order_id , Table_id , Customer_id )
+

@@ -1,5 +1,4 @@
 .banner {
-
   top: 0;
   left: 0;
   height: 13%;
@@ -8,7 +7,7 @@
   position: fixed;
   border: 0px;
   padding: 0px;
-  z-index: 1;
+
   border-bottom: 1px solid #A83535;
 }
 
@@ -66,8 +65,10 @@
 }
 
 .tabs_header {
-     position: relative;
-     top: 54px;
+     position: fixed;
+  z-index: 1;
+  margin-top: 13%;
+    width:100%;
  }
 
 

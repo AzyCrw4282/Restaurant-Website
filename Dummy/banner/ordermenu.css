@@ -2,6 +2,40 @@
      height: 20%;
  }
 
+ .image {
+     width: 100%;
+     padding: 12px;
+ }
+
+ .card {
+    padding-top: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transistion: 0.3;
+     width: 30%;
+     border-radius: 5px;
+     margin: 25px;
+ }
+
+ .card button {
+     width: 100%;
+     border: none;
+     outline: 0;
+     padding: 12px;
+     color: white;
+     background-color: #9c0d0a;
+     text-align: center;
+     cursor: pointer;
+     font-size: 18px;
+ }
+
+
+ .card button:hover {
+    opacity: 0.6;
+ }
+.container {
+    padding: 30px 16px;
+}
+
  body, html, .main {
      height: 100%;
  }

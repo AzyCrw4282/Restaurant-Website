@@ -52,60 +52,167 @@
                 </ul>
                 <div class="tab-content mt-2">
                     <div class="tab-pane fade show active" id="tabone" role="tabpanel">
+                      <div class="row" id="menu_header_container">
+                          <div class="col-md-12">
+
+                              <h1 class="" id="menu_header">Menu</h1>
+                          </div>
+                      </div>
                         <div class="py-5">
+
                             <div class="container">
+
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h1 class="">Menu</h1>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h4 class="">Category 1</h4>
+                                        <h4 class="menu_headings">Starters and Nibbles</h4>
                                     </div>
                                 </div>
                                 {% for food_obj in food %}
                                 <div class="row" style="">
                                     <div class="col-md-8">the food is: {{ food_obj.name }} The id is: {{ food_obj.id }}</div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
                                 </div>
                                 {% endfor %}
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4 class="">Category 2<br></h4>
+                                        <h4 class="menu_headings">Mains<br></h4>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                      </a></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                      </a></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="menu_headings">Sharing Platters<br></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="menu_headings">Desserts<br></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4 class="menu_headings">Drinks<br></h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
+                                </div>
+
+
+
                                 <div class="row shadow-sm">
                                     <div class="col-md-8"></div>
-                                    <div class="col-md-4"><a class="btn btn-secondary" href="#" style="">Add to
-                                        order</a></div>
+                                    <div class="col-md-4" id="add_button"><a class="btn btn-secondary" href="#" style="">+
+                                        </a></div>
                                 </div>
                             </div>
                         </div>

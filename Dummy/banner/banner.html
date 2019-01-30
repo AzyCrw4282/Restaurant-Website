@@ -17,7 +17,7 @@
         $(document).ready(function(){
         $("a").on('click', function(event) {
 
-        var heightofbanner = $(document).height() * 0.13;
+        var heightofbanner = $("#headerContainer").height() + 10 ;
         console.log(heightofbanner);
 
 
@@ -26,13 +26,14 @@
             var hashlocation = this.hash;
 
             $('html, body').animate({
-            scrollTop: $("#sides").offset().top - heightofbanner
+            scrollTop: $(hashlocation).offset().top - heightofbanner
             }, 800);
            }
          });
         });
     </script>
 
+<div id="headerContainer">
   <div id="banner" class="banner">
       <img src ="src/Logo.svg" class="banner" id="restaurantLogo">
       <img src="src/left_banner.png" id="left_banner">
@@ -65,7 +66,7 @@
               <li><a href="#deals">Deals</a></li>
           </ul>
       </div>
-
+</div>
 </head>
 
 </html>

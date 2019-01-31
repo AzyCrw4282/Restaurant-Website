@@ -7,21 +7,36 @@
 {% block body %}
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
-    {# Food( _id, name )#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+    {# //Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )#}
     <form onsubmit="return false">
         {% csrf_token %}
         <br>
         add a food item : <br>
         enter Name: <br>
-        <input type='text' aria-label="enter name:" id="food_name"/>
+        <input type='text' aria-label="enter name:" id="food_name"/><br>
+        enter category_id:<br>
+        <input type="number" aria-label="enter category id: " id="food_category_id"><br>
+        enter price:<br>
+        <input type="number" aria-label="enter price: " id="food_price"><br>
         <button class="add_food" onclick="add_food()">Submit</button>
     </form>
+
+    {# // FoodCategory( _id, name)#}
+    <form onsubmit="return false">
+        {% csrf_token %}
+        <br>
+        add category<br>
+         enter food category name: <br>
+        <input type='text' aria-label="enter name:" id="food_category_name"/>
+        <button class="add_food_category" onclick="add_food_category()">Submit</button>
+    </form>
+
 
     {#  Table( _id , max_customers, )#}
     <form onsubmit="return false">
@@ -59,6 +74,6 @@
         <input type='datetime-local' aria-label="order_time:" id="order_time"/>
         <button class="add_order" onclick="add_order()">Submit</button>
     </form>
-    <script src="{% static 'menu/js/app.js' %}"></script>
+    <script src="{% static 'menu/js/db_insert.js' %}"></script>
 
 {% endblock %}

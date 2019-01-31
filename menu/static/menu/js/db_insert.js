@@ -41,7 +41,7 @@ function add_order() {
     alert("sent");
 }
 
-// # Food( _id, name )
+//Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
 function add_food() {
     $.ajax({
         type: "POST",
@@ -49,6 +49,8 @@ function add_food() {
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             name:document.getElementById("food_name").value,
+            price:document.getElementById("food_price").value,
+            category_id:document.getElementById("food_category_id").value,
         },
         success:
             function () {
@@ -85,9 +87,29 @@ function add_customer() {
     });
     alert("sent");
 }
+// FoodCategory( _id, name)
+function add_food_category() {
+    $.ajax({
+        type: "POST",
+        url: 'add_food_category/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            name:document.getElementById("food_category_name").value
+        },
+        success:
+            function () {
+                console.log("successful");
+            },
+        error: function () {
+            console.log("failure");
 
+        }
+
+    });
+    alert("sent");
+
+}
 //Table( _id , max_customers, )
-
 function add_table() {
     $.ajax({
         type: "POST",

@@ -25,11 +25,14 @@
     </div>
     <br><br><br><br><br>
     <div class="main" id="categories">
-        {#    for loop each id is a category name name#}
 
     </div>
-     <script>
-        load_category_items();
+    <script type="text/javascript">
+        console.log("getting data");
+        var data = {{ category_list|safe}};
+        console.log(data);
+        console.log("got data");
+        get_categories(data);
     </script>
 
     {#asdfas#}

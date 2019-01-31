@@ -71,7 +71,7 @@
 }
 
 .tabs_header {
-     position: relative;
+     position: fixed;
     z-index: 2;
     top: 11%;
     width:100%;

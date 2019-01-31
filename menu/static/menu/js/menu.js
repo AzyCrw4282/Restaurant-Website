@@ -26,7 +26,7 @@ function load_header_tabs(categories) {
     for (var i in categories) {
         // <li><a class="active" href="#mains">Mains</a></li>
         var li = document.createElement("li");
-        li.innerHTML+='<a class="active" href="#'+i+'">'+i+'</a>'
+        li.innerHTML+='<a class="active" href="#'+i+'"></a>';
         li.appendChild(document.createTextNode(i));
         ul.appendChild(li);
     }
@@ -74,7 +74,7 @@ function load_category_items() {
 
     };
     add_categories(categories);
-    load_header_tabs(categories);
+    //load_header_tabs(categories);
     // categories is a dictionary
     for (var i in categories) {
         console.log("Category Name: " + i);

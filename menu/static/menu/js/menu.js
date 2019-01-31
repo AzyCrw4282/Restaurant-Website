@@ -15,17 +15,29 @@
 //it's relevance and readability
 function get_categories(category_list) {
 
-    console.log("CATEGORY_LIST OBJECT: "+category_list);
+    console.log("CATEGORY_LIST OBJECT: " + category_list);
     add_categories(category_list);
 
+
+}
+
+function load_header_tabs(categories) {
+    var ul = document.getElementById("tabs_header_list");
+    for (var i in categories) {
+        // <li><a class="active" href="#mains">Mains</a></li>
+        var li = document.createElement("li");
+        li.innerHTML+='<a class="active" href="#'+i+'">'+i+'</a>'
+        li.appendChild(document.createTextNode(i));
+        ul.appendChild(li);
+    }
 
 }
 
 function add_categories(categories) {
     for (i in categories) {
         var section = document.createElement("SECTION");
-        section.id=i;
-        console.log("SECTION ID's: "+i);
+        section.id = i;
+        console.log("SECTION ID's: " + i);
         document.getElementById("categories").appendChild(section);
     }
 }
@@ -62,6 +74,7 @@ function load_category_items() {
 
     };
     add_categories(categories);
+    load_header_tabs(categories);
     // categories is a dictionary
     for (var i in categories) {
         console.log("Category Name: " + i);
@@ -69,9 +82,9 @@ function load_category_items() {
         var category_object = categories[i];
         //category_object is a list of dictionaries
         for (j in category_object) {
-            console.log("J "+j);
-            var category_object_dict=category_object[j];
-            console.log("dict "+category_object_dict);
+            console.log("J " + j);
+            var category_object_dict = category_object[j];
+            console.log("dict " + category_object_dict);
             var card = add_card(category_object_dict.name, category_object_dict.price);
             document.getElementById(i).appendChild(card);
         }
@@ -83,7 +96,7 @@ function load_category_items() {
 function add_card(food_name, price) {
     console.log("Creating Card: " + food_name + " , " + price);
     var div = document.createElement("div");
-    div.className = "card";
+    div.className = "bunny";
     div.innerHTML = "<div class='image'><h1>" + food_name + "</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
     return div;
 }

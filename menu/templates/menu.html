@@ -13,31 +13,25 @@
 {#{% endblock %}#}
 {% block body %}
     <script src="{% static 'menu/js/menu.js' %}"></script>
-
-    {#        <link rel="stylesheet" type="text/css" href="../static/menu/css/menu.css">#}
-    {#    <script src="//code.jquery.com/jquery-1.10.2.js"></script>#}
+    <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/menu/css/style.css" type="text/css"/>
 
     <div class="tabs_header">
-        <ul>
-            <li><a class="active" href="#mains">Mains</a></li>
-            <li><a href="#sides">Sides</a></li>
-            <li><a href="#drinks">Drinks</a></li>
-            <li><a href="#deals">Deals</a></li>
+        <ul id="tabs_header_list">
         </ul>
     </div>
 
-
-
     <div class="header" id="header">
     </div>
-
+    <br><br><br><br><br>
     <div class="main" id="categories">
         {#    for loop each id is a category name name#}
 
     </div>
-    <script>
+     <script>
         load_category_items();
     </script>
+
     {#asdfas#}
     {#<script>#}
     {#//runs through each category name and creates a new card of food then appends#}

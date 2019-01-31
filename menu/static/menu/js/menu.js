@@ -18,18 +18,23 @@ function get_categories(category_list) {
 
     console.log("CATEGORY_LIST OBJECT: " + category_list);
     add_categories(category_list);
-    load_category_items();
+    load_header_tabs(category_list);
+    load_category_items(category_list);
 
 
 }
 
 function load_header_tabs(categories) {
+
     var ul = document.getElementById("tabs_header_list");
     for (var i in categories) {
         // <li><a class="active" href="#mains">Mains</a></li>
         var li = document.createElement("li");
-        li.innerHTML+='<a class="active" href="#'+i+'"></a>';
-        li.appendChild(document.createTextNode(i));
+        li.className="active";
+        var a = document.createElement("a");
+        a.href="#"+i;
+        a.innerHTML+=i;
+        li.appendChild(a);
         ul.appendChild(li);
     }
 
@@ -44,7 +49,7 @@ function add_categories(categories) {
     }
 }
 
-function load_category_items() {
+function load_category_items(categories) {
 
     // these are the objects, I need to gain access to each category as vars then
 //add each food in each category as a list
@@ -56,25 +61,25 @@ function load_category_items() {
 
 
     //get categories from db then test once the bellow works fine
-    var categories = {
-        "mains": [
-            {"name": "Tacos with cereal", "price": "£5"},
-            {"name": "Tacos", "price": "£2"},
-            {"name": "Tacos with toast", "price": "£3"}],
-        "sides": [
-            {"name": "Cereal with no Tacos", "price": "£5"},
-            {"name": "Tacos with no Tacos", "price": "£2"},
-            {"name": "Toast with no Tacos", "price": "£3"}],
-        "drinks": [
-            {"name": "Vodka", "price": "£5"},
-            {"name": "Pepsi", "price": "£2"},
-            {"name": "7up", "price": "£3"}],
-        "deals": [
-            {"name": "The non-non-mexican", "price": "10% off "},
-            {"name": "The non-mexican", "price": "%50 off"},
-            {"name": "The mexican", "price": "100% off"}]
-
-    };
+    // var categories = {
+    //     "mains": [
+    //         {"name": "Tacos with cereal", "price": "£5"},
+    //         {"name": "Tacos", "price": "£2"},
+    //         {"name": "Tacos with toast", "price": "£3"}],
+    //     "sides": [
+    //         {"name": "Cereal with no Tacos", "price": "£5"},
+    //         {"name": "Tacos with no Tacos", "price": "£2"},
+    //         {"name": "Toast with no Tacos", "price": "£3"}],
+    //     "drinks": [
+    //         {"name": "Vodka", "price": "£5"},
+    //         {"name": "Pepsi", "price": "£2"},
+    //         {"name": "7up", "price": "£3"}],
+    //     "deals": [
+    //         {"name": "The non-non-mexican", "price": "10% off "},
+    //         {"name": "The non-mexican", "price": "%50 off"},
+    //         {"name": "The mexican", "price": "100% off"}]
+    //
+    // };
     add_categories(categories);
     //load_header_tabs(categories);
     // categories is a dictionary
@@ -95,7 +100,7 @@ function load_category_items() {
 
 }
 
-function add_card(food_name, price) {
+function add_card(food_name, price,id) {
     console.log("Creating Card: " + food_name + " , " + price);
     var div = document.createElement("div");
     div.className = "bunny";

@@ -42,7 +42,7 @@ class Customer(models.Model):
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
 
 
-# Order( _id , Food_id , Table_id , Customer_id , time )
+# Order( _id , Food_id  , Customer_id , time )
 class Order(models.Model):
     food = models.ManyToManyField(Food)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

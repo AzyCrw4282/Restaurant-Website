@@ -14,9 +14,11 @@
 // this is an function gets the context passed to the html and checks
 //it's relevance and readability
 function get_categories(category_list) {
+    console.log("loaded funciton");
 
     console.log("CATEGORY_LIST OBJECT: " + category_list);
     add_categories(category_list);
+    load_category_items();
 
 
 }

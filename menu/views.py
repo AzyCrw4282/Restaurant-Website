@@ -9,7 +9,7 @@ from django.core.files import File
 from .models import Table, Customer, Order, Food, FoodCategory
 from datetime import datetime
 from django.http import JsonResponse
-
+import json
 
 # from MenuView.models import
 # from MenuView.forms import
@@ -37,12 +37,22 @@ def menu(request):
     # constructing categories object as described above:
     category_list = {}
     categories = FoodCategory.objects.all()
+    foods_list = []
+
     for category in categories:
-        print("CATEGORY: ", category)
+        print("CATEGORY: ", category.name)
         category_foods = category.food_set.all()
-        print("CATEGORY FOODS: ", category_foods)
-        category_list.update({category.name: category_foods})
-    context = {'food': Food.objects.all()}
+
+        for food in category_foods:
+            food_dict = {}
+            food_dict.update({"name":food.name})
+            food_dict.update({"price":food.price})
+            foods_list.append(food_dict)
+        print("CATEGORY FOODS: ", foods_list)
+        category_list.update({category.name: foods_list})
+    js_data = json.dumps(category_list)
+    context = {"category_list":js_data}
+    print("Sending: ",context)
     return render(
         request, 'menu/templates/menu.html', context)
 

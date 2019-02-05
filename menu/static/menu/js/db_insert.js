@@ -14,19 +14,15 @@ TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
  */
 
 // # Order( _id , Food_id , Table_id , Customer_id , time_of_order )
-function add_order() {
+function add_order(data) {
+
+    var context={};
+
 
     $.ajax({
         type: "POST",
         url: 'add_order/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            food_id: document.getElementById("order_food_id").value,
-            customer_id: document.getElementById("order_customer_id").value,
-            //Make sure to convert into the correct format for django, not sure what
-            //it should be
-            time: document.getElementById("order_time").value,
-        },
+        data: context,
 
         success:
             function () {

@@ -30,7 +30,7 @@ class FoodCategory(models.Model):
     name = models.CharField(default="", max_length=30)
 
 
-# Food( _id, name,price, category_id , information: MtM(FoodInformation),description,picture )
+# Food( _id ,display, name, price, category_id , information: MtM(FoodInformation), description, picture )
 class Food(models.Model):
     name = models.CharField(default="", max_length=30)
     price = models.FloatField(default=0)
@@ -38,31 +38,32 @@ class Food(models.Model):
     information = models.ManyToManyField(FoodInformation)
     description = models.CharField(default="", max_length=200)
     picture = models.ImageField
+    display=models.BooleanField(default=True)
 
 
 # Order( _id , Food_id  ,comment , status)
 class Order(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     comment = models.CharField(default="", max_length=200)
-    status = models.BooleanField(default="")
+    status = models.BooleanField(default=False)
 
 
-# TableOrder ( _id , order:MtM(Order),Table_id, time)
+# TableOrder ( _id , orders:MtM(Order),Table_id, time, status)
 class TableOrder(models.Model):
-    order = models.ManyToManyField(Order)
+    orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
+    status=models.BooleanField(default=False)
 
-# Table( _id , max_customers, )
+# Table( _id  )
 #
-# Customer ( _id , name , Table_id)
-#
-# Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-#
-# FoodAlergies( _id, name)
+# FoodInformation( _id, name,description)
 #
 # FoodCategory( _id, name)
 #
-# Order( _id , Food_id  , Customer_id , time_of_order )
+# Food( _id, display, name, price, category_id , information: MtM(FoodInformation), description, picture )
 #
-# waiter( _id , Order_id , Table_id , Customer_id )
+# Order( _id , Food_id  ,comment , status)
+#
+# TableOrder ( _id , orders:MtM(Order),Table_id, time)
+#

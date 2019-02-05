@@ -3,6 +3,7 @@ from django.utils.timezone import now
 
 from datetime import datetime
 
+
 # Create your models here
 
 # CONVENTIONS:
@@ -13,14 +14,15 @@ from datetime import datetime
 # notes:
 # a constant system for max length should be looked into
 
-# Table( _id , max_customers )
+# Table( _id  )
 class Table(models.Model):
-    max_customers = models.IntegerField(default=0)
+    pass
 
 
-# FoodAlergies( _id, name)
-class FoodAllergies(models.Model):
+# FoodInformation( _id, name,description)
+class FoodInformation(models.Model):
     name = models.CharField(default="", max_length=30)
+    ingredients = models.CharField(default="", max_length=200)
 
 
 # FoodCategory( _id, name)
@@ -28,24 +30,27 @@ class FoodCategory(models.Model):
     name = models.CharField(default="", max_length=30)
 
 
-# Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
+# Food( _id, name,price, category_id , information: MtM(FoodInformation),description,picture )
 class Food(models.Model):
     name = models.CharField(default="", max_length=30)
-    price = models.IntegerField(default=0)
+    price = models.FloatField(default=0)
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE)
-    allergy = models.ManyToManyField(FoodAllergies)
+    information = models.ManyToManyField(FoodInformation)
+    description = models.CharField(default="", max_length=200)
+    picture = models.ImageField
 
 
-# Customer ( _id , Table_id)
-class Customer(models.Model):
-    name = models.CharField(default="", max_length=20)
-    table = models.ForeignKey(Table, on_delete=models.CASCADE)
-
-
-# Order( _id , Food_id  , Customer_id , time )
+# Order( _id , Food_id  ,comment , status)
 class Order(models.Model):
-    food = models.ManyToManyField(Food)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    comment = models.CharField(default="", max_length=200)
+    status = models.BooleanField(default="")
+
+
+# TableOrder ( _id , order:MtM(Order),Table_id, time)
+class TableOrder(models.Model):
+    order = models.ManyToManyField(Order)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
 
 # Table( _id , max_customers, )
@@ -61,4 +66,3 @@ class Order(models.Model):
 # Order( _id , Food_id  , Customer_id , time_of_order )
 #
 # waiter( _id , Order_id , Table_id , Customer_id )
-

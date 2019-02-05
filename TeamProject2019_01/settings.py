@@ -39,7 +39,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'menu.apps.menuConfig',
+    'waiter.apps.WaiterConfig',
+    'chef.apps.ChefConfig',
+    'menu.apps.MenuConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,64 @@
+{% load static %}
+
+<link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
+<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<!-- jquery and whatever else you needed -->
+
+<html lang="en">
+
+{% block head %}
+    <meta charset="utf-8">
+
+    <title>Customer Menu</title>
+    <meta name="Example top banner for project pages." content="example banner">
+    <meta name="MattDaniells" content="banner">
+
+    <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'menu/js/banner.js' %}"></script>
+
+    <script>
+      banner()
+    </script>
+    <div id="headerContainer">
+        <div id="banner" class="banner">
+            <img src="../static/menu/img/Logo.svg" class="banner" id="restaurantLogo">
+            <img src="../static/menu/img/left_banner.png" id="left_banner">
+            <img src="../static/menu/img/cactus1.png" alt="Cactus" class="cacti" id="cactus1">
+            <img src="../static/menu/img/cactus2.png" alt="Cactus" class="cacti" id="cactus2">
+            <div class="social_media_bar">
+
+                <img src="../static/menu/img/email-logo.png" alt="Facebook" id="logo1">
+                <div class="divider" id="divider1"></div>
+                <img src="../static/menu/img/facebook-logo.png" alt="Twitter" id="logo2">
+                <div class="divider" id="divider2"></div>
+                <img src="../static/menu/img/twitter-logo.png" alt="Instagram" id="logo3">
+                <div class="divider" id="divider3"></div>
+                <img src="../static/menu/img/instagram-logo.png" alt="Email" id="logo4">
+
+            </div>
+
+            <div class="links_bar">
+                <a href="" id="login_link">Login</a>
+            </div>
+        </div>
+
+    <div class="tabs_header">
+          <ul id="tabs_header_list">
+
+          </ul>
+      </div>
+</div>
+
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
+</html>

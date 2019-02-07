@@ -5,7 +5,7 @@ from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.shortcuts import reverse, redirect, get_object_or_404
 import os, hashlib
 from django.core.files import File
-from .models import FoodCategory
+from .models import FoodCategory,Table
 from datetime import datetime
 from django.http import JsonResponse
 import json
@@ -44,6 +44,11 @@ def menu(request):
     return render(
         request, 'menu/templates/menu.html', context)
 
+def welcome_page(request):
+    print("called welcome_page")
+    tables=Table.objects.all()
+    context={"tables":tables}
+    return render(request,'menu/templates/welcome_page.html',context)
 
 def add_stuff(request):
     print("called menu")

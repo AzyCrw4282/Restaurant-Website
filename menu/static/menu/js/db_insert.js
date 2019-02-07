@@ -16,7 +16,7 @@ TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
 // # Order( _id , Food_id , Table_id , Customer_id , time_of_order )
 function add_order(data) {
 
-    var context={};
+    var context = {};
 
 
     $.ajax({
@@ -44,9 +44,9 @@ function add_food() {
         url: 'add_food/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            name:document.getElementById("food_name").value,
-            price:document.getElementById("food_price").value,
-            category_id:document.getElementById("food_category_id").value,
+            name: document.getElementById("food_name").value,
+            price: document.getElementById("food_price").value,
+            category_id: document.getElementById("food_category_id").value,
         },
         success:
             function () {
@@ -69,7 +69,7 @@ function add_customer() {
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             table_id: document.getElementById("customer_table_id").value,
-            name:document.getElementById("customer_name").value
+            name: document.getElementById("customer_name").value
         },
         success:
             function () {
@@ -83,6 +83,7 @@ function add_customer() {
     });
     alert("sent");
 }
+
 // FoodCategory( _id, name)
 function add_food_category() {
     $.ajax({
@@ -90,7 +91,7 @@ function add_food_category() {
         url: 'add_food_category/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            name:document.getElementById("food_category_name").value
+            name: document.getElementById("food_category_name").value
         },
         success:
             function () {
@@ -105,6 +106,7 @@ function add_food_category() {
     alert("sent");
 
 }
+
 //Table( _id , max_customers, )
 function add_table() {
     $.ajax({
@@ -112,7 +114,7 @@ function add_table() {
         url: 'add_table/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            max_customers:document.getElementById("table_max_customers").value
+            max_customers: document.getElementById("table_max_customers").value
         },
         success:
             function () {

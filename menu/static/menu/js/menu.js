@@ -51,35 +51,6 @@ function add_categories(categories) {
 
 function load_category_items(categories) {
 
-    // these are the objects, I need to gain access to each category as vars then
-//add each food in each category as a list
-//for now keep the data structure
-//Pseudo:
-// for each cat:
-// var what= {"cat.name":[{cat.values},{cat.values},{cat.values}]
-// cat.values : "schema_element_name: schema_element_value"
-
-
-    //get categories from db then test once the bellow works fine
-    // var categories = {
-    //     "mains": [
-    //         {"name": "Tacos with cereal", "price": "£5"},
-    //         {"name": "Tacos", "price": "£2"},
-    //         {"name": "Tacos with toast", "price": "£3"}],
-    //     "sides": [
-    //         {"name": "Cereal with no Tacos", "price": "£5"},
-    //         {"name": "Tacos with no Tacos", "price": "£2"},
-    //         {"name": "Toast with no Tacos", "price": "£3"}],
-    //     "drinks": [
-    //         {"name": "Vodka", "price": "£5"},
-    //         {"name": "Pepsi", "price": "£2"},
-    //         {"name": "7up", "price": "£3"}],
-    //     "deals": [
-    //         {"name": "The non-non-mexican", "price": "10% off "},
-    //         {"name": "The non-mexican", "price": "%50 off"},
-    //         {"name": "The mexican", "price": "100% off"}]
-    //
-    // };
     add_categories(categories);
     //load_header_tabs(categories);
     // categories is a dictionary

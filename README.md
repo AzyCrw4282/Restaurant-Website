@@ -5,6 +5,9 @@ git clone 'project name'<br>
 git checkout -b 'branch name'<br>
 <br>
 please install the dependencies.<br>
+virtualenve venv<br>
+source venv/bin/activate<br>
+pip3 install -r requirements.txt<br>
 <br>
 running the server on localhost:<br>
 <br>

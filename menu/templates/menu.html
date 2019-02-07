@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+{# Objects expected: #}
+{#category_list -- see explanation in load_category_items in menu/js/menu.js#}
+<!---->
+<html lang="en">
+
+{% extends 'menu/templates/base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+    <script src="{% static 'menu/js/menu.js' %}"></script>
+    <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/menu/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
+
+
+    <div class="header" id="header">
+    </div>
+
+    <div class="main" id="categories">
+
+    </div>
+    <script type="text/javascript">
+        console.log("getting data");
+        var data = {{ category_list|safe}};
+        console.log(data);
+        console.log("got data");
+        get_categories(data);
+    </script>
+
+
+{% endblock %}
+</html>

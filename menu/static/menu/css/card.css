@@ -1,0 +1,51 @@
+.food_card {
+  box-shadow: 0 4px 8px 0 ;
+  transition: 0.3s;
+  width:400px;
+  height:400px;
+}
+
+
+.food_card_img_border {
+  width:400px;
+  height:300px
+}
+
+
+.food_card_img {
+  width:400px;
+  height:300px;
+}
+
+
+
+
+.food_card_info_box {
+ float: left;
+ width:400px;
+ height:50px;
+
+}
+ul.food_info_box_list li {
+   display:table-cell;
+   width:200px;
+}
+
+
+.buttons {
+  color: black;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.buttons:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.buttons button:hover {
+  background-color: #ff9933;
+}
+

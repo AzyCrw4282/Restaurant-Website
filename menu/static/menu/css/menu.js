@@ -41,23 +41,52 @@ function load_header_tabs(categories) {
 }
 
 function add_card(picture_src,name,price,id){
+    var div=document.getElementById(id="add_here");
     console.log("hello from script");
     var div_1=create_tag("div","","","food_card",id,"");
     var div_2=create_tag("div","","","food_card_img_border","","");
-    var img=create_tag("div","",picture_src,"food_card_img","","")
+    var img=create_tag("IMG","",picture_src ,"food_card_img","","")
     div_2.appendChild(img);
     div_1.appendChild(div_2);
+    var div_3 =create_tag("div","","","food_card_info_box","","");
+    var ul=create_tag("ul","","","food_info_box_list","menu","");
+    var li_burger=create_tag("li","","","","",name);
+    var li_price=create_tag("li","","","","",price);
+    ul.appendChild(li_burger);
+    ul.appendChild(li_price);
+    div_3.appendChild(ul);
+    div_1.appendChild(div_3);
+    div.appendChild(div_1);
 
+}
+function create_cards(foods){
+    [
+        {"tag_name":tag_name,"href":href,"src":src,"tag_class":tag_class,"id":id,"text":text}
+    ]
+    for ()
 }
 
 function create_tag(tag_name,href,src,tag_class,id,text){
     var tag=  document.createElement(tag_name);
-    tag.href=href;
-    tag.class=tag_class;
-    tag.id=id;
-    tag.src=src;
-    tag.innerText=text;
+    if(href.length>0){
+            tag.href=href;
+    }
+    if(tag_class.length>0){
+            tag.className=tag_class;
+    }
+    if(src.length>0){
+         console.log(src);
+            tag.src=src;
+            // tag.alt="burger";
+    }if(id.length>0){
+            tag.id=id;
+    }if(text.length>0){
+            tag.innerText=text;
+    }if(href.length>0){
+            tag.href=href;
+    }
     return tag;
+
 
 }
 

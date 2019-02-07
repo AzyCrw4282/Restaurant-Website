@@ -1,3 +1,8 @@
+@@font-face {
+  font-family: mexicanero;
+  src: url("../static/menu/fonts/Mexicanero.otf");
+}
+
 .banner {
   top: 0;
   left: 0;
@@ -173,6 +178,38 @@
 
 #menu_bar4 {
   top: 0%;
+}
+
+#menu_header {
+  top: 0px;
+  text-align: center;
+  font-size: 120px;
+  color: #A83535;
+  font-family: mexicanero;
+  position: relative;
+
+
+}
+
+#menu_header_container {
+  background-color: rgba(1,50,32, 0.2);
+  height: 130px;
+  position: relative;
+}
+
+#add_button {
+  position: relative;
+  width: 100%;
+  left: 90%;
+
+}
+
+.menu_headings {
+  color: #A83535;
+  font-family: mexicanero;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
 }
 
 

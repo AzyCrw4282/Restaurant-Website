@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('chef/', include('chef.urls')),
     path('waiter/', include('waiter.urls')),
-    path('menu/', include('menu.urls'))
-
+    path('menu/', include('menu.urls')),
+    path('accounts/', include('accounts.urls')),  # new
+    path('', views.menu_redirect, name='menu_redirect')
 ]

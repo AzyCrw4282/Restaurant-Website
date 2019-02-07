@@ -2,33 +2,25 @@
 
 {# Objects expected: #}
 {#category_list -- see explanation in load_category_items in menu/js/menu.js#}
-<!---->
 <html lang="en">
 
 {% extends 'menu/templates/base.html' %}
 {% load staticfiles %}
 
 {% block body %}
-    <script src="{% static 'menu/js/menu.js' %}"></script>
+    <script src="{% static 'menu/js/welcome_page.js' %}"></script>
     <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
     <link rel="stylesheet" href="../static/menu/css/style.css" type="text/css"/>
     <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
 
+    Welcome to the OOXACA?
+    Please enter your table number:
+    <select aria-label="table list" id="table_option_list">
 
-    <div class="header" id="header">
-    </div>
-
-    <div class="main" id="categories">
-
-    </div>
+    </select>
     <script type="text/javascript">
-        console.log("getting data");
-        var data = {{ category_list|safe}};
-        console.log(data);
-        console.log("got data");
-        get_categories(data);
+        add_table_options({{ tables|safe }})
     </script>
-
 
 {% endblock %}
 </html>

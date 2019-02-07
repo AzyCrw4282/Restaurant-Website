@@ -30,7 +30,7 @@ function add_table_order(time,orders){
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "time":time,
             "orders": orders
-        },
+
                     success:
             function () {
                 console.log("successful");

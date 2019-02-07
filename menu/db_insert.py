@@ -42,7 +42,7 @@ def add_table_order(request, table_id):
         try:
             temp = TableOrder.objects.create(
                 table_id=table_id,
-                comment=request.POST['comment'],
+                time=request.POST['time'],
             )
             temp.save()
             for order in request.POST['orders']:

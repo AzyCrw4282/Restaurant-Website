@@ -2,7 +2,7 @@
 
   top: 0;
   left: 0;
-  height: 13%;
+  height: 100px;
   width: 100%;
   background-color: #FAE593;
   position: fixed;
@@ -44,25 +44,8 @@
 }
 
 .cacti {
-  position: relative;
+  position: absolute;
   top: 18%;
-}
-
-.menu_bar {
-  background-color: #FAE593;
-  font-size: 20px;
-  font-family: Courier;
-  text-align: center;
-  position: relative;
-  width: 100%;
-  border-top: 1px solid #A83535;
-  border-bottom: 1px solid #A83535;
-}
-
-.menu_items {
-  color: black;
-  font-weight: bold;
-  font-size: 18px;
 }
 
 #logo1 {
@@ -91,10 +74,10 @@
 }
 
 #restaurantLogo {
-  width: 12%;
-  height: 90%;
-  left: 44%;
-  top: 5%;
+  width: 180px;
+  height: 90px;
+  left: 678px;
+  top: 5px;
   position: absolute;
   border-bottom: 0;
   box-shadow: 0;
@@ -145,23 +128,6 @@
   top: 20%;
 }
 
-#menu_bar1 {
-  top: 17%;
-}
-
-#menu_bar2 {
-  top: 0.1%;
-}
-
-#menu_bar3 {
-  top: 0%;
-}
-
-#menu_bar4 {
-  top: 0%;
-}
-
-
 a {
   text-decoration: none;
 }
@@ -175,7 +141,7 @@ head {
 
 body {
   margin: 0;
+  border: 0;
   padding: 0;
   z-index: 0;
-  border-top: 10%;
 }

@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class menuConfig(AppConfig):
+class MenuConfig(AppConfig):
     name = 'menu'

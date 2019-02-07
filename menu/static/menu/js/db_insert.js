@@ -14,66 +14,24 @@ TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
  */
 
 // # Order( _id , Food_id , Table_id , Customer_id , time_of_order )
-function add_order() {
 
-    $.ajax({
-        type: "POST",
-        url: 'add_order/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            food_id: document.getElementById("order_food_id").value,
-            customer_id: document.getElementById("order_customer_id").value,
-            //Make sure to convert into the correct format for django, not sure what
-            //it should be
-            time: document.getElementById("order_time").value,
-        },
-
-        success:
-            function () {
-                console.log("successful");
-            },
-        error: function () {
-            console.log("failure");
-
-        }
-
-    });
-    alert("sent");
-}
-
-// # Food( _id, name )
-function add_food() {
-    $.ajax({
-        type: "POST",
-        url: 'add_food/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            name:document.getElementById("food_name").value,
-        },
-        success:
-            function () {
-                console.log("successful");
-            },
-        error: function () {
-            console.log("failure");
-
-        }
-
-    });
-    alert("sent");
-}
+//Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
 
 // # Customer ( _id , name , Table_id)
-function add_customer() {
-    $.ajax({
-        type: "POST",
-        url: 'add_customer/',
+
+// FoodCategory( _id, name)
+function add_table_order(time,orders){
+
+        $.ajax({
+    //Post request made here
+        type: "post",
+        url: 'delete_table_order/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            table_id: document.getElementById("customer_table_id").value,
-            name:document.getElementById("customer_name").value
-        },
-        success:
+            "time":time,
+            "orders": orders
+
+                    success:
             function () {
                 console.log("successful");
             },
@@ -83,32 +41,9 @@ function add_customer() {
         }
 
     });
-    alert("sent");
 }
 
-//Table( _id , max_customers, )
 
-function add_table() {
-    $.ajax({
-        type: "POST",
-        url: 'add_table/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            max_customers:document.getElementById("table_max_customers").value
-        },
-        success:
-            function () {
-                console.log("successful");
-            },
-        error: function () {
-            console.log("failure");
-
-        }
-
-    });
-    alert("sent");
-
-}
 
 jQuery(document).ready(function () {
 // This button will increment the value

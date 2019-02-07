@@ -39,7 +39,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'menu.apps.menuConfig',
+    'accounts.apps.AccountsConfig',
+    'waiter.apps.WaiterConfig',
+    'chef.apps.ChefConfig',
+    'menu.apps.MenuConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +53,7 @@ INSTALLED_APPS = [
     ]
 
 MIDDLEWARE = [
+    'TeamProject2019_01.middleware.LoginRequiredMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -142,17 +146,12 @@ STATICFILES_DIRS=(
 MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
-# LOGIN_URL='/account/login/'
-# LOGIN_REDIRECT_URL='/home/'
-# LOGIN_EXEMPT_URLS={
-#     r'^account/register/$',
-#     r'^account/password_reset/$',#reset page
-#     r'^account/password_reset/done/$',#form submited
-#     r'^account/password_reset/complete/$',#form completedd
-#     r'^account/password_reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'#confirmed page
-#
-# }
-#
+LOGIN_URL='/accounts/login/'
+LOGIN_REDIRECT_URL='/menu/'
+LOGIN_EXEMPT_URLS={
+    r'^menu/$',
+}
+
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True

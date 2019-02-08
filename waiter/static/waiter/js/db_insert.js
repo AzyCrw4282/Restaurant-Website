@@ -13,25 +13,29 @@ E.g.
 #   ]
 # }
 
-
+*/
 
 
 // function for add_food not added - octavio's req
-function add_food(){
+function add_food() {
 
+    $.ajax({
+        //Post request
+        type: "post",
+        url: 'add_food/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
 
-
+        }
+    })
 }
-
- */
-
 
 
 //post method goes from here to db_insert.js . addtable()
-function add_table(data){
+function add_table() {
 
     $.ajax({
-    //Post request
+        //Post request
         type: "post",
         url: 'add_table/',
         data: {
@@ -42,81 +46,81 @@ function add_table(data){
 }
 
 
-function delete_table(table_id){
+function delete_table(table_id) {
     table = [
-        {"table" : "table_id"}
+        {"table": "table_id"}
     ];
 
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'delete_table/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_id" : table_id
+            "table_id": table_id
         }
     })
 }
 
 
-function add_food_information(food_information_name){
+function add_food_information(food_information_name) {
     FoodInfo = [
-        {"foodInfo" : "food_information_name"}
+        {"foodInfo": "food_information_name"}
     ];
 
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'add_food_information/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_information_name" : food_information_name
+            "food_information_name": food_information_name
         }
     })
 }
 
-function delete_food_information(food_information_id){
+function delete_food_information(food_information_id) {
 
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'delete_food_information/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_information_id" : food_information_id
+            "food_information_id": food_information_id
         }
     })
 }
 
-function add_food_category(food_category_name){
-
+function add_food_category(food_category_name) {
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'add_food_category/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_category_name" : food_category_name
+            "food_category_name":document.getElementById("food_category_name").value
+
         }
     })
 }
 
-function delete_food_category(food_category_id){
+function delete_food_category(food_category_id) {
 
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'delete_food_category/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_category_id" : food_category_id
+            "food_category_id": food_category_id
         }
     })
 }
 
-function delete_food(food_id){
+function delete_food(food_id) {
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'delete_food/',
         data: {
@@ -126,15 +130,15 @@ function delete_food(food_id){
     })
 }
 
-function delete_table_order(table_order_id){
+function delete_table_order(table_order_id) {
 
     $.ajax({
-    //Post request made here
+        //Post request made here
         type: "post",
         url: 'delete_table_order/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_order_id" : table_order_id
+            "table_order_id": table_order_id
         }
     })
 }

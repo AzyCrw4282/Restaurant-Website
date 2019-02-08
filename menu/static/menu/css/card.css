@@ -1,19 +1,36 @@
+
+
+
+.food_card_container {
+
+     display: inline-block;
+    padding: 50px;
+
+ }
+.food_card_separator{
+    padding: 10px;
+    color:black;
+    font-family: "-apple-system";
+    font-size:20px;
+}
+
 .food_card {
-  box-shadow: 0 4px 8px 0 ;
+  box-shadow: 0 1px 4px 0 ;
   transition: 0.3s;
-  width:400px;
-  height:400px;
+  width:320px;
+  height:420px;
+    padding: 10px
 }
 
 
 .food_card_img_border {
-  width:400px;
+  width:300px;
   height:300px
 }
 
 
 .food_card_img {
-  width:400px;
+  width:300px;
   height:300px;
 }
 
@@ -22,20 +39,23 @@
 
 .food_card_info_box {
  float: left;
- width:400px;
+ width:300px;
  height:50px;
 
 }
 ul.food_info_box_list li {
    display:table-cell;
-   width:200px;
+   width:150px;
+    background-color: black;
+    font-family: -apple-system;
+    text-align: center;
 }
 
 
 .buttons {
+    display: block;
   color: black;
   text-align: center;
-  align-items: center;
   cursor: pointer;
 }
 

@@ -5,7 +5,7 @@ from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, Ht
 from django.shortcuts import reverse, redirect, get_object_or_404
 import os, hashlib
 from django.core.files import File
-from .models import FoodCategory,FoodInformation,Food
+from .models import FoodCategory,FoodInformation,Food,Table
 
 from datetime import datetime
 from django.http import JsonResponse
@@ -42,7 +42,7 @@ import json
 # ]
 #
 # }
-def menu(request):
+def menu(request,table_id):
     print("called menu")
     # constructing categories object as described above:
     temp={}
@@ -60,7 +60,7 @@ def menu(request):
 
     food_category_list=[]
     for food_category_object in food_category_objects:
-        temp_dict={"name":food_category_object.name,"id":food_category_object}
+        temp_dict={"name":food_category_object.name,"id":food_category_object.id}
         food_category_list.append(temp_dict)
 
     # "foods": [
@@ -75,18 +75,21 @@ def menu(request):
     for food_object in food_objects:
         temp_dict={}
         temp_dict.update({"id":food_object.id})
-        temp_dict.update({"display": food_object.dispaly})
+        temp_dict.update({"display": food_object.display})
         temp_dict.update({"name": food_object.name})
         temp_dict.update({"price": food_object.price})
         temp_dict.update({"category_id": food_object.category_id})
         temp_dict.update({"food_information": []})
-        for category_id in food_object.food_information.all():
+        for category_id in food_object.information.all():
             temp_dict["food_information"].append({"id":category_id})
         temp_dict.update({"description": food_object.description})
-        temp_dict.update({"picture": food_object.picture})
+        temp_dict.update({"picture": food_object.picture.__str__()})
+        food_list.append(temp_dict)
     temp.update({"food_information":food_information_list,"food_categories":food_category_list,"foods":food_list})
+    print(food_list)
     js_data = json.dumps(temp)
     context = {"category_list": js_data}
+
     print("Sending: ", context)
     return render(
         request, 'menu/templates/menu.html', context)
@@ -94,14 +97,12 @@ def menu(request):
 def welcome_page(request):
     print("called welcome_page")
     tables=Table.objects.all()
-    context={"tables":tables}
+    table_list=[]
+    for table in tables:
+        table_list.append({"id":table.id})
+    context={"tables":table_list}
+    print("sending context: ",context)
     return render(request,'menu/templates/welcome_page.html',context)
 
-def add_stuff(request):
-    print("called menu")
-    user = request.user
-    context = {'user': user}
-    return render(
-        request, 'menu/templates/../waiter/templates/insert_example.html', context)
 
 

@@ -9,24 +9,13 @@
  .main {
      margin-top:2em;
  }
- .bunny {
 
-     display: inline-block;
-     background: #ffffff;
-     padding-top: 50px;
-     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-     transistion: 0.3;
-     width: 30%;
-     border-radius: 5px;
-     margin: 1em;
- }
 
- .bunny button {
+ .button {
 
-     width: 100%;
+     width: 33.33%;
      border: none;
      outline: 0;
-     padding: 12px;
      color: white;
      background-color: #9c0d0a;
      text-align: center;
@@ -35,7 +24,7 @@
  }
 
 
- .bunny button:hover {
+ .button:hover {
     opacity: 0.6;
  }
 .container {

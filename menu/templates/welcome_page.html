@@ -12,15 +12,20 @@
     <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
     <link rel="stylesheet" href="../static/menu/css/style.css" type="text/css"/>
     <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
-
+    <br><br><br><br>
+    <br>
+<div class="main">
     Welcome to the OOXACA?
     Please enter your table number:
-    <select aria-label="table list" id="table_option_list">
+    <ul aria-label="table list" id="table_option_list">
 
-    </select>
+    </ul>
     <script type="text/javascript">
-        add_table_options({{ tables|safe }})
+        console.log("calling");
+        console.log({{ tables |safe }});
+        add_table_options({{ tables |safe }})
     </script>
+</div>
 
 {% endblock %}
 </html>

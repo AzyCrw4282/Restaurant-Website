@@ -20,29 +20,28 @@ TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
 // # Customer ( _id , name , Table_id)
 
 // FoodCategory( _id, name)
-function add_table_order(time,orders){
-
-        $.ajax({
-    //Post request made here
-        type: "post",
-        url: 'delete_table_order/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "time":time,
-            "orders": orders
-
-                    success:
-            function () {
-                console.log("successful");
-            },
-        error: function () {
-            console.log("failure");
-
-        }
-
-    });
-}
-
+// function add_table_order(time, orders) {
+//
+//     $.ajax({
+//         //Post request made here
+//         type: "post",
+//         url: 'delete_table_order/',
+//         data: {
+//             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+//             "time": time,
+//             "orders": orders,
+//
+//             success:
+//                 function () {
+//                     console.log("successful");
+//                 },
+//             error: function () {
+//                 console.log("failure");
+//
+//             }
+//
+//         });
+// }
 
 
 jQuery(document).ready(function () {

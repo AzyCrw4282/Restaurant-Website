@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 
 from datetime import datetime
-
+import os
 
 # Create your models here
 
@@ -29,6 +29,9 @@ class FoodInformation(models.Model):
 class FoodCategory(models.Model):
     name = models.CharField(default="", max_length=30)
 
+def get_image_path(instance,filename):
+    print(os.path.join('img/food/', filename))
+    return os.path.join('img/food/', filename)
 
 # Food( _id ,display, name, price, category_id , information: MtM(FoodInformation), description, picture )
 class Food(models.Model):
@@ -37,7 +40,7 @@ class Food(models.Model):
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE)
     information = models.ManyToManyField(FoodInformation)
     description = models.CharField(default="", max_length=200)
-    picture = models.ImageField
+    picture = models.ImageField(upload_to=get_image_path, blank=True, null=True)
     display=models.BooleanField(default=True)
 
 

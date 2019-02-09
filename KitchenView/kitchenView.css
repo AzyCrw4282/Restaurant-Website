@@ -1,0 +1,68 @@
+ .header {
+     height: 20%;
+ }
+
+ .image {
+     width: 100%;
+     padding: 12px;
+ }
+ .main {
+     margin-top:2em;
+ }
+ .card {
+     display: inline-block;
+     padding-top: 50px;
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transistion: 0.3;
+     width: 30%;
+     border-radius: 5px;
+     margin: 1em;
+ }
+
+
+ .buttonContainer {
+     display: inline-block;
+ }
+
+ button.cancel {
+     float:left;
+     width: 50%;
+     border: none;
+     outline: 0;
+     padding: 10px;
+     color: white;
+     background-color: #9c1816;
+     text-align: center;
+     cursor: pointer;
+     font-size: 18px;
+     margin-bottom: 3%;
+
+
+ }
+
+button.done{
+    float: right;
+     width: 50%;
+     border: none;
+     outline: 0;
+     padding: 10px;
+     color: white;
+     background-color: #719c0f;
+     text-align: center;
+     cursor: pointer;
+     font-size: 18px;
+     margin-bottom: 3%;
+ }
+
+
+ button.cancel:hover {
+    opacity: 0.6;
+ }
+
+ button.done:hover {
+     opacity: 0.6;
+ }
+
+.container {
+    padding: 30px 16px;
+}

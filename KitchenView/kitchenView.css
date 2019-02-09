@@ -17,11 +17,26 @@
      width: 30%;
      border-radius: 5px;
      margin: 1em;
+     background-color: #8fd19e;
  }
 
+ body {
+     background: #0b0b0b;
 
- .buttonContainer {
-     display: inline-block;
+ }
+
+ nav ul {
+     height:200px;
+     width:75%;
+ }
+
+ ul {
+     font-size: 18px;
+ }
+
+ nav ul{
+     overflow:hidden;
+     overflow-y:scroll;
  }
 
  button.cancel {

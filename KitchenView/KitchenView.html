@@ -21,32 +21,26 @@
     </script>
     <script>
 
-        var main  = {"mains":[
-                { "foodname":"Tacos with cereal", "price":"£5" },
-                { "foodname":"Tacos", "price":"£2" },
-                { "foodname":"Tacos with toast", "price":"£3" }]}
+        var order  = {"orders":[
+                { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"}]}
 
-        var side  = {"sides":[
-                { "sidename":"Cereal with no Tacos", "price":"£5" },
-                { "sidename":"Tacos with no Tacos", "price": "£2" },
-                { "sidename":"Toast with no Tacos", "price":"£3" }]}
 
-        var drink  = {"drinks":[
-                { "drinnkname":"Vodka", "price":"£5" },
-                { "drinkname":"Pepsi", "price":"£2" },
-                { "drinkname":"7up", "price":"£3" }]}
-
-        var deal  = {"deals":[
-                { "dealname":"The non-non-mexican", "deal":"10% off " },
-                { "dealname":"The non-mexican", "deal":"%50 off" },
-                { "dealname":"The mexican", "deal":"100% off" }]}
-
-        function newCard(id,menuitem,price) {
+        function newCard(id,order1,order2,order3,order4) {
             console.log("test");
             var div = document.createElement("div");
-            //div.id = id;
             div.className = "card";
-        div.innerHTML = "<div class='image'><h1>"+ menuitem +"</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button class='cancel' onclick='confirmCancel()' id='cancel'>Cancel</button></p> <p><button class='done'onclick='confirmDone()' id='done'>Done</button> </p> </div>";
+            div.innerHTML = "<div class='image'><nav><ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul> </nav> " +
+                "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel()' id='cancel'>Cancel</button></p> " +
+                "<p><button class='done'onclick='confirmDone()' id='done'>Done</button> </p> </div>";
             return div;
         }
 
@@ -63,31 +57,14 @@
 </div>
 <script>
 
-    for (var i in main.mains) {
-        var item = main.mains[i].foodname;
-        var price = main.mains[i].price;
-        var card = newCard(i,item,price);
+    for (var i in order.orders) {
+        var order1 = order.orders[i].order1;
+        var order2 = order.orders[i].order2;
+        var order3 = order.orders[i].order3;
+        var order4 = order.orders[i].order4;
+        var card =  newCard(i,order1,order2,order3,order4);
         document.getElementById("main").appendChild(card);
     }
-    for (var i in side.sides) {
-        var item = side.sides[i].sidename;
-        var price = side.sides[i].price;
-        var card = newCard("side"+i,item,price);
-        document.getElementById("main").appendChild(card);
-    }
-    for (var i in drink.drinks) {
-        var item = drink.drinks[i].drinkname;
-        var price = drink.drinks[i].price;
-        var card = newCard("drinks"+i,item,price);
-        document.getElementById("main").appendChild(card);
-    }
-    for (var i in deal.deals) {
-        var item = deal.deals[i].dealname;
-        var itemdeal = deal.deals[i].deal;
-        var card = newCard("deals"+i,item,itemdeal);
-        document.getElementById("main").appendChild(card);
-    }
-
 
 
 </script>

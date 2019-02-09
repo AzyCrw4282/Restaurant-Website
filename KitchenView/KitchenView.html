@@ -46,7 +46,7 @@
             var div = document.createElement("div");
             //div.id = id;
             div.className = "card";
-        div.innerHTML = "<div class='image'><h1>"+ menuitem +"</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button class='cancel' onclick='confirmCancel()'>Cancel</button></p> <p><button class='done'onclick='confirmDone()'>Done</button> </p> </div>";
+        div.innerHTML = "<div class='image'><h1>"+ menuitem +"</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button class='cancel' onclick='confirmCancel()' id='cancel'>Cancel</button></p> <p><button class='done'onclick='confirmDone()' id='done'>Done</button> </p> </div>";
             return div;
         }
 

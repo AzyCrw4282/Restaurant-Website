@@ -53,12 +53,19 @@
     }
 
 
+
     function confirmCancel() {
-        confirm("Do you want to cancel this order");
+        var cancel = confirm("Do you want to cancel this order");
+        if(cancel == true){
+            document.getElementById('cancel').style.backgroundColor = "blue";
+        }
     }
 
      function confirmDone() {
-        confirm("Do you want to complete this Order");
+        var done = confirm("Do you want to complete this Order");
+        if(done == true){
+            document.getElementById('done').style.backgroundColor = "green";
+        }
     }
 
 

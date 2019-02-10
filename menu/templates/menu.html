@@ -12,26 +12,35 @@
     <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'menu/css/menu.css' %}" type="text/css"/>
-        <link rel="stylesheet" href="{% static 'menu/css/card.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'menu/css/card.css' %}" type="text/css"/>
 
-    <br><br><br><br>
-    <br>
-<div class="main">
-    Welcome to the OOXACA?
-    Please enter your table number:
-    <ul aria-label="table list" id="table_option_list">
+    <div class="main">
+        Welcome to the OOXACA?
+        Please enter your table number:
+        <ul aria-label="table list" id="table_option_list">
 
-    </ul>
-    <div class="food_card_container" id="categories">
+        </ul>
+        <div class="food_card_container" id="categories">
+
+        </div>
+
+        <div class="order_popup">
+            <header>
+                Order
+            </header>
+            <ul aria-label="order" id="order_list"class="order_list">
+
+            </ul>
+            Order Total:
+            <div  id="order_total">0.0</div>
+            <button onclick="submit_order()">submit order</button>
+        </div>
+     <script type="text/javascript">
+            var DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+            load_data({{ category_list |safe }});
+        </script>
 
     </div>
-    <script type="text/javascript">
-        var DJANGO_STATIC_URL='{{ STATIC_URL }}';
-        console.log("calling");
-        console.log({{ category_list |safe }});
-        load_data({{ category_list |safe }})
-    </script>
-</div>
 
 {% endblock %}
 </html>

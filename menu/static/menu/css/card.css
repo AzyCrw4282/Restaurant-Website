@@ -1,51 +1,87 @@
 
-
-
 .food_card_container {
-
-     display: inline-block;
+    width: 100%;
+    display: inline-block;
     padding: 50px;
 
- }
-.food_card_separator{
+}
+
+.food_card_separator {
     padding: 10px;
-    color:black;
+    color: black;
     font-family: "-apple-system";
-    font-size:20px;
+    font-size: 20px;
 }
 
 .food_card {
-  box-shadow: 0 1px 4px 0 ;
-  transition: 0.3s;
-  width:320px;
-  height:420px;
-    padding: 10px
+    display: inline-block;
+    box-shadow: 0 1px 4px 0;
+    transition: 0.3s;
+    width: 320px;
+    height: 380px;
+    padding: 10px;
+
 }
 
 
 .food_card_img_border {
-  width:300px;
-  height:300px
+    width: 300px;
+    height: 300px;
 }
 
 
 .food_card_img {
-  width:300px;
-  height:300px;
+    width: 300px;
+    height: 300px;
 }
-
-
 
 
 .food_card_info_box {
- float: left;
- width:300px;
- height:50px;
+    float: left;
+
+    width: 300px;
+    height: 60px;
 
 }
+
+.order_popup {
+    color: black;
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    max-width: 225px;
+    min-width: 225px;
+    overflow-y: scroll;
+    opacity: 0.7;
+    box-shadow: 0 1px 4px 0;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.order_list {
+    display: block;
+}
+
+ul.popup_box_list li {
+    display: table-cell;
+    max-width: 70px;
+    min-width: 70px;
+    background-color: #fff3cd;
+    font-family: -apple-system;
+    text-align: center;
+}
+
+ul.food_button_box_list li {
+    display: table-cell;
+    width: 33.33%;
+    font-family: -apple-system;
+    text-align: center;
+}
+
 ul.food_info_box_list li {
-   display:table-cell;
-   width:150px;
+    display: table-cell;
+    color: white;
+    width: 150px;
     background-color: black;
     font-family: -apple-system;
     text-align: center;
@@ -54,18 +90,18 @@ ul.food_info_box_list li {
 
 .buttons {
     display: block;
-  color: black;
-  text-align: center;
-  cursor: pointer;
+    color: black;
+    text-align: center;
+    cursor: pointer;
 }
 
 .buttons:after {
-  content: "";
-  clear: both;
-  display: table;
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .buttons button:hover {
-  background-color: #ff9933;
+    background-color: #ff9933;
 }
 

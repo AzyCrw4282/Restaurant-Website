@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
 
   <title>Banner</title>
@@ -11,32 +12,43 @@
 
   <link rel="stylesheet" href="banner.css" type="text/css" />
 
-  <div class="banner">
-      <img src ="src/Logo.svg" class="banner" id="restaurantLogo">
-      <img src="src/left_banner.png" id="left_banner">
-      <img src="src/cactus1.png" alt="Cactus" class="cacti" id = "cactus1">
-      <img src="src/cactus2.png" alt="Cactus" class="cacti" id="cactus2">
-      <div class="social_media_bar">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $("a").on('click', function(event) {
 
-        <img src="src/email-logo.png" alt="Facebook" id="logo1">
-        <div class="divider" id="divider1"></div>
-        <img src="src/facebook-logo.png" alt="Twitter" id="logo2">
-        <div class="divider" id="divider2"></div>
-        <img src="src/twitter-logo.png" alt="Instagram" id="logo3">
-        <div class="divider" id="divider3"></div>
-        <img src="src/instagram-logo.png" alt="Email" id="logo4">
+        var heightofbanner = $("#headerContainer").height() + 10 ;
+        console.log(heightofbanner);
 
+
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hashlocation = this.hash;
+
+            $('html, body').animate({
+            scrollTop: $(hashlocation).offset().top - heightofbanner
+            }, 800);
+           }
+         });
+        });
+    </script>
+
+
+<div id="headerContainer">
+
+<div class="tabs_header">
+          <ul>
+              <li><a class="active" href="#mains">Mains</a></li>
+              <li><a href="#sides">Sides</a></li>
+              <li><a href="#drinks">Drinks</a></li>
+              <li><a href="#deals">Deals</a></li>
+          </ul>
       </div>
+</div>
 
-      <div class="links_bar">
-        <a href="" id="login_link">Login</a>
-      </div>
+
     </div>
+
 </head>
-
-<body>
-  <div id="test_div"></div>
-
-</body>
 
 </html>

@@ -1,15 +1,31 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="../static/waiter/css/waitercard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet" href="{% static 'waiter/css/waitercard.scss' %}" type="text/css"/>
+
+    <script src="{% static 'waiter/js/waitercard.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'waiter/css/waitercard.css' %}" type="text/css"/>
 </head>
 <body>
-<script src="waitercard.js">
-    var card = create_order("1","1212","432","Hello maybe this works");
-    add_card(card)
+    <div id="card_list">
+
+    </div>
+<script>
+    var card = create_order("1", "1212", "432", "Hello maybe this works");
+    add_card(card);
+    add_card(card);
+     add_card(card);
+    add_card(card);
+     add_card(card);
+    add_card(card);
+     add_card(card);
+    add_card(card);
 </script>
 
 </body>

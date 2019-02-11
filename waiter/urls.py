@@ -8,6 +8,8 @@ from django.contrib import admin
 urlpatterns = [
                   path('',views.waiter, name='waiter'),
                   # temporary url's for populating database, this should be done from user's requests e.t.c.
+                  url(r'^delete_food/$', views.delete_food, name='delete_food'),
+
                   url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
 
                   url(r'^insert_stuff/delete_table/$', db_insert.delete_table, name='delete_table'),

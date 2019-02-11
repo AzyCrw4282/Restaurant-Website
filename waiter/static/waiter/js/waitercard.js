@@ -14,15 +14,19 @@ function create_order(oNum, oTime, oTable, comments, items ){
     tempOrder[1] = oTime;
     tempOrder[2] = oTable;
     tempOrder[3] = comments;
-    tempOrder[4] = items
+    tempOrder[4] = items;
+    return tempOrder
 }
 */
 
 function add_card(card) {
-    console.log("static: " + DJANGO_STATIC_URL);
-    var order_number = card[0];
-    var order_time = card[1];
-    var order_table = "Table " + card[2];
+    var card_list=document.getElementById("card_list");
+    console.log(card);
+    console.log("static: ");
+    var orderNumber = card[0];
+    var orderTime = card[1];
+    var orderTable = "Table " + card[2];
+
     var comments = card[3];
     console.log("hello from script");
     var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
@@ -52,8 +56,7 @@ function add_card(card) {
 
     border.appendChild(cardbody);
     border.appendChild(footer);
-
-    return border;
+card_list.appendChild(border);
 }
 
 function create_tag(tag_name, href, src, tag_class, id, text) {

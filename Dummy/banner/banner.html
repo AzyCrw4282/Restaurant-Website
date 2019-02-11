@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Banner</title>
+  <meta name="Example top banner for project pages." content="example banner">
+  <meta name="MattDaniells" content="banner">
+
+  <link rel="stylesheet" href="banner.css" type="text/css" />
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $("a").on('click', function(event) {
+
+        var heightofbanner = $("#headerContainer").height() + 10 ;
+        console.log(heightofbanner);
+
+
+        if (this.hash !== "") {
+            event.preventDefault();
+            var hashlocation = this.hash;
+
+            $('html, body').animate({
+            scrollTop: $(hashlocation).offset().top - heightofbanner
+            }, 800);
+           }
+         });
+        });
+    </script>
+
+
+<div id="headerContainer">
+
+<div class="tabs_header">
+          <ul>
+              <li><a class="active" href="#mains">Mains</a></li>
+              <li><a href="#sides">Sides</a></li>
+              <li><a href="#drinks">Drinks</a></li>
+              <li><a href="#deals">Deals</a></li>
+          </ul>
+      </div>
+</div>
+
+
+    </div>
+
+</head>
+
+</html>

@@ -17,21 +17,23 @@
      width: 30%;
      border-radius: 5px;
      margin: 1em;
-     background-color: #8fd19e;
+     background-color: #9c9c98;
  }
 
  body {
-     background: #0b0b0b;
+     background: #ffffff;
 
  }
 
  nav ul {
      height:200px;
-     width:75%;
+     width:85%;
  }
 
  ul {
      font-size: 18px;
+     font-family: Arial;
+     list-style-type: none;
  }
 
  nav ul{
@@ -51,12 +53,12 @@
      cursor: pointer;
      font-size: 18px;
      margin-bottom: 3%;
-
-
+     border-top-left-radius: 5px;
+     border-bottom-left-radius: 5px;
  }
 
 button.done{
-    float: right;
+     float: right;
      width: 50%;
      border: none;
      outline: 0;
@@ -67,6 +69,8 @@ button.done{
      cursor: pointer;
      font-size: 18px;
      margin-bottom: 3%;
+     border-top-right-radius: 5px;
+     border-bottom-right-radius: 5px;
  }
 
 
@@ -77,6 +81,24 @@ button.done{
  button.done:hover {
      opacity: 0.6;
  }
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #807234;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
 
 .container {
     padding: 30px 16px;

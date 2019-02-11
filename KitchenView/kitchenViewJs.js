@@ -54,23 +54,25 @@
 
 
 
-    function confirmCancel() {
+    function confirmCancel(object) {
         var cancel = confirm("Do you want to cancel this order");
+         console.log(object.id);
         if(cancel == true){
-            document.getElementById('cancel').style.backgroundColor = "blue";
+            document.getElementById(object.id).style.backgroundColor = "#9a9c63";
         }
         if(cancel == false){
-            document.getElementById('cancel').style.backgroundColor = "#9c1816";
+            document.getElementById(object.id).style.backgroundColor = "#9c1816";
         }
     }
 
-     function confirmDone() {
+     function confirmDone(object) {
         var done = confirm("Do you want to complete this Order");
+         console.log(object.id);
         if(done == true){
-            document.getElementById('done').style.backgroundColor = "green";
+            document.getElementById(object.id).style.backgroundColor = "#39459c";
         }
          if(done == false){
-            document.getElementById('done').style.backgroundColor = "#9c6016";
+            document.getElementById(object.id).style.backgroundColor = "#9c6016";
         }
     }
 

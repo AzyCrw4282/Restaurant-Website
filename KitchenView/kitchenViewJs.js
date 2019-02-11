@@ -53,6 +53,19 @@
     // }
 
 
+        // function newCard(id,order1,order2,order3,order4) {
+        //     console.log("test");
+        //     var div = document.createElement("div");
+        //     div.id = id;
+        //     div.className = "card";
+        //     div.innerHTML = "<div class='image'><nav><ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> " +
+        //         "<li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li> "+ order4 +"</li> " +
+        //         "<li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul> </nav> " +
+        //         "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel(this)'>Cancel</button></p> " +
+        //         "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
+        //     return div;
+        // }
+
 
     function confirmCancel(object) {
         var cancel = confirm("Do you want to cancel this order");

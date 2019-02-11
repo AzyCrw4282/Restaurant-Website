@@ -21,7 +21,7 @@
     </script>
     <script>
 
-        var order  = {"orders":[
+        var smallorder  = {"orders":[
                 { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
                   { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
                   { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
@@ -33,13 +33,36 @@
                   { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"},
                   { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish"}]}
 
+         var bigorder  = {"orders":[
+                { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish", "order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  },
+                  { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  }]}
 
-        function newCard(id,order1,order2,order3,order4) {
+        function newCardLarge(id,order1,order2,order3,order4,order5,order6,order7,order8,order9,order10,order11,order12) {
             console.log("test");
             var div = document.createElement("div");
             div.id = id;
             div.className = "card";
-            div.innerHTML = "<div class='image'><nav><ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul> </nav> " +
+            div.innerHTML = "<div class='image'> <ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> " +
+                "<li>"+ order5 +"</li> <li>"+ order6 +"</li> <li>" +order7+ "</li> <li> "+ order8 +"</li> " +
+                "<li>"+ order9 +"</li> <li>"+ order10 +"</li> <li>" +order11+ "</li> <li>"+ order12 +"</li> </ul>" +
+                "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel(this)'>Cancel</button></p> " +
+                "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
+            return div;
+        }
+        function newCardSmall(id,order1,order2,order3,order4) {
+            console.log("test");
+            var div = document.createElement("div");
+            div.id = id;
+            div.className = "card";
+            div.innerHTML = "<div class='image'> <ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul>" +
                 "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel(this)'>Cancel</button></p> " +
                 "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
             return div;
@@ -58,12 +81,28 @@
 </div>
 <script>
 
-    for (var i in order.orders) {
-        var order1 = order.orders[i].order1;
-        var order2 = order.orders[i].order2;
-        var order3 = order.orders[i].order3;
-        var order4 = order.orders[i].order4;
-        var card =  newCard(i,order1,order2,order3,order4);
+    for (var i in smallorder.orders) {
+        var order1 = smallorder.orders[i].order1;
+        var order2 = smallorder.orders[i].order2;
+        var order3 = smallorder.orders[i].order3;
+        var order4 = smallorder.orders[i].order4;
+        var card =  newCardSmall(i,order1,order2,order3,order4);
+        document.getElementById("main").appendChild(card);
+    }
+      for (var i in bigorder.orders) {
+        var order1 = bigorder.orders[i].order1;
+        var order2 = bigorder.orders[i].order2;
+        var order3 = bigorder.orders[i].order3;
+        var order4 = bigorder.orders[i].order4;
+        var order5 = bigorder.orders[i].order5;
+        var order6 = bigorder.orders[i].order6;
+        var order7 = bigorder.orders[i].order7;
+        var order8 = bigorder.orders[i].order8;
+        var order9 = bigorder.orders[i].order9;
+        var order10 = bigorder.orders[i].order10;
+        var order11 = bigorder.orders[i].order11;
+        var order12 = bigorder.orders[i].order12;
+        var card =  newCardLarge(i,order1,order2,order3,order4,order5,order6,order7,order8,order9,order10,order11,order12);
         document.getElementById("main").appendChild(card);
     }
 

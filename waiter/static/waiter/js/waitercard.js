@@ -1,11 +1,13 @@
-/* Data structure should loaded in as Order(order_number, order_time, order_table, comments, order_items)
- * data loaded in array and card constructed with add_card.
+/* Data structure should loaded in as Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
+ * (from schema.txt)
  * Example how it's supposed to display in the waitercard.html
+ *
  *
  */
 
-
+/*
 var tempOrder = [];
+
 
 function create_order(oNum, oTime, oTable, comments, items ){
     tempOrder[0] = oNum;
@@ -14,37 +16,39 @@ function create_order(oNum, oTime, oTable, comments, items ){
     tempOrder[3] = comments;
     tempOrder[4] = items
 }
+*/
 
 function add_card(card) {
     console.log("static: " + DJANGO_STATIC_URL);
-    var orderNumber = card[0];
-    var orderTime = card[1];
-    var orderTable = "Table " + card[2];
+    var order_number = card[0];
+    var order_time = card[1];
+    var order_table = "Table " + card[2];
     var comments = card[3];
     console.log("hello from script");
     var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var orderNumHead = create_tag("h5", "", "", "border-bottom border-dark", "", "" + orderNumber);
-    var orderTableHead = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "" + orderTable);
-    var listOfItems = create_tag("ol","","","text-left","","");
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "" + order_number);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "" + order_table);
+    var list_of_items = create_tag("ol","","","text-left","","");
     var li1 = create_tag("li", "", "", "", "", "1");
     var li2 = create_tag("li", "", "", "", "", "2");
     var li3 = create_tag("li", "", "", "", "", "3");
-    var commentBox = create_tag("p", "", "", "text-monospace", "", "" + comments);
-    var confirmButton = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
-    var cancelButton = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", orderTime);
+    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + comments);
+    var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", order_time);
 
-    listOfItems.appendChild(li1);
-    listOfItems.appendChild(li2);
-    listOfItems.appendChild(li3);
+    list_of_items.appendChild(li1);
+    list_of_items.appendChild(li2);
+    list_of_items.appendChild(li3);
 
-    cardbody.appendChild(orderNumHead);
-    cardbody.appendChild(orderTableHead);
-    cardbody.appendChild(listOfItems);
-    cardbody.appendChild(commentBox);
-    cardbody.appendChild(confirmButton);
-    cardbody.appendChild(cancelButton);
+    cardbody.appendChild(order_num_head);
+    cardbody.appendChild(order_table_head);
+    cardbody.appendChild(list_of_items);
+    cardbody.appendChild(comment_box);
+    cardbody.appendChild(confirm_button);
+    cardbody.appendChild(cancel_button);
 
     border.appendChild(cardbody);
     border.appendChild(footer);
@@ -63,7 +67,7 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
     if (src.length > 0) {
         console.log(src);
         tag.src = src;
-        // tag.alt="burger";
+
     }
     if (id.length > 0) {
         tag.id = id;

@@ -67,28 +67,61 @@
         // }
 
 
-    function confirmCancel(object) {
-        var cancel = confirm("Do you want to cancel this order");
-         console.log(object.id);
+    function confirmCancel(objid) {
+        var cancel = confirm("Are you sure you want to cancel this order");
+
+
         if(cancel == true){
-            document.getElementById(object.id).style.backgroundColor = "#9a9c63";
+            document.getElementById(objid).style.backgroundColor = "#ee8400";
+            setTimeout(removeCard,2200,objid,"Cancelled");
+            console.log("Order Cancelled");
         }
         if(cancel == false){
-            document.getElementById(object.id).style.backgroundColor = "#9c1816";
+            document.getElementById(objid).style.backgroundColor = "#ffffff";
         }
     }
 
-     function confirmDone(object) {
-        var done = confirm("Do you want to complete this Order");
-         console.log(object.id);
+     function confirmDone(objid) {
+        var done = confirm("Are you sure you want to complete this order");
+
         if(done == true){
-            document.getElementById(object.id).style.backgroundColor = "#39459c";
+            document.getElementById(objid).style.backgroundColor="#329c37";
+            setTimeout(removeCard,4000,objid,"Completed");
         }
          if(done == false){
-            document.getElementById(object.id).style.backgroundColor = "#9c6016";
+               document.getElementById(objid).style.backgroundColor="#ffffff";
+
         }
     }
 
+    function removeCard(objid,typestr){
+
+        var cardobj = document.getElementById(objid)
+        cardobj.parentElement.removeChild(cardobj);
+        alert(typestr  + ": Table " + objid +" order has been removed ");
+    }
+
+
+      // function newCardSmall(id,order1,order2,order3,order4) {
+      //       var div = document.createElement("div");
+      //       div.id = id;
+      //       div.className = "card";
+      //       div.innerHTML = "<div class='image'> <ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul>" +
+      //           "</div> <div class='container'> <p><button  id="+id+" class='cancel' onclick='confirmCancel(this.id)'>Cancel</button></p> " +
+      //           "<p><button id="+id+" class='done'onclick='confirmDone(this.id)'>Done</button> </p> </div>";
+      //       return div;
+      //   }
+
+
+    //
+    //  for (var i in smallorder.orders) {
+    //     var order1 = smallorder.orders[i].order1;
+    //     var order2 = smallorder.orders[i].order2;
+    //     var order3 = smallorder.orders[i].order3;
+    //     var order4 = smallorder.orders[i].order4;
+    //     var card =  newCardSmall(i,order1,order2,order3,order4);
+    //     document.getElementById("main").appendChild(card);
+    // }
 
   //
   // <div class="col-md-6 px-5 mt-3 border-dark" style="">

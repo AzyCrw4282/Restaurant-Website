@@ -46,27 +46,18 @@
                   { "order1":"Curry", "order2":"Rice","order3":"Tacos", "order4":"Fish","order5":"Curry", "order6":"Rice","order7":"Tacos", "order8":"Fish","order9":"Curry", "order10":"Rice","order11":"Tacos", "order12":"Fish"  }]}
 
         function newCardLarge(id,order1,order2,order3,order4,order5,order6,order7,order8,order9,order10,order11,order12) {
-            console.log("test");
             var div = document.createElement("div");
             div.id = id;
             div.className = "card";
-            div.innerHTML = "<div class='image'> <ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> " +
+            div.innerHTML = "<div class='image'> <ul> <li>Table id : "+ id +"</li> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> " +
                 "<li>"+ order5 +"</li> <li>"+ order6 +"</li> <li>" +order7+ "</li> <li> "+ order8 +"</li> " +
                 "<li>"+ order9 +"</li> <li>"+ order10 +"</li> <li>" +order11+ "</li> <li>"+ order12 +"</li> </ul>" +
-                "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel(this)'>Cancel</button></p> " +
-                "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
+                "</div> <div class='container'> <p><button id="+id+" class='cancel' onclick='confirmCancel(this.id)'>Cancel</button></p> " +
+                "<p><button id="+id+" class='done'onclick='confirmDone(this.id)'>Done</button> </p> </div>";
             return div;
         }
-        function newCardSmall(id,order1,order2,order3,order4) {
-            console.log("test");
-            var div = document.createElement("div");
-            div.id = id;
-            div.className = "card";
-            div.innerHTML = "<div class='image'> <ul> <li>"+ order1 +"</li> <li>"+ order2 +"</li> <li>" +order3+ "</li> <li>"+ order4 +"</li> </ul>" +
-                "</div> <div class='container'> <p><button class='cancel' onclick='confirmCancel(this)'>Cancel</button></p> " +
-                "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
-            return div;
-        }
+
+
 
     </script>
 
@@ -81,15 +72,11 @@
 </div>
 <script>
 
-    for (var i in smallorder.orders) {
-        var order1 = smallorder.orders[i].order1;
-        var order2 = smallorder.orders[i].order2;
-        var order3 = smallorder.orders[i].order3;
-        var order4 = smallorder.orders[i].order4;
-        var card =  newCardSmall(i,order1,order2,order3,order4);
-        document.getElementById("main").appendChild(card);
-    }
-      for (var i in bigorder.orders) {
+
+
+
+
+        for (var i in bigorder.orders) {
         var order1 = bigorder.orders[i].order1;
         var order2 = bigorder.orders[i].order2;
         var order3 = bigorder.orders[i].order3;

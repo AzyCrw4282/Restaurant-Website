@@ -20,10 +20,12 @@
         <ul aria-label="table list" id="table_option_list">
 
         </ul>
+        <form onsubmit="return false">
+        {% csrf_token %}
         <div class="food_card_container" id="categories">
 
         </div>
-
+        </form>
         <div class="order_popup">
             <header>
                 Order

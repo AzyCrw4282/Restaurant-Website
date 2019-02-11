@@ -32,7 +32,7 @@ class LoginRequiredMiddleware:
             logout(request)
         if request.user.is_authenticated and url_is_exempt:
             print('both are true')
-            return redirect(settings.LOGIN_REDIRECT_URL)
+            return None
 
         elif request.user.is_authenticated or url_is_exempt:
             if url_is_exempt:
@@ -44,4 +44,4 @@ class LoginRequiredMiddleware:
 
         else:
             print("redirect initiated")
-            # return views.menu_redirect()
+            return views.menu_redirect()

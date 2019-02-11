@@ -66,6 +66,23 @@ function load_tab_shortcut_buttons(categories) {
     }
 }
 
+function send_food_delete_request(id) {
+    return function () {
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_food/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "food_id": id
+            }
+        })
+    }
+
+
+}
+
 
 function add_card(card) {
     console.log("static: " + DJANGO_STATIC_URL);
@@ -77,7 +94,9 @@ function add_card(card) {
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     var img = create_tag("IMG", "", "media/" + src, "food_card_img", "", "");
+
     div_2.appendChild(img);
+
     div_1.appendChild(div_2);
     var div_3 = create_tag("div", "", "", "food_card_info_box", "", "");
     var ul = create_tag("ul", "", "", "food_info_box_list", "", "");
@@ -87,13 +106,19 @@ function add_card(card) {
     var div_6 = create_tag("li", "", "", "button", "", "-");
     var div_7 = create_tag("li", "", "", "output", id + "card_total", "" + 0);
     var div_8 = create_tag("li", "", "", "button", "", "+");
+    var delete_button = create_tag("li", "", "", "button", "", "delete");
+
     //adding on click functions to increment the popup quantity
     div_6.onclick = update_popup(false, id, name, price);
 
+
+    delete_button.onclick = send_food_delete_request(id);
     div_8.onclick = update_popup(true, id, name, price);
     div_4.appendChild(div_6);
     div_4.appendChild(div_7);
     div_4.appendChild(div_8);
+    div_4.appendChild(delete_button);
+
 
     ul.appendChild(li_burger);
     ul.appendChild(li_price);
@@ -265,9 +290,14 @@ function add_section_for_each_food_category(categories) {
         var cat = categories[i];
         var section = document.createElement("SECTION");
         section.className = "food_card_container";
-        var separator = document.createElement("div");
-        separator.className = "food_card_separator";
-        separator.innerText = cat["name"];
+//       <h1 class="separator">
+//              <span>SIDES</span>
+//        </h1>
+        var separator = document.createElement("h1");
+        separator.className = "separator";
+        var span = document.createElement("span");
+        span.innerText = cat["name"].toUpperCase();
+        separator.appendChild(span);
         section.id = cat["name"];
         console.log(cat);
         console.log("SECTION ID's: " + i);

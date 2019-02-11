@@ -18,7 +18,7 @@
     box-shadow: 0 1px 4px 0;
     transition: 0.3s;
     width: 320px;
-    height: 380px;
+    height: 400px;
     padding: 10px;
 
 }
@@ -27,12 +27,13 @@
 .food_card_img_border {
     width: 300px;
     height: 300px;
+    overflow: hidden;
 }
 
 
 .food_card_img {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: auto;
 }
 
 
@@ -46,7 +47,7 @@
 .order_popup {
     color: black;
     position: fixed;
-    top: 100px;
+    top: 200px;
     right: 10px;
     max-width: 225px;
     min-width: 225px;

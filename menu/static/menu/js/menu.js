@@ -83,6 +83,37 @@ function send_food_delete_request(id) {
 
 }
 
+function add_food_to_order_request(food_id,table_order_id,comment_id){
+    return function () {
+
+        var unique_id = document.getElementById(table_order_id).value;
+
+        var comment = document.getElementById(comment_id).value;
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var date_time = date+' '+time;
+        var context = {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "food_id": food_id,
+                "unique_order_number" : unique_id,
+                "comment" : comment,
+                "time" : date_time
+
+            }
+        console.log("Posting data")
+        console.log(context)
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'add_food_to_order/',
+            data: context
+        })
+}
+}
+
 
 function add_card(card) {
     console.log("static: " + DJANGO_STATIC_URL);
@@ -90,6 +121,7 @@ function add_card(card) {
     var name = card["name"];
     var price = card["price"];
     var id = card["id"];
+
     console.log("hello from script");
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
@@ -103,23 +135,23 @@ function add_card(card) {
     var li_burger = create_tag("li", "", "", "", "", name);
     var li_price = create_tag("li", "", "", "", "", "" + price);
     var div_4 = create_tag("ul", "", "", "food_button_box_list", "", "");
-    var div_6 = create_tag("li", "", "", "button", "", "-");
-    var div_7 = create_tag("li", "", "", "output", id + "card_total", "" + 0);
     var div_8 = create_tag("li", "", "", "button", "", "+");
+    var div_7 = create_tag("li", "", "", "output", id + "card_total", "" + 0);
+    var div_6 = create_tag("li", "", "", "button", "", "-");
     var delete_button = create_tag("li", "", "", "button", "", "delete");
-
+    var comment = create_tag("input", "", "", "text", id+"comment", "comment");
+    var table_number = create_tag("input", "", "", "text", id+"unique_order_number", "table_number");
     //adding on click functions to increment the popup quantity
+    div_8.onclick=add_food_to_order_request(id,table_number.id,comment.id);
     div_6.onclick = update_popup(false, id, name, price);
-
-
     delete_button.onclick = send_food_delete_request(id);
-    div_8.onclick = update_popup(true, id, name, price);
     div_4.appendChild(div_6);
     div_4.appendChild(div_7);
     div_4.appendChild(div_8);
+
     div_4.appendChild(delete_button);
-
-
+    div_4.appendChild(comment);
+    div_4.appendChild(table_number);
     ul.appendChild(li_burger);
     ul.appendChild(li_price);
     div_3.appendChild(ul);
@@ -214,8 +246,39 @@ function update_popup(increment, card_id, name, price) {
     }
 }
 
-function submit_order() {
-    return;
+function order_popup_data(){
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+function submit_order(data) {
+    console.log("Order Sent");
+        $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'add_table_order/',// To be changed here
+
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "data":data
+
+
+
+
+            //"food_id": food_id,
+            //"food_comment" : comment
+        }
+    })
 }
 
 //    <div class="food_card_info_box">

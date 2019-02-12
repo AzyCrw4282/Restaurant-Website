@@ -11,7 +11,7 @@ from datetime import datetime
 from django.http import JsonResponse
 import json
 
-
+from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
 # from MenuView.models import
 # from MenuView.forms import
 # ---------THESE ARE FUNCTIONS THAT TAKE CARE OF USER'S REQUEST USING FORMS, DATABASE MODELS AND HTML-------------
@@ -42,6 +42,86 @@ import json
 # ]
 #
 # }
+
+
+def delete_table_order(request):
+
+    if (request.method == 'POST'):
+        try:
+            table_order = TableOrder.objects.get(id = request.POST['table_order_id'])
+
+            table_order.delete()
+        except:
+            print("System failed to delete")
+
+
+
+def add_order(request):
+    if request.method == 'POST':
+        print("Order is ready to be sent")
+
+        try:
+            #Create objects below
+            temp = TableOrder.objects.create(
+                table = request.POST['table'],
+                time = request.POST['time'],
+                status = request.POST['status']
+
+            )
+            temp.save()
+            temp2 = Order.objects.create(
+                food = Food.objects.get(id = request.POST['food_id']),
+                comment = request.POST['comment'],
+                status = request.POST['status']
+            )
+            temp2.save()
+
+            temp3 = Food.objects.create(
+                name = request.POST['name'],
+                price = request.POST['price'],
+                category = request.POST['category'],
+                information = request.POST['information'],
+                description = request.POST['description']
+
+            )
+            temp3.save()
+            temp2.Food.add(temp3)
+            temp.orders.add(temp2)
+            response = {
+                'status': 1,
+                'message': 'added food'
+            }
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+
+            response = {
+                'status': 0,
+                'message': 'Oops something went wrong - ' + str(e)
+            }
+        return JsonResponse(response)
+    else:
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def menu(request):
     print("called menu")
     # constructing categories object as described above:

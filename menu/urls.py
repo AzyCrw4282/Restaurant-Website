@@ -8,7 +8,6 @@ from . import db_insert
 
 urlpatterns = [
                   path('',views.menu, name='menu'),
-                  url(r'^(?P<table_id>\d+)/add_table_order/$', db_insert.add_table_order, name='add_table_order'),
-                  url(r'^delete_food/$', waiter_views.delete_food, name='add_table_order'),
-
+                  url(r'^delete_food/$', waiter_views.delete_food, name='delete_food'),
+                  url(r'^add_food_to_order/$', views.add_food_to_order, name='add_table_order'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

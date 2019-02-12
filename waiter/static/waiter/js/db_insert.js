@@ -78,7 +78,7 @@ function add_food_information(food_information_name) {
         }
     })
 }
-
+//Unsure on how these id's are being passed
 function delete_food_information(food_information_id) {
 
     $.ajax({

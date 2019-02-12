@@ -117,7 +117,8 @@ def delete_food_information(request):
 # FoodCategory( _id, name)
 def add_food_category(request):
     print("called add_category")
-    if request.method == 'POST':
+    print(request.POST)
+    if request.method == 'POST':  #post request of a form ok
         try:
             temp = FoodCategory(name=request.POST['food_category_name'])
             temp.save()

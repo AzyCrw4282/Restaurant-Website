@@ -16,6 +16,12 @@
             color: #C00000;
         }
 
+        #banner {
+          max-width: 100%;
+          height: auto;
+          position = fixed;
+          margin-top: 0px.
+        }
 
         a:link, a:visited {
             background-color: white;
@@ -33,7 +39,7 @@
 
         #tabs_header {
             position: fixed;
-            top: 20%;
+            top: 0%;
         }
 
         header {
@@ -47,15 +53,13 @@
         }
 
         h1 {
-            position: fixed;
+            position: relative;
             margin-top: 20px;
         }
-
-        h1.separator {
+         h1.separator {
             margin-top: 0;
         }
-
-        h1.separator:before {
+         h1.separator:before {
             content: "";
             display: block;
             border-top: solid 2px #C00000;
@@ -65,13 +69,13 @@
             top: 50%;
             z-index: 1;
         }
-
-        h1.separator span {
+         h1.separator span {
             background: #fff;
             padding: 0 20px;
             position: relative;
             z-index: 5;
         }
+
 
         #menu {
             position: fixed;

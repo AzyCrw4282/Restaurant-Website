@@ -143,9 +143,9 @@ MEDIA_URL =  '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
 LOGIN_URL='/accounts/login/'
-LOGIN_REDIRECT_URL='/menu/'
+LOGIN_REDIRECT_URL='/waiter/'
 LOGIN_EXEMPT_URLS={
-    r'^menu/$',
+    r'^menu/*$',
 }
 
 # EMAIL_HOST = 'smtp.gmail.com'

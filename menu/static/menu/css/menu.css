@@ -1,43 +1,91 @@
- .header {
-     height: 20%;
- }
+h1 {
+    font-size: 20px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+    text-align: center;
+    color: #C00000;
+    z-index: -1
+}
 
- .image {
-     width: 100%;
-     padding: 12px;
- }
- .main {
-     margin-top:2em;
- }
+a {
+    font-size: 15px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+}
+
+.header {
+    height: 20%;
+}
+
+.image {
+    width: 100%;
+    padding: 12px;
+}
+
+.main {
+    margin-top: 2em;
+}
 
 
- .button {
+.button {
 
-     width: 33.33%;
-     border: none;
-     outline: 0;
-     color: white;
-     background-color: #9c0d0a;
-     text-align: center;
-     cursor: pointer;
-     font-size: 18px;
- }
+    width: 33.33%;
+    border: none;
+    outline: 0;
+    color: white;
+    background-color: #9c0d0a;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
 
 
- .button:hover {
+.button:hover {
     opacity: 0.6;
- }
+}
+
 .container {
     padding: 30px 16px;
 }
 
- body, html, .main {
-     height: 100%;
- }
- section {
-     min-height: 100%;
- }
+body, html, .main {
+    height: 100%;
+}
 
- h1 {
-     padding-top: 250px;
- }
+section {
+    min-height: 100%;
+}
+
+h1 {
+    position: relative;
+    margin-top: 20px;
+}
+
+h1.separator {
+    background-color: transparent;
+
+    margin-top: 0;
+}
+
+h1.separator:before {
+    content: "";
+    display: block;
+    border-top: solid 2px #C00000;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+}
+
+h1.separator span {
+    background: #fff;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
+
+h1.one span {
+    background: #fff;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}

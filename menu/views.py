@@ -42,7 +42,7 @@ import json
 # ]
 #
 # }
-def menu(request,table_id):
+def menu(request):
     print("called menu")
     # constructing categories object as described above:
     temp={}

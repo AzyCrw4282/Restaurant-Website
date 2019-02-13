@@ -58,6 +58,7 @@ class TableOrder(models.Model):
     orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
+    submitted=models.BooleanField(default=False)
     status=models.BooleanField(default=False)
     id=models.TextField(primary_key=True)
 

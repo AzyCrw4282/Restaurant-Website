@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import FoodForm
 from menu.models import Food
+from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 
 
 # Create your views here.
@@ -35,5 +36,8 @@ def delete_food(request):
             food_object = Food.objects.get(id=request.POST['food_id'])
             food_object.delete()
             print("delete successful?")
+            HttpResponseRedirect("/menu/waiter/")
+
         except:
             print("error deleting food ")
+            return

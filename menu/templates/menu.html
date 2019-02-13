@@ -26,7 +26,7 @@
 
         </div>
         </form>
-        <div class="order_popup">
+        <div id="order_popup" class="order_popup">
             <header>
                 Order
             </header>
@@ -35,7 +35,7 @@
             </ul>
             Order Total:
             <div  id="order_total">0.0</div>
-            <button onclick="submit_order()">submit order</button>
+            <button id="submit_order" onclick="submit_order()"></button>
         </div>
      <script type="text/javascript">
             var DJANGO_STATIC_URL = '{{ STATIC_URL }}';

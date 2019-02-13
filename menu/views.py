@@ -21,11 +21,11 @@ from menu.models import Table, FoodInformation, Order, Food, FoodCategory, Table
 
 
 UNSUCCESSFUL_RESPONSE = {
-    'status': 0,
+    'success': True,
     'message': 'FAILURE '
 }
 SUCCESSFUL_RESPONSE = {
-    'status': 1,
+    'success': False,
     'message': 'SUCCESS'
 }
 
@@ -104,13 +104,17 @@ def delete_food_from_order(request, table_id):
     print("DELETING FOOD ORDER ITEM")
     try:
         table_order = TableOrder.objects.get(id=table_id)
-        order = table_order.orders.get(id=request.POST["order_id"])
-        order.delete()
-        JsonResponse = SUCCESSFUL_RESPONSE
+        if not table_order.submitted:
+            order = table_order.orders.get(id=request.POST["order_id"])
+            order.delete()
+            return JsonResponse(SUCCESSFUL_RESPONSE)
+        else:
+            return JsonResponse(UNSUCCESSFUL_RESPONSE)
+
 
     except Exception as e:
         print("Failed reson: ", e)
-        JsonResponse = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
 def delete_table_order(request, table_id):
@@ -127,8 +131,21 @@ def delete_table_order(request, table_id):
         except:
             print("System failed to delete")
 
+def submit_order(request,table_id):
+    print("CALLED SUBMIT ORDER")
+    try:
+        table_order=TableOrder.objects.get(id=table_id)
+        table_order.submitted=True
+        table_order.save()
+    #     UPDATE THE WAITER HERE?
+        return HttpResponseRedirect("/menu/"+table_id+"/")
 
-def menu_popup_update(request, table_id):
+    except Exception as e:
+        print("FAIlED to submit order: ",e)
+        print("redirecting")
+        return HttpResponseRedirect("/menu/"+table_id+"/")
+
+def get_menu_popup_data(request, table_id):
     """
     Updates the popup with current order
     :param request, contains 'order_id' (some key?) for now the table number
@@ -146,16 +163,21 @@ def menu_popup_update(request, table_id):
         data.update({"table_order": []})
         # need to pass each_order(name, price), total price
         total_price = 0
-        for order_id in table_order:
-            order = Order.objects.get(id=order_id)
-            food = Food.objects.get(order.food)
-            total_price += food.price
-            food_name = food.name
-            food_price = food.price
-            data['table_order'].append({'food_price': food_price, 'food_name': food_name})
+        orders=table_order.orders.all()
+        print(orders)
+        for order in orders:
+            total_price += order.food.price
+            food_name = order.food.name
+            food_price = order.food.price
+            data['table_order'].append({'order_id':order.id,'food_price': food_price, 'food_name': food_name, 'food_comment':order.comment})
         data.update({'total_price': total_price})
+        if(table_order.submitted):
+            status="submitted"
+        else:
+            status="not-submitted"
+        data.update({"order_submitted":status})
         response = {
-            'status': 1,
+            'success': True,
             'message': json.dumps(data)
         }
         return JsonResponse(response)
@@ -203,14 +225,17 @@ def add_food_to_order(request, table_id):
                 return JsonResponse(response)
 
         try:
-            # try to create order object that is to be added to the table order
-            order = Order.objects.create(
-                food=Food.objects.get(id=request.POST['food_id']),
-                comment="comment: " + request.POST['comment'],
-                status=False
-            )
-            table_order.orders.add(order)
-            response = SUCCESSFUL_RESPONSE
+            if not table_order.submitted:
+                # try to create order object that is to be added to the table order
+                order = Order.objects.create(
+                    food=Food.objects.get(id=request.POST['food_id']),
+                    comment="comment: " + request.POST['comment'],
+                    status=False
+                )
+                table_order.orders.add(order)
+                response = SUCCESSFUL_RESPONSE
+            else:
+                response = UNSUCCESSFUL_RESPONSE
 
         except Exception as e:
             print("FAILED TO CREATE ORDER: ", e)

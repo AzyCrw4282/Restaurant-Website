@@ -3,7 +3,7 @@ from django.utils.timezone import now
 
 from datetime import datetime
 import os
-
+import uuid
 # Create your models here
 
 # CONVENTIONS:
@@ -16,7 +16,9 @@ import os
 
 # Table( _id  )
 class Table(models.Model):
-    pass
+    number=models.IntegerField(default=0)
+    id=models.TextField(primary_key=True)
+
 
 
 # FoodInformation( _id, name,description)
@@ -56,7 +58,10 @@ class TableOrder(models.Model):
     orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
+    submitted=models.BooleanField(default=False)
     status=models.BooleanField(default=False)
+    id=models.TextField(primary_key=True)
+
 
 # Table( _id  )
 #

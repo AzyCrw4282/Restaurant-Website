@@ -35,8 +35,10 @@ from django.http import JsonResponse
 #   ]
 # }
 
+
+#To be deleted
 def add_table_order(request, table_id):
-    print("called add_table_order")
+    print("Post request details: " + request.POST)
     # expecting: name, price, category_id, description, picture)
     if request.method == 'POST':
         try:

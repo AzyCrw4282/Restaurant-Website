@@ -40,7 +40,8 @@ function add_table() {
         url: 'add_table/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-
+            "table_id":document.getElementById("table_id").value,
+            "table_number":document.getElementById("table_number").value
         }
     })
 }
@@ -78,7 +79,7 @@ function add_food_information(food_information_name) {
         }
     })
 }
-
+//Unsure on how these id's are being passed
 function delete_food_information(food_information_id) {
 
     $.ajax({

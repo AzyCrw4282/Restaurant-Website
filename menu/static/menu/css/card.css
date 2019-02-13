@@ -15,7 +15,8 @@
 
 .food_card {
     display: inline-block;
-    box-shadow: 0 4px 8px 0 rgb(255, 34, 34);
+    box-shadow: 0 4px 4px 0 grey;
+    margin: 1.8em;
     transition: 0.3s;
     border-radius: 5px;
     width: 20%;

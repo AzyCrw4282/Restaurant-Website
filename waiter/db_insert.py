@@ -54,7 +54,8 @@ def add_table(request):
 
     if request.method == 'POST':
         try:
-            temp = Table()
+            temp = Table.objects.create(id=request.POST['table_id'],number=request.POST['table_number'])
+
             temp.save()
             response = {
                 'status': 0,

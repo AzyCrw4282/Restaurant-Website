@@ -40,7 +40,8 @@ function add_table() {
         url: 'add_table/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-
+            "table_id":document.getElementById("table_id").value,
+            "table_number":document.getElementById("table_number").value
         }
     })
 }

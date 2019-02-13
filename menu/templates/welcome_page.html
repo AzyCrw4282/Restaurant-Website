@@ -16,15 +16,10 @@
     <br>
 <div class="main">
     Welcome to the OOXACA?
-    Please enter your table number:
-    <ul aria-label="table list" id="table_option_list">
+    Please enter the Provided code:
+    <input id="table_code" class="text">table code: </input>
+    <button onclick="redirect_user()">submit</button>
 
-    </ul>
-    <script type="text/javascript">
-        console.log("calling");
-        console.log({{ tables |safe }});
-        add_table_options({{ tables |safe }})
-    </script>
 </div>
 
 {% endblock %}

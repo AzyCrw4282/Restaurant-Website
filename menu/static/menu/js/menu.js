@@ -66,16 +66,33 @@ function load_tab_shortcut_buttons(categories) {
     }
 }
 
-function send_food_delete_request(id) {
+function delete_food_from_menu(id) {
+
     return function () {
 
         $.ajax({
             //Post request made here
             type: "post",
-            url: 'delete_food/',
+            url: 'delete_food_from_menu/',
             data: {
                 csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
                 "food_id": id
+            }
+        })
+
+    }
+}
+
+function delete_food_from_order(order_id) {
+    return function () {
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_food_from_order/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "order_id": order_id
             }
         })
     }
@@ -83,27 +100,25 @@ function send_food_delete_request(id) {
 
 }
 
-function add_food_to_order_request(food_id,table_order_id,comment_id){
+function add_food_to_order(food_id, comment_id) {
     return function () {
 
-        var unique_id = document.getElementById(table_order_id).value;
 
         var comment = document.getElementById(comment_id).value;
 
         var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var date_time = date+' '+time;
+        var date_time = date + ' ' + time;
         var context = {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "food_id": food_id,
-                "unique_order_number" : unique_id,
-                "comment" : comment,
-                "time" : date_time
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "food_id": food_id,
+            "comment": comment,
+            "time": date_time
 
-            }
-        console.log("Posting data")
-        console.log(context)
+        };
+        console.log("Posting data");
+        console.log(context);
 
         $.ajax({
             //Post request made here
@@ -111,7 +126,7 @@ function add_food_to_order_request(food_id,table_order_id,comment_id){
             url: 'add_food_to_order/',
             data: context
         })
-}
+    }
 }
 
 
@@ -135,24 +150,19 @@ function add_card(card) {
     var li_burger = create_tag("li", "", "", "", "", name);
     var li_price = create_tag("li", "", "", "", "", "" + price);
     var div_4 = create_tag("ul", "", "", "food_button_box_list", "", "");
-    var div_8 = create_tag("li", "", "", "button", "", "+");
+    var div_8 = create_tag("li", "", "", "button", "", "Add To Order");
     var div_7 = create_tag("li", "", "", "output", id + "card_total", "" + 0);
-    var div_6 = create_tag("li", "", "", "button", "", "-");
     var delete_button = create_tag("li", "", "", "button", "", "delete");
-    var comment = create_tag("input", "", "", "text", id+"comment", "comment");
-    var table_number = create_tag("input", "", "", "text", id+"unique_order_number", "table_number");
+    var comment = create_tag("input", "", "", "text", id + "comment", "comment");
     //adding on click functions to increment the popup quantity
-    div_8.onclick=add_food_to_order_request(id,table_number.id,comment.id);
-    div_6.onclick = update_popup(false, id, name, price);
-    delete_button.onclick = send_food_delete_request(id);
-    div_4.appendChild(div_6);
+    div_8.onclick = add_food_to_order(id, comment.id);
+    delete_button.onclick = delete_food_from_menu(id);
     div_4.appendChild(div_7);
     div_4.appendChild(div_8);
 
     div_4.appendChild(delete_button);
     div_4.appendChild(comment);
-    div_4.appendChild(table_number);
-    ul.appendChild(li_burger);
+    ul.appendChild(li_burger);insert_stuff/
     ul.appendChild(li_price);
     div_3.appendChild(ul);
     div_1.appendChild(div_3);
@@ -246,31 +256,22 @@ function update_popup(increment, card_id, name, price) {
     }
 }
 
-function order_popup_data(){
-
-
-
-
+function order_popup_data() {
 
 
 }
 
 
-
-
-
-
-
 function submit_order(data) {
     console.log("Order Sent");
-        $.ajax({
+    $.ajax({
         //Post request made here
         type: "post",
         url: 'add_table_order/',// To be changed here
 
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "data":data
+            "data": data
 
 
 

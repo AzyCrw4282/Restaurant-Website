@@ -15,18 +15,18 @@
 
 .food_card {
     display: inline-block;
-    box-shadow: 0 1px 4px 0;
+    box-shadow: 0 4px 8px 0 rgb(255, 34, 34);
     transition: 0.3s;
-    width: 320px;
-    height: 400px;
+    border-radius: 5px;
+    width: 25%;
     padding: 10px;
+    background: #ffffff;
 
 }
 
 
 .food_card_img_border {
-    width: 300px;
-    height: 300px;
+    width: 100%;
     overflow: hidden;
 }
 
@@ -92,20 +92,30 @@ ul.food_info_box_list li {
 }
 
 
-.buttons {
+button.noOfItems {
+
+
+    display: block;
+    color: black;
+    background-color: #9c240d;
+    text-align: center;
+    cursor: pointer;
+}
+
+.button {
     display: block;
     color: black;
     text-align: center;
     cursor: pointer;
 }
 
-.buttons:after {
+.button:after {
     content: "";
     clear: both;
     display: table;
 }
 
-.buttons button:hover {
+.button button:hover {
     background-color: #ff9933;
 }
 

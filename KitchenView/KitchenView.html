@@ -10,7 +10,9 @@
 </head>
 
 <body>
-
+    <div class="banner">
+        <img id="banner" src="Banner.png" class="center"/>
+    </div>
 
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -59,6 +61,7 @@
 
 
 
+
     </script>
 
 
@@ -91,7 +94,21 @@
         var order12 = bigorder.orders[i].order12;
         var card =  newCardLarge(i,order1,order2,order3,order4,order5,order6,order7,order8,order9,order10,order11,order12);
         document.getElementById("main").appendChild(card);
+
     }
+
+
+</script>
+<script>
+            // Add a "checked" symbol when clicking on a list item
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function(ev) {
+          if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+          }
+        }, false);
+
+
 
 
 </script>

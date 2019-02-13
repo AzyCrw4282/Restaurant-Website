@@ -65,7 +65,19 @@
         //         "<p><button class='done'onclick='confirmDone(this)'>Done</button> </p> </div>";
         //     return div;
         // }
+    function addChecked(){
 
+
+         var list = document.querySelector('ul');
+        list.addEventListener('click', function(ev) {
+          if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+          }
+        }, false);
+
+
+
+    }
 
     function confirmCancel(objid) {
         var cancel = confirm("Are you sure you want to cancel this order");

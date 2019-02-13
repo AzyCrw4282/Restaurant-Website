@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-<head>
+<>
     <meta charset="utf-8">
     <title>Menu View</title>
      <link rel="stylesheet" href="../static/menu/css/card.css">
@@ -147,6 +147,16 @@
           background: #9c240d;
         }
     </style>
+    <script>
+
+        function addToBasket(price){
+            var curPrice = document.getElementById("total").textContent;
+            var newPrice = parseInt(curPrice) + price;
+            document.getElementById("total").innerHTML = newPrice;
+        }
+    </script>
+
+
 </head>
 <body>
  <div class="banner">
@@ -190,10 +200,8 @@ function myFunction() {
         <img class= "food_card_img" src="https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg" alt="burger">
     </div>
 
-
-
-        <div class="buttons">
-             <button type="button" class="block">Add to Order</button>
+        <div class="buttons" id = "add_to_cart" onclick="addToBasket(25.00)">
+             <button type="button" class="block"  >Add to Order £25.00</button>
         </div>
 
   </div>
@@ -211,8 +219,12 @@ Donald Watson coined the term vegan in 1944 when he co-founded the Vegan Society
     </td>
     <td style="width:20%">
     <h2>Your current Basket</h2>
-    Veganism is the practice of abstaining from the use of animal products, particularly in diet, and an associated philosophy that rejects the commodity status of animals.[b] A follower of the diet or the philosophy is known as a vegan (/ˈviːɡən/ VEE-gən).[c] Distinctions may be made between several categories of veganism. Dietary vegans (or strict vegetarians) refrain from consuming animal products, not only meat but also eggs, dairy products and other animal-derived substances.[d] The term ethical vegan is often applied to those who not only follow a vegan diet but extend the philosophy into other areas of their lives, and oppose the use of animals for any purpose.[e] Another term is environmental veganism, which refers to the avoidance of animal products on the premise that the industrial farming of animals is environmentally damaging and unsustainable.[22]
-    Veganism is the practice of abstaining from the use of animal products, particularly in diet, and an associated philosophy that rejects the commodity status of animals.[b] A follower of the diet or the philosophy is known as a vegan (/ˈviːɡən/ VEE-gən).[c] Distinctions may be made between several categories of veganism. Dietary vegans (or strict vegetarians) refrain from consuming animal products, not only meat but also eggs, dairy products and other animal-derived substances.[d] The term ethical vegan is often applied to those who not only follow a vegan diet but extend the philosophy into other areas of their lives, and oppose the use of animals for any purpose.[e] Another term is environmental veganism, which refers to the avoidance of animal products on the premise that the industrial farming of animals is environmentally damaging and unsustainable.[22
+    <button type="button" class="block">Submit</button>
+
+        <p><h4>price</h4>
+        <h4 id="total"> 0
+        </h4>
+        </p>
     </td>
 </body>
 </html>

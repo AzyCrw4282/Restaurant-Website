@@ -27,9 +27,6 @@
             color: #C00000;
         }
 
-
-
-
         a:link, a:visited {
             background-color: white;
             color: black;
@@ -77,6 +74,11 @@
         }
 
 
+        ul {
+            font-size: 25px;
+            font-family: Raelway;
+            list-style-type: none;
+            }
 
 
         h1 {
@@ -110,7 +112,7 @@
             position: fixed;
             right: 0;
             margin-top: 0;
-            height: 100%
+            height: 100%;
             width: 20%;
             background-color: black;
 
@@ -149,13 +151,24 @@
     </style>
     <script>
 
-        function addToBasket(price){
+
+        function addToPrice(price,foodname){
             var curPrice = document.getElementById("total").textContent;
             var newPrice = parseInt(curPrice) + price;
             document.getElementById("total").innerHTML = newPrice;
+            addToCart(foodname);
+
+        }
+        function addToCart(foodname) {
+
+            var list = document.createElement("ul");
+            list.className = "card";
+            list.innerHTML = "<li>"+ foodname +"</li>";
+            var element = document.getElementById("basketInfo")
+            element.appendChild(list);
         }
     </script>
-
+    
 
 </head>
 <body>
@@ -200,7 +213,7 @@ function myFunction() {
         <img class= "food_card_img" src="https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg" alt="burger">
     </div>
 
-        <div class="buttons" id = "add_to_cart" onclick="addToBasket(25.00)">
+        <div class="buttons" id = "add_to_cart" onclick="addToPrice(25.00,'rice')">
              <button type="button" class="block"  >Add to Order £25.00</button>
         </div>
 
@@ -217,14 +230,16 @@ Some reviews have shown that some people who eat vegan diets have less chronic d
 
 Donald Watson coined the term vegan in 1944 when he co-founded the Vegan Society in England. At first he used it to mean "non-dairy vegetarian", but from 1951 the Society defined it as "the doctrine that man should live without exploiting animals".[34] Interest in veganism increased in the 2010s,[35][36] especially in the latter half.[36] More vegan stores opened and vegan options became increasingly available in supermarkets and restaurants in many
     </td>
-    <td style="width:20%">
-    <h2>Your current Basket</h2>
-    <button type="button" class="block">Submit</button>
+    <td style="width:20%" id="basketInfo">
 
-        <p><h4>price</h4>
-        <h4 id="total"> 0
-        </h4>
+
+    <h2>Your current Basket</h2>
+        <p><h3>price</h3>
+        <h3 id="total"> 0
+        </h3>
         </p>
+        <button type="button" class="block">Submit</button>
     </td>
+
 </body>
 </html>

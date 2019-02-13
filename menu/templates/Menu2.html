@@ -5,6 +5,10 @@
     <title>Menu View</title>
      <link rel="stylesheet" href="../static/menu/css/card.css">
     <style>
+
+        p {
+             font-family:  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+        }
         .center {
             display: block;
             margin-left: auto;
@@ -17,16 +21,12 @@
             font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
         }
 
-        h1 {
+        h1, h2, h3{
             font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
             text-align: center;
             color: #C00000;
         }
-        h2 {
-            font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-            text-align: center;
-            color: #C00000;
-        }
+
 
 
 
@@ -49,6 +49,35 @@
             top: 5%;
             text-align: center;
         }
+        .popup {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+        }
+
+        .popup .popuptext {
+          visibility: hidden;
+          width: 900%;
+          background-color: #555;
+          color: #fff;
+          text-align: center;
+          border-radius: 6px;
+          padding: 8px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 125%;
+          left: 0%;
+          margin-left: 0px;
+           font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+        }
+
+
+        .popup .show {
+          visibility: visible;
+        }
+
+
+
 
         h1 {
             position: relative;
@@ -145,7 +174,17 @@
 </h1>
 
   <div class="food_card">
-
+      <h3> Food Name </h3>
+    <div class="popup" onclick="myFunction()"> <img src="InfoButton.png" align="right"/>
+  <span class="popuptext" id="myPopup">My little brother is allergic to eggs and legit every animal on earth:(</span>
+    </div>
+      <script>
+// When the user clicks on div, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
     <div class="food_card_img_border">
 
         <img class= "food_card_img" src="https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg" alt="burger">

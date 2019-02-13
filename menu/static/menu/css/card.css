@@ -18,7 +18,7 @@
     box-shadow: 0 4px 8px 0 rgb(255, 34, 34);
     transition: 0.3s;
     border-radius: 5px;
-    width: 25%;
+    width: 20%;
     padding: 10px;
     background: #ffffff;
 
@@ -32,7 +32,7 @@
 
 
 .food_card_img {
-    width: 400px;
+    width:99%;
     height: auto;
 }
 
@@ -102,20 +102,39 @@ button.noOfItems {
     cursor: pointer;
 }
 
-.button {
-    display: block;
-    color: black;
-    text-align: center;
-    cursor: pointer;
+
+.block {
+  display: block;
+  width:99%;
+  border-radius:5px;
+  background-color: #C00000;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align:center;
+
 }
 
-.button:after {
-    content: "";
-    clear: both;
-    display: table;
+.block:hover {
+  background-color: #800000;
+  color: white;
 }
 
-.button button:hover {
-    background-color: #ff9933;
-}
+/*.button {*/
+    /*display: block;*/
+    /*color: black;*/
+    /*text-align: center;*/
+    /*cursor: pointer;*/
+/*}*/
+
+/*.button:after {*/
+    /*content: "";*/
+    /*clear: both;*/
+    /*display: table;*/
+/*}*/
+
+/*.button button:hover {*/
+    /*background-color: #ff9933;*/
+/*}*/
 

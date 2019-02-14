@@ -54,7 +54,8 @@ def add_table(request):
 
     if request.method == 'POST':
         try:
-            temp = Table()
+            temp = Table.objects.create(id=request.POST['table_id'],number=request.POST['table_number'])
+
             temp.save()
             response = {
                 'status': 0,
@@ -117,7 +118,8 @@ def delete_food_information(request):
 # FoodCategory( _id, name)
 def add_food_category(request):
     print("called add_category")
-    if request.method == 'POST':
+    print(request.POST)
+    if request.method == 'POST':  #post request of a form ok
         try:
             temp = FoodCategory(name=request.POST['food_category_name'])
             temp.save()

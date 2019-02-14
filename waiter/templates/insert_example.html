@@ -31,13 +31,15 @@
     </form>
 
 
-      Table( _id , max_customers, )
+      Table(  code (id), table_number, )
     <form onsubmit="return false">
         {% csrf_token %}
         <br>
         add a table <br>
-        enter max customers: <br>
-        <input type='text' aria-label="enter max custmers:" id="table_max_customers"/>
+        enter table_code and table_number: <br>
+        <input type='text' aria-label="enter table_code:" id="table_id"/>
+        <input type='text' aria-label="enter table number:" id="table_number"/>
+
         <button class="add_table" onclick="add_table()">Submit</button>
     </form>
 

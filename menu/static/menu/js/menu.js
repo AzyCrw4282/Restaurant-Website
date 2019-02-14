@@ -41,7 +41,9 @@
 // # }
 function load_data(data) {
     update_menu_popup_data();
-    setInterval(function(){
+
+    setInterval(function(){ //This send get request data every 2 seconds.
+        waiter_chef_interaction
         update_menu_popup_data()
     },2000);
     var food_information = data["food_information"];
@@ -99,10 +101,52 @@ function delete_food_from_order(order_id) {
         });
 
 
+    }
+}
+
+function delete_food_from_order(order_id) {
+    return function () {
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_food_from_order/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "order_id": order_id
+            },
+        });
+
+
 
     }
 
 
+}
+
+function add_food_to_order(food_id, comment_id) {
+    return function () {
+
+        var comment = document.getElementById(comment_id).value;
+
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var date_time = date + ' ' + time;
+        var context = {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "food_id": food_id,
+            "comment": comment,
+            "time": date_time
+
+        };
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'add_food_to_order/',
+            data: context
+        });
+    }
 }
 
 function add_food_to_order(food_id, comment_id) {
@@ -189,13 +233,12 @@ function update_menu_popup_data() {
         type: 'GET',
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
+         HTML_MenuView_Ash
                 populate_popup(JSON.parse(data['message']));
             } else {
                 console.log("NO DATA")
 
             }
-
-
         },
         error: function (data) {
         }
@@ -342,7 +385,6 @@ function load_food_cards_into_sections(categories, food_cards) {
         document.getElementById(category_dict[category_id]).appendChild(card);
     }
 
-
 }
 
 function add_card_old(food_name, price, id) {
@@ -352,7 +394,6 @@ function add_card_old(food_name, price, id) {
     div.innerHTML = "<div class='image'><h1>" + food_name + "</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
     return div;
 }
-
 
 
 
@@ -701,4 +742,3 @@ function add_card_old(food_name, price, id) {
 //
 //
 //
-

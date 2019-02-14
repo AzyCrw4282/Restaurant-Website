@@ -3,4 +3,4 @@ venv/
 .idea/
 *.pyc
 media/
-__pychache__
+__pychache__/

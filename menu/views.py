@@ -178,9 +178,9 @@ def get_menu_popup_data(request, table_id):
         data.update({"order_submitted":status})
         response = {
             'success': True,
-            'message': json.dumps(data)
+            'message': json.dumps(data)#Dumps data and creates a string
         }
-        return JsonResponse(response)
+        return JsonResponse(response)#Response returned to ajax call
 
 
     except Exception as e:

@@ -43,6 +43,7 @@ TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
 //         });
 // }
 
+//This is to be removed. It was created earlier for different purpose.
 
 jQuery(document).ready(function () {
 // This button will increment the value

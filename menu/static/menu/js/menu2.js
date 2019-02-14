@@ -12,6 +12,10 @@ var sidesCard = {
         {"price": "1.00", "foodtype": "tango", "allergens": "orange"}]
 }
 
+var authenticated = false;
+
+
+
 function create_tag(tag_name, href, src, tag_class, id, text) {
     var tag = document.createElement(tag_name);
     if (href.length > 0) {
@@ -53,6 +57,7 @@ function createCard(id, price, foodtype, allergens) {
 
 
 
+
 function add_card(card) {
     console.log("static: " + DJANGO_STATIC_URL);
     var src = card["picture"];
@@ -68,7 +73,9 @@ function add_card(card) {
     var commentForm = create_tag("form","","","","","");
     var textField = create_tag("input","","","",commentid,"");
     var orderBtn = create_tag("button","","","block","","Add to Order "+ price);
-    var delete_button = create_tag("li", "", "", "button", "", "delete");
+    if (authenticated) {
+        var delete_button = create_tag("li", "", "", "button", "", "delete");
+    }
 
     //adding on click functions to increment the popup quantity
     orderBtn.onclick = update_popup(true,name,price,id);
@@ -79,7 +86,9 @@ function add_card(card) {
     div_3.appendChild(commentForm);
     commentForm.appendChild(textField);
     div_4.appendChild(orderBtn);
-    div_4.appendChild(delete_button);
+    if(authenticated){
+        div_4.appendChild(delete_button);
+    }
 
     return div_1;
 }

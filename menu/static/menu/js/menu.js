@@ -143,7 +143,7 @@ function add_card(card) {
 
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    var img = create_tag("img", "", "/media/" + src, "food_card_img", "", "");
+    var img = create_tag("img", "", "/menu/media/" + src, "food_card_img", "", "");
 
     div_2.appendChild(img);
 

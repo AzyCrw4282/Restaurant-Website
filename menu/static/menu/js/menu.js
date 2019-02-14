@@ -46,6 +46,7 @@ function load_data(data) {
         waiter_chef_interaction
         update_menu_popup_data()
     },2000);
+
     var food_information = data["food_information"];
     var food_categories = data["food_categories"];
     var foods = data["foods"];
@@ -180,13 +181,14 @@ function add_food_to_order(food_id, comment_id) {
 
 function add_card(card) {
     var src = card["picture"];
+
     var name = card["name"];
     var price = card["price"];
     var id = card["id"];
 
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    var img = create_tag("IMG", "", "media/" + src, "food_card_img", "", "");
+    var img = create_tag("img", "", "/menu/media/" + src, "food_card_img", "", "");
 
     div_2.appendChild(img);
 
@@ -233,8 +235,12 @@ function update_menu_popup_data() {
         type: 'GET',
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
-         HTML_MenuView_Ash
-                populate_popup(JSON.parse(data['message']));
+        try {
+                     populate_popup(JSON.parse(data['message']));
+                }
+                catch (e) {
+               //    data is empty
+               }
             } else {
                 console.log("NO DATA")
 

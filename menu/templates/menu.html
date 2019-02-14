@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="{% static 'menu/css/menu2.css' %}" type="text/css"/>
 
     <div class="main">
-        Welcome to the OOXACA?
-        Please enter your table number:
+
         <ul aria-label="table list" id="table_option_list">
 
         </ul>
@@ -37,6 +36,7 @@
             <div  id="order_total">0.0</div>
             <button id="submit_order" onclick="submit_order()"></button>
         </div>
+        <img src="/media/img/food/cream.jpg" alt="">
      <script type="text/javascript">
             var DJANGO_STATIC_URL = '{{ STATIC_URL }}';
             load_data({{ category_list |safe }});

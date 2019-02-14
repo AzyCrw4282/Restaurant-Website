@@ -3,4 +3,10 @@ venv/
 .idea/
 *.pyc
 media/
-__pychache__/
+*/__pychache__/
+__pychache__
+__/pycache_/
+*/migrations/
+*/migrations
+/migrations
+migrations/

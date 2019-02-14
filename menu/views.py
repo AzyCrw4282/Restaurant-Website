@@ -214,6 +214,9 @@ def add_food_to_order(request, table_id):
                     id=table_id,
                     table=Table.objects.get(id=table_id),
                     time=request.POST['time'],
+                    client_confirmed = False,
+                    chef_confirmed = False,
+                    waiter_confirmed = False
                 )
                 table_order.save()
             except Exception as e:

@@ -290,22 +290,27 @@ function populate_popup(data) {
     var order_submitted = data["order_submitted"];
     var order_list = data["table_order"];
     var total_price = data["total_price"];
-    for (var order_id in order_list) {
+    for (var order_id in order_list) {//For each order create it in the popup list
         var order = order_list[order_id];
         //    check if it is already loaded into the page
         //    append it if it doesnt exist
-        var li = create_tag("li", "", "", "", "", "");
+        var li = create_tag("ul", "", "", "", "", "");
+        var ul2 = create_tag("ul", "", "", "", "", "");
+        var delete_button = create_tag("button", "", "", "button", "", "Delete");
         var ul = create_tag("ul", "", "", "popup_box_list", "", "");
         var li_name = create_tag("li", "", "", "", "", order["food_name"]);
         var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
         var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
-        var delete_button = create_tag("li", "", "", "button", "", "Delete");
         delete_button.onclick = delete_food_from_order(order["order_id"]);
-        ul.appendChild(delete_button);
+
         ul.appendChild(li_name);
         ul.appendChild(li_price);
-        ul.appendChild(li_comment);
+        ul.appendChild(delete_button);
+        ul2.appendChild(li_comment);
+
+
         li.appendChild(ul);
+        li.appendChild(ul2);
         popup_tag.appendChild(li);
     }
     var total_tag = document.getElementById("order_total");
@@ -327,8 +332,9 @@ function populate_popup2(data) {
         var order = order_list[order_id];
         //    check if it is already loaded into the page
         //    append it if it doesnt exist
+                var ul = create_tag("ul", "", "", "popup_box_list", "", "");
         var li = create_tag("li", "", "", "", "", "");
-        var ul = create_tag("ul", "", "", "popup_box_list", "", "");
+
         var li_name = create_tag("li", "", "", "", "", order["food_name"]);
         var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
         var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);

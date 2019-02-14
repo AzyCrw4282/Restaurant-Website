@@ -42,7 +42,7 @@ class Food(models.Model):
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE)
     information = models.ManyToManyField(FoodInformation)
     description = models.CharField(default="", max_length=200)
-    picture = models.ImageField(upload_to=get_image_path, blank=True, null=True)
+    picture = models.ImageField(upload_to='img/food/', blank=True, null=True)
     display=models.BooleanField(default=True)
 
 

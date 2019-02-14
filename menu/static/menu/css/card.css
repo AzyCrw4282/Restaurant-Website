@@ -27,12 +27,12 @@
 .food_card_img_border {
     width: 300px;
     height: 300px;
-    overflow: hidden;
+
 }
 
 
 .food_card_img {
-    width: 400px;
+    width: auto;
     height: auto;
 }
 

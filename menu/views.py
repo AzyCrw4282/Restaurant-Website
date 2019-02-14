@@ -36,7 +36,7 @@ def menu(request):
     #   this should be done by some code the user can enter? discuss with client?
     tables=Table.objects.all()
     for table in tables:
-        print("AVAILABLE TABLES:",table.id)
+        print("AVAILABLE TABLES:",table.id,": ",table.number)
     return render(
         request, 'menu/templates/welcome_page.html',context={})
 

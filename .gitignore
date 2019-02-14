@@ -10,3 +10,6 @@ __/pycache_/
 */migrations
 /migrations
 migrations/
+*/setting.py
+settings.py
+db.sqlite3

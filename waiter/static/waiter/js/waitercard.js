@@ -19,6 +19,30 @@ function create_order(oNum, oTime, oTable, comments, items ){
 }
 */
 
+function update_waiter_card() {
+    var food_name, total_price, food_price, order_id, order_comment;
+
+    $.ajax({
+        url: 'get_waiter_card_data/',
+        dataType: 'json',
+        type: 'GET', // A get request data to update data
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                populate_popup(JSON.parse(data['message']));//To populate called here
+            } else {
+                console.log("NO DATA")
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
+
+
+
+
+
 function add_card(card) {
     var card_list=document.getElementById("card_list");
     console.log(card);

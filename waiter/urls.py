@@ -10,6 +10,12 @@ urlpatterns = [
                   # temporary url's for populating database, this should be done from user's requests e.t.c.
                   url(r'^delete_food/$', views.delete_food, name='delete_food'),
 
+#For testing      url(r'^welcome/$', views.waiter, name='waiter'),
+
+                #URL to redirect adding data to the card
+                  url(r'^get_waiter_card_data//$', views.get_waiter_card_data, name='get_waiter_card_data'),
+
+
                   url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
 
                   url(r'^insert_stuff/delete_table/$', db_insert.delete_table, name='delete_table'),

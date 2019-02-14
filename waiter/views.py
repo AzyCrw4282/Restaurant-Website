@@ -6,7 +6,32 @@ from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, Ht
 
 # Create your views here.
 def waiter(request):
-    return render(request,"waiter/templates/WaiterTest.html",{})
+    return render(request,"waiter/templates/Waitercard.html",{})
+
+
+def get_waiter_card_data(request):
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return (1)
+
+
+
+
+
+
+
+
 
 
 def insert_stuff(request):

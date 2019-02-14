@@ -41,7 +41,7 @@
 // # }
 function load_data(data) {
     update_menu_popup_data();
-    setInterval(function(){
+    setInterval(function(){ //This send get request data every 2 seconds.
         update_menu_popup_data()
     },2000);
     var food_information = data["food_information"];
@@ -108,7 +108,6 @@ function delete_food_from_order(order_id) {
 function add_food_to_order(food_id, comment_id) {
     return function () {
 
-
         var comment = document.getElementById(comment_id).value;
 
         var today = new Date();
@@ -122,7 +121,6 @@ function add_food_to_order(food_id, comment_id) {
             "time": date_time
 
         };
-
 
         $.ajax({
             //Post request made here
@@ -189,13 +187,10 @@ function update_menu_popup_data() {
         type: 'GET',
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
-                populate_popup(JSON.parse(data['message']));
+                populate_popup(JSON.parse(data['message']));//To populate called here
             } else {
                 console.log("NO DATA")
-
             }
-
-
         },
         error: function (data) {
         }
@@ -342,7 +337,6 @@ function load_food_cards_into_sections(categories, food_cards) {
         document.getElementById(category_dict[category_id]).appendChild(card);
     }
 
-
 }
 
 function add_card_old(food_name, price, id) {
@@ -352,7 +346,4 @@ function add_card_old(food_name, price, id) {
     div.innerHTML = "<div class='image'><h1>" + food_name + "</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
     return div;
 }
-
-
-
 

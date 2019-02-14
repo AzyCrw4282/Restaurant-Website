@@ -2,258 +2,58 @@
 <head>
     <meta charset="utf-8">
     <title>Menu View</title>
-     <link rel="stylesheet" href="../static/menu/css/card.css">
-    <style>
-
-        p {
-             font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-        }
-        .center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-
-        }
-
-        a {
-            font-size: 30px;
-            font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-        }
-
-        h1, h2, h3{
-            font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-            text-align: center;
-            color: #C00000;
-        }
-
-        a:link, a:visited {
-            background-color: white;
-            color: black;
-            padding: 10px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        a:hover, a:active {
-            background-color: #C00000;
-            color: white;
-        }
-
-        #tabs_header {
-            position: relative;
-            top: 5%;
-            text-align: center;
-        }
-        .popup {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-        }
-
-        .popup .popuptext {
-          visibility: hidden;
-          width: 900%;
-          background-color: #555;
-          color: #fff;
-          text-align: center;
-          border-radius: 6px;
-          padding: 8px 0;
-          position: absolute;
-          z-index: 1;
-          bottom: 125%;
-          left: 0%;
-          margin-left: 0px;
-           font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-        }
+    <link rel="stylesheet" href="../static/menu/css/card.css">
+    <link rel="stylesheet" href="../static/menu/css/menu2.css">
 
 
-        .popup .show {
-          visibility: visible;
-        }
-
-
-        ul {
-            font-size: 25px;
-            font-family: Raelway;
-            list-style-type: none;
-            }
-
-
-        h1 {
-            position: relative;
-            margin-top: 20px;
-        }
-
-        h1.separator {
-            margin-top: 0;
-        }
-
-        h1.separator:before {
-            content: "";
-            display: block;
-            border-top: solid 2px #C00000;
-            width: 100%;
-            height: 1px;
-            position: absolute;
-            top: 50%;
-            z-index: 1;
-        }
-
-
-        h1.separator span {
-            background: #fff;
-            padding: 0 20px;
-            position: relative;
-            z-index: 5;
-        }
-
-        basket {
-            position: fixed;
-            right: 0;
-            margin-top: 0;
-            height: 100%;
-            width: 20%;
-            background-color: black;
-
-        }
-
-        top_header {
-            width: 300px;
-            height: 300px;
-        }
-
-        banner {
-            width: 215px;
-            height: 175px
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        /* Track */
-        ::-webkit-scrollbar-track {
-          box-shadow: inset 0 0 5px #807234;
-          border-radius: 10px;
-        }
-
-        /* Handle */
-        ::-webkit-scrollbar-thumb {
-          background: #9c250e;
-          border-radius: 10px;
-        }
-
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-          background: #9c240d;
-        }
-    </style>
-
-
-    <script>
-
-        var foodCard  = {"orders" :[
-                  { "price":"8.00", "foodtype":"moRE MORE More","allergens":"nuts"},
-                  { "price":"5.00","foodtype":"Rice and NO MORE","allergens":"nuts"},
-                  { "price":"10.00", "foodtype":"Rice and More MSn","allergens":"protien"}]}
-
-         var sidesCard  = {"sides" :[
-                  { "price":"1.00", "foodtype":"coke","allergens":"coke"},
-                  { "price":"1.00","foodtype":"fanta","allergens":"orange"},
-                  { "price":"1.00", "foodtype":"tango","allergens":"orange"}]}
-
-        function createCard(id,price,foodtype, allergens) {
-
-              var div = document.createElement("div");
-              div.className = "food_card";
-              div.innerHTML = "<div> <h3 id="+id+"> "+foodtype+" </h3> </div> " +
-                  "<div class='food_card_img_border'> <img class= 'food_card_img' src='https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg' alt='burger'> " +
-                  "</div> <div> <button onclick='addToPrice("+price+","+id+")' type='button' class='block'> Add to Order "+price+" </button> </div>";
-              return div;
-
-
-        }
-
-        function myFunction(element) {
-                var popup = document.getElementById(element);
-                popup.classList.toggle("show");
-        }
-
-        function card_gen() {
-
-            for (var x in foodCard.orders) {
-
-                var price = foodCard.orders[x].price;
-                var foodtype = foodCard.orders[x].foodtype;
-                var allergens = foodCard.orders[x].allergens;
-                var ordercard = createCard(x, price, foodtype, allergens);
-                document.getElementById("main").appendChild(ordercard);
-           }
-
-        }
-
-        function addToPrice(foodprice,foodID){
-            var curPrice = document.getElementById("total").textContent;
-            var newPrice = parseInt(curPrice) + parseInt(foodprice);
-            document.getElementById("total").innerHTML = newPrice;
-            var id = document.getElementById(foodID).innerText;
-            addToCart(id)
-        }
-
-        function addToCart(foodname) {
-            let list = document.createElement("ul");
-            list.className = "card";
-            list.innerHTML = "<li>"+ foodname +"</li>";
-            let element = document.getElementById("basketInfo");
-            element.appendChild(list);
-        }
-    </script>
+    <script src ="../static/menu/js/menu2.js" ></script>
 </head>
+
+
 <body onload="card_gen()">
- <div class="banner">
-        <img src="Banner.png" alt="The logo for Oaxaca" class="center"/>
-    </div>
+<div class="banner">
+    <img src="Banner.png" alt="The logo for Oaxaca" class="center"/>
+</div>
 <table style="width:100%">
     <td style="width:80%">
-<div class="top_header">
+        <div class="top_header">
 
-    <div class="tabs_header" id="tabs_header">
-        <a style="text-decoration:none;" class="active" href="#mains">Mains</a>
-        <a style="text-decoration:none;" href="#sides">Sides</a>
-        <a style="text-decoration:none;" href="#drinks">Drinks</a>
-        <a style="text-decoration:none;" href="#deals">Deals</a>
-    </div>
+            <div class="tabs_header" id="tabs_header">
+                <a style="text-decoration:none;" class="active" href="#mains">Mains</a>
+                <a style="text-decoration:none;" href="#sides">Sides</a>
+                <a style="text-decoration:none;" href="#drinks">Drinks</a>
+                <a style="text-decoration:none;" href="#deals">Deals</a>
+            </div>
 
-</div>
+        </div>
 
-<A NAME="mains"></a>
-<h1 class="separator">
-    <span>MAINS</span>
-</h1>
-<div id="main">
-</div>
+        <A NAME="mains"></a>
+        <h1 class="separator">
+            <span>MAINS</span>
+        </h1>
+        <div id="main">
+        </div>
 
 
-<A NAME="sides"></a>
-<h1 class="separator">
-    <span>SIDES</span>
-</h1>
-     <div id="side">
-</div>
+        <A NAME="sides"></a>
+        <h1 class="separator">
+            <span>SIDES</span>
+        </h1>
+        <div id="side">
+        </div>
 
 
     </td>
     <td style="width:20%" id="basketInfo">
-    <h2>Your current Basket</h2>
-        <p><h3>price</h3>
+        <h2>Your current Basket</h2>
+        <p>
+        <h3>price</h3>
         <h3 id="total"> 0
         </h3>
         </p>
         <button type="button" class="block">Submit</button>
     </td>
-    </table>
-
+</table>
 
 
 </body>

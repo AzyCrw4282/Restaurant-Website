@@ -2,17 +2,8 @@
 //EXAMPLE JAVASCRIPT OR WHATEVER TO BE IMPLEMENTED, FEEL FREE TO USE AJAX,
 //BEAR IN MIND, THE METHOD HAS TO WORK WITH CSRF_TOKEN
 
-// #
-// #
-// #
-// # waiter( _id , Order_id , Table_id , Customer_id )
-/*
-I'M SEPARATING ALL THE ADD FUNCTIONS, THIS COULD BE COMBINED WITH A SWITCH
-STATEMENT, THIS WILL MAKE THE CODE MUCH SHORTER AND EVERYTHING ELSE
-WOULD ONLY BE NEEDED TO BE CODED ONCE, HOWEVER THIS IS UP TO THE PERSON DOING JS
-TO DECIDE, I'M JUST DOING THESE SO THERE IS NO EXCUSE FOR DB COMMUNICATION.
- */
 
+<<<<<<< HEAD
 // # Order( _id , Food_id , Table_id , Customer_id , time_of_order )
 
 //Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
@@ -103,3 +94,5 @@ jQuery(document).ready(function () {
 
 })
 ;
+=======
+>>>>>>> master

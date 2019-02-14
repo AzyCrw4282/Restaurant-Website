@@ -61,7 +61,7 @@
         function addToCart(foodname) {
             let list = document.createElement("ul");
             list.className = "card";
-            list.innerHTML = "<li>"+ foodname +"</li>";
+            list.innerHTML = "<li><p>"+ foodname +"</p></li>";
             let element = document.getElementById("basketInfo");
             element.appendChild(list);
         }
@@ -102,19 +102,16 @@
 </h1>
      <div id="side">
 </div>
-
-
     </td>
+
     <td style="width:20%" id="basketInfo">
-    <h2>Your current Basket</h2>
-        <p><h3>price</h3>
-        <h3 id="total"> 0
-        </h3>
-        </p>
+    <h2>Your Basket</h2>
+
+      <h3 style="display:inline;">Total &nbsp; £</h3><h3 style="display:inline;" id="total">0</h3>
+
         <button type="button" class="block">Submit</button>
     </td>
     </table>
-
 
 
 </body>

@@ -125,6 +125,8 @@ button.noOfItems {
 
         p {
              font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+             text-align: "left";
+             font-size: 20px;
         }
         .center {
             display: block;
@@ -233,7 +235,6 @@ button.noOfItems {
             height: 100%;
             width: 20%;
             background-color: black;
-
         }
 
         top_header {

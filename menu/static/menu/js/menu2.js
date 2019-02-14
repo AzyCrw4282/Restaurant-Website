@@ -12,6 +12,33 @@ var sidesCard = {
         {"price": "1.00", "foodtype": "tango", "allergens": "orange"}]
 }
 
+function create_tag(tag_name, href, src, tag_class, id, text) {
+    var tag = document.createElement(tag_name);
+    if (href.length > 0) {
+        tag.href = href;
+    }
+    if (tag_class.length > 0) {
+        tag.className = tag_class;
+    }
+    if (src.length > 0) {
+        console.log(src);
+        tag.src = src;
+        // tag.alt="burger";
+    }
+    if (id.length > 0) {
+        tag.id = id;
+    }
+    if (text.length > 0) {
+        tag.innerText = text;
+    }
+    if (href.length > 0) {
+        tag.href = href;
+    }
+    return tag;
+
+}
+
+
 function createCard(id, price, foodtype, allergens) {
 
     var div = document.createElement("div");
@@ -23,6 +50,43 @@ function createCard(id, price, foodtype, allergens) {
 
 
 }
+
+
+
+function add_card(card) {
+    console.log("static: " + DJANGO_STATIC_URL);
+    var src = card["picture"];
+    var foodtype = card["foodtype"];
+    var price = card["price"];
+    var id = card["id"];
+    var div_1 = create_tag("div", "", "", "food_card", id, "");
+    var heading = create_tag("h3","","","",id,foodtype);
+    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
+    var img = create_tag("IMG", "", 'https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg', "food_card_img", "", "");
+    var div_3 = create_tag("div", "" , "","","","");
+    var div_4 = create_tag("div","","","","","");
+    var commentForm = create_tag("form","","","","","");
+    var textField = create_tag("input","","","",commentid,"");
+    var orderBtn = create_tag("button","","","block","","Add to Order "+ price);
+    var delete_button = create_tag("li", "", "", "button", "", "delete");
+
+    //adding on click functions to increment the popup quantity
+    orderBtn.onclick = update_popup(true,name,price,id);
+    delete_button.onclick = send_food_delete_request(id);
+
+    div_1.appendChild(heading);
+    div_2.appendChild(img);
+    div_3.appendChild(commentForm);
+    commentForm.appendChild(textField);
+    div_4.appendChild(orderBtn);
+    div_4.appendChild(delete_button);
+
+    return div_1;
+}
+
+
+
+
 
 function myFunction(element) {
     var popup = document.getElementById(element);
@@ -41,6 +105,9 @@ function card_gen() {
     }
 
 }
+
+
+
 
 function addToPrice(foodprice, foodID) {
     var curPrice = document.getElementById("total").textContent;

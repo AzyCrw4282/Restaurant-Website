@@ -1,4 +1,6 @@
+media/
 venv/
 .idea/
 *.pyc
 media/
+__pychache__

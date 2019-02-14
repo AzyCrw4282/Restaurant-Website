@@ -42,7 +42,7 @@ class Food(models.Model):
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE)
     information = models.ManyToManyField(FoodInformation)
     description = models.CharField(default="", max_length=200)
-    picture = models.ImageField(upload_to=get_image_path, blank=True, null=True)
+    picture = models.ImageField(upload_to='img/food/', blank=True, null=True)
     display=models.BooleanField(default=True)
 
 
@@ -50,7 +50,7 @@ class Food(models.Model):
 class Order(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     comment = models.CharField(default="", max_length=200)
-    status = models.BooleanField(default=False)
+    chef_confirmed = models.BooleanField(default=False)
 
 
 # TableOrder ( _id , orders:MtM(Order),Table_id, time, status)
@@ -58,8 +58,9 @@ class TableOrder(models.Model):
     orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
-    submitted=models.BooleanField(default=False)
-    status=models.BooleanField(default=False)
+    client_confirmed=models.BooleanField(default=False)
+    chef_confirmed=models.BooleanField(default=False)
+    waiter_confirmed=models.BooleanField(default=False)
     id=models.TextField(primary_key=True)
 
 

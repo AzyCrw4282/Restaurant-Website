@@ -180,8 +180,8 @@ a:hover, a:active {
 }
 
 #tabs_header {
-    position: relative;
-    top: 5%;
+    position: fixed;
+    top: 50px;
     text-align: center;
 }
 

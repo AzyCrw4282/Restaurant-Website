@@ -49,10 +49,10 @@ function load_data(data) {
     console.log(authenticated);
     update_menu_popup_data();
 
-    // setInterval(function () { //This send get request data every 2 seconds.
-    //
-    //     update_menu_popup_data()
-    // }, 2000);
+    setInterval(function () { //This send get request data every 2 seconds.
+
+        update_menu_popup_data()
+    }, 2000);
 
     var food_information = data["food_information"];
     var food_categories = data["food_categories"];
@@ -299,12 +299,12 @@ function populate_popup(data) {
         var li_name = create_tag("li", "", "", "", "", order["food_name"]);
         var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
         var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
-        var delete_button = create_tag("li", "", "", "button", "", "Delete");
+        var delete_button = create_tag("button", "", "", "button", "", "Delete");
         delete_button.onclick = delete_food_from_order(order["order_id"]);
         ul.appendChild(delete_button);
         ul.appendChild(li_name);
         ul.appendChild(li_price);
-        ul.appendChild(li_comment);
+        // ul.appendChild(li_comment);
         li.appendChild(ul);
         popup_tag.appendChild(li);
     }

@@ -9,7 +9,7 @@
 var tempOrder = [];
 
 
-function create_order(oNum, oTime, oTable, comments, items ){
+function create_order(oNum, oTime, oTable, comments, items) {
     console.log("creating order");
     tempOrder[0] = oNum;
     tempOrder[1] = oTime;
@@ -19,35 +19,58 @@ function create_order(oNum, oTime, oTable, comments, items ){
     return tempOrder
 }
 
-function load_data(data){
+function update_waiter_card() {
+    var food_name, total_price, food_price, order_id, order_comment;
+
+    $.ajax({
+        url: 'get_waiter_card_data/',
+        dataType: 'json',
+        type: 'GET', // A get request data to update data
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                populate_popup(JSON.parse(data['message']));//To populate called here
+            } else {
+                console.log("NO DATA")
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
+
+function load_data(data) {
     console.log(data);
     load_cards(data["table_orders"])
 }
-function load_cards(table_orders){
-    for (var i in table_orders){
-        var table_order=table_orders[i];
-        var table_order_id=table_order["id"];
-        var table_order_comment=table_order["comment"];
-        var table_order_time=table_order["time"];
-        var table_order_table_number=table_order["table_number"];
-        var table_order_order_list=table_order["orders"];
-        add_card(table_order_id,table_order_comment,table_order_time,table_order_table_number,table_order_order_list);
+
+function load_cards(table_orders) {
+    for (var i in table_orders) {
+        var table_order = table_orders[i];
+        var table_order_id = table_order["id"];
+        var table_order_comment = table_order["comment"];
+        var table_order_time = table_order["time"];
+        var table_order_table_number = table_order["table_number"];
+        var table_order_order_list = table_order["orders"];
+        add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
 
 
     }
 }
-function add_card(table_order_id,table_order_comment,table_order_time,table_order_table_number,table_order_order_list) {
-    var card_list=document.getElementById("card_list");
+
+function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+
+    var card_list = document.getElementById("card_list");
     console.log("static: ");
     console.log("hello from script");
     var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
     var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
     var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
-    var list_of_items = create_tag("ol","","","text-left","","");
-    for(var i in table_order_order_list ) {
+    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
+    for (var i in table_order_order_list) {
         var order_item = table_order_order_list[i];
-        var order_item_tag = create_tag("li", "", "", "", "", ""+ order_item["food_name"] +": " + order_item["comment"]);
+        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
         list_of_items.appendChild(order_item_tag);
 
     }
@@ -56,7 +79,7 @@ function add_card(table_order_id,table_order_comment,table_order_time,table_orde
     var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "",""+ table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
 
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);

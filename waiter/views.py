@@ -5,6 +5,9 @@ from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, Ht
 import json
 
 # Create your views here.
+def get_waiter_card_data(request):
+    return (1)
+
 def waiter(request):
     # pass the order item's to the waiter
     table_orders=TableOrder.objects.all()

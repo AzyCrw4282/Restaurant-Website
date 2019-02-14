@@ -6,10 +6,6 @@ media/
 */__pychache__/
 __pychache__
 __/pycache_/
-*/migrations/
-*/migrations
-/migrations
-migrations/
 */setting.py
 settings.py
 db.sqlite3

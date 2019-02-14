@@ -39,13 +39,20 @@
 // # ]
 // #
 // # }
+var authenticated = false;
+
+function user_is_authenticated() {
+    authenticated = true;
+}
+
 function load_data(data) {
+    console.log(authenticated);
     update_menu_popup_data();
 
-    setInterval(function(){ //This send get request data every 2 seconds.
-        waiter_chef_interaction
-        update_menu_popup_data()
-    },2000);
+    // setInterval(function () { //This send get request data every 2 seconds.
+    //
+    //     update_menu_popup_data()
+    // }, 2000);
 
     var food_information = data["food_information"];
     var food_categories = data["food_categories"];
@@ -89,21 +96,6 @@ function delete_food_from_menu(id) {
     }
 }
 
-function delete_food_from_order(order_id) {
-    return function () {
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'delete_food_from_order/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "order_id": order_id
-            },
-        });
-
-
-    }
-}
 
 function delete_food_from_order(order_id) {
     return function () {
@@ -116,7 +108,6 @@ function delete_food_from_order(order_id) {
                 "order_id": order_id
             },
         });
-
 
 
     }
@@ -181,6 +172,44 @@ function add_food_to_order(food_id, comment_id) {
 
 function add_card(card) {
     var src = card["picture"];
+    var food_name = card["name"];
+    var price = card["price"];
+    var id = card["id"];
+    var div_1 = create_tag("div", "", "", "food_card", id, "");
+    var heading = create_tag("h3", "", "", "", id, "" + food_name);
+    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
+    var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
+    var div_3 = create_tag("div", "", "", "", "", "");
+    var div_4 = create_tag("div", "", "", "", "", "");
+    var commentForm = create_tag("form", "", "", "", "", "");
+    var textField = create_tag("input", "", "", "", id + "comment", "");
+    var orderBtn = create_tag("button", "", "", "block", "", "Add to Order " + price);
+    if (authenticated) {
+        var delete_button = create_tag("li", "", "", "button", "", "delete");
+        delete_button.onclick = delete_food_from_menu(id);
+
+    }
+
+    //adding on click functions to increment the popup quantity
+    orderBtn.onclick = add_food_to_order(id, textField.id);
+
+    div_1.appendChild(heading);
+    div_2.appendChild(img);
+    div_3.appendChild(textField);
+    div_4.appendChild(orderBtn);
+    div_1.appendChild(div_2);
+    div_1.appendChild(div_3);
+    div_1.appendChild(div_4);
+
+    if (authenticated) {
+        div_4.appendChild(delete_button);
+    }
+
+    return div_1;
+}
+
+function add_card1(card) {
+    var src = card["picture"];
 
     var name = card["name"];
     var price = card["price"];
@@ -235,12 +264,11 @@ function update_menu_popup_data() {
         type: 'GET',
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
-        try {
-                     populate_popup(JSON.parse(data['message']));
+                try {
+                    populate_popup(JSON.parse(data['message']));
+                } catch (e) {
+                    //    data is empty
                 }
-                catch (e) {
-               //    data is empty
-               }
             } else {
                 console.log("NO DATA")
 
@@ -253,6 +281,10 @@ function update_menu_popup_data() {
 }
 
 function populate_popup(data) {
+    //  let list = document.createElement("ul");
+    // list.className = "card";
+    // list.innerHTML = "<li>" + foodname + "</li>";
+
     var popup_tag = document.getElementById("order_list");
     while (popup_tag.firstChild) {
         popup_tag.removeChild(popup_tag.firstChild)
@@ -281,14 +313,47 @@ function populate_popup(data) {
     var total_tag = document.getElementById("order_total");
     total_tag.innerText = "Total: " + total_price;
     var button = document.getElementById("submit_order");
-    button.innerText= "Submit Order (status: " + order_submitted + ")";
+    button.innerText = "Submit Order (status: " + order_submitted + ")";
+
+}
+
+function populate_popup2(data) {
+    var popup_tag = document.getElementById("order_list");
+    while (popup_tag.firstChild) {
+        popup_tag.removeChild(popup_tag.firstChild)
+    }
+    var order_submitted = data["order_submitted"];
+    var order_list = data["table_order"];
+    var total_price = data["total_price"];
+    for (var order_id in order_list) {
+        var order = order_list[order_id];
+        //    check if it is already loaded into the page
+        //    append it if it doesnt exist
+        var li = create_tag("li", "", "", "", "", "");
+        var ul = create_tag("ul", "", "", "popup_box_list", "", "");
+        var li_name = create_tag("li", "", "", "", "", order["food_name"]);
+        var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
+        var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
+        var delete_button = create_tag("li", "", "", "button", "", "Delete");
+        delete_button.onclick = delete_food_from_order(order["order_id"]);
+        ul.appendChild(delete_button);
+        ul.appendChild(li_name);
+        ul.appendChild(li_price);
+        ul.appendChild(li_comment);
+        li.appendChild(ul);
+        popup_tag.appendChild(li);
+    }
+    var total_tag = document.getElementById("order_total");
+    total_tag.innerText = "Total: " + total_price;
+    var button = document.getElementById("submit_order");
+    button.innerText = "Submit Order (status: " + order_submitted + ")";
 
 }
 
 function submit_order() {
 
-        console.log("submitting order");
-        window.location += "submit_order/"
+    console.log("submitting order");
+    window.location += "submit_order/"
 
 }
 
@@ -400,9 +465,6 @@ function add_card_old(food_name, price, id) {
     div.innerHTML = "<div class='image'><h1>" + food_name + "</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
     return div;
 }
-
-
-
 
 
 // // Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )

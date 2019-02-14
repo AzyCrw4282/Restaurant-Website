@@ -1,16 +1,16 @@
-var foodCard = {
-    "orders": [
-        {"price": "8.00", "foodtype": "moRE MORE More", "allergens": "nuts"},
-        {"price": "5.00", "foodtype": "Rice and NO MORE", "allergens": "nuts"},
-        {"price": "10.00", "foodtype": "Rice and More MSn", "allergens": "protien"}]
-}
-
-var sidesCard = {
-    "sides": [
-        {"price": "1.00", "foodtype": "coke", "allergens": "coke"},
-        {"price": "1.00", "foodtype": "fanta", "allergens": "orange"},
-        {"price": "1.00", "foodtype": "tango", "allergens": "orange"}]
-}
+// var foodCard = {
+//     "orders": [
+//         {"price": "8.00", "foodtype": "moRE MORE More", "allergens": "nuts"},
+//         {"price": "5.00", "foodtype": "Rice and NO MORE", "allergens": "nuts"},
+//         {"price": "10.00", "foodtype": "Rice and More MSn", "allergens": "protien"}]
+// }
+//
+// var sidesCard = {
+//     "sides": [
+//         {"price": "1.00", "foodtype": "coke", "allergens": "coke"},
+//         {"price": "1.00", "foodtype": "fanta", "allergens": "orange"},
+//         {"price": "1.00", "foodtype": "tango", "allergens": "orange"}]
+// }
 
 var authenticated = false;
 
@@ -67,7 +67,7 @@ function add_card(card) {
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3","","","",id,foodtype);
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    var img = create_tag("IMG", "", 'https://www.mexicanplease.com/wp-content/uploads/2017/09/mexican-picadillo-after-cooking-over-rice.jpg', "food_card_img", "", "");
+    var img = create_tag("IMG", "", "/menu/media/"+src, "food_card_img", "", "");
     var div_3 = create_tag("div", "" , "","","","");
     var div_4 = create_tag("div","","","","","");
     var commentForm = create_tag("form","","","","","");
@@ -105,7 +105,6 @@ function myFunction(element) {
 function card_gen() {
 
     for (var x in foodCard.orders) {
-
         var price = foodCard.orders[x].price;
         var foodtype = foodCard.orders[x].foodtype;
         var allergens = foodCard.orders[x].allergens;
@@ -130,9 +129,8 @@ function addToCart(foodname, comment_id) {
     let list = document.createElement("ul");
     list.className = "card";
     list.innerHTML = "<li>" + foodname + "</li>";
-    let element = document.getElementById("basketInfo");
+    let element = document.getElementById("basket_info");
     element.appendChild(list);
-
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -152,7 +150,5 @@ function addToCart(foodname, comment_id) {
         url: 'add_food_to_order/',
         data: context
     });
-
-
 
 }

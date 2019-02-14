@@ -26,19 +26,23 @@
         </div>
         </form>
         <div id="order_popup" class="order_popup">
-            <header>
-                Order
-            </header>
+            <h3>
+                Order:
+            </h3>
             <ul aria-label="order" id="order_list"class="order_list">
 
             </ul>
-            Order Total:
+            <h4>
+                Total:
+            </h4>
             <div  id="order_total">0.0</div>
             <button id="submit_order" onclick="submit_order()"></button>
         </div>
         <img src="/media/img/food/cream.jpg" alt="">
      <script type="text/javascript">
-            var DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+            if({{ user.is_authenticated|yesno:"true,false"}}){
+                user_is_authenticated()
+            }
             load_data({{ category_list |safe }});
         </script>
 

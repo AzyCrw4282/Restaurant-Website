@@ -2,6 +2,9 @@ media/
 venv/
 .idea/
 *.pyc
+*/migrations
+/migrations
+migrations/
 media/
 */__pychache__/
 __pychache__

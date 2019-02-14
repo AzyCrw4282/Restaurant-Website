@@ -5,11 +5,12 @@
  *
  */
 
-/*
+
 var tempOrder = [];
 
 
 function create_order(oNum, oTime, oTable, comments, items ){
+    console.log("creating order");
     tempOrder[0] = oNum;
     tempOrder[1] = oTime;
     tempOrder[2] = oTable;
@@ -17,35 +18,45 @@ function create_order(oNum, oTime, oTable, comments, items ){
     tempOrder[4] = items;
     return tempOrder
 }
-*/
 
-function add_card(card) {
+function load_data(data){
+    console.log(data);
+    load_cards(data["table_orders"])
+}
+function load_cards(table_orders){
+    for (var i in table_orders){
+        var table_order=table_orders[i];
+        var table_order_id=table_order["id"];
+        var table_order_comment=table_order["comment"];
+        var table_order_time=table_order["time"];
+        var table_order_table_number=table_order["table_number"];
+        var table_order_order_list=table_order["orders"];
+        add_card(table_order_id,table_order_comment,table_order_time,table_order_table_number,table_order_order_list);
+
+
+    }
+}
+function add_card(table_order_id,table_order_comment,table_order_time,table_order_table_number,table_order_order_list) {
     var card_list=document.getElementById("card_list");
-    console.log(card);
     console.log("static: ");
-    var orderNumber = card[0];
-    var orderTime = card[1];
-    var orderTable = "Table " + card[2];
-
-    var comments = card[3];
     console.log("hello from script");
     var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "" + order_number);
-    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "" + order_table);
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
     var list_of_items = create_tag("ol","","","text-left","","");
-    var li1 = create_tag("li", "", "", "", "", "1");
-    var li2 = create_tag("li", "", "", "", "", "2");
-    var li3 = create_tag("li", "", "", "", "", "3");
+    for(var i in table_order_order_list ) {
+        var order_item = table_order_order_list[i];
+        var order_item_tag = create_tag("li", "", "", "", "", ""+ order_item["food_name"] +": " + order_item["comment"]);
+        list_of_items.appendChild(order_item_tag);
+
+    }
+
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + comments);
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", order_time);
-
-    list_of_items.appendChild(li1);
-    list_of_items.appendChild(li2);
-    list_of_items.appendChild(li3);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "",""+ table_order_comment);
 
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
@@ -56,7 +67,7 @@ function add_card(card) {
 
     border.appendChild(cardbody);
     border.appendChild(footer);
-card_list.appendChild(border);
+    card_list.appendChild(border);
 }
 
 function create_tag(tag_name, href, src, tag_class, id, text) {

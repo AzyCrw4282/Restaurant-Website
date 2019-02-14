@@ -104,7 +104,7 @@ def delete_food_from_order(request, table_id):
     print("DELETING FOOD ORDER ITEM")
     try:
         table_order = TableOrder.objects.get(id=table_id)
-        if not table_order.submitted:
+        if not table_order.client_confirmed:
             order = table_order.orders.get(id=request.POST["order_id"])
             order.delete()
             return JsonResponse(SUCCESSFUL_RESPONSE)
@@ -135,7 +135,7 @@ def submit_order(request,table_id):
     print("CALLED SUBMIT ORDER")
     try:
         table_order=TableOrder.objects.get(id=table_id)
-        table_order.submitted=True
+        table_order.client_confirmed=True
         table_order.save()
     #     UPDATE THE WAITER HERE?
         return HttpResponseRedirect("/menu/"+table_id+"/")
@@ -171,7 +171,7 @@ def get_menu_popup_data(request, table_id):
             food_price = order.food.price
             data['table_order'].append({'order_id':order.id,'food_price': food_price, 'food_name': food_name, 'food_comment':order.comment})
         data.update({'total_price': total_price})
-        if(table_order.submitted):
+        if(table_order.client_confirmed):
             status="submitted"
         else:
             status="not-submitted"
@@ -214,7 +214,6 @@ def add_food_to_order(request, table_id):
                     id=table_id,
                     table=Table.objects.get(id=table_id),
                     time=request.POST['time'],
-                    status=False
                 )
                 table_order.save()
             except Exception as e:
@@ -225,12 +224,11 @@ def add_food_to_order(request, table_id):
                 return JsonResponse(response)
 
         try:
-            if not table_order.submitted:
+            if not table_order.client_confirmed:
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
                     comment="comment: " + request.POST['comment'],
-                    status=False
                 )
                 table_order.orders.add(order)
                 response = SUCCESSFUL_RESPONSE

@@ -64,18 +64,16 @@ function load_data(data) {
 }
 
 function load_tab_shortcut_buttons(categories) {
-    var ul = document.getElementById("tabs_header_list");
+    var div = document.getElementById("tabs_header");
     for (var i in categories) {
         var cat = categories[i];
         var cat_name = cat["name"];
-        // <li><a class="active" href="#mains">Mains</a></li>
-        var li = document.createElement("li");
-        li.className = "active";
+        // <a style="text-decoration:none;" href="#sides">Sides</a>
         var a = document.createElement("a");
+        a.style="text-decoration:none;";
         a.href = "#" + cat_name;
-        a.innerHTML += cat_name;
-        li.appendChild(a);
-        ul.appendChild(li);
+        a.innerHTML += cat_name.toUpperCase();
+        div.appendChild(a);
     }
 }
 

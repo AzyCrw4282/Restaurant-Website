@@ -195,7 +195,7 @@ function add_card(card) {
     var textField = create_tag("input", "", "", "", id + "comment", "");
     var orderBtn = create_tag("button", "", "", "block", "", "Add to Order " + price);
     if (authenticated) {
-        var delete_button = create_tag("li", "", "", "button", "", "delete");
+        var delete_button = create_tag("button", "", "", "block", "", "delete");
         delete_button.onclick = delete_food_from_menu(id);
 
     }

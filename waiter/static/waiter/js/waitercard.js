@@ -9,16 +9,6 @@
 var tempOrder = [];
 
 
-function create_order(oNum, oTime, oTable, comments, items) {
-    console.log("creating order");
-    tempOrder[0] = oNum;
-    tempOrder[1] = oTime;
-    tempOrder[2] = oTable;
-    tempOrder[3] = comments;
-    tempOrder[4] = items;
-    return tempOrder
-}
-
 function update_waiter_card() {
     var food_name, total_price, food_price, order_id, order_comment;
 

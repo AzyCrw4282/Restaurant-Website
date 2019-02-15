@@ -14,31 +14,7 @@
 // this is an function gets the context passed to the html and checks
 //it's relevance and readability
 
-// load the tabs at the top
-// load the categories for each tab
 
-
-//load the data sent from the server
-//in the bellow format
-// # {
-// #     "food_information":[
-// #         {"id":id,"name":name},
-// #         {"id":id,"name":name}
-// #     ],
-// #     "food_categories":[
-// #         {"id":id,"name":name},
-// #         {"id":id,"name":name},
-// #         {"id":id,"name":name}
-// #     ],
-// # "foods":[
-// #     {"id":id,"display":display,"name":name,"price":price,"category_id":catogory_id,"food_information":[
-// #         {"id":id},
-// #         {"id":id},
-// #         {"id":id},
-// #     ],"description":description,"picture":picture},
-// # ]
-// #
-// # }
 var authenticated = false;
 
 function user_is_authenticated() {
@@ -423,34 +399,6 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 
 }
 
-
-//</script>
-//<div class="food_card">
-//
-//    <div class="food_card_img_border">
-//
-//        <img class= "food_card_img" src="http://pluspng.com/img-png/burger-png-hd-burger-png-image-png-image-466.png" alt="burger">
-//    </div>
-//
-//    <div class="food_card_info_box" >
-//        <ul id="menu"class = "food_info_box_list">
-//            <li>HTML</li>
-//            <li>CSS</li>
-//        </ul>
-//    </div>
-//
-//    <div class="food_card_info_box">
-//
-//        <div class="buttons">
-//            <button>-</button>
-//            <button>submit</button>
-//            <button>+</button>
-//        </div>
-//
-//    </div>
-//
-//
-//</div>
 
 
 function add_section_for_each_food_category(categories) {

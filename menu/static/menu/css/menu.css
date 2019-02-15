@@ -74,7 +74,7 @@
 }
 
 .order_popup {
-    color: black;
+    color:black;
     position:fixed;
     top: 10%;
     right: 10px;
@@ -85,6 +85,7 @@
     box-shadow: 0 1px 4px 0;
     transition: 0.3s;
     border-radius: 5px;
+    display:none;
 }
 
 .order_list {
@@ -461,4 +462,16 @@ banner {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #9c240d;
+}
+#popup_div{
+    position:absolute;
+}
+#popup_div_header{
+
+}
+.cart_button{
+    position:fixed;
+    color:black;
+    top:100px;
+
 }

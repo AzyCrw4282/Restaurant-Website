@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+{# Objects expected: #}
+{#category_list -- see explanation in load_category_items in menu/js/menu.js#}
+<html lang="en">
+
+{% extends 'menu/templates/base.html' %}
+{% load staticfiles %}
+
+{% block body %}
+    <script src="{% static 'menu/js/welcome_page.js' %}"></script>
+    <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/menu/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
+    <br><br><br><br>
+    <br>
+    <div class="main">
+        Welcome to the OOXACA?
+        Please enter the Provided code:
+        <img src="media/img/food/cream.jpg" alt="">
+
+        <input id="table_code" class="text">table code: </input>
+        <button class= "WelcomeButton"  onclick="redirect_user()">submit</button>
+
+    </div>
+
+{% endblock %}
+</html>

@@ -17,7 +17,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -35,11 +34,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'menu.apps.menuConfig',
+    'accounts.apps.AccountsConfig',
+    'waiter.apps.WaiterConfig',
+    'chef.apps.ChefConfig',
+    'menu.apps.MenuConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,9 +48,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jquery',
-    ]
+]
 
 MIDDLEWARE = [
+    'TeamProject2019_01.middleware.LoginRequiredMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,22 +80,20 @@ TEMPLATES = [
     },
 ]
 
-
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':'team1',
-        'USER':'kenteam1user',
-        'PASSWORD':'password',
-        'HOST':'localhost',
-        'POST':'',
+
+        'NAME': 'team1',
+        'USER': 'team1user',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'POST': '',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -113,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -127,32 +126,30 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=(
+STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
     'menu/static/',
 
 )
 # TOO LOOK AT LATER IF REQUIRED
 #
-MEDIA_URL =  '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+print(MEDIA_ROOT)
+
 #
-# LOGIN_URL='/account/login/'
-# LOGIN_REDIRECT_URL='/home/'
-# LOGIN_EXEMPT_URLS={
-#     r'^account/register/$',
-#     r'^account/password_reset/$',#reset page
-#     r'^account/password_reset/done/$',#form submited
-#     r'^account/password_reset/complete/$',#form completedd
-#     r'^account/password_reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$'#confirmed page
-#
-# }
-#
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/waiter/'
+LOGIN_EXEMPT_URLS = {
+    r'^menu/*$',
+    r'^menu/[\s\S]*',
+}
+
+
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True

@@ -13,36 +13,41 @@
     <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'menu/css/menu.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'menu/css/menu2.css' %}" type="text/css"/>
+    <div class="top_header">
+        <div class="tabs_header" id="tabs_header">
 
-    <div class="main">
-        Welcome to the OOXACA?
-        Please enter your table number:
-        <ul aria-label="table list" id="table_option_list">
+        </div>
 
-        </ul>
-        <form onsubmit="return false">
+    </div>
+
+    <form onsubmit="return false">
         {% csrf_token %}
         <div class="food_card_container" id="categories">
 
         </div>
-        </form>
-        <div id="order_popup" class="order_popup">
-            <header>
-                Order
-            </header>
-            <ul aria-label="order" id="order_list"class="order_list">
+    </form>
+    <td style="width:40%">
 
-            </ul>
-            Order Total:
-            <div  id="order_total">0.0</div>
-            <button id="submit_order" onclick="submit_order()"></button>
-        </div>
-     <script type="text/javascript">
-            var DJANGO_STATIC_URL = '{{ STATIC_URL }}';
-            load_data({{ category_list |safe }});
-        </script>
+    <div id="order_popup" class="order_popup">
+        <h3>
+            Order:
+        </h3>
+        <ul aria-label="order" id="order_list" class="order_list">
 
+        </ul>
+        <h4>
+            Total:
+        </h4>
+        <div id="order_total">0.0</div>
+        <button id="submit_order" onclick="submit_order()"></button>
     </div>
+
+    <script type="text/javascript">
+        if ({{ user.is_authenticated|yesno:"true,false"}}) {
+            user_is_authenticated()
+        }
+        load_data({{ category_list |safe }});
+    </script>
 
 {% endblock %}
 </html>

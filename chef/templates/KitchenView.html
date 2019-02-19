@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'chef/css/kitchenView.css' %}" type="text/css"/>
+    <title>Kitchen View</title>
+    <script src="{% static 'chef/js/kitchenViewJs.js' %}"></script>
+</head>
+
+<body>
+<div class="banner">
+    <img id="banner" src="../static/chef/img/Banner.png" class="center"/>
+</div>
+
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+
+
+<div class="header" id="header">
+</div>
+
+<div class="main" id="main">
+    <div id="card_container">
+
+    </div>
+
+</div>
+<script>
+    load_data({{ table_orders |safe }})
+</script>
+
+</body>
+</html>

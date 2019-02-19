@@ -24,18 +24,15 @@ function user_is_authenticated() {
 function load_data(data) {
     console.log(authenticated);
     update_menu_popup_data();
-
     setInterval(function () { //This send get request data every 2 seconds.
-
         update_menu_popup_data()
     }, 2000);
 
-    var food_information = data["food_information"];
     var food_categories = data["food_categories"];
-    var foods = data["foods"];
+    var foods = data["food_list"];
     load_tab_shortcut_buttons(food_categories);
     add_section_for_each_food_category(food_categories);
-    load_food_cards_into_sections(food_categories, foods, food_information);
+    load_food_cards_into_sections(foods,food_categories);
 
 }
 
@@ -423,12 +420,12 @@ function add_section_for_each_food_category(categories) {
     }
 }
 
-function load_food_cards_into_sections(categories, food_cards) {
+function load_food_cards_into_sections(food_list,food_categories) {
     //load_header_tabs(categories);
     // categories is a dictionary
     var category_dict = {};
-    for (var i in categories) {
-        var category = categories[i];
+    for (var i in food_categories) {
+        var category = food_categories[i];
         console.log(category);
         var cat_id = category["id"];
         var cat_name = category["name"];

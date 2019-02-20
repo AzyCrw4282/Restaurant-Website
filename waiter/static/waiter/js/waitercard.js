@@ -28,6 +28,63 @@ function update_waiter_card() {
     });
 
 }
+//if order is cancelled by waiter, send to the archive
+function cancel_order_state(order_id,state){
+
+    $.ajax({
+        type: "post",
+        url: 'cancel_order_state/',
+        data: {
+        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        "order_id": order_id,
+        "state": state
+        }
+    });
+
+
+
+
+}
+//After client confirms, waiter can confirm it
+function confirm_order_state(order_id,state){
+
+    $.ajax({
+    type: "post",
+    url: 'confirm_order_state/',
+    data: {
+    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+    "order_id": order_id,
+    "state": state
+    }
+});
+
+
+
+
+
+}
+
+function delivered_order_state(order_id,state){
+
+    $.ajax({
+    type: "post",
+    url: 'delivered_order_state/',
+    data: {
+    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+    "order_id": order_id,
+    "state": state
+    }
+});
+
+
+
+
+
+}
+
+
+
+
 
 function load_data(data) {
     console.log(data);

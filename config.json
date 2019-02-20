@@ -1,0 +1,12 @@
+{
+  "table_order_states": {
+    "client_created": "client_created",
+    "client_confirmed": "client_confirmed",
+    "waiter_confirmed": "waiter_confirmed",
+    "waiter_canceled": "waiter_canceled",
+    "waiter_delivered": "waiter_delivered",
+    "chef_confirmed": "chef_confirmed",
+    "chef_canceled": "chef_canceled",
+    "archived": "archived"
+  }
+}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from menu.models import TableOrder
+from menu.models import Order
 # Create your views here.
 def chef(request):
     table_orders = TableOrder.objects.all()
@@ -39,3 +40,49 @@ def cancle_order(request):
         order.delete()
     except Exception as e:
         pass
+
+#Need to distinguish between removing single order and cancelling whole table order
+def set_order_state(request,state):
+    try:
+        order = Order.objects.get(request.POST['order_id'])
+        order.status = state
+        order.save()
+    except Exception as e:
+        print(e)
+
+
+
+
+def set_table_order_state(request,state):
+    try:
+        order = Order.objects.get(request.POST['table_order_id'])
+        order.status = state
+        order.save()
+    except Exception as e:
+        print(e)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

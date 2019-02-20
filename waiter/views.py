@@ -80,3 +80,35 @@ def delete_food(request):
         except:
             print("error deleting food ")
             return
+
+
+#Functions for waiter_state handling
+def confirm_order_state(request,state):
+    try:
+        order = Order.objects.get(request.POST["order_id"])
+        order.status = state
+        order.save()
+    except Exception as e:
+        print(e)
+
+
+
+def cancel_order_state(request,state):
+    try:
+        order = Order.objects.get(request.POST["order_id"])
+        order.status = state
+        order.save()
+    except Exception as e:
+        print(e)
+
+
+def delivered_order_state(request,state):
+    try:
+        order = Order.objects.get(request.POST["order_id"])
+        order.status = state
+        order.save()
+    except Exception as e:
+        print(e)
+
+
+

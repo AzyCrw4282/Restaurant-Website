@@ -31,9 +31,14 @@ SUCCESSFUL_RESPONSE = {
 
 
 def db_objects_to_list_of_dicts(objects):
+    '''
+    converts multiple db objects to a list of it's dictionaries
+    :param objects:
+    :return:
+    '''
     list = []
-    for object in objects:
-        list.append(object.to_dict())
+    for db_object in objects:
+        list.append(db_object.to_dict())
     return list
 
 
@@ -48,10 +53,10 @@ def menu(request):
         request, 'menu/templates/welcome_page.html', context={})
 def menu_with_id(request, table_id):
     """
-        Serves Main menu screen with relevant data
-        :param request:
-        :return: menu.html with data (rendered)
-        """
+    Serves Main menu screen with relevant data
+    :param request:
+    :return: menu.html with data (rendered)
+    """
     if request.method == 'POST':
         print("TABLE ID: ", table_id)
     print("TABLE ID: ", table_id)
@@ -78,7 +83,7 @@ def get_menu_popup_data(request, table_id):
     """
     Updates the popup with current order
     :param request, contains 'order_id' (some key?) for now the table number
-    :return: json containing all table_orders
+    :return: json containing the table order with the order items inside.
     """
     #     try to get the table order
     print("CALLED MENU_POPUP_UPDATE")
@@ -91,9 +96,8 @@ def get_menu_popup_data(request, table_id):
         # convert to dict:
         response_dict={"table_order":table_order.to_dict()}
         # replace the order items (id's to the object dictionaries)
-        table_order_items_dict=db_objects_to_list_of_dicts(table_order_items)
         temp=response_dict["table_order"]
-        temp["orders"]=table_order_items_dict
+        temp["orders"]=db_objects_to_list_of_dicts(table_order_items)
         # calc total price
         total_price=0
         for order_item in table_order_items:
@@ -157,11 +161,6 @@ def add_food_to_order(request, table_id):
     :param request:
     :return: success/failure
     """
-    # check if the id is in the database first, if it is
-    # try getting an order associated with that id
-    # or make a new order where the id is that id :D
-    # add the stuff to that order
-    # order get's deleted after half an hour
     if request.method == 'POST':
         # check if table_order exists given some arbitrary key
         # just using the table number for now.

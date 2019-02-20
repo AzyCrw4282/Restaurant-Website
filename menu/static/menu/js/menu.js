@@ -21,24 +21,24 @@ function user_is_authenticated() {
     authenticated = true;
 }
 
+//========  LOADING DATA =============
 function load_data(data) {
-    console.log(authenticated);
+
+    console.log(data);
     update_menu_popup_data();
-
     setInterval(function () { //This send get request data every 2 seconds.
-
         update_menu_popup_data()
-    }, 2000);
+    }, 10000);
 
-    var food_information = data["food_information"];
-    var food_categories = data["food_categories"];
-    var foods = data["foods"];
+    var food_categories = data["category_list"];
+    var foods = data["food_list"];
     load_tab_shortcut_buttons(food_categories);
     add_section_for_each_food_category(food_categories);
-    load_food_cards_into_sections(food_categories, foods, food_information);
+    load_food_cards_into_sections(foods, food_categories);
 
 }
 
+//============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
     var div = document.getElementById("tabs_header");
     for (var i in categories) {
@@ -57,128 +57,7 @@ function load_tab_shortcut_buttons(categories) {
     a.href = "#basket";
     a.id = "basket";
     div.appendChild(a);
-
-
 }
-function banner(){
-    $(document).ready(function () {
-            $("a").on('click', function (event) {
-
-                var heightofbanner = $("#headerContainer").height() + 10;
-                console.log(heightofbanner);
-                if (this.hash !== "") {
-                    event.preventDefault();
-                    var hashlocation = this.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hashlocation).offset().top - heightofbanner
-                    }, 800);
-                }
-            });
-        });
-}
-
-$(document).ready(function () {
-    $("#basket").click(function (e) {
-        var x = document.getElementById("order_popup");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-        return false;
-    });
-});
-
-function delete_food_from_menu(id) {
-
-    return function () {
-
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'delete_food_from_menu/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "food_id": id
-            }
-        })
-
-    }
-}
-
-
-function delete_food_from_order(order_id) {
-    return function () {
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'delete_food_from_order/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "order_id": order_id
-            },
-        });
-
-
-    }
-
-
-}
-
-function add_food_to_order(food_id, comment_id) {
-    return function () {
-
-        var comment = document.getElementById(comment_id).value;
-
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var date_time = date + ' ' + time;
-        var context = {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_id": food_id,
-            "comment": comment,
-            "time": date_time
-
-        };
-
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'add_food_to_order/',
-            data: context
-        });
-    }
-}
-
-function add_food_to_order(food_id, comment_id) {
-    return function () {
-
-
-        var comment = document.getElementById(comment_id).value;
-
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var date_time = date + ' ' + time;
-        var context = {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_id": food_id,
-            "comment": comment,
-            "time": date_time
-
-        };
-
-
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'add_food_to_order/',
-            data: context
-        });
-    }
-}
-
 
 function add_card(card) {
     var src = card["picture"];
@@ -218,44 +97,185 @@ function add_card(card) {
     return div_1;
 }
 
-function add_card1(card) {
-    var src = card["picture"];
+function populate_popup(data) {
+    //  let list = document.createElement("ul");
+    // list.className = "card";
+    // list.innerHTML = "<li>" + foodname + "</li>";
+    var table_order=data["table_order"];
+    var popup_tag = document.getElementById("order_list");
+    while (popup_tag.firstChild) {
+        popup_tag.removeChild(popup_tag.firstChild)
+    }
+    var order_submitted = table_order["status"];
+    var order_list = table_order["orders"];
+    var total_price = table_order["total_price"];
 
-    var name = card["name"];
-    var price = card["price"];
-    var id = card["id"];
+    for (var order_id in order_list) {//For each order create it in the popup list
+        var order = order_list[order_id];
+        console.log("I'm here now?");
+                console.log(order["food_name"]);
 
-    var div_1 = create_tag("div", "", "", "food_card", id, "");
-    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    var img = create_tag("img", "", "/menu/media/" + src, "food_card_img", "", "");
+        //    check if it is already loaded into the page
+        //    append it if it doesnt exist
+        var li = create_tag("ul", "", "", "", "", "");
+        var ul2 = create_tag("ul", "", "", "", "", "");
+        var delete_button = create_tag("button", "", "", "button", "", "Delete");
+        var ul = create_tag("ul", "", "", "popup_box_list", "", "");
+        var li_name = create_tag("li", "", "", "", "", order["food_name"]);
+        var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
+        var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
+        console.log(order["food_name"]);
+        delete_button.onclick = delete_food_from_order(order["id"]);
 
-    div_2.appendChild(img);
+        ul.appendChild(li_name);
+        ul.appendChild(li_price);
+        ul.appendChild(delete_button);
+        ul2.appendChild(li_comment);
 
-    div_1.appendChild(div_2);
-    var div_3 = create_tag("div", "", "", "food_card_info_box", "", "");
-    var ul = create_tag("ul", "", "", "food_info_box_list", "", "");
-    var li_burger = create_tag("li", "", "", "", "", name);
-    var li_price = create_tag("li", "", "", "", "", "" + price);
-    var div_4 = create_tag("ul", "", "", "food_button_box_list", "", "");
-    var div_8 = create_tag("li", "", "", "button", "", "Add To Order");
-    var div_7 = create_tag("li", "", "", "output", id + "card_total", "" + 0);
-    var delete_button = create_tag("li", "", "", "button", "", "delete");
-    var comment = create_tag("input", "", "", "text", id + "comment", "comment");
-    //adding on click functions to increment the popup quantity
-    div_8.onclick = add_food_to_order(id, comment.id);
-    delete_button.onclick = delete_food_from_menu(id);
-    div_4.appendChild(div_7);
-    div_4.appendChild(div_8);
 
-    div_4.appendChild(delete_button);
-    div_4.appendChild(comment);
-    ul.appendChild(li_burger);
-    ul.appendChild(li_price);
-    div_3.appendChild(ul);
-    div_1.appendChild(div_3);
-    div_3.appendChild(div_4)
-    ;
-    return div_1;
+        li.appendChild(ul);
+        li.appendChild(ul2);
+        popup_tag.appendChild(li);
+    }
+    var total_tag = document.getElementById("order_total");
+    total_tag.innerText = "Total: " + total_price;
+    var button = document.getElementById("submit_order");
+    button.innerText = "Submit Order (status: " + order_submitted + ")";
+
+}
+
+function add_section_for_each_food_category(categories) {
+    for (var i in categories) {
+        var cat = categories[i];
+        var section = document.createElement("SECTION");
+        section.className = "food_card_container";
+//       <h1 class="separator">
+//              <span>SIDES</span>
+//        </h1>
+        var separator = document.createElement("h1");
+        separator.className = "separator";
+        var span = document.createElement("span");
+        span.innerText = cat["name"].toUpperCase();
+        separator.appendChild(span);
+        section.id = cat["name"];
+        console.log(cat);
+        console.log("SECTION ID's: " + i);
+        document.getElementById("categories").appendChild(separator);
+
+        document.getElementById("categories").appendChild(section);
+    }
+}
+
+function load_food_cards_into_sections(food_list, food_categories) {
+    //load_header_tabs(categories);
+    // categories is a dictionary
+    var category_dict = {};
+    for (var i in food_categories) {
+        var category = food_categories[i];
+        console.log(category);
+        var cat_id = category["id"];
+        var cat_name = category["name"];
+        category_dict[cat_id] = cat_name;
+    }
+    for (var i in food_list) {
+        var food = food_list[i];
+        console.log("food: " + food);
+        var card = add_card(food);
+        var category_id = food["id"];
+        console.log(category_dict);
+        console.log("id to push to:" + category_dict[category_id]);
+        document.getElementById(category_dict[category_id]).appendChild(card);
+    }
+
+}
+
+// ========= JQUERY ACTIVE PAGE ACTIONS================
+$(document).ready(function () {
+    $("#basket").click(function (e) {
+        var x = document.getElementById("order_popup");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+        return false;
+    });
+});
+
+$("#popup_button_minimize").click(function () {
+    if ($(this).html() == "-") {
+        $(this).html("+");
+    } else {
+        $(this).html("-");
+    }
+    $("#box").slideToggle();
+});
+
+
+//======== AJAX REQUESTS ================================
+function delete_food_from_menu(id) {
+
+    return function () {
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_food_from_menu/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "food_id": id
+            }
+        })
+
+    }
+}
+
+
+function delete_food_from_order(order_id) {
+    return function () {
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_food_from_order/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "order_id": order_id
+            },
+        });
+
+
+    }
+
+
+}
+
+
+function add_food_to_order(food_id, comment_id) {
+    return function () {
+
+
+        var comment = document.getElementById(comment_id).value;
+
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var date_time = date + ' ' + time;
+        var context = {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "food_id": food_id,
+            "comment": comment,
+            "time": date_time
+
+        };
+
+
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'add_food_to_order/',
+            data: context
+        });
+    }
 }
 
 //the bellow function is not nice, however I made it as reference in 15 minutes, this is to be reformatted.
@@ -266,8 +286,6 @@ function add_card1(card) {
 //how does one retrieve the correct order?
 
 function update_menu_popup_data() {
-    var food_name, total_price, food_price, order_id, order_comment;
-
     $.ajax({
         url: 'get_menu_popup_data/',
         dataType: 'json',
@@ -290,81 +308,6 @@ function update_menu_popup_data() {
 
 }
 
-function populate_popup(data) {
-    //  let list = document.createElement("ul");
-    // list.className = "card";
-    // list.innerHTML = "<li>" + foodname + "</li>";
-
-    var popup_tag = document.getElementById("order_list");
-    while (popup_tag.firstChild) {
-        popup_tag.removeChild(popup_tag.firstChild)
-    }
-    var order_submitted = data["order_submitted"];
-    var order_list = data["table_order"];
-    var total_price = data["total_price"];
-    for (var order_id in order_list) {//For each order create it in the popup list
-        var order = order_list[order_id];
-        //    check if it is already loaded into the page
-        //    append it if it doesnt exist
-        var li = create_tag("ul", "", "", "", "", "");
-        var ul2 = create_tag("ul", "", "", "", "", "");
-        var delete_button = create_tag("button", "", "", "button", "", "Delete");
-        var ul = create_tag("ul", "", "", "popup_box_list", "", "");
-        var li_name = create_tag("li", "", "", "", "", order["food_name"]);
-        var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
-        var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
-        delete_button.onclick = delete_food_from_order(order["order_id"]);
-
-        ul.appendChild(li_name);
-        ul.appendChild(li_price);
-        ul.appendChild(delete_button);
-        ul2.appendChild(li_comment);
-
-
-        li.appendChild(ul);
-        li.appendChild(ul2);
-        popup_tag.appendChild(li);
-    }
-    var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "Total: " + total_price;
-    var button = document.getElementById("submit_order");
-    button.innerText = "Submit Order (status: " + order_submitted + ")";
-
-}
-
-function populate_popup2(data) {
-    var popup_tag = document.getElementById("order_list");
-    while (popup_tag.firstChild) {
-        popup_tag.removeChild(popup_tag.firstChild)
-    }
-    var order_submitted = data["order_submitted"];
-    var order_list = data["table_order"];
-    var total_price = data["total_price"];
-    for (var order_id in order_list) {
-        var order = order_list[order_id];
-        //    check if it is already loaded into the page
-        //    append it if it doesnt exist
-        var ul = create_tag("ul", "", "", "popup_box_list", "", "");
-        var li = create_tag("li", "", "", "", "", "");
-
-        var li_name = create_tag("li", "", "", "", "", order["food_name"]);
-        var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
-        var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
-        var delete_button = create_tag("li", "", "", "button", "", "Delete");
-        delete_button.onclick = delete_food_from_order(order["order_id"]);
-        ul.appendChild(delete_button);
-        ul.appendChild(li_name);
-        ul.appendChild(li_price);
-        ul.appendChild(li_comment);
-        li.appendChild(ul);
-        popup_tag.appendChild(li);
-    }
-    var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "Total: " + total_price;
-    var button = document.getElementById("submit_order");
-    button.innerText = "Submit Order (status: " + order_submitted + ")";
-
-}
 
 function submit_order() {
 
@@ -373,6 +316,7 @@ function submit_order() {
 
 }
 
+//======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================
 
 function create_tag(tag_name, href, src, tag_class, id, text) {
     var tag = document.createElement(tag_name);
@@ -401,65 +345,4 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 
 
 
-function add_section_for_each_food_category(categories) {
-    for (var i in categories) {
-        var cat = categories[i];
-        var section = document.createElement("SECTION");
-        section.className = "food_card_container";
-//       <h1 class="separator">
-//              <span>SIDES</span>
-//        </h1>
-        var separator = document.createElement("h1");
-        separator.className = "separator";
-        var span = document.createElement("span");
-        span.innerText = cat["name"].toUpperCase();
-        separator.appendChild(span);
-        section.id = cat["name"];
-        console.log(cat);
-        console.log("SECTION ID's: " + i);
-        document.getElementById("categories").appendChild(separator);
-
-        document.getElementById("categories").appendChild(section);
-    }
-}
-
-function load_food_cards_into_sections(categories, food_cards) {
-    //load_header_tabs(categories);
-    // categories is a dictionary
-    var category_dict = {};
-    for (var i in categories) {
-        var category = categories[i];
-        console.log(category);
-        var cat_id = category["id"];
-        var cat_name = category["name"];
-        category_dict[cat_id] = cat_name;
-    }
-    for (var i in food_cards) {
-        var food = food_cards[i];
-        console.log("food: " + food);
-        var card = add_card(food);
-        var category_id = food["category_id"];
-        console.log(category_dict);
-        console.log("id to push to:" + category_dict[category_id]);
-        document.getElementById(category_dict[category_id]).appendChild(card);
-    }
-
-}
-
-function add_card_old(food_name, price, id) {
-    console.log("Creating Card: " + food_name + " , " + price);
-    var div = document.createElement("div");
-    div.className = "bunny";
-    div.innerHTML = "<div class='image'><h1>" + food_name + "</h1></div> <div class='container'> <h4>" + price + "</h4> <p><button>Add to Order</button></p> </div>";
-    return div;
-}
-
-$("#popup_button_minimize").click(function () {
-    if ($(this).html() == "-") {
-        $(this).html("+");
-    } else {
-        $(this).html("-");
-    }
-    $("#box").slideToggle();
-});
 

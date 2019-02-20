@@ -20,6 +20,7 @@ var authenticated = false;
 function user_is_authenticated() {
     authenticated = true;
 }
+
 //========  LOADING DATA =============
 function load_data(data) {
 
@@ -27,15 +28,16 @@ function load_data(data) {
     update_menu_popup_data();
     setInterval(function () { //This send get request data every 2 seconds.
         update_menu_popup_data()
-    }, 2000);
+    }, 10000);
 
     var food_categories = data["category_list"];
     var foods = data["food_list"];
     load_tab_shortcut_buttons(food_categories);
     add_section_for_each_food_category(food_categories);
-    load_food_cards_into_sections(foods,food_categories);
+    load_food_cards_into_sections(foods, food_categories);
 
 }
+
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
     var div = document.getElementById("tabs_header");
@@ -99,16 +101,20 @@ function populate_popup(data) {
     //  let list = document.createElement("ul");
     // list.className = "card";
     // list.innerHTML = "<li>" + foodname + "</li>";
-
+    var table_order=data["table_order"];
     var popup_tag = document.getElementById("order_list");
     while (popup_tag.firstChild) {
         popup_tag.removeChild(popup_tag.firstChild)
     }
-    var order_submitted = data["order_submitted"];
-    var order_list = data["table_order"];
-    var total_price = data["total_price"];
+    var order_submitted = table_order["status"];
+    var order_list = table_order["orders"];
+    var total_price = table_order["total_price"];
+
     for (var order_id in order_list) {//For each order create it in the popup list
         var order = order_list[order_id];
+        console.log("I'm here now?");
+                console.log(order["food_name"]);
+
         //    check if it is already loaded into the page
         //    append it if it doesnt exist
         var li = create_tag("ul", "", "", "", "", "");
@@ -117,8 +123,9 @@ function populate_popup(data) {
         var ul = create_tag("ul", "", "", "popup_box_list", "", "");
         var li_name = create_tag("li", "", "", "", "", order["food_name"]);
         var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
-        var li_comment = create_tag("li", "", "", "", "", "" + order["food_comment"]);
-        delete_button.onclick = delete_food_from_order(order["order_id"]);
+        var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
+        console.log(order["food_name"]);
+        delete_button.onclick = delete_food_from_order(order["id"]);
 
         ul.appendChild(li_name);
         ul.appendChild(li_price);
@@ -136,6 +143,7 @@ function populate_popup(data) {
     button.innerText = "Submit Order (status: " + order_submitted + ")";
 
 }
+
 function add_section_for_each_food_category(categories) {
     for (var i in categories) {
         var cat = categories[i];
@@ -157,7 +165,8 @@ function add_section_for_each_food_category(categories) {
         document.getElementById("categories").appendChild(section);
     }
 }
-function load_food_cards_into_sections(food_list,food_categories) {
+
+function load_food_cards_into_sections(food_list, food_categories) {
     //load_header_tabs(categories);
     // categories is a dictionary
     var category_dict = {};
@@ -201,8 +210,6 @@ $("#popup_button_minimize").click(function () {
     }
     $("#box").slideToggle();
 });
-
-
 
 
 //======== AJAX REQUESTS ================================
@@ -279,8 +286,6 @@ function add_food_to_order(food_id, comment_id) {
 //how does one retrieve the correct order?
 
 function update_menu_popup_data() {
-    var food_name, total_price, food_price, order_id, order_comment;
-
     $.ajax({
         url: 'get_menu_popup_data/',
         dataType: 'json',
@@ -310,6 +315,7 @@ function submit_order() {
     window.location += "submit_order/"
 
 }
+
 //======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================
 
 function create_tag(tag_name, href, src, tag_class, id, text) {

@@ -13,6 +13,10 @@ import json
 import uuid
 from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
 
+with open('config.json') as json_data_file:
+    data = json.load(json_data_file)
+table_order_states = data["table_order_states"]
+
 # from MenuView.models import
 # from MenuView.forms import
 # ---------THESE ARE FUNCTIONS THAT TAKE CARE OF USER'S REQUEST USING FORMS, DATABASE MODELS AND HTML-------------
@@ -51,6 +55,8 @@ def menu(request):
         print("AVAILABLE TABLES:", table.id, ": ", table.number)
     return render(
         request, 'menu/templates/welcome_page.html', context={})
+
+
 def menu_with_id(request, table_id):
     """
     Serves Main menu screen with relevant data
@@ -92,22 +98,19 @@ def get_menu_popup_data(request, table_id):
 
     try:
         table_order = TableOrder.objects.get(id=table_id)
-        table_order_items=TableOrder.orders.all()
+        table_order_items = table_order.orders.all()
         # convert to dict:
-        response_dict={"table_order":table_order.to_dict()}
+        response_dict = {"table_order": table_order.to_dict()}
         # replace the order items (id's to the object dictionaries)
-        temp=response_dict["table_order"]
-        temp["orders"]=db_objects_to_list_of_dicts(table_order_items)
+        temp = response_dict["table_order"]
+        temp["orders"] = db_objects_to_list_of_dicts(table_order_items)
         # calc total price
-        total_price=0
+        total_price = 0
         for order_item in table_order_items:
-            total_price+= order_item.food.price
-        response_dict.update({'total_price': total_price})
-        if (table_order.client_confirmed):
-            status = "submitted"
-        else:
-            status = "not-submitted"
-        response_dict.update({"order_submitted": status})
+            total_price += order_item.food.price
+        response_dict["table_order"].update({'total_price': total_price})
+
+        print(response_dict)
         response = {
             'success': True,
             'message': json.dumps(response_dict)  # Dumps data and creates a string
@@ -119,7 +122,6 @@ def get_menu_popup_data(request, table_id):
     except Exception as e:
         print("EXCEPTION menu_popup_update: ", e)
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
-
 
 
 def welcome_page(request):
@@ -144,7 +146,7 @@ def submit_order(request, table_id):
     print("CALLED SUBMIT ORDER")
     try:
         table_order = TableOrder.objects.get(id=table_id)
-        table_order.client_confirmed = True
+        table_order.status = table_order_states["client_confirmed"]
         table_order.save()
         #     UPDATE THE WAITER HERE?
         return HttpResponseRedirect("/menu/" + table_id + "/")
@@ -153,6 +155,7 @@ def submit_order(request, table_id):
         print("FAIlED to submit order: ", e)
         print("redirecting")
         return HttpResponseRedirect("/menu/" + table_id + "/")
+
 
 def add_food_to_order(request, table_id):
     """
@@ -175,9 +178,6 @@ def add_food_to_order(request, table_id):
                     id=table_id,
                     table=Table.objects.get(id=table_id),
                     time=request.POST['time'],
-                    client_confirmed=False,
-                    chef_confirmed=False,
-                    waiter_confirmed=False
                 )
                 table_order.save()
             except Exception as e:
@@ -188,11 +188,11 @@ def add_food_to_order(request, table_id):
                 return JsonResponse(response)
 
         try:
-            if not table_order.client_confirmed:
+            if table_order.status == table_order_states["client_created"]:
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
-                    comment="comment: " + request.POST['comment'],
+                    comment=request.POST['comment'],
                 )
                 table_order.orders.add(order)
                 response = SUCCESSFUL_RESPONSE
@@ -205,17 +205,20 @@ def add_food_to_order(request, table_id):
         return JsonResponse(response)
     else:
         pass
+
+
 # =========== DELETE FROM DB FUNCTIONS:=========================
 
 def delete_food_from_order(request, table_id):
     print("DELETING FOOD ORDER ITEM")
     try:
         table_order = TableOrder.objects.get(id=table_id)
-        if not table_order.client_confirmed:
+        if table_order.status == table_order_states["client_created"]:
             order = table_order.orders.get(id=request.POST["order_id"])
             order.delete()
             return JsonResponse(SUCCESSFUL_RESPONSE)
         else:
+            print("UNSUCESSFUL")
             return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
@@ -237,4 +240,3 @@ def delete_table_order(request, table_id):
             table_order.delete()
         except:
             print("System failed to delete")
-

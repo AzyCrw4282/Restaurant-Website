@@ -80,7 +80,7 @@ class Order(models.Model):
     status = models.TextField(default=False)
 
     def to_dict(self):
-        dict = {"food": self.food.id, "comment": self.comment, "id": self.id, "status": self.status}
+        dict = {"food_id": self.food.id,"food_name":self.food.name,"food_price":self.food.price, "comment": self.comment, "id": self.id, "status": self.status}
         return dict
 
 

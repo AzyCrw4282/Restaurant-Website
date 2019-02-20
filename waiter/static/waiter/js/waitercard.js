@@ -29,9 +29,9 @@ function update_waiter_card() {
 
 }
 
-function load_data(data) {
-    console.log(data);
-    load_cards(data["table_orders"])
+function load_data(order_list) {
+    console.log(order_list);
+    load_cards(order_list)
 }
 
 function load_cards(table_orders) {

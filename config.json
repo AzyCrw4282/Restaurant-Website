@@ -8,5 +8,9 @@
     "chef_confirmed": "chef_confirmed",
     "chef_canceled": "chef_canceled",
     "archived": "archived"
+  },
+  "order_states":{
+    "cooking": "cooking",
+    "done": "done"
   }
 }

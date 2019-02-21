@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<link rel="stylesheet" href="css/Waiterver2.css" type="text/css"/>
-<link rel="stylesheet" href="css/bootstrap-grid.css" type="text/css"/>
-<link rel="stylesheet" href="css/bootstrap-reboot.css" type="text/css"/>
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
-<link rel="stylesheet" href="css/waitercard.css" type="text/css"/>
-<script src="js/bootstrap.bundle.js"></script>
-<script src="js/Waiterver2.js"></script>
-<script src="js/bootstrap.js"></script>
+<link rel="stylesheet" href="../static/waiter/css/Waiterver2.css" type="text/css"/>
+<link rel="stylesheet" href="../static/waiter/css/bootstrap-grid.css" type="text/css"/>
+<link rel="stylesheet" href="../static/waiter/css/bootstrap-reboot.css" type="text/css"/>
+<link rel="stylesheet" href="../static/waiter/css/bootstrap.css" type="text/css"/>
+<link rel="stylesheet" href="../static/waiter/css/waitercard.css" type="text/css"/>
+<script src="../static/waiter/js/bootstrap.bundle.js"></script>
+<script src="../static/waiter/js/Waiterver2.js"></script>
+<script src="../static/waiter/js/bootstrap.js"></script>
 
 
 
@@ -56,7 +57,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#pendinglist" href="#pending2">Order 2 2</a>
+                    <a data-toggle="collapse" data-parent="#pendinglist" href="#pending2">Order 2</a>
                 </h4>
             </div>
             <div id="pending2" class="panel-collapse collapse">
@@ -111,7 +112,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen1">Order 1</a>
+                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen1">Order 11</a>
                 </h4>
             </div>
             <div id="kitchen1" class="panel-collapse collapse in">
@@ -135,7 +136,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen2">Order 2 2</a>
+                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen2">Order 22</a>
                 </h4>
             </div>
             <div id="kitchen2" class="panel-collapse collapse">
@@ -159,7 +160,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen3">Order 3</a>
+                    <a data-toggle="collapse" data-parent="#kitchenlist" href="#kitchen3">Order 33</a>
                 </h4>
             </div>
             <div id="kitchen3" class="panel-collapse collapse">
@@ -186,20 +187,162 @@
 
 <!-- Tab 3 -->
 <div id="ready" class="tabcontent">
-    <div id="readylist">
 
-
-
+    <div class="panel-group" id="readylist">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#readylist" href="#ready1">Order 111</a>
+                </h4>
+            </div>
+            <div id="kitchen1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#readylist" href="#ready2">Order 222</a>
+                </h4>
+            </div>
+            <div id="ready2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#readylist" href="#ready3">Order 333</a>
+                </h4>
+            </div>
+            <div id="ready3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 <!-- Tab 4 -->
 <div id="archive" class="tabcontent">
-    <div id="">
 
-
-
+    <div class="panel-group" id="archivelist">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#archivelist" href="#archive1">Order 1111</a>
+                </h4>
+            </div>
+            <div id="archive1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#archivelist" href="#archive2">Order 2222</a>
+                </h4>
+            </div>
+            <div id="archive2" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#archivelist" href="#archive3">Order 3333</a>
+                </h4>
+            </div>
+            <div id="archive3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="card text-center border border-secondary">
+                        <div class="card-body" style="">
+                            <h5 class="border-bottom border-dark">OrderNo</h5>
+                            <h5 class="card-title border-bottom border-dark">TableNo</h5>
+                            <ol class="text-left">
+                                <li>One</li>
+                                <li>Two</li>
+                                <li>Three</li>
+                            </ol>
+                            <p class="text-monospace">Comments in the order would go here<br>~~<br>~~<br>~~</p><a class="btn btn-primary w-50" href="#">Confirm</a><a class="btn w-50 btn-secondary" href="#">Cancel</a>
+                        </div>
+                        <div class="card-footer text-muted">%TIMESTAMP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 

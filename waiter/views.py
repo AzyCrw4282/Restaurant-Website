@@ -66,22 +66,6 @@ def insert_stuff(request):
         request, 'waiter/templates/insert_example.html', context)
 
 
-def confirm_order(request):
-    try:
-        order = TableOrder.objects.get(request.POST["table_order_id"])
-        order.waiter_confirmed = True
-        order.save()
-    except Exception as e:
-        pass
-
-
-def delete_order(request):
-    try:
-        order = TableOrder.objects.get(request.POST["table_order_id"])
-        order.delete()
-    except Exception as e:
-        pass
-
 
 def delete_food(request):
     print("called delete_food")
@@ -98,33 +82,25 @@ def delete_food(request):
             return
 
 
-#Functions for waiter_state handling
-def confirm_order_state(request,state):
-    try:
-        order = Order.objects.get(request.POST["order_id"])
-        order.status = state
-        order.save()
-    except Exception as e:
-        print(e)
+
+def archive_order(order):
+    pass
+
+def change_table_order_state(request):
+    if request.method=='POST':
+        print("changing state of table order")
+        try:
+            table_order = TableOrder.objects.get(id=request.POST["table_order_id"])
+            table_order.status = request.POST["state"]
+            print("STATE CHANGED TO: ",table_order.status)
+            table_order.save()
+        except Exception as e:
+            print("FAILED:")
+            print(e)
 
 
 
-def cancel_order_state(request,state):
-    try:
-        order = Order.objects.get(request.POST["order_id"])
-        order.status = state
-        order.save()
-    except Exception as e:
-        print(e)
 
-
-def delivered_order_state(request,state):
-    try:
-        order = Order.objects.get(request.POST["order_id"])
-        order.status = state
-        order.save()
-    except Exception as e:
-        print(e)
 
 
 

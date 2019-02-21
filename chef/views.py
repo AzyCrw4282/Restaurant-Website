@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from menu.models import TableOrder
-from menu.models imort Order
+from menu.models import Order
+from django.http import JsonResponse
 
 import json
+
 # Create your views here.
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)
@@ -28,6 +30,7 @@ def chef(request):
     data.update({"table_orders": []})
     table_order_list = data["table_orders"]
     for table_order in table_orders:
+        print("STATUS",table_order.status)
         if table_order.status == table_order_states["waiter_confirmed"]:
             table_order_items = table_order.orders.all()
             # convert to dict:
@@ -43,67 +46,41 @@ def chef(request):
 
     print("printing data", data)
 
-    return render(request,"chef/templates/KitchenView.html",{"table_orders":data})
+    return render(request, "chef/templates/KitchenView.html", {"table_orders": data})
 
 
-def confirm_order(request):
-    try:
-        order = TableOrder.objects.get(request.POST["table_order_id"])
-        order.waiter_confirmed = True
-        order.save()
-    except Exception as e:
-        pass
+# Need to distinguish between removing single order and cancelling whole table order
+def get_order_states(request):
+    if request.method == 'GET':
+        response_dict = {}
+        # SENDING ALL THE ORDERS TO THE CHEFS
+        for order in Order.objects.all():
+            response_dict.update({order.id: order.status})
+        response = {
+            'success': True,
+            'message': json.dumps(response_dict)  # Dumps data and creates a string
+        }
+
+        return JsonResponse(response)  # Response returned to ajax call
 
 
-def cancle_order(request):
-    try:
-        order = TableOrder.objects.get(request.POST["table_order_id"])
-        order.delete()
-    except Exception as e:
-        pass
-
-#Need to distinguish between removing single order and cancelling whole table order
-def set_order_state(request,state):
-    try:
-        order = Order.objects.get(request.POST['order_id'])
-        order.status = state
-        order.save()
-    except Exception as e:
-        print(e)
+def change_order_state(request):
+    if request.method == 'POST':
+        print("changing state of order")
+        try:
+            order = Order.objects.get(id=request.POST["order_id"])
+            order.status = request.POST["state"]
+            order.save()
+        except Exception as e:
+            print(e)
 
 
-
-
-def set_table_order_state(request,state):
-    try:
-        order = Order.objects.get(request.POST['table_order_id'])
-        order.status = state
-        order.save()
-    except Exception as e:
-        print(e)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def change_table_order_state(request):
+    if request.method == 'POST':
+        print("changing state of table order")
+        try:
+            table_order = TableOrder.objects.get(id=request.POST["table_order_id"])
+            table_order.status = request.POST["state"]
+            table_order.save()
+        except Exception as e:
+            print(e)

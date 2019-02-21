@@ -4,10 +4,23 @@ from menu.models import Food, TableOrder, Order
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 import json
 
+with open('config.json') as json_data_file:
+    data = json.load(json_data_file)
+table_order_states = data["table_order_states"]
 
 # Create your views here.
 def get_waiter_card_data(request):
     return (1)
+def db_objects_to_list_of_dicts(objects):
+    '''
+    converts multiple db objects to a list of it's dictionaries
+    :param objects:
+    :return:
+    '''
+    list = []
+    for db_object in objects:
+        list.append(db_object.to_dict())
+    return list
 
 
 def waiter(request):
@@ -17,18 +30,21 @@ def waiter(request):
     data.update({"table_orders": []})
     table_order_list = data["table_orders"]
     for table_order in table_orders:
-        if table_order.client_confirmed:
-            table_order_order_list = []
-            for order_object in table_order.orders.all():
-                table_order_list_order = {}
-                table_order_list_order.update(
-                    {"id": order_object.id, "food_name": order_object.food.name, "comment": order_object.comment})
-                table_order_order_list.append(table_order_list_order)
-            table_order_list.append({"id": table_order.id, "table_number": table_order.table.number,
-                                     "waiter_confirmed": table_order.waiter_confirmed.__str__(),
-                                     "time": table_order.time.__str__(), "orders": table_order_order_list})
+        if not table_order.status==table_order_states["client_created"]:
+            table_order_items = table_order.orders.all()
+            # convert to dict:
+            temp_dict=table_order.to_dict()
+            temp_dict["orders"]=db_objects_to_list_of_dicts(table_order.orders.all())
+            total_price = 0
+            for order_item in table_order_items:
+                total_price += order_item.food.price
+            temp_dict.update({"total_price":total_price,"table_number":table_order.table.number})
+            table_order_list.append(temp_dict)
+            # replace the order items (id's to the object dictionaries)
+            # calc total price
+
     print("printing data", data)
-    return render(request, "waiter/templates/WaiterTest.html", {"table_orders": data})
+    return render(request, "waiter/templates/WaiterTest.html", data)
 
 
 def insert_stuff(request):

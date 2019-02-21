@@ -14,7 +14,18 @@
     <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
     <br><br><br><br>
     <br>
-    <div class="main">
+
+
+    <div id="banner" class="banner">
+            <div class="links_bar">
+                <a href="" id="login_link">Login</a>
+            </div>
+        </div>
+
+
+    <div class="background_welcome">
+        <img src="media/img/WelcomePage.png" alt="">
+     <div class="main">
         Welcome to the OOXACA?
         Please enter the Provided code:
         <br>
@@ -25,9 +36,16 @@
         <img src="media/img/food/cream.jpg" alt="">
 
         <input id="table_code" class="text">table code: </input>
-        <button class= "WelcomeButton"  onclick="redirect_user()">submit</button>
+        <button class="WelcomeButton" onclick="redirect_user()">submit</button>
 
     </div>
+    </div>
+
+
+
+
+
+
 
 {% endblock %}
 </html>

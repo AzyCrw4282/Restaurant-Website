@@ -8,6 +8,8 @@
 {% load staticfiles %}
 
 {% block body %}
+<table style="width:100%">
+    <td width = "80%">
     <script src="{% static 'menu/js/menu.js' %}"></script>
     <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
@@ -15,10 +17,12 @@
     <link rel="stylesheet" href="{% static 'menu/css/menu2.css' %}" type="text/css"/>
     <div class="top_header">
         <div class="tabs_header" id="tabs_header">
-
         </div>
-
     </div>
+
+
+
+
 
     <form onsubmit="return false">
         {% csrf_token %}
@@ -26,12 +30,14 @@
 
         </div>
     </form>
-    <td style="width:40%">
 
+    </td>
+
+<td width = "20%">
     <div id="order_popup" class="order_popup">
-        <h3>
+        <h1>
             Order:
-        </h3>
+        </h1>
         <ul aria-label="order" id="order_list" class="order_list">
 
         </ul>
@@ -50,4 +56,6 @@
     </script>
 
 {% endblock %}
+    </td>
+    </table>
 </html>

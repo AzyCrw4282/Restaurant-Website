@@ -76,15 +76,9 @@
 .order_popup {
     color:black;
     position:fixed;
-    top: 10%;
-    right: 10px;
-    max-width: 400px;
-    min-width: 225px;
+    top: 15%;
+    width: 18%;
     overflow-y: scroll;
-    opacity: 0.7;
-    box-shadow: 0 1px 4px 0;
-    transition: 0.3s;
-    border-radius: 5px;
     display:none;
 }
 

@@ -14,7 +14,9 @@
 // this is an function gets the context passed to the html and checks
 //it's relevance and readability
 
-
+// SECTION STRUCTURE OF THIS FILE:
+// ACCESS POINT (LOADING DATA FROM HTML)
+// CREATING HTML ELEMENTS FOR THE PAGE
 var authenticated = false;
 
 function user_is_authenticated() {
@@ -23,8 +25,6 @@ function user_is_authenticated() {
 
 //========  LOADING DATA =============
 function load_data(data) {
-
-    console.log(data);
     update_menu_popup_data();
     setInterval(function () { //This send get request data every 2 seconds.
         update_menu_popup_data()
@@ -60,14 +60,18 @@ function load_tab_shortcut_buttons(categories) {
 }
 
 function add_card(card) {
+    console.log(card);
     var src = card["picture"];
     var food_name = card["name"];
     var price = card["price"];
     var id = card["id"];
+    var food_information = card["information"];
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
+    var div_21 = create_tag("div","","","","","");
+    var div_22 = create_tag("button","","","food_information",id,"i");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
@@ -84,6 +88,8 @@ function add_card(card) {
 
     div_1.appendChild(heading);
     div_2.appendChild(img);
+    div_2.appendChild(div_21);
+    div_21.appendChild(div_22);
     div_3.appendChild(textField);
     div_4.appendChild(orderBtn);
     div_1.appendChild(div_2);
@@ -112,8 +118,7 @@ function populate_popup(data) {
 
     for (var order_id in order_list) {//For each order create it in the popup list
         var order = order_list[order_id];
-        console.log("I'm here now?");
-                console.log(order["food_name"]);
+
 
         //    check if it is already loaded into the page
         //    append it if it doesnt exist
@@ -124,7 +129,7 @@ function populate_popup(data) {
         var li_name = create_tag("li", "", "", "", "", order["food_name"]);
         var li_price = create_tag("li", "", "", "", "", "" + order["food_price"]);
         var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
-        console.log(order["food_name"]);
+
         delete_button.onclick = delete_food_from_order(order["id"]);
 
         ul.appendChild(li_name);
@@ -158,8 +163,7 @@ function add_section_for_each_food_category(categories) {
         span.innerText = cat["name"].toUpperCase();
         separator.appendChild(span);
         section.id = cat["name"];
-        console.log(cat);
-        console.log("SECTION ID's: " + i);
+
         document.getElementById("categories").appendChild(separator);
 
         document.getElementById("categories").appendChild(section);
@@ -172,18 +176,17 @@ function load_food_cards_into_sections(food_list, food_categories) {
     var category_dict = {};
     for (var i in food_categories) {
         var category = food_categories[i];
-        console.log(category);
+
         var cat_id = category["id"];
         var cat_name = category["name"];
         category_dict[cat_id] = cat_name;
     }
     for (var i in food_list) {
         var food = food_list[i];
-        console.log("food: " + food);
+
         var card = add_card(food);
         var category_id = food["id"];
-        console.log(category_dict);
-        console.log("id to push to:" + category_dict[category_id]);
+
         document.getElementById(category_dict[category_id]).appendChild(card);
     }
 
@@ -212,109 +215,15 @@ $("#popup_button_minimize").click(function () {
 });
 
 
-//======== AJAX REQUESTS ================================
-function delete_food_from_menu(id) {
+$(food).ready(function(){
+  $("#hide").click(function(){
+    $("p").hide();
+  });
+  $("#show").click(function(){
+    $("p").show();
+  });
+});
 
-    return function () {
-
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'delete_food_from_menu/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "food_id": id
-            }
-        })
-
-    }
-}
-
-
-function delete_food_from_order(order_id) {
-    return function () {
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'delete_food_from_order/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "order_id": order_id
-            },
-        });
-
-
-    }
-
-
-}
-
-
-function add_food_to_order(food_id, comment_id) {
-    return function () {
-
-
-        var comment = document.getElementById(comment_id).value;
-
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var date_time = date + ' ' + time;
-        var context = {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_id": food_id,
-            "comment": comment,
-            "time": date_time
-
-        };
-
-
-        $.ajax({
-            //Post request made here
-            type: "post",
-            url: 'add_food_to_order/',
-            data: context
-        });
-    }
-}
-
-//the bellow function is not nice, however I made it as reference in 15 minutes, this is to be reformatted.
-//if you do not understand why this is how it is implemented please refer to the following link:
-//http://www.howtocreate.co.uk/referencedvariables.html
-// this function should be a miniature basket instead of an offline thing,
-// sync request all items in a specific order currently stored in the database
-//how does one retrieve the correct order?
-
-function update_menu_popup_data() {
-    $.ajax({
-        url: 'get_menu_popup_data/',
-        dataType: 'json',
-        type: 'GET',
-        success: function (data) {
-            if (JSON.parse(data["success"]) == "1") {
-                try {
-                    populate_popup(JSON.parse(data['message']));
-                } catch (e) {
-                    //    data is empty
-                }
-            } else {
-                console.log("NO DATA")
-
-            }
-        },
-        error: function (data) {
-        }
-    });
-
-}
-
-
-function submit_order() {
-
-    console.log("submitting order");
-    window.location += "submit_order/"
-
-}
 
 //======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================
 
@@ -343,6 +252,11 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 
 }
 
+
+function submit_order() {
+    console.log("submitting order");
+    window.location += "submit_order/"
+}
 
 
 

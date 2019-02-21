@@ -14,12 +14,28 @@ import uuid
 
 # notes:
 # a constant system for max length should be looked into
+from django.db import models
+from django.utils.timezone import now
+import json
+from datetime import datetime
+import os
+import uuid
+
+# Create your models here
+
+# CONVENTIONS:
+# class title : CamelCase
+# element naming: example_element
+#
+
+# notes:
+# a constant system for max length should be looked into
 
 # Table( _id  )
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
-
+order_states=data["order_states"]
 
 class Table(models.Model):
     number = models.IntegerField(default=0)
@@ -77,10 +93,10 @@ class Food(models.Model):
 class Order(models.Model):
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     comment = models.CharField(default="", max_length=200)
-    status = models.TextField(default=False)
+    status = models.TextField(default=order_states["cooking"])
 
     def to_dict(self):
-        dict = {"food_id": self.food.id,"food_name":self.food.name,"food_price":self.food.price, "comment": self.comment, "id": self.id, "status": self.status}
+        dict = {"food": self.food.id,"food_name":self.food.name, "comment": self.comment, "id": self.id, "status": self.status}
         return dict
 
 
@@ -91,16 +107,13 @@ class TableOrder(models.Model):
     time = models.DateTimeField(auto_now=True, blank=True, null=True)
     status = models.TextField(default=table_order_states["client_created"])
     id = models.TextField(primary_key=True)
+
     def to_dict(self):
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
                 "id": self.id}
         for order in self.orders.all():
             dict["orders"].append(order.id)
         return dict
-
-
-
-
 
 # Table( _id  )
 #

@@ -138,6 +138,69 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
 
 }
+//Anyone working on chef - Use this function to change the state
+function set_order_state(order_id,state) {
+
+        $.ajax({
+            type: "post",
+            url: 'set_order_state/',
+            data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "order_id": order_id,
+            "state": state
+            }
+        });
+}
+
+function set_table_order_state(table_order_id,state) {
+
+        $.ajax({
+            type: "post",
+            url: 'set_table_order_state/',
+            data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "table_order_id": table_order_id,
+            "state": state
+            }
+        });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function add_listeners(){
      var list = document.querySelector('ul');
     list.addEventListener('click', function (ev) {

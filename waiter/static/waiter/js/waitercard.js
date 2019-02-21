@@ -8,84 +8,6 @@
 
 var tempOrder = [];
 
-
-function update_waiter_card() {
-    var food_name, total_price, food_price, order_id, order_comment;
-
-    $.ajax({
-        url: 'get_waiter_card_data/',
-        dataType: 'json',
-        type: 'GET', // A get request data to update data
-        success: function (data) {
-            if (JSON.parse(data["success"]) == "1") {
-                populate_popup(JSON.parse(data['message']));//To populate called here
-            } else {
-                console.log("NO DATA")
-            }
-        },
-        error: function (data) {
-        }
-    });
-
-}
-//if order is cancelled by waiter, send to the archive
-function cancel_order_state(order_id,state){
-
-    $.ajax({
-        type: "post",
-        url: 'cancel_order_state/',
-        data: {
-        csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-        "order_id": order_id,
-        "state": state
-        }
-    });
-
-
-
-
-}
-//After client confirms, waiter can confirm it
-function confirm_order_state(order_id,state){
-
-    $.ajax({
-    type: "post",
-    url: 'confirm_order_state/',
-    data: {
-    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-    "order_id": order_id,
-    "state": state
-    }
-});
-
-
-
-
-
-}
-
-function delivered_order_state(order_id,state){
-
-    $.ajax({
-    type: "post",
-    url: 'delivered_order_state/',
-    data: {
-    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-    "order_id": order_id,
-    "state": state
-    }
-});
-
-
-
-
-
-}
-
-
-
-
-
 function load_data(order_list) {
     console.log(order_list);
     load_cards(order_list)
@@ -127,7 +49,8 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
-
+    confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
+    cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);

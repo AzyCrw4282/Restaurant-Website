@@ -5,7 +5,10 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-                  path('',views.chef, name='chef'),
-                  url(r'^chef/set_order_state/$',views.set_order_state(),name='set_order_state'),
-                  url(r'^chef/set_table_order_state/$',views.set_table_order_state(),name='set_table_order_state')
+                  path('', views.chef, name='chef'),
+                  url(r'^get_order_states/$', views.get_order_states, name='get_order_states'),
+
+                  url(r'^change_order_state/$', views.change_order_state, name='change_order_state'),
+                  url(r'^change_table_order_state/$', views.change_table_order_state, name='change_table_order_state')
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

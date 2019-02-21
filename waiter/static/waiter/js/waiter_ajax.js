@@ -1,21 +1,10 @@
 //This is a JS file for retrieving data in json format
 
-/*
+// SECTIONS OF THIS IFLE:
+// INSERTING ITEMS INTO THE DATABASE
+// ON CLICK EVENTS (FOR THE BUTTONS IN THE WAITER PAGE
 
-Data will be listed in a dictionary format.
-
-E.g.
-# {
-#   "comment":int,
-#   "orders": [
-#       {"id":int,"comment":comment },
-#       {"id":int,"comment":comment }
-#   ]
-# }
-
-*/
-
-
+// ========= INSERTING ITEMS INTO THE DATABASE=========
 // function for add_food not added - octavio's req
 function add_food() {
 
@@ -40,8 +29,8 @@ function add_table() {
         url: 'add_table/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_id":document.getElementById("table_id").value,
-            "table_number":document.getElementById("table_number").value
+            "table_id": document.getElementById("table_id").value,
+            "table_number": document.getElementById("table_number").value
         }
     })
 }
@@ -53,7 +42,7 @@ function delete_table(table_id) {
     ];
 
     $.ajax({
-        //Post request made here
+        //Post rupdate_waiter_cardequest made here
         type: "post",
         url: 'delete_table/',
         data: {
@@ -79,6 +68,7 @@ function add_food_information(food_information_name) {
         }
     })
 }
+
 //Unsure on how these id's are being passed
 function delete_food_information(food_information_id) {
 
@@ -100,7 +90,7 @@ function add_food_category(food_category_name) {
         url: 'add_food_category/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_category_name":document.getElementById("food_category_name").value
+            "food_category_name": document.getElementById("food_category_name").value
 
         }
     })
@@ -143,6 +133,43 @@ function delete_table_order(table_order_id) {
         }
     })
 }
+
+//========== FUNCTIONS UPDATING THE WAITER PAGE AND ON CLICK EVENTS=================
+function update_waiter_card() {
+    var food_name, total_price, food_price, order_id, order_comment;
+
+    $.ajax({
+        url: 'get_waiter_card_data/',
+        dataType: 'json',
+        type: 'GET', // A get request data to update data
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                populate_popup(JSON.parse(data['message']));//To populate called here
+            } else {
+                console.log("NO DATA")
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
+
+function change_table_order_state(table_order_id, state) {
+    return function () {
+        $.ajax({
+            type: "post",
+            url: 'change_table_order_state/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "table_order_id": table_order_id,
+                "state": state
+            }
+        });
+    }
+
+}
+
 
 
 

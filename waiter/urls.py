@@ -12,12 +12,15 @@ urlpatterns = [
 
 #For testing      url(r'^welcome/$', views.waiter, name='waiter'),
 
+                #url redirection for states
+                url(r'^change_table_order_state/$', views.change_table_order_state, name='change_table_order_state'),
+
                 #URL to redirect adding data to the card
                   url(r'^get_waiter_card_data//$', views.get_waiter_card_data, name='get_waiter_card_data'),
 
 
-                  url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
 
+                  url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
                   url(r'^insert_stuff/delete_table/$', db_insert.delete_table, name='delete_table'),
                   url(r'^insert_stuff/add_table/$', db_insert.add_table, name='add_food_category'),
                   url(r'^insert_stuff/add_food_information/$', db_insert.add_food_information, name='add_food_information'),

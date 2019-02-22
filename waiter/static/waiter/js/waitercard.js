@@ -1,4 +1,4 @@
-/* Data structure should loaded in as Order( _id , Menu_id , Table_id , Customer_id , time_of_order )
+/* Data structure should loaded in as Order( _id , Menu_id , Table_id , Customer_id , time_of_order, state )
  * (from schema.txt)
  * Example how it's supposed to display in the waitercard.html
  *
@@ -21,17 +21,34 @@ function load_cards(table_orders) {
         var table_order_time = table_order["time"];
         var table_order_table_number = table_order["table_number"];
         var table_order_order_list = table_order["orders"];
-        add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        var table_order_state = table_order["state"] //However the state of the order needs to be loaded
+        if(table_order_state == "client_confirmed"){
+            add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        }
+        else if(table_order_state == "waiter_confirmed"){
+            add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        }
+        else if(table_order_state == "chef_confirmed"){
+            add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        }
+        else if(table_order_state == "chef_cancelled"){
+            add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        }
+        else if(table_order_state == "archived"){
+            add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+        }
+
 
 
     }
 }
 
-function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+//Pending cards
+function add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
 
-    var card_list = document.getElementById("card_list");
+    var pendinglist = document.getElementById("pendinglist");
     console.log("static: ");
-    console.log("hello from script");
+    console.log("creating pendingcard");
     var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
     var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
@@ -57,6 +74,154 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     cardbody.appendChild(comment_box);
     cardbody.appendChild(confirm_button);
     cardbody.appendChild(cancel_button);
+
+    border.appendChild(cardbody);
+    border.appendChild(footer);
+    card_list.appendChild(border);
+}
+
+//Orders in kitchen
+function add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+
+    var card_list = document.getElementById("card_list");
+    console.log("static: ");
+    console.log("creating kitchencard");
+    var border = create_tag("div", "", "", "cardkitchen text-center border border-dark", "", "");
+    var cardbody = create_tag("div", "", "", "card-body", "", "");
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
+    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
+    for (var i in table_order_order_list) {
+        var order_item = table_order_order_list[i];
+        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
+        list_of_items.appendChild(order_item_tag);
+
+    }
+
+    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
+    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
+    cardbody.appendChild(order_num_head);
+    cardbody.appendChild(order_table_head);
+    cardbody.appendChild(list_of_items);
+    cardbody.appendChild(comment_box);
+    //cardbody.appendChild(confirm_button);
+    //cardbody.appendChild(cancel_button);
+
+    border.appendChild(cardbody);
+    border.appendChild(footer);
+    card_list.appendChild(border);
+}
+
+//Order ready cards
+function add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+
+    var card_list = document.getElementById("card_list");
+    console.log("static: ");
+    console.log("adding readycard");
+    var border = create_tag("div", "", "", "cardready text-center border border-ready", "", "");
+    var cardbody = create_tag("div", "", "", "card-body", "", "");
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
+    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
+    for (var i in table_order_order_list) {
+        var order_item = table_order_order_list[i];
+        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
+        list_of_items.appendChild(order_item_tag);
+
+    }
+
+    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
+    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    deliver_button.onclick=change_table_order_state(table_order_id,"waiter_delivered");
+    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
+    cardbody.appendChild(order_num_head);
+    cardbody.appendChild(order_table_head);
+    cardbody.appendChild(list_of_items);
+    cardbody.appendChild(comment_box);
+    cardbody.appendChild(deliver_button);
+    //cardbody.appendChild(cancel_button);
+
+    border.appendChild(cardbody);
+    border.appendChild(footer);
+    card_list.appendChild(border);
+}
+
+//Orders cancelled by kitchen
+function add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+
+    var card_list = document.getElementById("card_list");
+    console.log("static: ");
+    console.log("creating kitchencancelcard");
+    var border = create_tag("div", "", "", "cardready text-center border border-secondary", "", "");
+    var cardbody = create_tag("div", "", "", "card-body", "", "");
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
+    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
+    for (var i in table_order_order_list) {
+        var order_item = table_order_order_list[i];
+        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
+        list_of_items.appendChild(order_item_tag);
+
+    }
+
+    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
+    cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
+    cardbody.appendChild(order_num_head);
+    cardbody.appendChild(order_table_head);
+    cardbody.appendChild(list_of_items);
+    cardbody.appendChild(comment_box);
+    //cardbody.appendChild(confirm_button);
+    cardbody.appendChild(cancel_button);
+
+    border.appendChild(cardbody);
+    border.appendChild(footer);
+    card_list.appendChild(border);
+}
+
+//Archived Orders
+function add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
+
+    var card_list = document.getElementById("card_list");
+    console.log("static: ");
+    console.log("creating kitchencard");
+    var border = create_tag("div", "", "", "cardkitchen text-center border border-secondary", "", "");
+    var cardbody = create_tag("div", "", "", "card-body", "", "");
+    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "table code: " + table_order_id);
+    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
+    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
+    for (var i in table_order_order_list) {
+        var order_item = table_order_order_list[i];
+        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
+        list_of_items.appendChild(order_item_tag);
+
+    }
+
+    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
+    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
+    cardbody.appendChild(order_num_head);
+    cardbody.appendChild(order_table_head);
+    cardbody.appendChild(list_of_items);
+    cardbody.appendChild(comment_box);
+    //cardbody.appendChild(confirm_button);
+    //cardbody.appendChild(cancel_button);
 
     border.appendChild(cardbody);
     border.appendChild(footer);

@@ -3274,6 +3274,50 @@ input[type="button"].btn-block {
     border-bottom-right-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem; }
 
+.cardkitchen {
+  position: relative;
+  display: inline-block;
+  flex-direction: column;
+  width: 450px;
+  height: 450px;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #808080;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem; }
+.cardkitchen > hr {
+  margin-right: 0;
+  margin-left: 0; }
+.cardkitchen > .list-group:first-child .list-group-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem; }
+.cardkitchen > .list-group:last-child .list-group-item:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem; }
+
+.cardready {
+  position: relative;
+  display: inline-block;
+  flex-direction: column;
+  width: 450px;
+  height: 450px;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem; }
+.cardready > hr {
+  margin-right: 0;
+  margin-left: 0; }
+.cardready > .list-group:first-child .list-group-item:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem; }
+.cardready > .list-group:last-child .list-group-item:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem; }
+
 .card-body {
   flex: 1 1 auto;
   padding: 1.25rem; }
@@ -4682,6 +4726,10 @@ button.bg-dark:focus {
 
 .border-secondary {
   border-color: #FF0000 !important; }
+
+.border-ready {
+  border-color: #0bff00 !important;
+}
 
 .border-success {
   border-color: #28a745 !important; }

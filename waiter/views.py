@@ -44,7 +44,7 @@ def waiter(request):
             # calc total price
 
     print("printing data", data)
-    return render(request, "waiter/templates/WaiterTest.html", data)
+    return render(request, "waiter/templates/Waiterver2.html", data)
 
 
 def insert_stuff(request):

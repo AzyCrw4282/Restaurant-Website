@@ -21,27 +21,25 @@ function load_cards(table_orders) {
         var table_order_time = table_order["time"];
         var table_order_table_number = table_order["table_number"];
         var table_order_order_list = table_order["orders"];
-        var table_order_state = table_order["state"] //However the state of the order needs to be loaded
+        var table_order_state = table_order["status"]; //However the state of the order needs to be loaded
 
         //Conditionals so cards are loaded into the correct places
-        if(table_order_state == "client_confirmed"){
-            add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
-        }
-        else if(table_order_state == "waiter_confirmed"){
-            add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
-        }
-        else if(table_order_state == "chef_confirmed"){
-            add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
-        }
-        else if(table_order_state == "chef_cancelled"){
-            add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
-        }
-        else if(table_order_state == "archived"){
-            add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
-        }
+        console.log("State:"+table_order_state);
 
-
-
+        switch (table_order_state) {
+            case "client_confirmed":
+                add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+                break;
+            case "waiter_confirmed":
+                add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+                break;
+            case "chef_confirmed":
+                add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+                break;
+            case "archived":
+                add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+                break;
+        }
     }
 }
 
@@ -53,21 +51,21 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     console.log("creating pendingcard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "","","panel panel-default","","");
-    var panel_header = create_tag("div","","","panel-heading","","");
-    var panel_title = create_tag("h4","", "","panel-title","","");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement(a);
-    panel_title_text.setAttribute("data-toggle","collapse");
+    var panel_title_text = document.createElement('a');
+    panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#pending_list");
-    panel_title_text.href = "#pending"+table_order_id;
-    panel_title_text.innerHTML = "Order: "+table_order_id;
+    panel_title_text.href = "#pending" + table_order_id;
+    panel_title_text.innerHTML = "Order: " + table_order_id;
 
-    var panel_content_top = create_tag("div","","","panel-collapse collapse in","pending"+table_order_id,"");
-    var panel_body = create_tag("div","","","panel-body","","");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "pending" + table_order_id, "");
+    var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
 
     //Creating card divs
@@ -88,8 +86,8 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
-    confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
+    confirm_button.onclick = change_table_order_state(table_order_id, "waiter_confirmed");
+    cancel_button.onclick = change_table_order_state(table_order_id, "waiter_canceled");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
@@ -122,21 +120,21 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     console.log("creating kitchencard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "","","panel panel-default","","");
-    var panel_header = create_tag("div","","","panel-heading","","");
-    var panel_title = create_tag("h4","", "","panel-title","","");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement(a);
-    panel_title_text.setAttribute("data-toggle","collapse");
+    var panel_title_text = document.createElement('a');
+    panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#kitchen_list");
-    panel_title_text.href = "#kitchen"+table_order_id;
-    panel_title_text.innerHTML = "Order: "+table_order_id;
+    panel_title_text.href = "#kitchen" + table_order_id;
+    panel_title_text.innerHTML = "Order: " + table_order_id;
 
-    var panel_content_top = create_tag("div","","","panel-collapse collapse in","kitchen"+table_order_id,"");
-    var panel_body = create_tag("div","","","panel-body","","");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "kitchen" + table_order_id, "");
+    var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
     //Creating card divs
     var border = create_tag("div", "", "", "cardkitchen text-center border border-dark", "", "");
@@ -189,21 +187,21 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     console.log("creating readycard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "","","panel panel-default","","");
-    var panel_header = create_tag("div","","","panel-heading","","");
-    var panel_title = create_tag("h4","", "","panel-title","","");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement(a);
-    panel_title_text.setAttribute("data-toggle","collapse");
+    var panel_title_text = document.createElement("a");
+    panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
-    panel_title_text.href = "#ready"+table_order_id;
-    panel_title_text.innerHTML = "Order: "+table_order_id;
+    panel_title_text.href = "#ready" + table_order_id;
+    panel_title_text.innerHTML = "Order: " + table_order_id;
 
-    var panel_content_top = create_tag("div","","","panel-collapse collapse in","ready"+table_order_id,"");
-    var panel_body = create_tag("div","","","panel-body","","");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
+    var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
     //Creating card divs
     var border = create_tag("div", "", "", "cardready text-center border border-ready", "", "");
@@ -223,7 +221,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
-    deliver_button.onclick=change_table_order_state(table_order_id,"waiter_delivered");
+    deliver_button.onclick = change_table_order_state(table_order_id, "waiter_delivered");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
@@ -255,21 +253,21 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     console.log("creating readycard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "","","panel panel-default","","");
-    var panel_header = create_tag("div","","","panel-heading","","");
-    var panel_title = create_tag("h4","", "","panel-title","","");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement(a);
-    panel_title_text.setAttribute("data-toggle","collapse");
+    var panel_title_text = document.createElement("a");
+    panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
-    panel_title_text.href = "#ready"+table_order_id;
-    panel_title_text.innerHTML = "Order: "+table_order_id;
+    panel_title_text.href = "#ready" + table_order_id;
+    panel_title_text.innerHTML = "Order: " + table_order_id;
 
-    var panel_content_top = create_tag("div","","","panel-collapse collapse in","ready"+table_order_id,"");
-    var panel_body = create_tag("div","","","panel-body","","");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
+    var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
     //Creating card divs
     var border = create_tag("div", "", "", "cardready text-center border border-secondary", "", "");
@@ -290,7 +288,7 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    cancel_button.onclick=change_table_order_state(table_order_id,"archived");
+    cancel_button.onclick = change_table_order_state(table_order_id, "archived");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
@@ -315,27 +313,26 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
 
 //Archived Orders
 function add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
-
     var pending_list = document.getElementById("archive_list");
     console.log("static: ");
     console.log("creating archivecard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "","","panel panel-default","","");
-    var panel_header = create_tag("div","","","panel-heading","","");
-    var panel_title = create_tag("h4","", "","panel-title","","");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement(a);
-    panel_title_text.setAttribute("data-toggle","collapse");
+    var panel_title_text = document.createElement("a");
+    panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#archive_list");
-    panel_title_text.href = "#archive"+table_order_id;
-    panel_title_text.innerHTML = "Order: "+table_order_id;
+    panel_title_text.href = "#archive" + table_order_id;
+    panel_title_text.innerHTML = "Order: " + table_order_id;
 
-    var panel_content_top = create_tag("div","","","panel-collapse collapse in","archive"+table_order_id,"");
-    var panel_body = create_tag("div","","","panel-body","","");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "archive" + table_order_id, "");
+    var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
     //Creating card divs
     var border = create_tag("div", "", "", "cardkitchen text-center border border-secondary", "", "");

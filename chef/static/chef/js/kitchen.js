@@ -65,7 +65,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     var div_container = document.createElement("div");
     div_container.className = "container";
     var div_container_button_c = document.createElement("button");
-    div_container_button_c.onclick = change_table_order_state(table_order_id,"chef_canceled");confirmCancel(table_order_id);
+    div_container_button_c.onclick = change_table_order_state_cancel(table_order_id,"chef_canceled");
     div_container_button_c.className = "cancel";
     div_container_button_c.innerText += "Cancel";
     var div_container_p = document.createElement("p");
@@ -74,7 +74,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
     div_container_p = document.createElement("p");
     var div_container_button = document.createElement("button");
-    div_container_button.onclick = change_table_order_state(table_order_id,"chef_confirmed");confirmDone(table_order_id);
+    div_container_button.onclick = change_table_order_state_complete(table_order_id,"chef_confirmed");
     div_container_button.className = "done";
     div_container_button.innerText += "Done";
     div_container_p.appendChild(div_container_button);
@@ -85,9 +85,6 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
 
 }
-
-//Anyone working on chef - Use this function to change the state
-// changes state of the order
 
 
 function add_listeners() {
@@ -109,7 +106,7 @@ function addChecked() {
 }
 
 function confirmCancel(objid) {
-    return function () {
+
         var cancel = confirm("Are you sure you want to cancel this order");
 
         if (cancel == true) {
@@ -120,11 +117,13 @@ function confirmCancel(objid) {
         if (cancel == false) {
             document.getElementById(objid).style.backgroundColor = "#ffffff";
         }
-    }
+
+        return cancel;
+
 }
 
 function confirmDone(objid) {
-    return function () {
+
         var done = confirm("Are you sure you want to complete this order");
 
         if (done == true) {
@@ -134,8 +133,9 @@ function confirmDone(objid) {
         if (done == false) {
             document.getElementById(objid).style.backgroundColor = "#ffffff";
         }
-    }
+
 }
+
 
 function removeCard(objid, typestr) {
 

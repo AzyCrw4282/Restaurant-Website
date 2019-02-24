@@ -62,8 +62,26 @@ def get_order_states(request):
     if request.method == 'GET':
         response_dict = {}
         # SENDING ALL THE ORDERS TO THE CHEFS
-        for order in Order.objects.all():
-            response_dict.update({order.id: order.status})
+        relevant_orders=TableOrder.objects.filter(status="waiter_confirmed")
+
+        for table_order in relevant_orders:
+
+            for order in table_order.orders.all():
+                response_dict.update({order.id: order.status})
+        response = {
+            'success': True,
+            'message': json.dumps(response_dict)  # Dumps data and creates a string
+        }
+
+        return JsonResponse(response)  # Response returned to ajax call
+def get_table_order_states(request):
+    if request.method == 'GET':
+        response_dict = []
+        # SENDING ALL THE ORDERS TO THE CHEFS
+        relevant_orders=TableOrder.objects.filter(status="waiter_confirmed")
+        for order in relevant_orders.all():
+            response_dict.append(order.id)
+        print(response_dict)
         response = {
             'success': True,
             'message': json.dumps(response_dict)  # Dumps data and creates a string
@@ -91,5 +109,8 @@ def change_table_order_state(request):
             table_order = TableOrder.objects.get(id=request.POST["table_order_id"])
             table_order.status = request.POST["state"]
             table_order.save()
+            return JsonResponse(SUCCESSFUL_RESPONSE)
         except Exception as e:
             print(e)
+            return JsonResponse(UNSUCCESSFUL_RESPONSE)
+

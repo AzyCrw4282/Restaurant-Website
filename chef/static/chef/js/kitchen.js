@@ -1,9 +1,6 @@
-
 function load_data(table_order_list) {
     load_cards(table_order_list);
-    list_toggles();
 }
-
 
 
 function load_cards(data) {
@@ -23,19 +20,46 @@ function load_cards(data) {
         add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
     }
 }
-function update_order_list_items(order_dict){
-    for (var key in order_dict){
-        var order_status=order_dict[key];
-        var order_li=document.getElementById(key);
-        if(order_status=="cooking"){
-            order_li.className="";
-             order_li.onclick=change_order_state(key,"done");
-        }else{
-            order_li.className="checked";
-            order_li.onclick=change_order_state(key,"cooking");
+
+//SEND A REQUEST FOR ALL ID'S EVERY COUPLE SECONDS CHECK IF THEY ARE
+//ALL HERE ON THE PAGE OR IF SOME ARE MISSING ON THE PAGE OR IN THE REQUEST
+//IF THERE ARE ANY ABNORMALITIES REQUEST A RELOAD OF THE PAGE.
+
+function update_table_order_cards(card_id_list) {
+//    check if an update is required if it is reload page
+    for (var card_id in card_id_list) {
+        if (document.getElementById(card_id)) {
+            //    id exists all good
+        } else {
+            // there is a new id, reload the page :/
+            location.reload();
         }
     }
 }
+
+function update_order_list_items(order_dict) {
+    for (var key in order_dict) {
+        console.log(key);
+    }
+    for (var key in order_dict) {
+        console.log(key);
+        var order_status = order_dict[key];
+        var order_li = document.getElementById("order_li" + key);
+        if (order_li) {
+            console.log(order_li);
+            if (order_status == "cooking") {
+                order_li.className = "";
+                order_li.onclick = change_order_state(key, "done");
+            } else {
+                order_li.className = "checked";
+                order_li.onclick = change_order_state(key, "cooking");
+            }
+
+        }
+
+    }
+}
+
 function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
     console.log("adding card");
     console.log(table_order_order_list);
@@ -59,13 +83,13 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
         var food_name = order_item["food_name"];
         var comment = order_item["comment"];
         var order_li = document.createElement("li");
-        order_li.id = "" + order_id;
+        order_li.id = "order_li" + order_id;
         order_li.innerText = food_name + " : " + comment;
-        if(order_item["status"]=="cooking"){
-             order_li.onclick=change_order_state(order_id,"done");
-        }else{
-            order_li.className="checked";
-            order_li.onclick=change_order_state(order_id,"cooking");
+        if (order_item["status"] == "cooking") {
+            order_li.onclick = change_order_state(order_id, "done");
+        } else {
+            order_li.className = "checked";
+            order_li.onclick = change_order_state(order_id, "cooking");
         }
 
         div_img_ul.appendChild(order_li);
@@ -76,7 +100,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     var div_container = document.createElement("div");
     div_container.className = "container";
     var div_container_button_c = document.createElement("button");
-    div_container_button_c.onclick = change_table_order_state(table_order_id,"chef_canceled");
+    div_container_button_c.onclick = change_table_order_state(table_order_id, "chef_canceled");
     div_container_button_c.className = "cancel";
     div_container_button_c.innerText += "Cancel";
     var div_container_p = document.createElement("p");
@@ -85,7 +109,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
     div_container_p = document.createElement("p");
     var div_container_button = document.createElement("button");
-    div_container_button.onclick = change_table_order_state(table_order_id,"chef_confirmed");
+    div_container_button.onclick = change_table_order_state(table_order_id, "chef_confirmed");
     div_container_button.className = "done";
     div_container_button.innerText += "Done";
     div_container_p.appendChild(div_container_button);
@@ -94,7 +118,6 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     var a = document.getElementById("card_container");
     a.appendChild(div);
     update_order_states();
-
 
 }
 

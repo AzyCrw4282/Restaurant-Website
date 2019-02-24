@@ -51,11 +51,11 @@ function load_tab_shortcut_buttons(categories) {
         a.innerHTML += cat_name.toUpperCase();
         div.appendChild(a);
     }
-    var a = document.createElement("a");
-    a.style = "text-decoration:none;";
-    a.innerHTML += "BASKET";
-    a.href = "#basket";
-    a.id = "basket";
+    // var a = document.createElement("a");
+    // a.style = "text-decoration:none;";
+    // a.innerHTML += "BASKET";
+    // a.href = "#basket";
+    // a.id = "basket";
     div.appendChild(a);
 }
 
@@ -193,17 +193,17 @@ function load_food_cards_into_sections(food_list, food_categories) {
 }
 
 // ========= JQUERY ACTIVE PAGE ACTIONS================
-$(document).ready(function () {
-    $("#basket").click(function (e) {
-        var x = document.getElementById("order_popup");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-        return false;
-    });
-});
+// $(document).ready(function () {
+//     $("#basket").click(function (e) {
+//         var x = document.getElementById("order_popup");
+//         if (x.style.display === "none") {
+//             x.style.display = "block";
+//         } else {
+//             x.style.display = "none";
+//         }
+//         return false;
+//     });
+// });
 
 $("#popup_button_minimize").click(function () {
     if ($(this).html() == "-") {
@@ -252,11 +252,6 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 
 }
 
-
-function submit_order() {
-    console.log("submitting order");
-    window.location += "submit_order/"
-}
 
 
 

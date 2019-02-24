@@ -27,6 +27,10 @@ function delete_food_from_order(order_id) {
                 csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
                 "order_id": order_id
             },
+            success: function (data) {
+                console.log(data);
+                update_menu_popup_data();
+            },
         });
 
 
@@ -35,28 +39,33 @@ function delete_food_from_order(order_id) {
 
 }
 
+function submit_order() {
+    // var today = new Date();
+    //     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    //     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    //     var date_time = date + ' ' + time;
+    console.log("submitting order");
+    window.location += "submit_order/"
+}
+
+
 function add_food_to_order(food_id, comment_id) {
     return function () {
-
-
         var comment = document.getElementById(comment_id).value;
-
-        var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var date_time = date + ' ' + time;
         var context = {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "food_id": food_id,
             "comment": comment,
-            "time": date_time
-
         };
         $.ajax({
             //Post request made here
             type: "post",
             url: 'add_food_to_order/',
-            data: context
+            data: context,
+            success: function (data) {
+                console.log(data);
+                update_menu_popup_data();
+            },
         });
     }
 }
@@ -90,4 +99,7 @@ function update_menu_popup_data() {
     });
 
 }
+
+
+
 

@@ -80,7 +80,7 @@
     top: 15%;
     width: 18%;
     overflow-y: scroll;
-    display:none;
+    display:block;
 }
 
 .order_list {
@@ -295,23 +295,6 @@ banner {
 ::-webkit-scrollbar-thumb:hover {
     background: #9c240d;
 }
-
-/*.button {*/
-/*display: block;*/
-/*color: black;*/
-/*text-align: center;*/
-/*cursor: pointer;*/
-/*}*/
-
-/*.button:after {*/
-/*content: "";*/
-/*clear: both;*/
-/*display: table;*/
-/*}*/
-
-/*.button button:hover {*/
-/*background-color: #ff9933;*/
-/*}*/
 
 
 p {

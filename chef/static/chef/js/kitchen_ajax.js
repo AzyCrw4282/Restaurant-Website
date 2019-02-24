@@ -1,17 +1,37 @@
-function change_table_order_state(table_order_id, state) {
-    return function () {
-        $.ajax({
-            type: "post",
-            url: 'change_table_order_state/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "table_order_id": table_order_id,
-                "state": state
-            }
-        });
-    }
 
+function change_table_order_state_cancel(table_order_id, state) {
+    return function () {
+    confirmCancel(table_order_id);
+    $.ajax({
+        type: "post",
+        url: 'change_table_order_state/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "table_order_id": table_order_id,
+            "state": state
+        }
+    });
+ }
 }
+
+
+function change_table_order_state_complete(table_order_id, state) {
+    return function () {
+    confirmDone(table_order_id);
+    $.ajax({
+        type: "post",
+        url: 'change_table_order_state/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "table_order_id": table_order_id,
+            "state": state
+        }
+    });
+ }
+}
+
+
+
 
 function change_order_state(order_id, state) {
     return function () {
@@ -24,8 +44,12 @@ function change_order_state(order_id, state) {
                 "state": state
             }
         });
+
+
     }
+
 }
+
 
 
 function get_order_states() {
@@ -57,3 +81,26 @@ function get_order_states() {
         }
     });
 }
+
+
+
+// function change_table_order_state(table_order_id, state) {
+//     return function () {
+//         confirmCancel(table_order_id);
+//         $.ajax({
+//             type: "post",
+//             url: 'change_table_order_state/',
+//             data: {
+//                 csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+//                 "table_order_id": table_order_id,
+//                 "state": state
+//             }
+//         });
+//     }
+//
+// }
+
+
+
+
+

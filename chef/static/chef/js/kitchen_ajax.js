@@ -1,35 +1,19 @@
 
-function change_table_order_state_cancel(table_order_id, state) {
+function change_table_order_state(table_order_id, state) {
     return function () {
-    confirmCancel(table_order_id);
-    $.ajax({
-        type: "post",
-        url: 'change_table_order_state/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_order_id": table_order_id,
-            "state": state
-        }
-    });
- }
+        confirmCancel(table_order_id);
+        $.ajax({
+            type: "post",
+            url: 'change_table_order_state/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "table_order_id": table_order_id,
+                "state": state
+            }
+        });
+    }
+
 }
-
-
-function change_table_order_state_complete(table_order_id, state) {
-    return function () {
-    confirmDone(table_order_id);
-    $.ajax({
-        type: "post",
-        url: 'change_table_order_state/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_order_id": table_order_id,
-            "state": state
-        }
-    });
- }
-}
-
 
 
 
@@ -42,7 +26,12 @@ function change_order_state(order_id, state) {
                  csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
                 "order_id": order_id,
                 "state": state
+            },
+            success: function(data){
+                console.log(data);
+                update_order_states();
             }
+
         });
 
 
@@ -52,7 +41,7 @@ function change_order_state(order_id, state) {
 
 
 
-function get_order_states() {
+function update_order_states() {
 //    returns a dictionary the id being the order id and the state as per the config file
 //    example return:
 //     {
@@ -68,8 +57,10 @@ function get_order_states() {
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
                 try {
+                    var orders=JSON.parse(data["message"]);
+                    update_order_list_items(orders);
                 //    enter your function with what you wanna do with the data here e.g.:
-                //    do_something(data)
+                //    do_something(orders)
                 } catch (e) {
                     //    data is empty
                 }
@@ -82,23 +73,6 @@ function get_order_states() {
     });
 }
 
-
-
-// function change_table_order_state(table_order_id, state) {
-//     return function () {
-//         confirmCancel(table_order_id);
-//         $.ajax({
-//             type: "post",
-//             url: 'change_table_order_state/',
-//             data: {
-//                 csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-//                 "table_order_id": table_order_id,
-//                 "state": state
-//             }
-//         });
-//     }
-//
-// }
 
 
 

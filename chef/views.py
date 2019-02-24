@@ -10,6 +10,14 @@ with open('config.json') as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 
+UNSUCCESSFUL_RESPONSE = {
+    'success': False,
+    'message': 'FAILURE '
+}
+SUCCESSFUL_RESPONSE = {
+    'success': True,
+    'message': 'SUCCESS'
+}
 
 def db_objects_to_list_of_dicts(objects):
     '''
@@ -71,8 +79,9 @@ def change_order_state(request):
             order = Order.objects.get(id=request.POST["order_id"])
             order.status = request.POST["state"]
             order.save()
+            return JsonResponse(SUCCESSFUL_RESPONSE)
         except Exception as e:
-            print(e)
+            return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
 def change_table_order_state(request):

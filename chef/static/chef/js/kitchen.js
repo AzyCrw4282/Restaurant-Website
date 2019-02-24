@@ -4,15 +4,7 @@ function load_data(table_order_list) {
     list_toggles();
 }
 
-function list_toggles() {
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function (ev) {
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
 
-}
 
 function load_cards(data) {
     console.log(data);
@@ -31,7 +23,19 @@ function load_cards(data) {
         add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
     }
 }
-
+function update_order_list_items(order_dict){
+    for (var key in order_dict){
+        var order_status=order_dict[key];
+        var order_li=document.getElementById(key);
+        if(order_status=="cooking"){
+            order_li.className="";
+             order_li.onclick=change_order_state(key,"done");
+        }else{
+            order_li.className="checked";
+            order_li.onclick=change_order_state(key,"cooking");
+        }
+    }
+}
 function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
     console.log("adding card");
     console.log(table_order_order_list);
@@ -57,6 +61,13 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
         var order_li = document.createElement("li");
         order_li.id = "" + order_id;
         order_li.innerText = food_name + " : " + comment;
+        if(order_item["status"]=="cooking"){
+             order_li.onclick=change_order_state(order_id,"done");
+        }else{
+            order_li.className="checked";
+            order_li.onclick=change_order_state(order_id,"cooking");
+        }
+
         div_img_ul.appendChild(order_li);
     }
     div_img.appendChild(div_img_ul);
@@ -65,7 +76,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     var div_container = document.createElement("div");
     div_container.className = "container";
     var div_container_button_c = document.createElement("button");
-    div_container_button_c.onclick = change_table_order_state_cancel(table_order_id,"chef_canceled");
+    div_container_button_c.onclick = change_table_order_state(table_order_id,"chef_canceled");
     div_container_button_c.className = "cancel";
     div_container_button_c.innerText += "Cancel";
     var div_container_p = document.createElement("p");
@@ -74,7 +85,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
     div_container_p = document.createElement("p");
     var div_container_button = document.createElement("button");
-    div_container_button.onclick = change_table_order_state_complete(table_order_id,"chef_confirmed");
+    div_container_button.onclick = change_table_order_state(table_order_id,"chef_confirmed");
     div_container_button.className = "done";
     div_container_button.innerText += "Done";
     div_container_p.appendChild(div_container_button);
@@ -82,64 +93,9 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     div.appendChild(div_container);
     var a = document.getElementById("card_container");
     a.appendChild(div);
+    update_order_states();
 
 
 }
 
 
-function add_listeners() {
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function (ev) {
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
-}
-
-function addChecked() {
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function (ev) {
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
-}
-
-function confirmCancel(objid) {
-
-        var cancel = confirm("Are you sure you want to cancel this order");
-
-        if (cancel == true) {
-            document.getElementById(objid).style.backgroundColor = "#ee8400";
-            setTimeout(removeCard, 2200, objid, "Cancelled");
-            console.log("Order Cancelled");
-        }
-        if (cancel == false) {
-            document.getElementById(objid).style.backgroundColor = "#ffffff";
-        }
-
-        return cancel;
-
-}
-
-function confirmDone(objid) {
-
-        var done = confirm("Are you sure you want to complete this order");
-
-        if (done == true) {
-            document.getElementById(objid).style.backgroundColor = "#329c37";
-            setTimeout(removeCard, 4000, objid, "Completed");
-        }
-        if (done == false) {
-            document.getElementById(objid).style.backgroundColor = "#ffffff";
-        }
-
-}
-
-
-function removeCard(objid, typestr) {
-
-    var cardobj = document.getElementById(objid);
-    cardobj.parentElement.removeChild(cardobj);
-    alert(typestr + ": Table " + objid + " order has been removed ");
-}

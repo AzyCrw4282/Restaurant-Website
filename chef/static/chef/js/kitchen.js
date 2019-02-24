@@ -33,7 +33,8 @@ function update_table_order_cards(card_id_list) {
 //     console.log(card_id_list);
     var cards = document.getElementById("card_container");
     var number_of_cards = cards.children.length;
-
+    //update the states regardless because these can be clicked at any time...
+    update_order_states();
     if (card_id_list.length != number_of_cards) {
         location.reload()
     }

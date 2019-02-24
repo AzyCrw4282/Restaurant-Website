@@ -26,9 +26,6 @@ function user_is_authenticated() {
 //========  LOADING DATA =============
 function load_data(data) {
     update_menu_popup_data();
-    setInterval(function () { //This send get request data every 2 seconds.
-        update_menu_popup_data()
-    }, 10000);
 
     var food_categories = data["category_list"];
     var foods = data["food_list"];

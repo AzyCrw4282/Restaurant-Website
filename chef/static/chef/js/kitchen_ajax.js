@@ -10,6 +10,7 @@ function change_table_order_state(table_order_id, state) {
                 "state": state
             },
             success: function(data){
+                console.log("SUCCESS IN CHANGING STATE: ",data);
                 //reload the page to remove the card from all the items :D
                 location.reload();
             }
@@ -33,7 +34,6 @@ function change_order_state(order_id, state) {
                 "state": state
             },
             success: function(data){
-                console.log(data);
                 update_order_states();
             }
 
@@ -91,7 +91,6 @@ function update_order_states() {
             if (JSON.parse(data["success"]) == "1") {
                 try {
                     var orders=JSON.parse(data["message"]);
-                    console.log(orders);
                     update_order_list_items(orders);
                 //    enter your function with what you wanna do with the data here e.g.:
                 //    do_something(orders)

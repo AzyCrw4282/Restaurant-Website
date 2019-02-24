@@ -4,6 +4,9 @@ function load_data(table_order_list) {
 
 
 function load_cards(data) {
+    setInterval(function () {
+        update_table_order_states()
+    }, 5000);
     console.log(data);
     var table_orders = data["table_orders"];
     console.log(table_orders);
@@ -27,8 +30,15 @@ function load_cards(data) {
 
 function update_table_order_cards(card_id_list) {
 //    check if an update is required if it is reload page
-    for (var card_id in card_id_list) {
-        if (document.getElementById(card_id)) {
+//     console.log(card_id_list);
+    var cards = document.getElementById("card_container");
+    var number_of_cards = cards.children.length;
+
+    if (card_id_list.length != number_of_cards) {
+        location.reload()
+    }
+    for (var j in card_id_list) {
+        if (document.getElementById(card_id_list[j])) {
             //    id exists all good
         } else {
             // there is a new id, reload the page :/
@@ -38,11 +48,8 @@ function update_table_order_cards(card_id_list) {
 }
 
 function update_order_list_items(order_dict) {
+
     for (var key in order_dict) {
-        console.log(key);
-    }
-    for (var key in order_dict) {
-        console.log(key);
         var order_status = order_dict[key];
         var order_li = document.getElementById("order_li" + key);
         if (order_li) {

@@ -76,15 +76,15 @@ def get_order_states(request):
         return JsonResponse(response)  # Response returned to ajax call
 def get_table_order_states(request):
     if request.method == 'GET':
-        response_dict = []
+        response_list = []
         # SENDING ALL THE ORDERS TO THE CHEFS
         relevant_orders=TableOrder.objects.filter(status="waiter_confirmed")
-        for order in relevant_orders.all():
-            response_dict.append(order.id)
-        print(response_dict)
+        for table_order in relevant_orders.all():
+            response_list.append(table_order.id)
+        print(response_list)
         response = {
             'success': True,
-            'message': json.dumps(response_dict)  # Dumps data and creates a string
+            'message': json.dumps(response_list)  # Dumps data and creates a string
         }
 
         return JsonResponse(response)  # Response returned to ajax call

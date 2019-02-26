@@ -518,8 +518,9 @@ banner {
 }
 
 .veg_display_info {
-    width:100px;
+    width:30px;
     padding:50px 0;
     text-align: center;
     background-color:#C00000;
+    color:black;
 }

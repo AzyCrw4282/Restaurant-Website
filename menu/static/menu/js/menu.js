@@ -62,9 +62,11 @@ function load_tab_shortcut_buttons(categories) {
 function add_card(card) {
     // var information= card["information"]
     var information = [
-        {'name': 'vegan', 'ingredients': 'fit for vegans'},
-        {'name': 'hot', 'ingredients': 'fit for people who like spicy!'},
-        {'name': 'Veggie', 'ingredients': 'Meat!'},
+        {'name': 'Tabasco', 'ingredients': 'will kill you'},
+        {'name': 'yusra', 'ingredients': 'loves this one'},
+        {'name': 'chocolate', 'ingredients': 'Fit for dogs'},
+        {'name':'Yusra','ingredients':'loves this one!'},
+        {'name':'chocolate','ingredients':'Fit for dogs'}
     ];
     console.log(card);
     var src = card["picture"];
@@ -93,17 +95,17 @@ function add_card(card) {
     for (var i in information) {
         var info_name = information[i]["name"];
         var info_description = information[i]["ingredients"];
-        var vegan_button = create_tag("button", "", "", "food_information_specific", "food_button"+id, "" + info_name);
-        var display_button_info = create_tag("div", "", "", "", "veg_display_info" + id, "" + info_description)
-        div_23.appendChild(vegan_button);
+        var specific_button = create_tag("button", "", "", "food_information_specific", "food_button"+id, "" + info_name);
+        var display_button_info = create_tag("div", "", "", "", "veg_display_info" + id, "" + info_description);
+        specific_button.onclick=button_info(id);
+        div_23.appendChild(specific_button);
         div_1.appendChild(display_button_info);
 
 
     }
-
     //adding on click functions to increment the popup quantity
     orderBtn.onclick = add_food_to_order(id, textField.id);
-    vegan_button.onclick=button_info(id);
+
 
 
 
@@ -128,22 +130,15 @@ function add_card(card) {
 function button_info(id) {
 
     return function() {
-
         var display_info_box = document.getElementById("veg_display_info" + id);
         if (display_info_box.style.display === "none") {
-            display_info_box.style.display = "block";
-
+            display_info_box.style.display = "inline-block";
         } else {
             display_info_box.style.display = "none";
         }
     }
 
 }
-
-
-
-
-
 
 
 function populate_popup(data) {

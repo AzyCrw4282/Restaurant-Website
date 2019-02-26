@@ -60,35 +60,57 @@ function load_tab_shortcut_buttons(categories) {
 }
 
 function add_card(card) {
+    // var information= card["information"]
+    var information = [
+        {'name': 'vegan', 'ingredients': 'fit for vegans'},
+        {'name': 'hot', 'ingredients': 'fit for people who like spicy!'},
+        {'name': 'Veggie', 'ingredients': 'Meat!'},
+    ];
     console.log(card);
     var src = card["picture"];
     var food_name = card["name"];
     var price = card["price"];
     var id = card["id"];
-    var food_information = card["information"];
+    // var food_information = card["information"];
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
-    var div_21 = create_tag("div","","","","","");
-    var div_22 = create_tag("button","","","food_information",id,"i");
+    var div_21 = create_tag("div", "", "", "food_info", "", "");
+    var div_22 = create_tag("button", "", "", "food_information", id, "i");
+    var div_23 = create_tag("div", "", "", "veggie_info", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
     var orderBtn = create_tag("button", "", "", "block", "", "Add to Order " + price);
+
     if (authenticated) {
         var delete_button = create_tag("button", "", "", "block", "", "delete");
         delete_button.onclick = delete_food_from_menu(id);
 
     }
+    for (var i in information) {
+        var info_name = information[i]["name"];
+        var info_description = information[i]["ingredients"];
+        var vegan_button = create_tag("button", "", "", "food_information_specific", "food_button"+id, "" + info_name);
+        var display_button_info = create_tag("div", "", "", "", "veg_display_info" + id, "" + info_description)
+        div_23.appendChild(vegan_button);
+        div_1.appendChild(display_button_info);
+
+
+    }
 
     //adding on click functions to increment the popup quantity
     orderBtn.onclick = add_food_to_order(id, textField.id);
+    vegan_button.onclick=button_info(id);
+
+
 
     div_1.appendChild(heading);
     div_2.appendChild(img);
     div_2.appendChild(div_21);
+    div_2.appendChild(div_23);
     div_21.appendChild(div_22);
     div_3.appendChild(textField);
     div_4.appendChild(orderBtn);
@@ -103,11 +125,32 @@ function add_card(card) {
     return div_1;
 }
 
+function button_info(id) {
+
+    return function() {
+
+        var display_info_box = document.getElementById("veg_display_info" + id);
+        if (display_info_box.style.display === "none") {
+            display_info_box.style.display = "block";
+
+        } else {
+            display_info_box.style.display = "none";
+        }
+    }
+
+}
+
+
+
+
+
+
+
 function populate_popup(data) {
     //  let list = document.createElement("ul");
     // list.className = "card";
     // list.innerHTML = "<li>" + foodname + "</li>";
-    var table_order=data["table_order"];
+    var table_order = data["table_order"];
     var popup_tag = document.getElementById("order_list");
     while (popup_tag.firstChild) {
         popup_tag.removeChild(popup_tag.firstChild)
@@ -205,6 +248,9 @@ $(document).ready(function () {
     });
 });
 
+
+
+
 $("#popup_button_minimize").click(function () {
     if ($(this).html() == "-") {
         $(this).html("+");
@@ -212,16 +258,6 @@ $("#popup_button_minimize").click(function () {
         $(this).html("-");
     }
     $("#box").slideToggle();
-});
-
-
-$(food).ready(function(){
-  $("#hide").click(function(){
-    $("p").hide();
-  });
-  $("#show").click(function(){
-    $("p").show();
-  });
 });
 
 
@@ -258,5 +294,7 @@ function submit_order() {
     window.location += "submit_order/"
 }
 
-
+//     function display_ingredients(){
+//     alert(""+info_description);
+// }
 

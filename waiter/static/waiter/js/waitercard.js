@@ -13,6 +13,45 @@ function load_data(order_list) {
     load_cards(order_list)
 }
 
+function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state){
+    var del_card = document.getElementById("table_order_id:);
+    del_card.innerHTML = "";
+    switch(table_order_current_state) {
+        case "client_confirmed":
+            var del_card_parent = document.getElementById("pending_list");
+            break;
+        case "waiter_confirmed":
+            var del_card_parent = document.getElementById("kitchen_list");
+            break;
+        case "chef_confirmed":
+            var del_card_parent = document.getElementById("ready_list");
+            break;
+        case "archived":
+            var del_card_parent = document.getElementById("archive_list");
+            break;
+    }
+    console.log("Deleted card from "+table_order_current_state)
+    del_card_parent.parentNode.removeChild(del_card);
+
+    switch(table_order_new_state){
+        case "client_confirmed":
+            add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+            break;
+        case "waiter_confirmed":
+            add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+            break;
+        case "chef_confirmed":
+            add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+            break;
+        case "archived":
+            add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list);
+            break;
+
+    }
+    console.log("Added new card to "+ table_order_new_state)
+
+}
+
 function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];
@@ -51,7 +90,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     console.log("creating pendingcard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default","" + table_order_id, "");
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -62,7 +101,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#pending_list");
     panel_title_text.href = "#pending" + table_order_id;
-    panel_title_text.innerHTML = "Order: " + table_order_id;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "pending" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -82,12 +121,14 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     }
 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     confirm_button.onclick = change_table_order_state(table_order_id, "waiter_confirmed");
+    confirm_button.onclick = move_card(table_order_id,table_order_comment,table_order_time, table_order_table_number, table_order_order_list, "client_confirmed","waiter_confirmed")
     cancel_button.onclick = change_table_order_state(table_order_id, "waiter_canceled");
+    cancel_button.onclick = move_card(table_order_id,table_order_comment,table_order_time, table_order_table_number, table_order_order_list, "client_confirmed","archived")
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
@@ -115,12 +156,14 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
 //Orders in kitchen
 function add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
 
+
+
     var pending_list = document.getElementById("kitchen_list");
     console.log("static: ");
     console.log("creating kitchencard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -131,7 +174,7 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#kitchen_list");
     panel_title_text.href = "#kitchen" + table_order_id;
-    panel_title_text.innerHTML = "Order: " + table_order_id;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "kitchen" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -150,10 +193,10 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     }
 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
@@ -187,7 +230,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     console.log("creating readycard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -198,7 +241,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
     panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Order: " + table_order_id;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -217,11 +260,12 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     }
 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     deliver_button.onclick = change_table_order_state(table_order_id, "waiter_delivered");
+    deliver_button.onclick = move_card(table_order_id,table_order_comment,table_order_time, table_order_table_number, table_order_order_list, "kitchen_confirmed","archived")
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
@@ -253,7 +297,7 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     console.log("creating readycard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -264,7 +308,7 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
     panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Order: " + table_order_id;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -283,12 +327,13 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     }
 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     cancel_button.onclick = change_table_order_state(table_order_id, "archived");
+    cancel_button.onclick = move_card(table_order_id,table_order_comment,table_order_time, table_order_table_number, table_order_order_list, "kitchen_cancelled","archived")
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
@@ -318,7 +363,7 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     console.log("creating archivecard");
 
     //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "", "");
+    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -329,7 +374,7 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#archive_list");
     panel_title_text.href = "#archive" + table_order_id;
-    panel_title_text.innerHTML = "Order: " + table_order_id;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "archive" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -348,10 +393,10 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     }
 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
+    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);

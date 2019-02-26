@@ -19,17 +19,38 @@
     padding: 50px;
 
 }
-
-.WelcomeButton {
-    height: 100px;
-    width: 100px;
+.table_code_text{
+    height: 75px;
+    width: 500px;
+    height: 50px;
+    width: 500px;
+    position: absolute;
+    transition: .5s ease;
+    top: 30%;
+    left: 39%;
+}
+.welcome_message{
+      position: relative;
+    left: 500px;
 }
 
+
+
+.WelcomeButton {
+    height: 50px;
+    width: 100px;
+    position: absolute;
+    transition: .5s ease;
+    top: 40%;
+    left: 50%;
+    background-color: #f44336;
+}
+/*
 .text {
     height: 75px;
     width: 250px;
 }
-
+*/
 .food_card_separator {
     z-index: -1;
     padding: 10px;

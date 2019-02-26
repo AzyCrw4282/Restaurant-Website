@@ -220,7 +220,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var comment_box = create_tag("p", "", "", "text-monospace", "", "Waiter comment");
     var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_comment);
+    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     deliver_button.onclick = change_table_order_state(table_order_id, "waiter_delivered");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);

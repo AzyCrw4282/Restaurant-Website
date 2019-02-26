@@ -73,13 +73,9 @@
 }
 
 .order_popup {
-
-    color:black;
     position:fixed;
     top: 15%;
-    width: 18%;
-    overflow-y: scroll;
-    display:none;
+    width: = 18%;
 }
 
 .order_list {
@@ -88,16 +84,12 @@
 
 ul.popup_box_list li {
     display: table-cell;
-    max-width: 70px;
-    min-width: 70px;
-    background-color: #fff3cd;
-    font-family: -apple-system;
     text-align: center;
 }
 
 ul.food_button_box_list li {
     display: table-cell;
-    width: 33.33%;
+
     /*half of food_card_info_box*/
     height: 30px;
     font-family: -apple-system;
@@ -107,9 +99,6 @@ ul.food_button_box_list li {
 ul.food_info_box_list li {
     display: table-cell;
     color: white;
-    width: 150px;
-    /*half of food_card_info_box*/
-    height: 30px;
     background-color: black;
     font-family: -apple-system;
     text-align: center;
@@ -117,8 +106,6 @@ ul.food_info_box_list li {
 
 
 button.noOfItems {
-
-
     display: block;
     color: black;
     background-color: #9c240d;
@@ -152,13 +139,6 @@ p {
     font-size: 20px;
 }
 
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
 a {
     font-size: 30px;
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
@@ -168,6 +148,12 @@ h1, h2, h3 {
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
     text-align: center;
     color: #C00000;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 a:link, a:visited {
@@ -179,10 +165,7 @@ a:link, a:visited {
     display: inline-block;
 }
 
-a:hover, a:active {
-    background-color: #C00000;
-    color: white;
-}
+
 
 #tabs_header {
     position: fixed;

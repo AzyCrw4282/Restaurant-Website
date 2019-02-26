@@ -40,7 +40,6 @@
 
 .food_card {
     display: inline-block;
-
     box-shadow: 0 4px 4px 0 grey;
     margin: 1.8em;
     transition: 0.3s;
@@ -480,16 +479,47 @@ banner {
     left:90%;
     background-color:#C00000;
     color: white;
-    font-size:10px;
+    font-size:15px;
     padding: 4px 4px;
     border: none;
     cursor: pointer;
-    border-radius:50px;
+    border-radius:60px;
     text-align: center;
     font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+
+}
+.food_information_specific {
+    position: relative;
+    top:0%;
+    right:30%;
+    background-color: #41c005;
+    color: white;
+    font-size:15px;
+    padding: 4px 4px;
+    border: none;
+    cursor: pointer;
+    border-radius:60px;
+    text-align: center;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+
+}
+.food_info{
+    position: absolute;
+    left:30%;
+}
+.veggie_info {
+    position:relative;
+    left:30%;
 
 }
 .background_welcome {
     width:100%;
     height:100%;
+}
+
+.veg_display_info {
+    width:100px;
+    padding:50px 0;
+    text-align: center;
+    background-color:#C00000;
 }

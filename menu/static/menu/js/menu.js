@@ -182,7 +182,7 @@ function load_food_cards_into_sections(food_list, food_categories) {
         var food = food_list[i];
 
         var card = add_card(food);
-        var category_id = food["id"];
+        var category_id = food["category"];
 
         document.getElementById(category_dict[category_id]).appendChild(card);
     }
@@ -212,14 +212,14 @@ $("#popup_button_minimize").click(function () {
 });
 
 
-$(food).ready(function(){
-  $("#hide").click(function(){
-    $("p").hide();
-  });
-  $("#show").click(function(){
-    $("p").show();
-  });
-});
+// $(food).ready(function(){
+//   $("#hide").click(function(){
+//     $("p").hide();
+//   });
+//   $("#show").click(function(){
+//     $("p").show();
+//   });
+// });
 
 
 //======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================

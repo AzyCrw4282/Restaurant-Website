@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import FoodForm
 from menu.models import Food, TableOrder, FoodCategory
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
-from datetime import timedelta,datetime
+from datetime import timedelta, datetime
 
 import json
 
@@ -79,6 +79,7 @@ def insert_stuff(request):
     return render(
         request, 'waiter/templates/insert_example.html', context)
 
+
 def delete_old_table_orders(request):
     '''
     deletes all table orders older than specified number of days
@@ -86,40 +87,58 @@ def delete_old_table_orders(request):
     :param request: Post contains days: int
     :return:
     '''
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
-            relevant_orders = TableOrder.objects.all().filter(entered_gte=datetime.now()-timedelta(days=request.POST["days"])).delete()
+            relevant_orders = TableOrder.objects.all().filter(
+                entered_gte=datetime.now() - timedelta(days=request.POST["days"])).delete()
         except Exception as e:
-            print("FAILED TO DELETE TABLE ORDERS: ",e)
+            print("FAILED TO DELETE TABLE ORDERS: ", e)
     return JsonResponse(SUCCESSFUL_RESPONSE)
+
+
 def delete_food_category(request):
-    if request.method=="POST":
+    if request.method == "POST":
         try:
-            id=request.POST["food_category_id"]
+            id = request.POST["food_category_id"]
             FoodCategory.objects.get(id=id).delete()
 
         except Exception as e:
 
-            print("FAILED TO DELETE CATEGORY: ",e)
+            print("FAILED TO DELETE CATEGORY: ", e)
+
 
 def delete_unarchived_table_orders(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         relevant_orders = TableOrder.objects.all().exclude(status="archived")
         relevant_orders.delete()
-def get_table_order_states(request):
-    if request.method == 'GET':
-        response_list = []
-        # SENDING ALL THE ORDERS TO THE CHEFS
-        relevant_orders = TableOrder.objects.all().exclude(status="client_created")
-        for table_order in relevant_orders.all():
-            response_list.append(table_order.id)
-        print(response_list)
-        response = {
-            'success': True,
-            'message': json.dumps(response_list)  # Dumps data and creates a string
-        }
 
-        return JsonResponse(response)  # Response returned to ajax call
+
+def get_table_order_list(request):
+    if request.method == 'GET':
+        print("GETTING TABLE ORDER STATES: ")
+        # pass the order item's to the waiter
+        table_orders = TableOrder.objects.all().exclude(status="client_created")
+        data = {}
+        data.update({"table_orders": []})
+        table_order_list = data["table_orders"]
+        for table_order in table_orders:
+            table_order_items = table_order.orders.all()
+            # convert to dict:
+            temp_dict = table_order.to_dict()
+            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.orders.all())
+            total_price = 0
+            for order_item in table_order_items:
+                total_price += order_item.food.price
+            temp_dict.update({"total_price": total_price, "table_number": table_order.table.number})
+            table_order_list.append(temp_dict)
+            # replace the order items (id's to the object dictionaries)
+            # calc total price
+
+    response = {
+        'success': True,
+        'message': json.dumps(data)  # Dumps data and creates a string
+    }
+    return JsonResponse(response)  # Response returned to ajax call
 
 
 def delete_food(request):
@@ -135,10 +154,6 @@ def delete_food(request):
         except:
             print("error deleting food ")
             return
-
-
-def archive_order(order):
-    pass
 
 
 def change_table_order_state(request):

@@ -156,18 +156,56 @@ function update_waiter_card() {
 }
 
 function change_table_order_state(table_order_id, state) {
-    return function () {
-        $.ajax({
-            type: "post",
-            url: 'change_table_order_state/',
-            data: {
-                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-                "table_order_id": table_order_id,
-                "state": state
-            }
-        });
-    }
 
+    $.ajax({
+        type: "post",
+        url: 'change_table_order_state/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "table_order_id": table_order_id,
+            "state": state
+        }
+    });
+}
+// function get_and_update_table_order_states(){
+//      $.ajax({
+//         type: "GET",
+//         url: 'get_table_order_states/',
+//         dataType:'json',
+//         success: function (data) {
+//             if (JSON.parse(data["success"]) == "1") {
+//                 update_table_order_states(JSON.parse(data['message']));//To populate called here
+//             } else {
+//                 console.log("NO DATA")
+//             }
+//         },
+//         error: function (data) {
+//         }
+//
+//     });
+// }
+function update_table_order_list(table_order_list){
+    $.ajax({
+        type: "GET",
+        url: 'get_table_order_list/',
+        dataType:'json',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "table_order_list": table_order_list
+        },
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                var data=JSON.parse(data['message']);
+
+                update_cards(data);//To populate called here
+            } else {
+                console.log("NO DATA")
+            }
+        },
+        error: function (data) {
+        }
+
+    });
 }
 
 

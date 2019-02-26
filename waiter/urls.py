@@ -16,9 +16,9 @@ urlpatterns = [
                 url(r'^change_table_order_state/$', views.change_table_order_state, name='change_table_order_state'),
 
                 #URL to redirect adding data to the card
-                  url(r'^get_waiter_card_data//$', views.get_waiter_card_data, name='get_waiter_card_data'),
+                  url(r'^get_waiter_card_data/$', views.get_waiter_card_data, name='get_waiter_card_data'),
 
-
+                  url(r'^get_table_order_list/$', views.get_table_order_list, name='get_table_order_list'),
 
                   url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
                   url(r'^insert_stuff/delete_table/$', db_insert.delete_table, name='delete_table'),

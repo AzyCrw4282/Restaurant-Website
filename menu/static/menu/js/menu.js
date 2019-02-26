@@ -214,7 +214,7 @@ $("#popup_button_minimize").click(function () {
     $("#box").slideToggle();
 });
 
-//
+
 // $(food).ready(function(){
 //   $("#hide").click(function(){
 //     $("p").hide();
@@ -223,7 +223,7 @@ $("#popup_button_minimize").click(function () {
 //     $("p").show();
 //   });
 // });
-//
+
 
 //======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================
 

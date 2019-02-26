@@ -57,7 +57,11 @@ function load_tab_shortcut_buttons(categories) {
 }
 
 function add_card(card) {
+    console.log("LOADING CARD");
     console.log(card);
+    console.log(card["information"]);
+    console.log(card["description"]);
+
     var src = card["picture"];
     var food_name = card["name"];
     var price = card["price"];
@@ -82,7 +86,6 @@ function add_card(card) {
 
     //adding on click functions to increment the popup quantity
     orderBtn.onclick = add_food_to_order(id, textField.id);
-
     div_1.appendChild(heading);
     div_2.appendChild(img);
     div_2.appendChild(div_21);

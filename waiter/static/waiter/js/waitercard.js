@@ -308,8 +308,8 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
-    deliver_button.onclick = change_table_order_state(table_order_id, "archived");
     deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
@@ -378,7 +378,6 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    cancel_button.onclick = change_table_order_state(table_order_id, "archived");
     cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived")
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);

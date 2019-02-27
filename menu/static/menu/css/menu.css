@@ -172,12 +172,27 @@
     display: block;
 }
 
+
+.button {
+  background-color: white; /* Green */
+  border: none;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 ul.popup_box_list li {
     display: table-cell;
     max-width: 70px;
     min-width: 70px;
-    background-color: #fff3cd;
-    font-family: -apple-system;
+    background-color: white;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
     text-align: center;
 }
 
@@ -186,7 +201,8 @@ ul.food_button_box_list li {
     width: 33.33%;
     /*half of food_card_info_box*/
     height: 30px;
-    font-family: -apple-system;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
+    font-color: red;
     text-align: center;
 }
 
@@ -197,7 +213,7 @@ ul.food_info_box_list li {
     /*half of food_card_info_box*/
     height: 30px;
     background-color: black;
-    font-family: -apple-system;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
     text-align: center;
 }
 

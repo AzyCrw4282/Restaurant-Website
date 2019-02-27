@@ -73,9 +73,9 @@
 }
 
 .order_popup {
-    position:fixed;
+    position: fixed;
     top: 15%;
-    width: = 18%;
+    width: 18%;
 }
 
 .order_list {
@@ -135,7 +135,7 @@ button.noOfItems {
 
 p {
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-    text-align: "left";
+    text-align: left;
     font-size: 20px;
 }
 
@@ -149,6 +149,7 @@ h1, h2, h3 {
     text-align: center;
     color: #C00000;
 }
+
 .center {
     display: block;
     margin-left: auto;
@@ -164,7 +165,6 @@ a:link, a:visited {
     text-decoration: none;
     display: inline-block;
 }
-
 
 
 #tabs_header {
@@ -456,54 +456,60 @@ banner {
 
 }
 
-.food_information {
-    position: relative;
-    top:0%;
-    left:90%;
-    background-color:#C00000;
+.card_info_button {
+    border-radius: 99%;
+    float: right;
+    font-size: 20px;
+    font-weight: normal;
+    background-color: #9c0d0a;
     color: white;
-    font-size:15px;
-    padding: 4px 4px;
-    border: none;
-    cursor: pointer;
-    border-radius:60px;
-    text-align: center;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
-
 }
-.food_information_specific {
-    position: relative;
-    top:0%;
-    right:30%;
-    background-color: #41c005;
+
+.food_allergy_buttons {
+    border-radius: 99%;
+    float: left;
+    font-size: 20px;
+    font-weight: normal;
+    background-color: #479c09;
     color: white;
-    font-size:15px;
-    padding: 4px 4px;
-    border: none;
+}
+
+.food_allergy_info_content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 400px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+
+}
+
+.food_allergy_info_content_close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.food_allergy_info_content_close:hover,
+.food_allergy_info_content_close:focus {
+    color: #000;
+    text-decoration: none;
     cursor: pointer;
-    border-radius:60px;
-    text-align: center;
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
-
-}
-.food_info{
-    position: absolute;
-    left:30%;
-}
-.veggie_info {
-    position:relative;
-    left:30%;
-
-}
-.background_welcome {
-    width:100%;
-    height:100%;
 }
 
-.veg_display_info {
-    width:30px;
-    padding:50px 0;
-    text-align: center;
-    background-color:#C00000;
-    color:black;
+.food_allergy_info_content_header {
+    padding: 2px 16px;
+    background-color: #800000;
+    color: white;
+}
+.food_allergy_info_content_body{
+    padding: 2px 16px;
+}
+.food_allergy_info_content_footer{
+   padding: 2px 16px;
+  background-color: #800000;
+  color: white;
 }

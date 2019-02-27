@@ -62,11 +62,9 @@ function load_tab_shortcut_buttons(categories) {
 function add_card(card) {
     // var information= card["information"]
     var information = [
-        {'name': 'Tabasco', 'ingredients': 'will kill you'},
-        {'name': 'yusra', 'ingredients': 'loves this one'},
-        {'name': 'chocolate', 'ingredients': 'Fit for dogs'},
-        {'name':'Yusra','ingredients':'loves this one!'},
-        {'name':'chocolate','ingredients':'Fit for dogs'}
+        {'name': 'Veg', 'ingredients': 'will kill you'},
+        {'name': 'V', 'ingredients': 'loves this one'},
+
     ];
     console.log(card);
     var src = card["picture"];
@@ -76,11 +74,9 @@ function add_card(card) {
     // var food_information = card["information"];
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
+    var info_button = create_tag("button", "", "", "card_info_button", id, "i")
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
-    var div_21 = create_tag("div", "", "", "food_info", "", "");
-    var div_22 = create_tag("button", "", "", "food_information", id, "i");
-    var div_23 = create_tag("div", "", "", "veggie_info", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
@@ -92,54 +88,77 @@ function add_card(card) {
         delete_button.onclick = delete_food_from_menu(id);
 
     }
-    for (var i in information) {
-        var info_name = information[i]["name"];
-        var info_description = information[i]["ingredients"];
-        var specific_button = create_tag("button", "", "", "food_information_specific", "food_button"+id, "" + info_name);
-        var display_button_info = create_tag("div", "", "", "", "veg_display_info" + id, "" + info_description);
-        specific_button.onclick=button_info(id);
-        div_23.appendChild(specific_button);
-        div_1.appendChild(display_button_info);
 
-
-    }
     //adding on click functions to increment the popup quantity
     orderBtn.onclick = add_food_to_order(id, textField.id);
 
 
+    if (authenticated) {
+        div_4.appendChild(delete_button);
+    }
+
+    for (var i in information) {
+        var allergy_name = information[i]["name"];
+        var allergy_content = information[i]["ingredients"];
+
+        var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + id, "" + allergy_name);
+        div_1.appendChild(allergy_button);
+
+        allergy_button.onclick = allergy_popup(card.id);
+
+        var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup", "");
+        var popup_box_header = create_tag("div", "", "", "food_allergy_info_content_header", "", "");
+        var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "", "X");
+        var heading_popup = create_tag("h2", "", "", "", "", "" + allergy_name);
+        var popupbox_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
+        var inside_body = create_tag("p", "", "", "", "", "" + allergy_content);
+        var popupbox_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "")
 
 
+        div_1.appendChild(popup_box_content);
+        popup_box_content.appendChild(popup_box_header);
+        popup_box_header.appendChild(close_button);
+        popup_box_header.appendChild(heading_popup);
+        popup_box_content.appendChild(popupbox_body);
+        popupbox_body.appendChild(inside_body);
+        popup_box_content.appendChild(popupbox_footer);
+
+
+    }
+
+
+    div_1.appendChild(info_button);
     div_1.appendChild(heading);
     div_2.appendChild(img);
-    div_2.appendChild(div_21);
-    div_2.appendChild(div_23);
-    div_21.appendChild(div_22);
     div_3.appendChild(textField);
     div_4.appendChild(orderBtn);
     div_1.appendChild(div_2);
     div_1.appendChild(div_3);
     div_1.appendChild(div_4);
 
-    if (authenticated) {
-        div_4.appendChild(delete_button);
-    }
-
     return div_1;
 }
 
-function button_info(id) {
+function allergy_popup(id) {
 
-    return function() {
-        var display_info_box = document.getElementById("veg_display_info" + id);
-        if (display_info_box.style.display === "none") {
-            display_info_box.style.display = "inline-block";
-        } else {
-            display_info_box.style.display = "none";
+
+    return function () {
+
+
+        var x = document.getElementById("content_popup" + id);
+        var allergy_button = document.getElementById("allergy_button");
+        var span = document.getElementsByClassName("close")[0];
+
+        allergy_button.onclick = function () {
+            x.style.display = "block";
         }
+        span.onclick = function () {
+            x.style.display = "none";
+        }
+
     }
 
 }
-
 
 function populate_popup(data) {
     //  let list = document.createElement("ul");
@@ -242,8 +261,6 @@ $(document).ready(function () {
         return false;
     });
 });
-
-
 
 
 $("#popup_button_minimize").click(function () {

@@ -9,14 +9,15 @@
     right: 0;
     overflow: scroll;
     overflow-x: scroll;
-    padding: 50px;
+
     z-index: -4;
 }
-
+.food_card_main_container{
+    padding-top:175px;
+}
 .food_card_container {
     width: 100%;
     display: block;
-    padding: 50px;
 
 }
 
@@ -117,10 +118,11 @@
 */
 .food_card_separator {
     z-index: -1;
-    padding: 10px;
     color: black;
     font-family: "-apple-system";
     font-size: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .food_card {
@@ -157,49 +159,14 @@
     height: 60px;
 
 }
+.shortcut_anchor{
+    top:200px;
+    font-size: 30px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
 
-.order_popup {
-
-    color: black;
-    position: fixed;
-    top: 15%;
-    width: 18%;
-    overflow-y: scroll;
-    display: block;
 }
 
-.order_list {
-    display: block;
-}
 
-ul.popup_box_list li {
-    display: table-cell;
-    max-width: 70px;
-    min-width: 70px;
-    background-color: #fff3cd;
-    font-family: -apple-system;
-    text-align: center;
-}
-
-ul.food_button_box_list li {
-    display: table-cell;
-    width: 33.33%;
-    /*half of food_card_info_box*/
-    height: 30px;
-    font-family: -apple-system;
-    text-align: center;
-}
-
-ul.food_info_box_list li {
-    display: table-cell;
-    color: white;
-    width: 150px;
-    /*half of food_card_info_box*/
-    height: 30px;
-    background-color: black;
-    font-family: -apple-system;
-    text-align: center;
-}
 
 
 button.noOfItems {
@@ -271,7 +238,7 @@ a:hover, a:active {
 
 #tabs_header {
     position: fixed;
-    top: 50px;
+    top: 100px;
     text-align: center;
 }
 
@@ -303,11 +270,6 @@ a:hover, a:active {
 }
 
 
-ul {
-    font-size: 25px;
-    font-family: Raelway;
-    list-style-type: none;
-}
 
 
 h1 {
@@ -316,7 +278,6 @@ h1 {
 }
 
 h1.separator {
-    top: 75px;
     margin-top: 50px;
     z-index: -1;
 }
@@ -340,14 +301,14 @@ h1.separator span {
     z-index: -1;
 }
 
-basket {
-    position: fixed;
-    right: 0;
-    margin-top: 0;
-    height: 100%;
-    width: 20%;
-    background-color: black;
-}
+/*basket {*/
+    /*position: fixed;*/
+    /*right: 0;*/
+    /*margin-top: 0;*/
+    /*height: 100%;*/
+    /*width: 20%;*/
+    /*background-color: black;*/
+/*}*/
 
 top_header {
     width: 300px;
@@ -449,11 +410,7 @@ a:hover, a:active {
 }
 
 
-ul {
-    font-size: 25px;
-    font-family: Raelway;
-    list-style-type: none;
-}
+
 
 
 h1 {
@@ -484,15 +441,15 @@ h1.separator span {
     z-index: 5;
 }
 
-basket {
-    position: fixed;
-    right: 0;
-    margin-top: 0;
-    height: 100%;
-    width: 20%;
-    background-color: black;
+/*basket {*/
+    /*position: fixed;*/
+    /*right: 0;*/
+    /*margin-top: 0;*/
+    /*height: 100%;*/
+    /*width: 20%;*/
+    /*background-color: black;*/
 
-}
+/*}*/
 
 top_header {
 
@@ -634,6 +591,7 @@ banner {
 .background_welcome {
     width: 100%;
     height: 100%;
+}
 
 .food_allergy_info_content_body {
     padding: 2px 16px;

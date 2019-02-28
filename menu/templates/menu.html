@@ -8,33 +8,28 @@
 {% load staticfiles %}
 
 {% block body %}
-<table style="width:100%">
-    <td width = "80%">
-    <script src="{% static 'menu/js/menu.js' %}"></script>
-    <script src="{% static 'menu/js/menu_ajax.js' %}"></script>
+    <table style="width:100%; margin-top: 100px;">
+    <td width="80%">
+        <script src="{% static 'menu/js/menu.js' %}"></script>
+        <script src="{% static 'menu/js/menu_ajax.js' %}"></script>
 
-    <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'menu/css/menu.css' %}" type="text/css"/>
-    <div class="top_header">
+        <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/menu.css' %}" type="text/css"/>
+
         <div class="tabs_header" id="tabs_header">
         </div>
-    </div>
 
 
-
-
-
-    <form onsubmit="return false">
-        {% csrf_token %}
-        <div class="food_card_container" id="categories">
-
-        </div>
-    </form>
+        <form onsubmit="return false">
+            {% csrf_token %}
+            <div class="food_card_container" id="categories">
+            </div>
+        </form>
 
     </td>
 
-<td width = "20%">
+    <td width="20%">
     <div id="order_popup" class="order_popup">
         <h1>
             Order:
@@ -57,6 +52,6 @@
     </script>
 
 {% endblock %}
-    </td>
-    </table>
+</td>
+</table>
 </html>

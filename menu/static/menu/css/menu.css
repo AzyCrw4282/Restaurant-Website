@@ -20,101 +20,6 @@
 
 }
 
-.table_code_input{
-    height: 50px;
-    width: 400px;
-    position: absolute;
-    transition: .5s ease;
-    top: 75%;
-    left: 100%;
-}
-.welcome_message{
-    position: absolute;
-    left: 90%;
-    font-size:100%
-}
-
-.welcome_message_2{
-    position: absolute;
-    left: 110%;
-    font-size:100%
-}
-
-
-.main_image{
-  border: 2px solid black;
-  padding: 25px;
-  background: url('../img/Bg_img.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-    height: 100%;
-    width: 100%;
-}
-
-.WelcomeButton {
-        position: absolute;
-        top: 110%;
-    left: 110%;
-	-moz-box-shadow:inset 3px 0px 50px -50px #f5978e;
-	-webkit-box-shadow:inset 3px 0px 50px -50px #f5978e;
-	box-shadow:inset 3px 0px 50px -50px #f5978e;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
-	background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
-	background-color:#f24537;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:18px;
-	font-weight:bold;
-	padding:11px 54px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #810e05;
-    height: 100px;
-    width: 300px;
-
-}
-.WelcomeButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
-	background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
-	background-color:#c62d1f;
-}
-.WelcomeButton:active {
-        position: absolute;
-        top: 120%;
-    left: 110%;
-}
-
-
-/*
-.WelcomeButton {
-    height: 50px;
-    width: 100px;
-    position: absolute;
-    transition: .5s ease;
-    top: 40%;
-    left: 50%;
-    background-color: #f44336;
-}
-
-.text {
-    height: 75px;
-    width: 250px;
-}
-*/
 .food_card_separator {
     z-index: -1;
     padding: 10px;
@@ -271,7 +176,7 @@ a:hover, a:active {
 
 #tabs_header {
     position: fixed;
-    top: 50px;
+    top: 100px;
     text-align: center;
 }
 
@@ -316,8 +221,9 @@ h1 {
 }
 
 h1.separator {
-    top: 75px;
-    margin-top: 0px;
+
+
+    margin-top: 50px;
     z-index: -1;
 }
 

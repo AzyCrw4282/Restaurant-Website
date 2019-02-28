@@ -6,7 +6,7 @@ body, html {
 .welcome_bg_image {
     /* The image used */
     margin-top: 100px;
-    background-image: url('https://bollytrip.com/wp-content/uploads/2018/12/colorful-sugar-skull-wallpaper-incredible-sugar-skull-wallpaper-for-iphone-wallpapersafari-of-colorful-sugar-skull-wallpaper.jpg');
+    background-image: url(../img/Background_WelcomePage.jpg);
     /* Full height */
     height: 100%;
 

@@ -115,7 +115,7 @@ function load_cards(table_orders) {
                 add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
                 break;
             case "chef_canceled":
-                add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
+                add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
                 break;
             case "archived":
                 add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);

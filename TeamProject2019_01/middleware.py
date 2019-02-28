@@ -44,4 +44,4 @@ class LoginRequiredMiddleware:
 
         else:
             print("redirect initiated")
-            return views.menu_redirect()
+            return views.menu_redirect(request)

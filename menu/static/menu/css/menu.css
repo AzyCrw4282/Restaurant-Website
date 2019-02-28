@@ -476,13 +476,16 @@ banner {
 
 .food_allergy_info_content {
     position: fixed;
-    bottom: 0;
+    bottom: 390px;
     background-color: #fefefe;
-    width: 400px;
+    width: 300px;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    display: none;
+    border-radius: 5px;
+
 
 }
 
@@ -500,16 +503,20 @@ banner {
     cursor: pointer;
 }
 
+
+
 .food_allergy_info_content_header {
     padding: 2px 16px;
     background-color: #800000;
     color: white;
 }
-.food_allergy_info_content_body{
+
+.food_allergy_info_content_body {
     padding: 2px 16px;
 }
-.food_allergy_info_content_footer{
-   padding: 2px 16px;
-  background-color: #800000;
-  color: white;
+
+.food_allergy_info_content_footer {
+    padding: 2px 16px;
+    background-color: #800000;
+    color: white;
 }

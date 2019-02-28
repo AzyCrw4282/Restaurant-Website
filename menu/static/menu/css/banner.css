@@ -1,9 +1,3 @@
-
-@font-face {
-    font-family: mexicanero;
-    /*src: url("{% static 'menu/fonts/Mexicanero.otf' %}");*/
-}
-
 .banner {
     top: 0;
     left: 0;
@@ -20,18 +14,6 @@
 }
 .nav-up {
   top: -40px; // same as header height. use variables in LESS/SASS
-}
-
-.social_media_bar { /*display: inline-block;*/
-    height: 50%;
-    width: 15%;
-    left: 75%;
-    top: 25%;
-    background-color: inherit;
-    position: absolute;
-    z-index: 2;
-    display: table-cell;
-    border-bottom: 1px solid #A83535;
 }
 
 .links_bar {
@@ -102,6 +84,10 @@
 #login_link {
     position: absolute;
     color: #A83535;
+
+#login_link{
+    position: absolute;
+    color: #C00000;
     font-family: monospace;
     font-weight: bold;
     font-size: 18px;
@@ -109,128 +95,3 @@
 
 }
 
-#divider1 {
-    left: 25%;
-}
-
-#divider2 {
-    left: 50%;
-}
-
-#divider3 {
-    left: 75%;
-}
-
-#divider4 {
-    left: 50%;
-}
-
-#cactus1 {
-    left: 39%;
-}
-
-#cactus2 {
-    left: 58%;
-}
-
-#test_div {
-    height: 2000px;
-    border: 1px dashed white;
-}
-
-#left_banner {
-    position: absolute;
-    left: 10%;
-    top: 20%;
-}
-
-#menu_bar1 {
-    top: 17%;
-}
-
-#menu_bar2 {
-    top: 0.1%;
-}
-
-#menu_bar3 {
-    top: 0%;
-}
-
-#menu_bar4 {
-    top: 0%;
-}
-
-#menu_header {
-    top: 0px;
-    text-align: center;
-    font-size: 120px;
-    color: #A83535;
-    font-family: mexicanero;
-    position: relative;
-
-
-}
-
-#menu_header_container {
-    background-color: rgba(1, 50, 32, 0.2);
-    height: 130px;
-    position: relative;
-}
-
-#add_button {
-    position: relative;
-    width: 100%;
-    left: 90%;
-
-}
-
-.menu_headings {
-    color: #A83535;
-    font-family: mexicanero;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    text-align: center;
-}
-
-
-a {
-    text-decoration: none;
-}
-
-head {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    position: fixed;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    z-index: 0;
-    border-top: 10px;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color:whitesmoke;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover {
-    background-color: #111;
-}

@@ -456,7 +456,7 @@ banner {
 
 }
 
-.card_info_button {
+.card_desc_button {
     border-radius: 99%;
     float: right;
     font-size: 20px;
@@ -488,12 +488,47 @@ banner {
 
 
 }
+.food_desc_content {
+    position: fixed;
+    bottom: 390px;
+    background-color: #fefefe;
+    width: 300px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    display: none;
+    border-radius: 5px;
+
+
+}
+.food_desc_content_header{
+     padding: 2px 16px;
+    background-color: #800000;
+    color: white;
+}
+.food_desc_content_close{
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.food_desc_content_body{
+     padding: 2px 16px;
+}
 
 .food_allergy_info_content_close {
     color: white;
     float: right;
     font-size: 28px;
     font-weight: bold;
+}
+.food_allergy_info_content_footer{
+     padding: 2px 16px;
+    background-color: #800000;
+    color: white;
 }
 
 .food_allergy_info_content_close:hover,

@@ -1,0 +1,127 @@
+
+body, html {
+    height: 100%;
+}
+
+.welcome_bg_image {
+    /* The image used */
+    margin-top: 100px;
+    background-image: url('https://bollytrip.com/wp-content/uploads/2018/12/colorful-sugar-skull-wallpaper-incredible-sugar-skull-wallpaper-for-iphone-wallpapersafari-of-colorful-sugar-skull-wallpaper.jpg');
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+
+}
+
+.welcome_title {
+    text-align: center;
+    position: relative;
+}
+
+.welcome_span {
+    font-size: 50px;
+    color: black;
+    text-shadow: 1px 1px black, -1px -1px darkred;
+    font-family: sans-serif;
+    -webkit-text-stroke: 2px darkred;
+
+}
+
+.welcome_span:hover {
+    font-size: 50px;
+    color: black;
+    text-shadow: 1px 1px black, -1px -1px lightgrey;
+    font-family: sans-serif;
+    -webkit-text-stroke: 2px lightgrey;
+
+}
+
+@supports (-webkit-text-stroke: 4px black) {
+    span {
+        color: transparent;
+        text-shadow: none;
+    }
+}
+.table_code_input {
+
+    border-width: 2px;
+    border-style:solid;
+    border-color: darkred;
+    border-radius: 5px;
+    padding: 2px;
+    text-align: center;
+    font-size: 20px;
+    height: auto;
+    width: auto;
+    position: relative;
+    background-color: black;
+    color: darkred;
+
+}
+.welcome_container {
+    /*temporary*/
+    border-style:solid;
+    width:300px;
+    height: 150px;
+    position: relative;
+    margin: 0 auto;
+    border-color:darkred;
+    border-width: 2px;
+    border-radius: 5px;
+
+}
+
+.input_code {
+    padding-top:20px;
+    width:260px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto;
+
+}
+
+.submit_button {
+    padding-top:10px;
+    width:260px;
+    height: 60px;
+    padding-left:160px;
+    position: relative;
+    margin: 0 auto;
+
+}
+
+.welcome_button {
+    position: absolute;
+    border-color: darkred;
+    background-color: black;
+
+    border-radius: 10px;
+    cursor: pointer;
+    color: darkred;
+    font-family: Arial;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0px -1px 0px #810e05;
+    height: 50px;
+    width: 100px;
+
+}
+
+.welcome_button:hover {
+    border-color: lightgrey;
+    color: lightgrey;
+}
+
+.welcome_button:active {
+    position: absolute;
+
+}
+
+
+
+

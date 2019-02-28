@@ -2,55 +2,46 @@
 {# Objects expected: #}
 {#category_list -- see explanation in load_category_items in menu/js/menu.js#}
 <html lang="en">
-   {% extends 'menu/templates/base.html' %}
-   {% load staticfiles %}
-   {% block body %}
-   <script src="{% static 'menu/js/welcome_page.js' %}"></script>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="../static/menu/css/menu.css" type="text/css"/>
+{% extends 'menu/templates/base.html' %}
+{% load staticfiles %}
+{% block body %}
+{#   LOADING SCRIPTS #}
+<script src="{% static 'menu/js/welcome_page.js' %}"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="../static/menu/css/welcome_page.css" type="text/css"/>
 
-   <link rel="stylesheet" href="../static/menu/css/banner.css" type="text/css"/>
-   <br><br><br><br>
-   <br>
-   <div id="banner" class="banner">
-      <div class="links_bar">
-         <a href="/accounts/login/" id="login_link" onclick="login_redirect()">Login</a>
-      </div>
-   </div>
-   <div class="main_image">
-      <div class="container">
-         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4">
-               <h2 class="welcome_message_2" style="font-size:60px";>WELCOME TO OAXACA</h2>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-               <br>
-               <div class="row">
-                  <input id="table_code" class="table_code_input float-right" placeholder="PLEASE ENTER YOUR TABLE NUMBER HERE"> </input>
-                  <br>
-                  <br>
-                   <br>
-                   <BR>
-               </div>
-               <div class="row">
-                  <button class="WelcomeButton" onclick="redirect_user()">Submit</button>
-                  <br>
-                  <br>
-               </div>
-            </div>
-            <p class="table_number_message"> </p>
-         </div>
-      </div>
-   </div>
-   {% endblock %}
-   <body>
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-   </body>
-   </body>
+
+<div class="welcome_bg_image">
+
+    <div class="welcome_title">
+        <a href="/accounts/login" style="text-decoration:none">
+
+            <span class="welcome_span">
+            Welcome To Oaxaca
+        </span>
+        </a>
+
+    </div>
+    <div class="welcome_container">
+
+        <div class="input_code">
+
+            <input id="table_code" class="table_code_input float-right" placeholder="Please enter your code.">
+        </div>
+        <div class="submit_button">
+            <button class="welcome_button" onclick="redirect_user()">Submit</button>
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+
 </html>
+{#  <div class="welcome_message_container container">#}
+{#            <h2 class="welcome_message_2" style="font-size:60px" >WELCOME TO OAXACA</h2>#}
+{#        </div>#}
+{#        <input id="table_code" class="table_code_input float-right" placeholder="Please enter your code."> </input>#}
+{##}

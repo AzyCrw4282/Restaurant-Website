@@ -172,27 +172,12 @@
     display: block;
 }
 
-
-.button {
-  background-color: white; /* Green */
-  border: none;
-  color: black;
-  padding: 5px 5px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
-  font-size: 20px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
 ul.popup_box_list li {
     display: table-cell;
     max-width: 70px;
     min-width: 70px;
-    background-color: white;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
+    background-color: #fff3cd;
+    font-family: -apple-system;
     text-align: center;
 }
 
@@ -201,8 +186,7 @@ ul.food_button_box_list li {
     width: 33.33%;
     /*half of food_card_info_box*/
     height: 30px;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
-    font-color: red;
+    font-family: -apple-system;
     text-align: center;
 }
 
@@ -213,7 +197,7 @@ ul.food_info_box_list li {
     /*half of food_card_info_box*/
     height: 30px;
     background-color: black;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif" ;
+    font-family: -apple-system;
     text-align: center;
 }
 
@@ -333,7 +317,7 @@ h1 {
 
 h1.separator {
     top: 75px;
-    margin-top: 0px;
+    margin-top: 50px;
     z-index: -1;
 }
 
@@ -557,25 +541,106 @@ banner {
 
 }
 
-.food_information {
-    position: relative;
-    top: 0%;
-    left: 90%;
-    background-color: #C00000;
+.card_desc_button {
+    border-radius: 99%;
+    float: right;
+    font-size: 20px;
+    font-weight: normal;
+    background-color: #9c0d0a;
     color: white;
-    font-size: 10px;
-    padding: 4px 4px;
-    border: none;
-    cursor: pointer;
-    border-radius: 50px;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+}
 
+.food_allergy_buttons {
+    border-radius: 99%;
+    float: left;
+    font-size: 20px;
+    font-weight: normal;
+    background-color: #479c09;
+    color: white;
+}
+
+.food_allergy_info_content {
+    position: fixed;
+    top: 235px;
+    background-color: #fefefe;
+    width: 300px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    display: none;
+    border-radius: 5px;
+
+
+}
+.food_desc_content {
+    position: fixed;
+    top: 235px;
+    background-color: #fefefe;
+    width: 300px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    display: none;
+    border-radius: 5px;
+
+
+}
+.food_desc_content_header{
+     padding: 2px 16px;
+    background-color: #800000;
+    color: white;
+}
+.food_desc_content_close{
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.food_desc_content_body{
+     padding: 2px 16px;
+}
+
+.food_allergy_info_content_close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.food_allergy_info_content_footer{
+     padding: 2px 16px;
+    background-color: #800000;
+    color: white;
+}
+
+.food_allergy_info_content_close:hover,
+.food_allergy_info_content_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.food_allergy_info_content_header {
+    padding: 2px 16px;
+    background-color: #800000;
+    color: white;
 }
 
 .background_welcome {
     width: 100%;
     height: 100%;
+
+.food_allergy_info_content_body {
+    padding: 2px 16px;
 }
 
-
+.food_allergy_info_content_footer {
+    padding: 2px 16px;
+    background-color: #800000;
+    color: white;
+}

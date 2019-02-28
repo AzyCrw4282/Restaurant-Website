@@ -476,7 +476,7 @@ banner {
 
 .food_allergy_info_content {
     position: fixed;
-    bottom: 390px;
+    top: 235px;
     background-color: #fefefe;
     width: 300px;
     -webkit-animation-name: slideIn;
@@ -490,7 +490,7 @@ banner {
 }
 .food_desc_content {
     position: fixed;
-    bottom: 390px;
+    top: 235px;
     background-color: #fefefe;
     width: 300px;
     -webkit-animation-name: slideIn;

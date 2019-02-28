@@ -113,16 +113,16 @@ function add_card(card) {
         var allergy_name = information[i]["name"];
         var allergy_content = information[i]["ingredients"];
 
-        var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name, "" + allergy_name[0]);
+        var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name + id, "" + allergy_name[0]);
 
         div_1.appendChild(allergy_button);
 
-        allergy_button.onclick = allergy_popup(allergy_name);
+        allergy_button.onclick = allergy_popup(allergy_name, id);
 
 
-        var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup" + allergy_name, "");
+        var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup" + allergy_name + id, "");
         var popup_box_header = create_tag("div", "", "", "food_allergy_info_content_header", "", "");
-        var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "close_button" + allergy_name, "");
+        var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "close_button" + allergy_name + id, "");
         close_button.innerHTML = "&times;";
 
         var heading_popup = create_tag("h2", "", "", "", "", "" + allergy_name);
@@ -164,15 +164,15 @@ function add_card(card) {
     return div_1;
 }
 
-function allergy_popup(allergy_name) {
+function allergy_popup(allergy_name, id) {
 
 
     return function () {
 
-        var x = document.getElementById("content_popup" + allergy_name);
-        var allergy_button = document.getElementById("allergy_button" + allergy_name);
+        var x = document.getElementById("content_popup" + allergy_name + id);
+        var allergy_button = document.getElementById("allergy_button" + allergy_name + id);
         //var span = document.getElementsByClassName("food_allergy_info_content_close")[1];
-        var span = document.getElementById("close_button" + allergy_name);
+        var span = document.getElementById("close_button" + allergy_name + id);
 
         allergy_button.onclick = function () {
             x.style.display = "block";
@@ -289,7 +289,7 @@ function load_food_cards_into_sections(food_list, food_categories) {
         var food = food_list[i];
 
         var card = add_card(food);
-        var category_id = food["id"];
+        var category_id = food["category"];
 
         document.getElementById(category_dict[category_id]).appendChild(card);
     }

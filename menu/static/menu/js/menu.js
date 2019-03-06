@@ -1,6 +1,5 @@
 // Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-//add all categories and associated items to the categories variable in the format:
-// categories={
+ // categories={
 //      "mains": [
 //             {"name": "Tacos with cereal", "price": "£5"},
 //             {"name": "Tacos", "price": "£2"},
@@ -67,9 +66,7 @@ function add_card(card) {
     var desc = [
         {'description': 'It is tacos'},
     ];
-    // console.log(card);
-    // console.log(card["information"]);
-    // console.log(card["description"]);
+   
 
     var src = card["picture"];
     var food_name = card["name"];
@@ -98,10 +95,11 @@ function add_card(card) {
         div_4.appendChild(delete_button);
     }
 
-
     for (var x in desc) {
 
-        var descr_info = desc[x]["description"]
+        var descr_info = desc[x]["description"];
+        desc_button.onclick = desc_popup(id);
+
         var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
         var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
         var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
@@ -112,10 +110,8 @@ function add_card(card) {
         var info_5 = create_tag("p", "", "", "", "", "" + descr_info);
         var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
 
-        desc_button.onclick = desc_popup(id);
 
     }
-
 
     div_1.appendChild(heading);
     div_2.appendChild(img);
@@ -178,12 +174,11 @@ function allergy_popup(allergy_name, id) {
 
         var x = document.getElementById("content_popup" + allergy_name + id);
         var allergy_button = document.getElementById("allergy_button" + allergy_name + id);
-        //var span = document.getElementsByClassName("food_allergy_info_content_close")[1];
         var span = document.getElementById("close_button" + allergy_name + id);
 
-        allergy_button.onclick = function () {
+
             x.style.display = "block";
-        }
+
 
         span.onclick = function () {
             x.style.display = "none";
@@ -203,9 +198,8 @@ function desc_popup(id) {
 
         var span = document.getElementById("desc_close_button" + id);
 
-        desc_button.onclick = function () {
-            x.style.display = "block";
-        }
+
+        x.style.display = "block";
 
         span.onclick = function () {
             x.style.display = "none";

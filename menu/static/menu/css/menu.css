@@ -507,18 +507,18 @@ banner {
     height: 30px;
     background-color: #9c0d0a;
     color: white;
-    display: inline-flex;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
+    text-align: center;
 }
 
 .food_allergy_buttons {
+    position: absolute;
     border-radius: 100%;
     width: 30px;
     height: 30px;
-    position: absolute;
-    display: inline-block;
+    text-align: center;
     left: 3%;
     font-size: 20px;
     font-weight: bold;
@@ -527,34 +527,23 @@ banner {
     cursor: pointer;
 }
 
+
 .food_allergy_info_content {
-    position: fixed;
+    position: absolute;
     top: 235px;
     background-color: #fefefe;
     width: 300px;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s;
     display: none;
     border-radius: 5px;
-
-
 }
 
 .food_desc_content {
-    position: fixed;
+    position: absolute;
     top: 235px;
     background-color: #fefefe;
     width: 300px;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s;
     display: none;
     border-radius: 5px;
-
-
 }
 
 .food_desc_content_header {
@@ -570,6 +559,10 @@ banner {
     font-weight: bold;
 }
 
+.food_desc_content_close:hover {
+    background-color: #000;
+
+}
 
 .food_desc_content_body {
     padding: 2px 16px;
@@ -588,13 +581,10 @@ banner {
     color: white;
 }
 
-.food_allergy_info_content_close:hover,
-.food_allergy_info_content_close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+.food_allergy_info_content_close:hover {
+    background-color: #000;
 
+}
 
 .food_allergy_info_content_header {
     padding: 2px 16px;

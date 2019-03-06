@@ -27,6 +27,17 @@
 
 }
 
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+
 .divider {
     position: absolute;
     border-left: 1px solid #A83535;

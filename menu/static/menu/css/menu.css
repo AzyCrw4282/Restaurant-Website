@@ -12,16 +12,18 @@
 
     z-index: -4;
 }
-.food_card_main_container{
-    padding-top:175px;
+
+.food_card_main_container {
+    padding-top: 175px;
 }
+
 .food_card_container {
     width: 100%;
     display: block;
 
 }
 
-.table_code_input{
+.table_code_input {
     height: 50px;
     width: 400px;
     position: absolute;
@@ -29,73 +31,76 @@
     top: 75%;
     left: 100%;
 }
-.welcome_message{
+
+.welcome_message {
     position: absolute;
     left: 90%;
-    font-size:100%
+    font-size: 100%
 }
 
-.welcome_message_2{
+.welcome_message_2 {
     position: absolute;
     left: 110%;
-    font-size:100%
+    font-size: 100%
 }
 
 
-.main_image{
-  border: 2px solid black;
-  padding: 25px;
-  background: url('../img/Bg_img.png');
-  background-repeat: no-repeat;
-  background-size: contain;
+.main_image {
+    border: 2px solid black;
+    padding: 25px;
+    background: url('../img/Bg_img.png');
+    background-repeat: no-repeat;
+    background-size: contain;
     height: 100%;
     width: 100%;
 }
 
 .WelcomeButton {
-        position: absolute;
-        top: 110%;
+    position: absolute;
+    top: 110%;
     left: 110%;
-	-moz-box-shadow:inset 3px 0px 50px -50px #f5978e;
-	-webkit-box-shadow:inset 3px 0px 50px -50px #f5978e;
-	box-shadow:inset 3px 0px 50px -50px #f5978e;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
-	background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
-	background-color:#f24537;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:18px;
-	font-weight:bold;
-	padding:11px 54px;
-	text-decoration:none;
-	text-shadow:0px -1px 0px #810e05;
+    -moz-box-shadow: inset 3px 0px 50px -50px #f5978e;
+    -webkit-box-shadow: inset 3px 0px 50px -50px #f5978e;
+    box-shadow: inset 3px 0px 50px -50px #f5978e;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
+    background: -moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: -ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
+    background: linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f', GradientType=0);
+    background-color: #f24537;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 11px 54px;
+    text-decoration: none;
+    text-shadow: 0px -1px 0px #810e05;
     height: 100px;
     width: 300px;
 
 }
+
 .WelcomeButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
-	background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
-	background-color:#c62d1f;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
+    background: -moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background: -webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background: -o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background: -ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
+    background: linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537', GradientType=0);
+    background-color: #c62d1f;
 }
+
 .WelcomeButton:active {
-        position: absolute;
-        top: 120%;
+    position: absolute;
+    top: 120%;
     left: 110%;
 }
 
@@ -144,6 +149,8 @@
     width: 300px;
     height: 300px;
     overflow: hidden;
+    position: relative;
+    text-align: center;
 
 }
 
@@ -159,14 +166,13 @@
     height: 60px;
 
 }
-.shortcut_anchor{
-    top:200px;
+
+.shortcut_anchor {
+    top: 200px;
     font-size: 30px;
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
 
 }
-
-
 
 
 button.noOfItems {
@@ -270,8 +276,6 @@ a:hover, a:active {
 }
 
 
-
-
 h1 {
     position: relative;
     margin-top: 20px;
@@ -302,12 +306,12 @@ h1.separator span {
 }
 
 /*basket {*/
-    /*position: fixed;*/
-    /*right: 0;*/
-    /*margin-top: 0;*/
-    /*height: 100%;*/
-    /*width: 20%;*/
-    /*background-color: black;*/
+/*position: fixed;*/
+/*right: 0;*/
+/*margin-top: 0;*/
+/*height: 100%;*/
+/*width: 20%;*/
+/*background-color: black;*/
 /*}*/
 
 top_header {
@@ -410,9 +414,6 @@ a:hover, a:active {
 }
 
 
-
-
-
 h1 {
     position: relative;
     margin-top: 20px;
@@ -442,12 +443,12 @@ h1.separator span {
 }
 
 /*basket {*/
-    /*position: fixed;*/
-    /*right: 0;*/
-    /*margin-top: 0;*/
-    /*height: 100%;*/
-    /*width: 20%;*/
-    /*background-color: black;*/
+/*position: fixed;*/
+/*right: 0;*/
+/*margin-top: 0;*/
+/*height: 100%;*/
+/*width: 20%;*/
+/*background-color: black;*/
 
 /*}*/
 
@@ -499,21 +500,31 @@ banner {
 }
 
 .card_desc_button {
-    border-radius: 99%;
-    float: right;
-    font-size: 20px;
-    font-weight: normal;
+    position: absolute;
+    right: 3%;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
     background-color: #9c0d0a;
     color: white;
+    display: inline-flex;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .food_allergy_buttons {
-    border-radius: 99%;
-    float: left;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    display: inline-block;
+    left: 3%;
     font-size: 20px;
-    font-weight: normal;
+    font-weight: bold;
     background-color: #479c09;
     color: white;
+    cursor: pointer;
 }
 
 .food_allergy_info_content {
@@ -530,6 +541,7 @@ banner {
 
 
 }
+
 .food_desc_content {
     position: fixed;
     top: 235px;
@@ -544,12 +556,14 @@ banner {
 
 
 }
-.food_desc_content_header{
-     padding: 2px 16px;
+
+.food_desc_content_header {
+    padding: 2px 16px;
     background-color: #800000;
     color: white;
 }
-.food_desc_content_close{
+
+.food_desc_content_close {
     color: white;
     float: right;
     font-size: 28px;
@@ -557,8 +571,8 @@ banner {
 }
 
 
-.food_desc_content_body{
-     padding: 2px 16px;
+.food_desc_content_body {
+    padding: 2px 16px;
 }
 
 .food_allergy_info_content_close {
@@ -567,8 +581,9 @@ banner {
     font-size: 28px;
     font-weight: bold;
 }
-.food_allergy_info_content_footer{
-     padding: 2px 16px;
+
+.food_allergy_info_content_footer {
+    padding: 2px 16px;
     background-color: #800000;
     color: white;
 }
@@ -579,7 +594,6 @@ banner {
     text-decoration: none;
     cursor: pointer;
 }
-
 
 
 .food_allergy_info_content_header {

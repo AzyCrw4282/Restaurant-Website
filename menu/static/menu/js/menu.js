@@ -1,5 +1,4 @@
 // Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-//add all categories and associated items to the categories variable in the format:
 // categories={
 //      "mains": [
 //             {"name": "Tacos with cereal", "price": "£5"},
@@ -52,7 +51,7 @@ function load_tab_shortcut_buttons(categories) {
         var cat_name = cat["name"];
         // <a style="text-decoration:none;" href="#sides">Sides</a>
         var a = document.createElement("a");
-        a.className="shortcut_anchor";
+        a.className = "shortcut_anchor";
         a.style = "text-decoration:none;";
         a.href = "#" + cat_name;
         a.innerHTML += cat_name.toUpperCase();
@@ -65,6 +64,7 @@ function load_tab_shortcut_buttons(categories) {
     // a.id = "basket";
     div.appendChild(a);
 }
+
 
 function add_card(card,info_dict) {
     // console.log("LOADING CARD");
@@ -85,12 +85,15 @@ function add_card(card,info_dict) {
     var food_name = card["name"];
     var price = card["price"];
     var id = card["id"];
-    // var food_information = card["information"];
+
     var div_1 = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
-    var desc_button = create_tag("button", "", "", "card_desc_button", "desc_button"+id, "i")
+    var desc_button = create_tag("button", "", "", "food_allergy_buttons", "desc_button" + id, "i");
+    desc_button.style.cssFloat='right';
+    desc_button.style.background='#0F31C0';
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
+    div_2.style.backgroundImage="url('"+"/menu/media/" + src+"')";
+    // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
@@ -107,18 +110,14 @@ function add_card(card,info_dict) {
     if (authenticated) {
         div_4.appendChild(delete_button);
     }
-
-    var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
-    var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
-    var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
-    info_close.innerHTML = "&times;";
-
-    var info_3 = create_tag("h2", "", "", "", "", "i");
-    var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
-    var info_5 = create_tag("p", "", "", "", "", "" + desc);
-    var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
-
-    desc_button.onclick = desc_popup(id);
+    div_1.appendChild(heading);
+    // div_2.appendChild(img);
+    div_2.appendChild(desc_button);
+    div_3.appendChild(textField);
+    div_4.appendChild(orderBtn);
+    div_1.appendChild(div_2);
+    div_1.appendChild(div_3);
+    div_1.appendChild(div_4);
 
 
     for (var i in information) {
@@ -127,23 +126,23 @@ function add_card(card,info_dict) {
 
         var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name + id, "" + allergy_name[0]);
 
-        div_1.appendChild(allergy_button);
-
-        allergy_button.onclick = allergy_popup(allergy_name, id);
+        div_2.appendChild(allergy_button);
 
 
         var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup" + allergy_name + id, "");
         var popup_box_header = create_tag("div", "", "", "food_allergy_info_content_header", "", "");
         var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "close_button" + allergy_name + id, "");
-        close_button.innerHTML = "&times;";
+
 
         var heading_popup = create_tag("h2", "", "", "", "", "" + allergy_name);
         var popupbox_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
         var inside_body = create_tag("p", "", "", "", "", "" + allergy_content);
         var popupbox_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
 
+        allergy_button.onmouseover = allergy_popup_display_on(allergy_name,id);
+        allergy_button.onmouseleave = allergy_popup_display_off(allergy_name,id);
 
-        div_1.appendChild(popup_box_content);
+        div_2.appendChild(popup_box_content);
         popup_box_content.appendChild(popup_box_header);
         popup_box_header.appendChild(close_button);
         popup_box_header.appendChild(heading_popup);
@@ -154,17 +153,28 @@ function add_card(card,info_dict) {
 
     }
 
+    for (var x in desc) {
 
-    div_1.appendChild(desc_button);
-    div_1.appendChild(heading);
-    div_2.appendChild(img);
-    div_3.appendChild(textField);
-    div_4.appendChild(orderBtn);
-    div_1.appendChild(div_2);
-    div_1.appendChild(div_3);
-    div_1.appendChild(div_4);
+        var descr_info = desc[x]["description"];
 
-    div_1.appendChild(info_1);
+        desc_button.onmouseover =  desc_popup_display_on(id);
+        desc_button.onmouseleave =  desc_popup_display_off(id);
+
+        var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
+        var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
+        var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+
+
+        var info_3 = create_tag("h2", "", "", "", "", "i");
+        var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
+        var info_5 = create_tag("p", "", "", "", "", "" + descr_info);
+        var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
+
+    }
+
+
+
+    div_2.appendChild(info_1);
     info_1.appendChild(info_2);
     info_2.appendChild(info_close);
     info_2.appendChild(info_3);
@@ -176,27 +186,34 @@ function add_card(card,info_dict) {
     return div_1;
 }
 
-function allergy_popup(allergy_name, id) {
-
-
+function allergy_popup_display_on(allergy_name, id) {
     return function () {
-
         var x = document.getElementById("content_popup" + allergy_name + id);
-        var allergy_button = document.getElementById("allergy_button" + allergy_name + id);
-        //var span = document.getElementsByClassName("food_allergy_info_content_close")[1];
-        var span = document.getElementById("close_button" + allergy_name + id);
-
-        allergy_button.onclick = function () {
-            x.style.display = "block";
-        }
-
-        span.onclick = function () {
-            x.style.display = "none";
-        }
-
+        x.style.display = "block";
     }
-
 }
+function allergy_popup_display_off(allergy_name, id) {
+    return function () {
+        var x = document.getElementById("content_popup" + allergy_name + id);
+        x.style.display = "none";
+    }
+}
+
+function desc_popup_display_on(id) {
+    return function () {
+        var x = document.getElementById("desc_popup" + id);
+        x.style.display = "block";
+    }
+}
+function desc_popup_display_off(id) {
+    return function () {
+       var x = document.getElementById("desc_popup" + id);
+        x.style.display = "none";
+    }
+}
+
+
+
 function desc_popup(id) {
 
 
@@ -207,9 +224,8 @@ function desc_popup(id) {
 
         var span = document.getElementById("desc_close_button" + id);
 
-        desc_button.onclick = function () {
-            x.style.display = "block";
-        }
+
+        x.style.display = "block";
 
         span.onclick = function () {
             x.style.display = "none";
@@ -233,13 +249,13 @@ function populate_popup(data) {
     var total_price = table_order["total_price"];
 
     for (var order_id in order_list) {//For each order create it in the popup list
-        var basket_item_p=document.createElement("p");
+        var basket_item_p = document.createElement("p");
 
         var order = order_list[order_id];
-         console.log(order);
+        console.log(order);
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
 
-        var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"]+": "+ order["comment"]);
+        var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"] + ": " + order["comment"]);
         var li_price = create_tag("span", "", "", "basket_item_price", "", "" + order["food_price"]);
         // var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
         delete_button.onclick = delete_food_from_order(order["id"]);
@@ -359,7 +375,6 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
     return tag;
 
 }
-
 
 
 //     function display_ingredients(){

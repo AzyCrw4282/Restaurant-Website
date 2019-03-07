@@ -142,22 +142,24 @@ def get_menu_popup_data(request, table_order_id):
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
+
 # =========== INSET INTO DB FUNCTIONS ==========================
 def submit_order(request, table_order_id):
     print("CALLED SUBMIT ORDER")
-    try:
-        table_order = TableOrder.objects.get(id=table_order_id)
-        table_order.status = table_order_states["client_confirmed"]
-        table_order.time=datetime.now()
-        table_order.save()
-        #     UPDATE THE WAITER HERE?
-        return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
+    if request.method=='POST':
+        try:
+            table_order = TableOrder.objects.get(id=table_order_id)
+            if table_order.status==table_order_states["client_created"]:
+                table_order.status = table_order_states["client_confirmed"]
+                table_order.time=datetime.now()
+                table_order.save()
+                #     UPDATE THE WAITER HERE?
+            return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 
-    except Exception as e:
-        print("FAIlED to submit order: ", e)
-        print("redirecting")
-        return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
-
+        except Exception as e:
+            print("FAIlED to submit order: ", e)
+            print("redirecting")
+            return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 
 def add_food_to_order(request, table_order_id):
     """

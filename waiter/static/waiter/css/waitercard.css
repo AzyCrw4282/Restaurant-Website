@@ -7076,3 +7076,37 @@ a.text-dark:hover, a.text-dark:focus {
 .order_text {
   color: #C00000;
 }
+
+.override_button {
+  background-color: #C00000;
+  color: white;
+  padding: 5px 5px;
+  font-size: 16px;
+  border: none;
+  max-height: 40px;
+}
+.override_drop{
+  position: relative;
+  display: inline-block;
+}
+.override-content{
+  display: none;
+  position: absolute;
+  background-color: #C00000;
+  min-width: 150px;
+
+}
+.override-content a {
+  color: white;
+  padding: 12px 16px;
+  display: block;
+
+}
+.override-content a:hover {
+  background-color: #FF0000;
+}
+.override_drop:hover .override-content {
+  display: block;
+
+}
+.override_drop:hover .override_button {background-color: #FF0000}

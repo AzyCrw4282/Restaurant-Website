@@ -268,6 +268,24 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
+
+    //Status Override
+    var override_dropdown = create_tag("div","", "", "override_drop", "","");
+    var override_button = create_tag("button", "","","override_button","","Status Override");
+    var override_content = create_tag("div", "","","override-content","","");
+    var override_to_pending = create_tag("a","#","","","", "Pending");
+    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
+    var override_to_ready = create_tag("a","#","","","", "Order Ready");
+    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
+    var override_to_archive = create_tag("a","#","","","", "archive");
+
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
+    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
+    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
+    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
@@ -277,8 +295,17 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     //cardbody.appendChild(confirm_button);
     //cardbody.appendChild(cancel_button);
 
+    override_content.appendChild(override_to_pending);
+    override_content.appendChild(override_to_in_kitchen);
+    override_content.appendChild(override_to_ready);
+    override_content.appendChild(override_to_cancelled);
+    override_content.appendChild(override_to_archive);
+    override_dropdown.appendChild(override_button);
+    override_dropdown.appendChild(override_content);
+
     border.appendChild(cardbody);
     border.appendChild(footer);
+    border.appendChild(override_dropdown);
 
     panel_title.appendChild(panel_title_text);
     panel_header.appendChild(panel_title);
@@ -337,6 +364,24 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
+
+    //Status Override
+    var override_dropdown = create_tag("div","", "", "override_drop", "","");
+    var override_button = create_tag("button", "","","override_button","","Status Override");
+    var override_content = create_tag("div", "","","override-content","","");
+    var override_to_pending = create_tag("a","#","","","", "Pending");
+    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
+    var override_to_ready = create_tag("a","#","","","", "Order Ready");
+    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
+    var override_to_archive = create_tag("a","#","","","", "archive");
+
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
+    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
+    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
+    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+
     deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
 
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
@@ -347,8 +392,17 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     cardbody.appendChild(deliver_button);
     //cardbody.appendChild(cancel_button);
 
+    override_content.appendChild(override_to_pending);
+    override_content.appendChild(override_to_in_kitchen);
+    override_content.appendChild(override_to_ready);
+    override_content.appendChild(override_to_cancelled);
+    override_content.appendChild(override_to_archive);
+    override_dropdown.appendChild(override_button);
+    override_dropdown.appendChild(override_content);
+
     border.appendChild(cardbody);
     border.appendChild(footer);
+    border.appendChild(override_dropdown);
 
     panel_title.appendChild(panel_title_text);
     panel_header.appendChild(panel_title);
@@ -407,6 +461,24 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
+
+    //Status Override
+    var override_dropdown = create_tag("div","", "", "override_drop", "","");
+    var override_button = create_tag("button", "","","override_button","","Status Override");
+    var override_content = create_tag("div", "","","override-content","","");
+    var override_to_pending = create_tag("a","#","","","", "Pending");
+    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
+    var override_to_ready = create_tag("a","#","","","", "Order Ready");
+    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
+    var override_to_archive = create_tag("a","#","","","", "archive");
+
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
+    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
+    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
+    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived")
     cardbody.appendChild(order_num_head);
@@ -416,8 +488,17 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     //cardbody.appendChild(confirm_button);
     cardbody.appendChild(cancel_button);
 
+    override_content.appendChild(override_to_pending);
+    override_content.appendChild(override_to_in_kitchen);
+    override_content.appendChild(override_to_ready);
+    override_content.appendChild(override_to_cancelled);
+    override_content.appendChild(override_to_archive);
+    override_dropdown.appendChild(override_button);
+    override_dropdown.appendChild(override_content);
+
     border.appendChild(cardbody);
     border.appendChild(footer);
+    border.appendChild(override_dropdown);
 
     panel_title.appendChild(panel_title_text);
     panel_header.appendChild(panel_title);
@@ -475,6 +556,24 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
     //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
+
+    //Status Override
+    var override_dropdown = create_tag("div","", "", "override_drop", "","");
+    var override_button = create_tag("button", "","","override_button","","Status Override");
+    var override_content = create_tag("div", "","","override-content","","");
+    var override_to_pending = create_tag("a","#","","","", "Pending");
+    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
+    var override_to_ready = create_tag("a","#","","","", "Order Ready");
+    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
+    var override_to_archive = create_tag("a","#","","","", "archive");
+
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
+    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
+    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
+    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+
     //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
     cardbody.appendChild(order_num_head);
@@ -484,8 +583,17 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     //cardbody.appendChild(confirm_button);
     //cardbody.appendChild(cancel_button);
 
+    override_content.appendChild(override_to_pending);
+    override_content.appendChild(override_to_in_kitchen);
+    override_content.appendChild(override_to_ready);
+    override_content.appendChild(override_to_cancelled);
+    override_content.appendChild(override_to_archive);
+    override_dropdown.appendChild(override_button);
+    override_dropdown.appendChild(override_content);
+
     border.appendChild(cardbody);
     border.appendChild(footer);
+    border.appendChild(override_dropdown);
 
     panel_title.appendChild(panel_title_text);
     panel_header.appendChild(panel_title);

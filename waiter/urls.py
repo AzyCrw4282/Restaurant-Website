@@ -21,6 +21,8 @@ urlpatterns = [
                   url(r'^get_table_order_list/$', views.get_table_order_list, name='get_table_order_list'),
 
                   url(r'^insert_stuff/$', views.insert_stuff, name='insert_stuff'),
+                  url(r'^insert_stuff/add_information_to_food/$', views.add_information_to_food, name='add_information_to_food'),
+
                   url(r'^insert_stuff/delete_table/$', db_insert.delete_table, name='delete_table'),
                   url(r'^insert_stuff/add_table/$', db_insert.add_table, name='add_food_category'),
                   url(r'^insert_stuff/add_food_information/$', db_insert.add_food_information, name='add_food_information'),

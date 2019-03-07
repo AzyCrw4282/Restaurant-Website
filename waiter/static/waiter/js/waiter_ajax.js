@@ -167,6 +167,7 @@ function change_table_order_state(table_order_id, state) {
         }
     });
 }
+
 // function get_and_update_table_order_states(){
 //      $.ajax({
 //         type: "GET",
@@ -183,19 +184,33 @@ function change_table_order_state(table_order_id, state) {
 //         }
 //
 //     });
-// }
-function update_table_order_list(table_order_list){
+// }$.a
+function add_food_information_to_food(food_li, info_li) {
+
+    $.ajax({
+        type: "post",
+        url: 'add_information_to_food/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "information_list":JSON.stringify( info_li),
+            "food_list": JSON.stringify( food_li)
+        }
+    });
+}
+
+
+function update_table_order_list(table_order_list) {
     $.ajax({
         type: "GET",
         url: 'get_table_order_list/',
-        dataType:'json',
+        dataType: 'json',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "table_order_list": table_order_list
         },
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
-                var data=JSON.parse(data['message']);
+                var data = JSON.parse(data['message']);
 
                 update_cards(data);//To populate called here
             } else {

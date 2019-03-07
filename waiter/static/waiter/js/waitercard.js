@@ -145,7 +145,8 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#pending_list");
     panel_title_text.href = "#pending" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
+    panel_title_text.className = "order_text";
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "pending" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -217,7 +218,8 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#kitchen_list");
     panel_title_text.href = "#kitchen" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
+    panel_title_text.className = "order_text";
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "kitchen" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -285,7 +287,8 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
     panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
+    panel_title_text.className = "order_text";
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -354,7 +357,8 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     panel_title_text.setAttribute("data-toggle", "collapse");
     panel_title_text.setAttribute("data-parent", "#ready_list");
     panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+    panel_title_text.innerHTML = "Table: " + table_order_table_number;
+    panel_title_text.className = "order_text";
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
@@ -422,6 +426,7 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     panel_title_text.setAttribute("data-parent", "#archive_list");
     panel_title_text.href = "#archive" + table_order_id;
     panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+    panel_title_text.className = "order_text";
 
     var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "archive" + table_order_id, "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");

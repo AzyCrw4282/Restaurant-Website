@@ -26,12 +26,21 @@ function user_is_authenticated() {
 //========  LOADING DATA =============
 function load_data(data) {
     update_menu_popup_data();
-
+    var food_information=data["food_information_list"];
     var food_categories = data["category_list"];
     var foods = data["food_list"];
     load_tab_shortcut_buttons(food_categories);
     add_section_for_each_food_category(food_categories);
-    load_food_cards_into_sections(foods, food_categories);
+    var food_info_dict={};
+    for(var i in food_information){
+        var info_dict=food_information[i];
+        var id = info_dict["id"];
+        food_info_dict[id]=info_dict;
+    }
+    load_food_cards_into_sections(foods, food_categories,food_info_dict);
+
+
+
 
 }
 
@@ -57,16 +66,17 @@ function load_tab_shortcut_buttons(categories) {
     div.appendChild(a);
 }
 
-function add_card(card) {
+function add_card(card,info_dict) {
     // console.log("LOADING CARD");
-    var information = [
-        {'name': 'Veg', 'ingredients': 'will kill you'},
-        {'name': 'V', 'ingredients': 'loves this one'},
-
-    ];
-    var desc = [
-        {'description':'It is tacos'},
-        ]
+    var information_list = card['information'];
+    var desc = card['description'];
+    var information=[];
+    for(var i in information_list){
+        var id=information_list[i];
+        information.push(info_dict[id])
+    }
+    console.log("LIST DICT OF INFO: ");
+    console.log(information);
     // console.log(card);
     // console.log(card["information"]);
     // console.log(card["description"]);
@@ -267,7 +277,7 @@ function add_section_for_each_food_category(categories) {
     }
 }
 
-function load_food_cards_into_sections(food_list, food_categories) {
+function load_food_cards_into_sections(food_list, food_categories,food_info_dict) {
     //load_header_tabs(categories);
     // categories is a dictionary
     var category_dict = {};
@@ -281,7 +291,7 @@ function load_food_cards_into_sections(food_list, food_categories) {
     for (var i in food_list) {
         var food = food_list[i];
 
-        var card = add_card(food);
+        var card = add_card(food,food_info_dict);
         var category_id = food["category"];
 
         document.getElementById(category_dict[category_id]).appendChild(card);

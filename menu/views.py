@@ -40,6 +40,8 @@ def db_objects_to_list_of_dicts(objects):
 
 # ======= NORMAL HTTP REQUESTS: =======================
 def welcome_page(request):
+    table_list=db_objects_to_list_of_dicts(Table.objects.all())
+
     #     create a unique id as a temp solution for now and redirect the person to uuid/menu :D
     #     right now this is generated automatically,
     #   this should be done by some code the user can enter? discuss with client?

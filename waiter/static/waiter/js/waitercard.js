@@ -31,21 +31,22 @@ function update_cards(data) {
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     var del_card = document.getElementById(table_order_id);
     del_card.innerHTML = "";
+    var del_card_parent;
     switch (table_order_current_state) {
         case "client_confirmed":
-            var del_card_parent = document.getElementById("pending_list");
+            del_card_parent = document.getElementById("pending_list");
             break;
         case "waiter_confirmed":
-            var del_card_parent = document.getElementById("kitchen_list");
+            del_card_parent = document.getElementById("kitchen_list");
             break;
         case "chef_confirmed":
-            var del_card_parent = document.getElementById("ready_list");
+            del_card_parent = document.getElementById("ready_list");
             break;
         case "chef_canceled":
-            var del_card_parent = document.getElementById("ready_list");
+            del_card_parent = document.getElementById("ready_list");
             break;
         case "archived":
-            var del_card_parent = document.getElementById("archive_list");
+            del_card_parent = document.getElementById("archive_list");
             break;
     }
     console.log("Deleted card from " + table_order_current_state);

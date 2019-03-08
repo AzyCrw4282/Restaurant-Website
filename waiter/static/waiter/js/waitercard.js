@@ -7,6 +7,8 @@
 
 
 var tempOrder = [];
+//Global for selected view
+var selected_view = ["all"];
 
 function load_data(order_list) {
     console.log(order_list);
@@ -27,6 +29,34 @@ function update_cards(data) {
 
 }
 
+/**
+ * The idea of this function was to have a drop down that'd would call this function to assign the array to selected_view
+ * which would then be used in load_cards to filter the loading of the cards. Scrapping the idea I think
+ */
+function select_view(option) {
+    var table_group_1 = ["1", "2", "3", "4", "5"];
+    var table_group_2 = ["6", "7", "8", "9", "10"];
+    var table_group_3 = ["11", "12", "13", "14", "15"];
+    var all_tables = ["all"];
+
+
+    switch (option){
+        default:
+            selected_view = all_tables;
+            break;
+        case "group_1":
+            selected_view = table_group_1;
+            break;
+        case "group_2":
+            selected_view = table_group_2;
+            break;
+        case "group_3":
+            selected_view = table_group_3;
+            break;
+    }
+
+
+}
 
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     var del_card = document.getElementById(table_order_id);
@@ -102,6 +132,8 @@ function load_cards(table_orders) {
             potential_div.remove();
 
         }
+
+
         //Conditionals so cards are loaded into the correct places
         // console.log("State:" + table_order_state);
 

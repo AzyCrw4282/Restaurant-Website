@@ -129,6 +129,7 @@ function load_cards(table_orders) {
             if (potential_div.value == table_order_state) {
                 continue;
             }
+            //Div has changed/ does not exist /whatever notification needed
             potential_div.remove();
 
         }

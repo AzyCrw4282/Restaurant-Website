@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import FoodForm
-from menu.models import Food, TableOrder, FoodCategory
+from .forms import FoodForm, FoodInformationForm
+from menu.models import Food, TableOrder, FoodCategory,FoodInformation
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -64,9 +64,11 @@ def waiter(request):
 def insert_stuff(request):
     if request.method == 'POST':
         print("received post request")
-        form = FoodForm(request.POST, request.FILES)
-        print("form recieved")
-        print(form)
+        print(request.POST)
+        if 'ingredients'in request.POST:
+            form=FoodInformationForm(request.POST)
+        else:
+            form = FoodForm(request.POST, request.FILES)
         if form.is_valid():
             print('form validated')
             instance = form.save(commit=False)
@@ -75,10 +77,37 @@ def insert_stuff(request):
 
     print("called insert stuff")
     user = request.user
-    context = {'user': user, 'food_form': FoodForm()}
+    food_information_list=db_objects_to_list_of_dicts(FoodInformation.objects.all())
+    food_list=db_objects_to_list_of_dicts(Food.objects.all())
+    food_dict={'food_list':food_list}
+    context = {'food_information_list':food_information_list,'food_dict':food_dict,'user': user, 'food_form': FoodForm(),'food_information_form':FoodInformationForm()}
     return render(
         request, 'waiter/templates/insert_example.html', context)
 
+def add_information_to_food(request):
+    if request.method=='POST':
+        try:
+            # get list of food information id's
+            print(request.POST)
+            information_list=json.loads(request.POST['information_list'])
+            food_list=json.loads(request.POST["food_list"])
+
+            print(food_list)
+            print(information_list)
+            for food_id in food_list:
+                food=Food.objects.get(id=food_id)
+                food.information.clear()
+                for information_id in information_list:
+                    information=FoodInformation.objects.get(id=information_id)
+                    food.information.add(information)
+                food.save()
+            print("SUCCESSSSSSSSS")
+            return JsonResponse(SUCCESSFUL_RESPONSE)
+
+        except Exception as e:
+            print("FAILED TO INSERT FOOD INFO: ",e)
+            return JsonResponse(UNSUCCESSFUL_RESPONSE)
+    return Http404
 
 def delete_old_table_orders(request):
     '''

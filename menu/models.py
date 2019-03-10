@@ -40,13 +40,12 @@ order_states=data["order_states"]
 class Table(models.Model):
     number = models.IntegerField(default=0)
     id = models.TextField(primary_key=True)
-
     def to_dict(self):
         dict = {"number": self.number, "id": self.id}
         return dict
 
 
-# FoodInformation( _id, name,description)
+# FoodInformation( _id, name,ingredients)
 class FoodInformation(models.Model):
     name = models.CharField(default="", max_length=30)
     ingredients = models.CharField(default="", max_length=200)
@@ -83,7 +82,7 @@ class Food(models.Model):
     def to_dict(self):
         dict = {"name": self.name, "price": self.price, "id": self.id, "category": self.category.id,
                 "information": [], "description": self.description, "picture": self.picture.__str__(),
-                "display": self.display}
+                "display": self.display.__str__()}
         for info in self.information.all():
             dict["information"].append(info.id)
         return dict

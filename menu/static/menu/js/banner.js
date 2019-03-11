@@ -16,34 +16,12 @@ function banner() {
     });
 }
 
-//
-// var prevScrollpos = window.pageYOffset;
-// window.onscroll = function () {
-//     var currentScrollPos = window.pageYOffset;
-//     if (currentScrollPos < 10) {
-//         document.getElementById("headerContainer").style.display = "";
-//     } else if(prevScrollpos < currentScrollPos) {
-//         document.getElementById("headerContainer").style.display = "None";
-//     }
-//     prevScrollpos = currentScrollPos;
-// };
 
 
-
-window.onscroll = function() {
+window.onscroll = function () {
     document.getElementById("banner").style.visibility = "hidden";
-    stickNavBar()};
-
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function stickNavBar() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky");
-  } else{
-
-    navbar.classList.remove("sticky");
-
-  }
-   document.getElementById("banner").style.visibility = "visible";
+    document.getElementById("tabs_header").style.top = "0px";
 }
+
+
+

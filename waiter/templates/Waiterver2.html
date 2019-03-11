@@ -19,23 +19,20 @@
 
 
 <div class="tab">
-    <button class="tablinks" onclick="tab(event,'pending')">Pending Orders</button>
-    <button class="tablinks" onclick="tab(event,'kitchen')">Kitchen</button>
-    <button class="tablinks" onclick="tab(event,'ready')">Order Ready</button>
-    <button class="tablinks" onclick="tab(event,'archive')">Archive</button>
+    <button id='tab_link_client_confirmed' class="tablinks" onclick="tab(event,'pending','tab_link_client_confirmed')">Pending Orders</button>
+    <button id='tab_link_waiter_confirmed' class="tablinks" onclick="tab(event,'kitchen','tab_link_waiter_confirmed')">Kitchen</button>
+    <button id='tab_link_chef_confirmed' class="tablinks" onclick="tab(event,'ready','tab_link_chef_confirmed')">Order Ready</button>
+    <button id='tab_link_archived' class="tablinks" onclick="tab(event,'archive','tab_link_archived')">Archive</button>
 </div>
 <form onsubmit="return false">
     {% csrf_token %}
 
     <!-- Tab 1 -->
     <div id="pending" class="tabcontent">
-
-
         <div class="panel-group" id="pending_list">
 
 
         </div>
-
     </div>
 
     <!-- Tab 2  -->
@@ -43,25 +40,20 @@
         <div class="panel-group" id="kitchen_list">
 
         </div>
-
     </div>
 
     <!-- Tab 3 -->
     <div id="ready" class="tabcontent">
-
         <div class="panel-group" id="ready_list">
 
         </div>
-
     </div>
 
     <!-- Tab 4 -->
     <div id="archive" class="tabcontent">
-
         <div class="panel-group" id="archive_list">
 
         </div>
-
     </div>
 
 </form>

@@ -7094,6 +7094,7 @@ a.text-dark:hover, a.text-dark:focus {
   position: absolute;
   background-color: #C00000;
   min-width: 150px;
+  z-index: 1;
 
 }
 .override-content a {
@@ -7116,15 +7117,22 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 /******Table Filter stuff******/
-.table_filter_button {
+/*.table_filter_button {
   float:right;
-}
+}*/
 
 .table_filter_content {
   display:none;
   position: absolute;
   background-color: #C00000;
   min-width: 120px;
+  min-height: 200px;
+  overflow: auto;
+  z-index: 2;
+  color:white;
+  padding-left: 8px;
+  padding-right: 8px;
+
 }
 .table_filter_content input {
   float:right;
@@ -7137,6 +7145,15 @@ a.text-dark:hover, a.text-dark:focus {
 }
 .table_filter_content a:hover {
   background-color: #FF0000;
+}
+.table_filter_dropdown {
+  position: absolute;
+  display: inline-block;
+
+}
+.table_filter_dropdown:hover .table_filter_content {
+  display:block;
+
 }
 
 

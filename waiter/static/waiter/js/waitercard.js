@@ -30,9 +30,7 @@ function update_cards(data) {
 }
 
 
-function set_table_filter(option){
-  
-}
+
 
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     var del_card = document.getElementById(table_order_id);
@@ -133,6 +131,61 @@ function load_cards(table_orders) {
         }
     }
 }
+
+//Table filter things
+
+/**
+ * This function loads the different tables as options to the table filter.
+ * This works by parsing over the table orders and loading the tables from orders into the dropdown
+ * as options.
+ *
+ * This is gonna be really slow when we start approaching higher numbers or orders, only fix
+ * would be to change the way /waiter/ loads the data into and get tables as a seperate entity but
+ * might require significant refactoring. I'm not sure how exactly to it too.
+ *
+ * TODO: Fix scaling by only loading tables directly from the database (refactor loading data)
+ * @param table_orders List of orders pulled from database.
+ */
+function table_filter_options(table_orders){
+    var filter = document.getElementById("table_filter_content");
+    for (var i in table_orders){
+        var table_order = table_orders[i];
+        var table_order_table_number = table_order["table_number"];
+
+        //checking for existing option
+        var repeat_check = document.getElementById("table_checkbox" + table_order_table_number);
+        if(repeat_check){
+            continue;
+        }
+
+
+        var table_filter_option = document.createElement("a");
+        var table_filter_checkbox = document.createElement("input");
+        table_filter_checkbox.setAttribute("type", "checkbox")
+        table_filter_checkbox.id = "table_checkbox" + table_order_table_number;
+        table_filter_option.id = "table_option" + table_order_table_number;
+        table_filter_option.value = table_order_table_number.toString();
+        table_filter_option.innerText = "Table" + table_order_table_number;
+
+        table_filter_option.appendChild(table_filter_checkbox);
+
+        table_filter_option.onclick = click_table_filter_checkbox(table_filter_checkbox);
+            table_filter_checkbox.onclick = update_table_filter(table_filter_checkbox);
+
+            filter.appendChild(table_filter_option);
+    }
+}
+
+function update_table_filter(table){
+
+}
+
+function click_table_filter_checkbox(table_filter_checkbox){
+    return function(){
+        table_filter_checkbox.click();
+    }
+}
+
 
 //Pending cards
 function add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {

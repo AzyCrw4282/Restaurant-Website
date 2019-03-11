@@ -7,12 +7,11 @@
 
 
 var tempOrder = [];
-//Global for selected view
-var selected_view = ["all"];
 
 function load_data(order_list) {
     console.log(order_list);
     load_cards(order_list);
+    table_filter_options(order_list);
     // get_and_update_table_order_states();
     setInterval(function () {
     update_table_order_list();
@@ -26,6 +25,7 @@ function update_cards(data) {
 
     print(table_orders);
     load_cards(table_orders);
+    table_filter_options(table_orders);
 
 }
 
@@ -162,7 +162,8 @@ function table_filter_options(table_orders){
         var table_filter_option = document.createElement("a");
         var table_filter_checkbox = document.createElement("input");
         table_filter_checkbox.setAttribute("type", "checkbox")
-        table_filter_checkbox.id = "table_checkbox" + table_order_table_number;
+        table_filter_checkbox.id = "_table_checkbox_" + table_order_table_number;
+
         table_filter_option.id = "table_option" + table_order_table_number;
         table_filter_option.value = table_order_table_number.toString();
         table_filter_option.innerText = "Table" + table_order_table_number;
@@ -176,8 +177,18 @@ function table_filter_options(table_orders){
     }
 }
 
-function update_table_filter(table){
-
+function update_table_filter(table_filter_checkbox){
+    return function() {
+        var set_display = "none";
+        if (table_filter_checkbox.checked) {
+            set_display = "block";
+        }
+        var order_cards = document.getElementsByName("top" + table_filter_checkbox.id)
+        for(var i = 0; i <order_cards.length; i++){
+            var order_card = order_cards[i];
+            order_card.style.display = set_display;
+        }
+    }
 }
 
 function click_table_filter_checkbox(table_filter_checkbox){
@@ -197,7 +208,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + table_order_table_number;
+    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -297,7 +308,7 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + table_order_table_number;
+    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -395,7 +406,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + table_order_table_number;
+    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -493,7 +504,7 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + table_order_table_number;
+    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -589,7 +600,7 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + table_order_table_number;
+    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");

@@ -16,7 +16,6 @@ with open('config.json') as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 
-
 UNSUCCESSFUL_RESPONSE = {
     'success': False,
     'message': 'FAILURE '
@@ -38,8 +37,11 @@ def db_objects_to_list_of_dicts(objects):
         list.append(db_object.to_dict())
     return list
 
+
 # ======= NORMAL HTTP REQUESTS: =======================
 def welcome_page(request):
+    table_list = db_objects_to_list_of_dicts(Table.objects.all())
+
     #     create a unique id as a temp solution for now and redirect the person to uuid/menu :D
     #     right now this is generated automatically,
     #   this should be done by some code the user can enter? discuss with client?
@@ -142,25 +144,23 @@ def get_menu_popup_data(request, table_order_id):
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
-
 # =========== INSET INTO DB FUNCTIONS ==========================
 def submit_order(request, table_order_id):
     print("CALLED SUBMIT ORDER")
-    if request.method=='POST':
-        try:
-            table_order = TableOrder.objects.get(id=table_order_id)
-            if table_order.status==table_order_states["client_created"]:
-                table_order.status = table_order_states["client_confirmed"]
-                table_order.time=datetime.now()
-                table_order.save()
-                #     UPDATE THE WAITER HERE?
-            return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
+    try:
+        table_order = TableOrder.objects.get(id=table_order_id)
+        if table_order.status == table_order_states["client_created"]:
+            table_order.status = table_order_states["client_confirmed"]
+            table_order.time = datetime.now()
+            table_order.save()
+            print("SUCCESSFUL redirecting...")
+            #     UPDATE THE WAITER HERE?
+        return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 
-        except Exception as e:
-            print("FAIlED to submit order: ", e)
-            print("redirecting")
-            return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
-
+    except Exception as e:
+        print("FAIlED to submit order: ", e)
+        print("redirecting")
+        return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 def add_food_to_order(request, table_order_id):
     """
     Adds an order item to an existing table-order

@@ -13,16 +13,16 @@ function load_data(order_list) {
     load_cards(order_list);
     // get_and_update_table_order_states();
     setInterval(function () {
-    update_table_order_list();
+        update_table_order_list();
 
     }, 5000);
 }
 
 function update_cards(data) {
-    print("UPDATING CARDS");
+    // print("UPDATING CARDS");
     var table_orders = data["table_orders"];
 
-    print(table_orders);
+    // print(table_orders);
     load_cards(table_orders);
 
 }
@@ -78,6 +78,19 @@ function move_card_on_click(table_order_id, table_order_comment, table_order_tim
     }
 }
 
+function turn_on_notification(table_order_state) {
+    print("turning on notification");
+    var state = table_order_state;
+    if (state == 'chef_canceled') {
+        state = 'chef_confirmed'
+    }
+    print(state);
+    var tab_button = document.getElementById('tab_link_' + state);
+    if(tab_button){
+        tab_button.style.backgroundColor = "red";
+    }
+}
+
 function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];
@@ -93,12 +106,17 @@ function load_cards(table_orders) {
         var table_order_state = table_order["status"]; //However the state of the order needs to be loaded
         var potential_div = document.getElementById(table_order_id);
         if (potential_div) {
-            print("VALUE");
-            print(potential_div.value);
+            // print("VALUE");
+            // print(potential_div.value);
             if (potential_div.value == table_order_state) {
                 continue;
             }
+            //Div has changed/ does not exist /whatever notification needed
+            turn_on_notification(table_order_state);
             potential_div.remove();
+
+        } else {
+            turn_on_notification(table_order_state);
 
         }
         //Conditionals so cards are loaded into the correct places
@@ -501,7 +519,8 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 
 }
 
-function tab(evt, tabname) {
+function tab(evt, tabname, id) {
+    //reset the bg colour if it is red.
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -512,6 +531,9 @@ function tab(evt, tabname) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(tabname).style.display = "block";
+    var tab = document.getElementById(id);
+    print(tab);
+    tab.style.backgroundColor = "white";
     evt.currentTarget.className += " active";
 }
 

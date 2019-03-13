@@ -244,6 +244,16 @@ a:hover, a:active {
     position: fixed;
     top: 100px;
     text-align: center;
+
+}
+
+#tabs_header.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 50px;
+    font-size: 20px;
+    z-index: 2;
 }
 
 .popup {

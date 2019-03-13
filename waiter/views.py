@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
-from menu.models import Food, TableOrder, FoodCategory,FoodInformation
+from menu.models import Food, TableOrder, FoodCategory, FoodInformation
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -27,9 +27,9 @@ def get_waiter_card_data(request):
 
 def db_objects_to_list_of_dicts(objects):
     '''
-    converts multiple db objects to a list of it's dictionaries
+    converts multiple db objects to a list of its dictionaries
     :param objects:
-    :return:
+    :return: [{obj1}{obj2}{objN}]
     '''
     list = []
     for db_object in objects:
@@ -65,8 +65,8 @@ def insert_stuff(request):
     if request.method == 'POST':
         print("received post request")
         print(request.POST)
-        if 'ingredients'in request.POST:
-            form=FoodInformationForm(request.POST)
+        if 'ingredients' in request.POST:
+            form = FoodInformationForm(request.POST)
         else:
             form = FoodForm(request.POST, request.FILES)
         if form.is_valid():
@@ -77,37 +77,40 @@ def insert_stuff(request):
 
     print("called insert stuff")
     user = request.user
-    food_information_list=db_objects_to_list_of_dicts(FoodInformation.objects.all())
-    food_list=db_objects_to_list_of_dicts(Food.objects.all())
-    food_dict={'food_list':food_list}
-    context = {'food_information_list':food_information_list,'food_dict':food_dict,'user': user, 'food_form': FoodForm(),'food_information_form':FoodInformationForm()}
+    food_information_list = db_objects_to_list_of_dicts(FoodInformation.objects.all())
+    food_list = db_objects_to_list_of_dicts(Food.objects.all())
+    food_dict = {'food_list': food_list}
+    context = {'food_information_list': food_information_list, 'food_dict': food_dict, 'user': user,
+               'food_form': FoodForm(), 'food_information_form': FoodInformationForm()}
     return render(
         request, 'waiter/templates/insert_example.html', context)
 
+
 def add_information_to_food(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
             # get list of food information id's
             print(request.POST)
-            information_list=json.loads(request.POST['information_list'])
-            food_list=json.loads(request.POST["food_list"])
+            information_list = json.loads(request.POST['information_list'])
+            food_list = json.loads(request.POST["food_list"])
 
             print(food_list)
             print(information_list)
             for food_id in food_list:
-                food=Food.objects.get(id=food_id)
+                food = Food.objects.get(id=food_id)
                 food.information.clear()
                 for information_id in information_list:
-                    information=FoodInformation.objects.get(id=information_id)
+                    information = FoodInformation.objects.get(id=information_id)
                     food.information.add(information)
                 food.save()
             print("SUCCESSSSSSSSS")
             return JsonResponse(SUCCESSFUL_RESPONSE)
 
         except Exception as e:
-            print("FAILED TO INSERT FOOD INFO: ",e)
+            print("FAILED TO INSERT FOOD INFO: ", e)
             return JsonResponse(UNSUCCESSFUL_RESPONSE)
     return Http404
+
 
 def delete_old_table_orders(request):
     '''

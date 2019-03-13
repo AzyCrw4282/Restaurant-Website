@@ -23,6 +23,11 @@
     <button id='tab_link_waiter_confirmed' class="tablinks" onclick="tab(event,'kitchen','tab_link_waiter_confirmed')">Kitchen</button>
     <button id='tab_link_chef_confirmed' class="tablinks" onclick="tab(event,'ready','tab_link_chef_confirmed')">Order Ready</button>
     <button id='tab_link_archived' class="tablinks" onclick="tab(event,'archive','tab_link_archived')">Archive</button>
+    <div class="table_filter_dropdown">
+    <button class="table_filter_button" id="table_filter_button">Select Tables</button>
+    <div class="table_filter_content" id="table_filter_content">
+    </div>
+    </div>
 </div>
 <form onsubmit="return false">
     {% csrf_token %}

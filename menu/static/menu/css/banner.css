@@ -16,6 +16,7 @@
   top: -40px; // same as header height. use variables in LESS/SASS
 }
 
+
 .links_bar {
     height: 30%;
     width: 20%;
@@ -26,6 +27,8 @@
     display: table-cell;
 
 }
+
+
 
 .divider {
     position: absolute;

@@ -38,8 +38,6 @@ by self.assertions methods. I have numebred each user story and where they are b
 """
 
 
-
-
 class welcome_menu_TestCase(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
@@ -68,6 +66,8 @@ class welcome_menu_TestCase(unittest.TestCase):
         driver.find_element_by_id("3comment").click()
         driver.find_element_by_id("3comment").clear()
         driver.find_element_by_id("3comment").send_keys("extra Chilli")
+
+
 
 
         self.assertEqual(driver.find_element_by_class_name("food_card_img_border").is_displayed(),True,"Border displayed ")#3, 4,5

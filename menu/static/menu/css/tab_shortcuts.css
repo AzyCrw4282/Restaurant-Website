@@ -1,0 +1,112 @@
+/*.shortcut_anchor a:link, a:visited {*/
+/*background-color: white;*/
+/*color: black;*/
+/*padding: 10px 30px;*/
+/*text-align: center;*/
+/*text-decoration: none;*/
+/*display: inline-block;*/
+/*}*/
+.tabs_header {
+    position: relative;
+    z-index: 2;
+    top: 50px;
+    background-color: whitesmoke;
+    width: 100%;
+    height: 75px;
+}
+.links_wrapper{
+
+    height: 100%;
+    overflow-y: hidden;
+}
+#tabs_header {
+    position: fixed;
+    top: 100px;
+    text-align: center;
+
+}
+
+#tabs_header.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 50px;
+    font-size: 20px;
+    z-index: 2;
+}
+
+.tabs_header a {
+    min-width: 200px;
+    max-width: 200px;
+    vertical-align: middle;
+    border-color: black;
+    border-width: 10px;
+    color: black;
+    padding: 10px 30px;
+    height: 100%;
+    font-size: 30px;
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+    text-decoration: none;
+    display: inline-block;
+}
+
+.tabs_header a:hover {
+    background-color: #C00000;
+    color: white;
+}
+
+.filter {
+    padding: 10px;
+    background-color: rgba(169, 165, 168, 0.41);
+    color: black;
+    width:200px;
+    height: 100%;
+    font-size: 30px;
+    font-family: "sans-serif";
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    float: left;
+}
+.filter:hover{
+    color: white;
+    background-color: #C00000;
+}
+.filter:hover .drop_down_content {
+    display: block;
+}
+
+
+.drop_down_content {
+    display: none;
+    position: absolute;
+    left:0;
+    top:100%;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+
+.drop_down_content input {
+    float: right;
+}
+
+.filter:hover .drop_down_content a {
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+}
+.filter:hover .drop_down_content a:hover {
+    background-color: #C00000;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+}
+
+

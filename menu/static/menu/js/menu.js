@@ -49,17 +49,18 @@ function add_filter_options(food_info_dict) {
     for (var i in food_info_dict) {
         var cat_dict = food_info_dict[i];
         var name = cat_dict["name"];
-        console.log(name);
+        // console.log(name);
         var option = document.createElement("a");
 
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
         checkbox.id = "option" + cat_dict["id"];
+        checkbox.onclick = click_checkbox(checkbox);
         option.value = name.toString();
         option.innerText = name;
         option.appendChild(checkbox);
-        option.onclick =click_checkbox(checkbox);
-            checkbox.onclick = update_filter(checkbox);
+        option.onclick = update_filter(checkbox);
+
 
         select.appendChild(option)
     }
@@ -68,7 +69,12 @@ function add_filter_options(food_info_dict) {
 
 function click_checkbox(checkbox) {
     return function () {
-        checkbox.click()
+        //clicking the checkbox again so it unclicks itself
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
     }
 }
 
@@ -81,24 +87,26 @@ function click_checkbox(checkbox) {
 
 function update_filter(checkbox) {
     return function () {
-        console.log(checkbox);
         console.log("UPDATING");
         var display = "none";
-        if (checkbox.checked) {
-            display = "block";
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+            display = "inline-block";
+        } else {
+            checkbox.checked = false;
         }
-        console.log(display);
+        // console.log(display);
         //get all buttons with the tag value of the
         //    removes / shows the relevant food cards on the page depending on selected options from the filter.
 
         var all_food_allergy_card_tags = document.getElementsByName("card_allergy_button_" + checkbox.id);
-        console.log(all_food_allergy_card_tags);
+        // console.log(all_food_allergy_card_tags);
         for (var i = 0; i < all_food_allergy_card_tags.length; i++) {
             //    while the parent node is not the food_card get the parent node
             //    set the food_card display
             var parent_node = all_food_allergy_card_tags[i].parentNode;
             while (true) {
-                console.log(parent_node);
+                // console.log(parent_node);
                 if (parent_node.className == "food_card") {
                     parent_node.style.display = display;
                     break;
@@ -116,7 +124,7 @@ function update_filter(checkbox) {
 
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
-    var div = document.getElementById("tabs_header");
+    var div = document.getElementById("links_wrapper");
     for (var i in categories) {
         var cat = categories[i];
         var cat_name = cat["name"];
@@ -146,8 +154,8 @@ function add_card(card, info_dict) {
         var id = information_list[i];
         information.push(info_dict[id])
     }
-    console.log("LIST DICT OF INFO: ");
-    console.log(information);
+    // console.log("LIST DICT OF INFO: ");
+    // console.log(information);
     // console.log(card);
     // console.log(card["information"]);
     // console.log(card["description"]);

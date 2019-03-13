@@ -167,12 +167,7 @@
 
 }
 
-.shortcut_anchor {
-    top: 200px;
-    font-size: 30px;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
 
-}
 
 
 button.noOfItems {
@@ -215,10 +210,8 @@ p {
 
 }
 
-a {
-    font-size: 30px;
-    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
-}
+
+
 
 h1, h2, h3 {
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
@@ -226,35 +219,9 @@ h1, h2, h3 {
     color: #C00000;
 }
 
-a:link, a:visited {
-    background-color: white;
-    color: black;
-    padding: 10px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
 
-a:hover, a:active {
-    background-color: #C00000;
-    color: white;
-}
 
-#tabs_header {
-    position: fixed;
-    top: 100px;
-    text-align: center;
 
-}
-
-#tabs_header.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0px;
-    padding: 50px;
-    font-size: 20px;
-    z-index: 2;
-}
 
 .popup {
     position: relative;
@@ -376,23 +343,8 @@ h1, h2, h3 {
     color: #C00000;
 }
 
-a:link, a:visited {
-    background-color: white;
-    color: black;
-    padding: 10px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
 
-a:hover, a:active {
-    background-color: #C00000;
-    color: white;
-}
 
-#tabs_header {
-
-}
 
 .popup {
     position: relative;

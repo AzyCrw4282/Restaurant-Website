@@ -1,0 +1,9 @@
+.food_card_separator {
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+    text-align: center;
+    color: #C00000;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 40px;
+}

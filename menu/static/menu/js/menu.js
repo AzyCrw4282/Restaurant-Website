@@ -177,10 +177,10 @@ function add_card(card, info_dict) {
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
-    var orderBtn = create_tag("button", "", "", "block", "", "Add to Order " + price);
+    var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price);
 
     if (authenticated) {
-        var delete_button = create_tag("button", "", "", "block", "", "delete");
+        var delete_button = create_tag("button", "", "", "food_card_button", "", "delete");
         delete_button.onclick = delete_food_from_menu(id);
     }
     //adding on click functions to increment the popup quantity
@@ -360,11 +360,9 @@ function add_section_for_each_food_category(categories) {
 //       <h1 class="separator">
 //              <span>SIDES</span>
 //        </h1>
-        var separator = document.createElement("h1");
-        separator.className = "separator";
-        var span = document.createElement("span");
-        span.innerText = cat["name"].toUpperCase();
-        separator.appendChild(span);
+        var separator = document.createElement("div");
+        separator.className = "food_card_separator";
+        separator.innerText = cat["name"].toUpperCase();
         section.id = cat["name"];
 
         document.getElementById("categories").appendChild(separator);

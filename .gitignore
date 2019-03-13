@@ -10,3 +10,4 @@ __/pycache_/
 */setting.py
 settings.py
 db.sqlite3
+geckodriver.log

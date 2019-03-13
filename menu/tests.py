@@ -20,7 +20,7 @@ class welcome_menu_TestCase(unittest.TestCase):
         driver.get("http://localhost:8000/menu/")
         driver.find_element_by_id("table_code").click()
         driver.find_element_by_id("table_code").clear()
-        driver.find_element_by_id("table_code").send_keys("1234")
+        driver.find_element_by_id("table_code").send_keys("123")
         driver.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Welcome To Oaxaca'])[1]/following::button[1]").click()
 

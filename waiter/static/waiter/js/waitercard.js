@@ -170,7 +170,7 @@ function table_filter_options(table_orders){
         var table_order_table_number = table_order["table_number"];
 
         //checking for existing option
-        var repeat_check = document.getElementById("table_checkbox" + table_order_table_number);
+        var repeat_check = document.getElementById("_table_checkbox_" + table_order_table_number);
         if(repeat_check){
             continue;
         }

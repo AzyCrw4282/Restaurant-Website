@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
-from menu.models import Food, TableOrder, FoodCategory, FoodInformation
+from menu.models import Food, TableOrder, FoodCategory, FoodInformation,Table
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -42,6 +42,7 @@ def waiter(request):
     table_orders = TableOrder.objects.all()
     data = {}
     data.update({"table_orders": []})
+    data.update({"table_list":db_objects_to_list_of_dicts(Table.objects.all())})
     table_order_list = data["table_orders"]
     for table_order in table_orders:
         if not table_order.status == table_order_states["client_created"]:

@@ -8,28 +8,25 @@
 
 var tempOrder = [];
 
-function load_data(order_list) {
+function load_data(order_list, table_list) {
     console.log(order_list);
     load_cards(order_list);
-    table_filter_options(order_list);
+    table_filter_options(table_list);
     // get_and_update_table_order_states();
     setInterval(function () {
         update_table_order_list();
-
+        // update_filter(table_list);
     }, 5000);
 }
 
 function update_cards(data) {
     // print("UPDATING CARDS");
+
     var table_orders = data["table_orders"];
 
     // print(table_orders);
     load_cards(table_orders);
-    table_filter_options(table_orders);
-
 }
-
-
 
 
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
@@ -84,14 +81,14 @@ function move_card_on_click(table_order_id, table_order_comment, table_order_tim
 }
 
 function turn_on_notification(table_order_state) {
-    print("turning on notification");
+    // print("turning on notification");
     var state = table_order_state;
     if (state == 'chef_canceled') {
         state = 'chef_confirmed'
     }
-    print(state);
+    // print(state);
     var tab_button = document.getElementById('tab_link_' + state);
-    if(tab_button){
+    if (tab_button) {
         tab_button.style.backgroundColor = "red";
     }
 }
@@ -163,57 +160,66 @@ function load_cards(table_orders) {
  * TODO: Fix scaling by only loading tables directly from the database (refactor loading data)
  * @param table_orders List of orders pulled from database.
  */
-function table_filter_options(table_orders){
+function table_filter_options(table_list) {
     var filter = document.getElementById("table_filter_content");
-    for (var i in table_orders){
-        var table_order = table_orders[i];
-        var table_order_table_number = table_order["table_number"];
-
-        //checking for existing option
-        var repeat_check = document.getElementById("_table_checkbox_" + table_order_table_number);
-        if(repeat_check){
-            continue;
-        }
-
+    for (var i in table_list) {
+        var table_order = table_list[i];
+        var table_number = table_order["number"];
 
         var table_filter_option = document.createElement("a");
         var table_filter_checkbox = document.createElement("input");
-        table_filter_checkbox.setAttribute("type", "checkbox")
-        table_filter_checkbox.id = "_table_checkbox_" + table_order_table_number;
-
-        table_filter_option.id = "table_option" + table_order_table_number;
-        table_filter_option.value = table_order_table_number.toString();
-        table_filter_option.innerText = "Table" + table_order_table_number;
-
+        table_filter_checkbox.setAttribute("type", "checkbox");
+        table_filter_checkbox.id = "checkbox_" + table_number;
+        table_filter_checkbox.value = table_number.toString();
+        table_filter_option.innerText = "Table" + table_number;
+        //click the checkbox twice to counter act.
+        table_filter_checkbox.onclick = click_checkbox(table_filter_checkbox);
         table_filter_option.appendChild(table_filter_checkbox);
-
-        table_filter_option.onclick = click_table_filter_checkbox(table_filter_checkbox);
-            table_filter_checkbox.onclick = update_table_filter(table_filter_checkbox);
-
-            filter.appendChild(table_filter_option);
+        //actually control the selection of the checkbox
+        table_filter_option.onclick = update_table_filter(table_filter_checkbox);
+        filter.appendChild(table_filter_option);
     }
 }
 
-function update_table_filter(table_filter_checkbox){
-    return function() {
+function update_table_filter(checkbox) {
+    return function () {
         var set_display = "none";
-        if (table_filter_checkbox.checked) {
-            set_display = "block";
+        console.log("UPDATING");
+        var display = "none";
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+            display = "block";
+        } else {
+            checkbox.checked = false;
         }
-        var order_cards = document.getElementsByName("top" + table_filter_checkbox.id)
-        for(var i = 0; i <order_cards.length; i++){
-            var order_card = order_cards[i];
-            order_card.style.display = set_display;
+        //For some reason the bellow does not work? so alternative was used.
+        // var order_cards = document.getElementsByName("top_table_" + checkbox.value);
+        var all_cards = document.getElementsByClassName("panel panel-default");
+
+
+        // console.log(order_cards);
+        // order_cards.style.display=display;
+        for (var i = 0; i < all_cards.length; i++) {
+            var order_card = all_cards[i];
+            if ("top_table_" + checkbox.value == order_card.name) {
+                order_card.style.display = display;
+
+            }
         }
     }
 }
 
-function click_table_filter_checkbox(table_filter_checkbox){
-    return function(){
-        table_filter_checkbox.click();
+
+function click_checkbox(checkbox) {
+    return function () {
+        //clicking the checkbox again so it unclicks itself
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
     }
 }
-
 
 //Pending cards
 function add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
@@ -225,8 +231,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
-
+    top_of_panel.name = "top_table_" + table_order_table_number;
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
@@ -264,14 +269,14 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
     //Status Override
-    var override_dropdown = create_tag("div","", "", "override_drop", "","");
-    var override_button = create_tag("button", "","","override_button","","Status Override");
-    var override_content = create_tag("div", "","","override-content","","");
-    var override_to_pending = create_tag("a","#","","","", "Pending");
-    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
-    var override_to_ready = create_tag("a","#","","","", "Order Ready");
-    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
-    var override_to_archive = create_tag("a","#","","","", "archive");
+    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
+    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
+    var override_content = create_tag("div", "", "", "override-content", "", "");
+    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
+    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
+    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
+    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
+    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
     override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
@@ -325,7 +330,7 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
+    top_of_panel.name = "top_table_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -363,14 +368,14 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
     //Status Override
-    var override_dropdown = create_tag("div","", "", "override_drop", "","");
-    var override_button = create_tag("button", "","","override_button","","Status Override");
-    var override_content = create_tag("div", "","","override-content","","");
-    var override_to_pending = create_tag("a","#","","","", "Pending");
-    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
-    var override_to_ready = create_tag("a","#","","","", "Order Ready");
-    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
-    var override_to_archive = create_tag("a","#","","","", "archive");
+    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
+    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
+    var override_content = create_tag("div", "", "", "override-content", "", "");
+    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
+    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
+    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
+    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
+    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
     override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
@@ -423,7 +428,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
+    top_of_panel.name = "top_table_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
@@ -461,14 +466,14 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
     //Status Override
-    var override_dropdown = create_tag("div","", "", "override_drop", "","");
-    var override_button = create_tag("button", "","","override_button","","Status Override");
-    var override_content = create_tag("div", "","","override-content","","");
-    var override_to_pending = create_tag("a","#","","","", "Pending");
-    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
-    var override_to_ready = create_tag("a","#","","","", "Order Ready");
-    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
-    var override_to_archive = create_tag("a","#","","","", "archive");
+    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
+    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
+    var override_content = create_tag("div", "", "", "override-content", "", "");
+    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
+    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
+    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
+    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
+    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
     override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
@@ -521,9 +526,10 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
     top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
+    top_of_panel.name = "top_table_" + table_order_table_number;
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
@@ -559,14 +565,14 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
     //Status Override
-    var override_dropdown = create_tag("div","", "", "override_drop", "","");
-    var override_button = create_tag("button", "","","override_button","","Status Override");
-    var override_content = create_tag("div", "","","override-content","","");
-    var override_to_pending = create_tag("a","#","","","", "Pending");
-    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
-    var override_to_ready = create_tag("a","#","","","", "Order Ready");
-    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
-    var override_to_archive = create_tag("a","#","","","", "archive");
+    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
+    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
+    var override_content = create_tag("div", "", "", "override-content", "", "");
+    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
+    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
+    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
+    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
+    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
     override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
@@ -610,16 +616,17 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
 
 //Archived Orders
 function add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
+    // var temp_holder=document.createElement("div");
     var pending_list = document.getElementById("archive_list");
     // console.log("static: ");
     // console.log("creating archivecard");
 
     //Panel group divs
     var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
-    top_of_panel.value = table_order_state;
-    top_of_panel.name = "top" + "_table_checkbox_" + table_order_table_number;
+
 
     var panel_header = create_tag("div", "", "", "panel-heading", "", "");
+
     var panel_title = create_tag("h4", "", "", "panel-title", "", "");
 
     /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
@@ -655,14 +662,14 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
     //Status Override
-    var override_dropdown = create_tag("div","", "", "override_drop", "","");
-    var override_button = create_tag("button", "","","override_button","","Status Override");
-    var override_content = create_tag("div", "","","override-content","","");
-    var override_to_pending = create_tag("a","#","","","", "Pending");
-    var override_to_in_kitchen = create_tag("a","#","","","", "In Kitchen");
-    var override_to_ready = create_tag("a","#","","","", "Order Ready");
-    var override_to_cancelled = create_tag("a","#","","","", "Cancelled");
-    var override_to_archive = create_tag("a","#","","","", "archive");
+    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
+    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
+    var override_content = create_tag("div", "", "", "override-content", "", "");
+    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
+    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
+    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
+    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
+    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
     override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
@@ -700,6 +707,9 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
 
     top_of_panel.appendChild(panel_header);
     top_of_panel.appendChild(panel_content_top);
+    top_of_panel.value = table_order_state;
+    top_of_panel.name = "top_table_" + table_order_table_number;
+    // print(top_of_panel.name);
 
     pending_list.appendChild(top_of_panel);
 }
@@ -750,7 +760,7 @@ function tab(evt, tabname, id) {
     }
     document.getElementById(tabname).style.display = "block";
     var tab = document.getElementById(id);
-    print(tab);
+    // print(tab);
     tab.style.backgroundColor = "white";
     evt.currentTarget.className += " active";
 }
@@ -764,11 +774,11 @@ function update_table_order_states(table_order_states) {
 // otherwise delete it request all the card details from the server
 // and add it back to the relevant location by it's status.
 //    Requirements for this: Card id and Card status
-    print(table_order_states);
+//     print(table_order_states);
     var outdated_table_orders = [];
     for (var i in table_order_states) {
         var dict = table_order_states[i];
-        print(dict);
+        // print(dict);
         var state = dict["state"];
         var id = dict["id"];
         var table_order_div = document.getElementById(id);

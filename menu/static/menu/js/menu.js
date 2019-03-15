@@ -233,24 +233,24 @@ function add_card(card, info_dict) {
 
     }
 
-    for (var x in desc) {
-
-        var descr_info = desc[x]["description"];
-
-        desc_button.onmouseover = desc_popup_display_on(id);
-        desc_button.onmouseleave = desc_popup_display_off(id);
-
-        var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
-        var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
-        var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
 
 
-        var info_3 = create_tag("h2", "", "", "", "", "i");
-        var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
-        var info_5 = create_tag("p", "", "", "", "", "" + descr_info);
-        var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
 
-    }
+
+    desc_button.onmouseover = desc_popup_display_on(id);
+    desc_button.onmouseleave = desc_popup_display_off(id);
+
+    var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
+    var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
+    var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+
+
+    var info_3 = create_tag("h2", "", "", "", "", ""+food_name);
+    var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
+    var info_5 = create_tag("p", "", "", "", "", "" + desc);
+    var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
+
+
 
 
     div_2.appendChild(info_1);

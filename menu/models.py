@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import Group
 from django.utils.timezone import now
 import json
 from datetime import datetime
@@ -37,6 +38,8 @@ with open('config.json') as json_data_file:
 table_order_states = data["table_order_states"]
 order_states=data["order_states"]
 
+# class Waiter(models.Model):
+#     member=models.user
 class Table(models.Model):
     number = models.IntegerField(default=0)
     id = models.TextField(primary_key=True)

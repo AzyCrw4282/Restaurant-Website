@@ -16,13 +16,24 @@
 // SECTION STRUCTURE OF THIS FILE:
 // ACCESS POINT (LOADING DATA FROM HTML)
 // CREATING HTML ELEMENTS FOR THE PAGE
-var authenticated = false;
 
+
+/**
+ * This method gives customer access to the menu, initially set to false.
+ * @type {boolean} when autheniticated is true, user is redirected to menu page.
+ */
+
+var authenticated = false;
 function user_is_authenticated() {
     authenticated = true;
 }
 
 //========  LOADING DATA =============
+/**
+ *
+ * @param data
+ */
+
 function load_data(data) {
     update_menu_popup_data();
     var food_information = data["food_information_list"];
@@ -39,9 +50,12 @@ function load_data(data) {
     add_filter_options(food_info_dict);
 
     load_food_cards_into_sections(foods, food_categories, food_info_dict);
-
-
 }
+
+/**
+ *
+ * @param food_info_dict
+ */
 
 
 function add_filter_options(food_info_dict) {
@@ -67,6 +81,12 @@ function add_filter_options(food_info_dict) {
 
 }
 
+/**
+ *
+ * @param checkbox
+ * @returns {Function}
+ */
+
 function click_checkbox(checkbox) {
     return function () {
         //clicking the checkbox again so it unclicks itself
@@ -78,12 +98,11 @@ function click_checkbox(checkbox) {
     }
 }
 
-// $('#drop_down_filter').multiselect({
-//     columns: 1,
-//     placeholder: 'Select Languages',
-//     search: true,
-//     selectAll: true
-// });
+/**
+ *
+ * @param checkbox
+ * @returns {Function}
+ */
 
 function update_filter(checkbox) {
     return function () {
@@ -144,21 +163,25 @@ function load_tab_shortcut_buttons(categories) {
     div.appendChild(a);
 }
 
+/**
+ * Creates a card for each Food item from the Food table, by loading the information from the database
+ * and displays the information
+ * @param card
+ * @param info_dict
+ * @returns {HTMLElement} this will be the card
+ */
 
 function add_card(card, info_dict) {
-    // console.log("LOADING CARD");
     var information_list = card['information'];
     var desc = card['description'];
     var information = [];
+
+    //iterates over the information
+
     for (var i in information_list) {
         var id = information_list[i];
         information.push(info_dict[id])
     }
-    // console.log("LIST DICT OF INFO: ");
-    // console.log(information);
-    // console.log(card);
-    // console.log(card["information"]);
-    // console.log(card["description"]);
 
     var src = card["picture"];
     var food_name = card["name"];
@@ -172,7 +195,6 @@ function add_card(card, info_dict) {
     desc_button.style.background = '#0F31C0';
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
-    // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
@@ -183,14 +205,13 @@ function add_card(card, info_dict) {
         var delete_button = create_tag("button", "", "", "food_card_button", "", "delete");
         delete_button.onclick = delete_food_from_menu(id);
     }
-    //adding on click functions to increment the popup quantity
+
     orderBtn.onclick = add_food_to_order(id, textField.id);
 
     if (authenticated) {
         div_4.appendChild(delete_button);
     }
     div_1.appendChild(heading);
-    // div_2.appendChild(img);
     div_2.appendChild(desc_button);
     div_3.appendChild(textField);
     div_4.appendChild(orderBtn);
@@ -232,10 +253,6 @@ function add_card(card, info_dict) {
 
 
     }
-
-
-
-
 
     desc_button.onmouseover = desc_popup_display_on(id);
     desc_button.onmouseleave = desc_popup_display_off(id);
@@ -295,18 +312,12 @@ function desc_popup_display_off(id) {
 
 
 function desc_popup(id) {
-
-
     return function () {
-
         var x = document.getElementById("desc_popup" + id);
         var desc_button = document.getElementById("desc_button" + id);
-
         var span = document.getElementById("desc_close_button" + id);
 
-
         x.style.display = "block";
-
         span.onclick = function () {
             x.style.display = "none";
         }
@@ -357,9 +368,7 @@ function add_section_for_each_food_category(categories) {
         var cat = categories[i];
         var section = document.createElement("SECTION");
         section.className = "food_card_container";
-//       <h1 class="separator">
-//              <span>SIDES</span>
-//        </h1>
+
         var separator = document.createElement("div");
         separator.className = "food_card_separator";
         separator.innerText = cat["name"].toUpperCase();
@@ -393,18 +402,9 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
 
 }
 
-// ========= JQUERY ACTIVE PAGE ACTIONS================
-// $(document).ready(function () {
-//     $("#basket").click(function (e) {
-//         var x = document.getElementById("order_popup");
-//         if (x.style.display === "none") {
-//             x.style.display = "block";
-//         } else {
-//             x.style.display = "none";
-//         }
-//         return false;
-//     });
-// });
+/**
+ *
+ */
 
 
 $("#popup_button_minimize").click(function () {
@@ -417,17 +417,18 @@ $("#popup_button_minimize").click(function () {
 });
 
 
-// $(food).ready(function(){
-//   $("#hide").click(function(){
-//     $("p").hide();
-//   });
-//   $("#show").click(function(){
-//     $("p").show();
-//   });
-// });
-
-
 //======== HELPER FUNCTIONS? NEW TO JAVASCRIPT================
+
+/**
+ * This creates HTML elements by their structure.
+ * @param tag_name this is the tag name for the element.
+ * @param href represents href which could be a link.
+ * @param src the src of the element being created.
+ * @param tag_class if the element has a tag class.
+ * @param id represents the id of the element being created.
+ * @param text this is if the html element contains text inside the tag.
+ * @returns {HTMLElement}
+ */
 
 function create_tag(tag_name, href, src, tag_class, id, text) {
     var tag = document.createElement(tag_name);
@@ -455,7 +456,4 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
 }
 
 
-//     function display_ingredients(){
-//     alert(""+info_description);
-// }
 

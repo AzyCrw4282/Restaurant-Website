@@ -20,7 +20,7 @@
 
 /**
  * This method gives customer access to the menu, initially set to false.
- * @type {boolean} when autheniticated is true, user is redirected to menu page.
+ * @type {boolean} when authenticated is true, user is redirected to menu page.
  */
 
 var authenticated = false;
@@ -282,13 +282,24 @@ function add_card(card, info_dict) {
     return div_1;
 }
 
+/**
+ *
+ * @param allergy_name and id
+     * @returns {Function}
+     * this function displays the content of the allergen box when the user hovers over it
+ */
 function allergy_popup_display_on(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
         x.style.display = "block";
     }
 }
-
+/**
+ *
+ * @param allergy_name and id
+     * @returns {Function}
+     * this function stops displaying the content of the allergen box when the user stops hovering over it
+ */
 function allergy_popup_display_off(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
@@ -296,6 +307,12 @@ function allergy_popup_display_off(allergy_name, id) {
     }
 }
 
+/**
+ *
+ * @param id
+     * @returns {Function}
+     * this function displays the pop up when the user hovers over it
+ */
 function desc_popup_display_on(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -303,6 +320,12 @@ function desc_popup_display_on(id) {
     }
 }
 
+/**
+ *
+ * @param id
+     * @returns {Function}
+     * this function stops displaying the pop up when the user stops hovering over it
+ */
 function desc_popup_display_off(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -310,7 +333,12 @@ function desc_popup_display_off(id) {
     }
 }
 
-
+/**
+ *
+ * @param id
+     * @returns {Function}
+     * this function displays the pop up when the user hovers over it
+ */
 function desc_popup(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -325,7 +353,11 @@ function desc_popup(id) {
     }
 
 }
-
+/**
+ *
+ * @param data
+     * this function populates the pop with the data
+ */
 function populate_popup(data) {
     //  let list = document.createElement("ul");
     // list.className = "card";
@@ -363,6 +395,12 @@ function populate_popup(data) {
 
 }
 
+/**
+ *
+ * @param data
+     * adds a section and a link for every food category the waiter adds
+ */
+
 function add_section_for_each_food_category(categories) {
     for (var i in categories) {
         var cat = categories[i];
@@ -379,6 +417,13 @@ function add_section_for_each_food_category(categories) {
         document.getElementById("categories").appendChild(section);
     }
 }
+
+
+/**
+ *
+ * @param data
+     * loads the food cards into the assigned food category sections
+ */
 
 function load_food_cards_into_sections(food_list, food_categories, food_info_dict) {
     //load_header_tabs(categories);
@@ -404,7 +449,10 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
 
 /**
  *
+ * @param data
+     *
  */
+
 
 
 $("#popup_button_minimize").click(function () {

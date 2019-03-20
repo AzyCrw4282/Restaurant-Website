@@ -117,7 +117,7 @@ class TableOrder(models.Model):
         total = 0
         for order in self.orders.all():
             total += order.food.price
-        dict = {self.time.__str__(): total}
+        dict = [self.time.__str__(),total]
 
         return dict
 

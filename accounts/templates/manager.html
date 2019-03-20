@@ -24,9 +24,30 @@
         Page for Statistics
         Page for account management
         <div class="statistics_container" id="statistics_container">
-            <canvas id="order_chart" width="600" height="400">
+            <div id="profit_time_chart">
+                <canvas id="order_chart" width="600" height="400">
 
-            </canvas>
+                </canvas>
+                <div class="graph_options">
+                    X-increments:
+                    <input name="increments" type="number" placeholder="x_increments" value="30">
+                    Time_spread:
+                    <input name="time_spread" type="number" placeholder="time_spread" value="1">
+
+                    <select name="time_step">
+                        <option value="days">days</option>
+                        <option value="minutes">minutes</option>
+                        <option value="hours">hours</option>
+                        <option value="weeks">weeks</option>
+                        <option value="months">months</option>
+                    </select>
+                    <select name="graph_type">
+                        <option value="bar">bar</option>
+                        <option value="line">line</option>
+                    </select>
+                    <button onclick="update_profit_time_chart()">Refresh</button>
+                </div>
+            </div>
         </div>
 
     </div>

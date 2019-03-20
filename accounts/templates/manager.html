@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{# Objects expected: #}
+{#category_list -- see explanation in load_category_items in menu/js/menu.js#}
+<html lang="en">
+{% extends 'menu/templates/base.html' %}
+{% load staticfiles %}
+{% block body %}
+{#   LOADING SCRIPTS #}
+<script src="{% static 'menu/js/welcome_page.js' %}"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="../static/menu/css/welcome_page.css" type="text/css"/>
+
+
+<div class="welcome_bg_image">
+
+    <div class="welcome_title">
+        <a href="/accounts/login" style="text-decoration:none">
+
+            <span class="welcome_span">
+            Welome Staff
+        </span>
+        </a>
+
+    </div>
+    <div class="welcome_container">
+
+        <div class="input_code">
+
+            <input id="table_code" class="table_code_input float-right" placeholder="Please enter your code.">
+        </div>
+        <div class="submit_button">
+            <button class="welcome_button" onclick="redirect_user()">Submit</button>
+
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+
+</html>
+{#  <div class="welcome_message_container container">#}
+{#            <h2 class="welcome_message_2" style="font-size:60px" >WELCOME TO OAXACA</h2>#}
+{#        </div>#}
+{#        <input id="table_code" class="table_code_input float-right" placeholder="Please enter your code."> </input>#}
+{##}

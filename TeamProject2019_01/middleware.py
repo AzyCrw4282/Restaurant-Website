@@ -9,6 +9,9 @@ EXEMPT_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
 if hasattr(settings, 'LOGIN_EXEMPT_URLS'):
     EXEMPT_URLS += [re.compile(url) for url in settings.LOGIN_EXEMPT_URLS]
 
+STAFF_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
+if hasattr(settings, 'STAFF_URLS'):
+    STAFF_URLS += [re.compile(url) for url in settings.STAFF_URLS]
 
 # ---PREVENT USER FROM ACCESSING UNWANTED PAGES IF NOT LOGGED IN
 class LoginRequiredMiddleware:
@@ -26,22 +29,14 @@ class LoginRequiredMiddleware:
         #     if not any(url.match(path) for url in EXEMPT_URLS):
         #         return redirect(settings.LOGIN_URL)
         url_is_exempt = any(url.match(path) for url in EXEMPT_URLS)
-
+        url_is_for_staff=any(url.match(path) for url in STAFF_URLS)
         if path == reverse('accounts:logout').lstrip('/'):
             print('logout matched')
             logout(request)
-        if request.user.is_authenticated and url_is_exempt:
-            print('both are true')
-            return None
+        if not(request.user.is_staff) and url_is_for_staff:
+            print("STAFF AUTHENTICATED")
+            return views.menu_redirect(request)
 
-        elif request.user.is_authenticated or url_is_exempt:
-            if url_is_exempt:
-                print("url exempt")
-            else:
-                print("user is authenticated")
-            print('one is true')
-            return None
-
-        else:
+        if not(request.user.is_authenticated) and not(url_is_exempt):
             print("redirect initiated")
             return views.menu_redirect(request)

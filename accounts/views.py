@@ -59,22 +59,23 @@ def manager(request):
     return render(
         request, 'menu/templates/welcome_page.html', context={})
 
+
 def create_waiter_group(request):
     '''
     this function auto creates the waiter group with the relevant permissions
     :param request:
     :return:
     '''
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
-            group=Group.objects.create(name="waiter")
+            group = Group.objects.get_or_create(name="waiter")
 
-            create_table_order_pm=ContentType.objects.get_for_model(model=TableOrder)
-            alter_menu_pm=ContentType.objects.get_for_model(model=Food)
-            alter_menu_pm1=ContentType.objects.get_for_model(model=FoodInformation)
-            alter_menu_pm2=ContentType.objects.get_for_model(model=FoodCategory)
-            alter_menu_pm3=ContentType.objects.get_for_model(model=Table)
-            alter_menu_pm4=ContentType.objects.get_for_model(model=Order)
+            create_table_order_pm = ContentType.objects.get_for_model(model=TableOrder)
+            alter_menu_pm = ContentType.objects.get_for_model(model=Food)
+            alter_menu_pm1 = ContentType.objects.get_for_model(model=FoodInformation)
+            alter_menu_pm2 = ContentType.objects.get_for_model(model=FoodCategory)
+            alter_menu_pm3 = ContentType.objects.get_for_model(model=Table)
+            alter_menu_pm4 = ContentType.objects.get_for_model(model=Order)
             group.permissions.add(create_table_order_pm)
             group.permissions.add(alter_menu_pm)
             group.permissions.add(alter_menu_pm1)
@@ -84,9 +85,39 @@ def create_waiter_group(request):
             group.save()
             print("SUCCESSFULLY CREATED GROUP")
         except Exception as e:
-            print("FAILED TO CREATE GROUP: ",e)
+            print("FAILED TO CREATE GROUP: ", e)
     pass
+
+
 def create_account(request):
-    pass
+    '''
+    auto create an account with relevant provided details
+
+    :param request:
+    :return:
+    '''
+    if request.method=='POST':
+        try:
+            group_name=request.POST["group_name"]
+            group=Group.objects.get(name=group_name)
+            new_user=User.objects.create()
+            new_user.save()
+            group.user_set.add(new_user)
+            group.save()
+        except Exception as e:
+            print("FAILED TO CREATE USER:",e)
+
+
 def delete_account(request):
-    pass
+    '''
+    delete a user by id
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        try:
+            new_user = request.POST["user_id"]
+            new_user.delete()
+        except Exception as e:
+            print("FAILED TO CREATE USER:", e)
+

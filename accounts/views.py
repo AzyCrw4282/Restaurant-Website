@@ -57,7 +57,7 @@ def manager(request):
     for table in tables:
         print("AVAILABLE TABLES:", table.id, ": ", table.number)
     return render(
-        request, 'menu/templates/welcome_page.html', context={})
+        request, 'accounts/templates/manager.html', context={})
 
 
 def create_waiter_group(request):
@@ -89,6 +89,24 @@ def create_waiter_group(request):
     pass
 
 
+def create_chef_group(request):
+    '''
+    this function auto creates the waiter group with the relevant permissions
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        try:
+            group = Group.objects.get_or_create(name="chef")
+            create_table_order_pm = ContentType.objects.get_for_model(model=TableOrder)
+            group.permissions.add(create_table_order_pm)
+            group.save()
+            print("SUCCESSFULLY CREATED GROUP")
+        except Exception as e:
+            print("FAILED TO CREATE GROUP: ", e)
+    pass
+
+
 def create_account(request):
     '''
     auto create an account with relevant provided details
@@ -96,16 +114,17 @@ def create_account(request):
     :param request:
     :return:
     '''
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
-            group_name=request.POST["group_name"]
-            group=Group.objects.get(name=group_name)
-            new_user=User.objects.create()
+            group_name = request.POST["group_name"]
+            group = Group.objects.get(name=group_name)
+            new_user = User.objects.create()
+            new_user.is_staff = False
             new_user.save()
             group.user_set.add(new_user)
             group.save()
         except Exception as e:
-            print("FAILED TO CREATE USER:",e)
+            print("FAILED TO CREATE USER:", e)
 
 
 def delete_account(request):
@@ -120,4 +139,3 @@ def delete_account(request):
             new_user.delete()
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
-

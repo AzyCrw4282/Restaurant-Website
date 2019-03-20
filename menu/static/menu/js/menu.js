@@ -164,8 +164,7 @@ function load_tab_shortcut_buttons(categories) {
 }
 
 /**
- * Creates a card for each Food item from the Food table, by loading the information from the database
- * and displays the information
+ * Creates a card for each Food item by adding the relevant food information from the food table.
  * @param card
  * @param info_dict
  * @returns {HTMLElement} this will be the card
@@ -177,7 +176,6 @@ function add_card(card, info_dict) {
     var information = [];
 
     //iterates over the information
-
     for (var i in information_list) {
         var id = information_list[i];
         information.push(info_dict[id])
@@ -188,98 +186,102 @@ function add_card(card, info_dict) {
     var price = card["price"];
     var id = card["id"];
 
-    var div_1 = create_tag("div", "", "", "food_card", id, "");
+    //creates the html elements in the card with the specific tags.
+    var food_card = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
     var desc_button = create_tag("button", "", "", "food_allergy_buttons", "desc_button" + id, "i");
     desc_button.style.cssFloat = 'right';
     desc_button.style.background = '#0F31C0';
-    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
-    var div_3 = create_tag("div", "", "", "", "", "");
-    var div_4 = create_tag("div", "", "", "", "", "");
+    var card_img_border = create_tag("div", "", "", "food_card_img_border", "", "");
+    card_img_border.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    var comment_section = create_tag("div", "", "", "", "", "");
+    var order_button_section = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
     var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price);
 
+
+    //only when the user is authenticated, there will be a delete button.
     if (authenticated) {
         var delete_button = create_tag("button", "", "", "food_card_button", "", "delete");
-        delete_button.onclick = delete_food_from_menu(id);
+        delete_button.onclick = delete_food_from_menu(id); //deletes specific food when the delete button is pressed.
     }
 
-    orderBtn.onclick = add_food_to_order(id, textField.id);
+    orderBtn.onclick = add_food_to_order(id, textField.id); //takes the id of the card and the
 
     if (authenticated) {
-        div_4.appendChild(delete_button);
+        order_button_section.appendChild(delete_button);
     }
-    div_1.appendChild(heading);
-    div_2.appendChild(desc_button);
-    div_3.appendChild(textField);
-    div_4.appendChild(orderBtn);
-    div_1.appendChild(div_2);
-    div_1.appendChild(div_3);
-    div_1.appendChild(div_4);
+
+    //when the html elements are created by appending each html element to one another it defines the structure for the elements.
+    food_card.appendChild(heading);
+    card_img_border.appendChild(desc_button);
+    comment_section.appendChild(textField);
+    order_button_section.appendChild(orderBtn);
+    food_card.appendChild(card_img_border);
+    food_card.appendChild(comment_section);
+    food_card.appendChild(order_button_section);
 
 
+    //iterates over the information in the food table and for each information a button is created, with the relevant information.
     for (var i in information) {
         var allergy_name = information[i]["name"];
         var allergy_content = information[i]["ingredients"];
 
+       //the button will only display the first letter of the information.
         var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name + id, "" + allergy_name[0]);
-        allergy_button.value = allergy_name;
-        allergy_button.name = "card_allergy_button_" + "option" + information[i]["id"];
-        div_2.appendChild(allergy_button);
+
+        allergy_button.value = allergy_name; //all the names in the food.information
+        allergy_button.name = "card_allergy_button_" + "option" + information[i]["id"]; //sets the name of the button to that specific food's information.
+        card_img_border.appendChild(allergy_button);
 
 
+        //creates a popup that displays all the information when user hovers over
         var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup" + allergy_name + id, "");
         var popup_box_header = create_tag("div", "", "", "food_allergy_info_content_header", "", "");
         var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "close_button" + allergy_name + id, "");
 
 
         var heading_popup = create_tag("h2", "", "", "", "", "" + allergy_name);
-        var popupbox_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
+        var popup_box_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
         var inside_body = create_tag("p", "", "", "", "", "" + allergy_content);
-        var popupbox_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
+        var popup_box_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
 
         allergy_button.onmouseover = allergy_popup_display_on(allergy_name, id);
         allergy_button.onmouseleave = allergy_popup_display_off(allergy_name, id);
 
-        div_2.appendChild(popup_box_content);
+        card_img_border.appendChild(popup_box_content);
         popup_box_content.appendChild(popup_box_header);
         popup_box_header.appendChild(close_button);
         popup_box_header.appendChild(heading_popup);
-        popup_box_content.appendChild(popupbox_body);
-        popupbox_body.appendChild(inside_body);
-        popup_box_content.appendChild(popupbox_footer);
-
+        popup_box_content.appendChild(popup_box_body);
+        popup_box_body.appendChild(inside_body);
+        popup_box_content.appendChild(popup_box_footer);
 
     }
 
     desc_button.onmouseover = desc_popup_display_on(id);
     desc_button.onmouseleave = desc_popup_display_off(id);
 
-    var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
-    var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
-    var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+    var info_popup_box = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
+    var info_popup_header = create_tag("div", "", "", "food_desc_content_header", "", "");
+    var info_popup_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+
+    var desc_heading_popup = create_tag("h2", "", "", "", "", ""+food_name);
+    var desc_popup_body = create_tag("div", "", "", "food_desc_content_body", "", "");
+    var desc_displays = create_tag("p", "", "", "", "", "" + desc);
+    var desc_popup_footer = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
+
+    card_img_border.appendChild(info_popup_box);
+    info_popup_box.appendChild(info_popup_header);
+    info_popup_header.appendChild(info_popup_close);
+    info_popup_header.appendChild(desc_heading_popup);
+    info_popup_box.appendChild(desc_popup_body);
+    desc_popup_body.appendChild(desc_displays);
+    info_popup_box.appendChild(desc_popup_footer);
 
 
-    var info_3 = create_tag("h2", "", "", "", "", ""+food_name);
-    var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
-    var info_5 = create_tag("p", "", "", "", "", "" + desc);
-    var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
-
-
-
-
-    div_2.appendChild(info_1);
-    info_1.appendChild(info_2);
-    info_2.appendChild(info_close);
-    info_2.appendChild(info_3);
-    info_1.appendChild(info_4);
-    info_4.appendChild(info_5);
-    info_1.appendChild(info_6);
-
-
-    return div_1;
+    return food_card;
 }
 
 function allergy_popup_display_on(allergy_name, id) {

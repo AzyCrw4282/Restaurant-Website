@@ -36,13 +36,15 @@ import uuid
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
-order_states=data["order_states"]
+order_states = data["order_states"]
+
 
 # class Waiter(models.Model):
 #     member=models.user
 class Table(models.Model):
     number = models.IntegerField(default=0)
     id = models.TextField(primary_key=True)
+
     def to_dict(self):
         dict = {"number": self.number, "id": self.id}
         return dict
@@ -98,7 +100,8 @@ class Order(models.Model):
     status = models.TextField(default=order_states["cooking"])
 
     def to_dict(self):
-        dict = {"food": self.food.id,"food_name":self.food.name,"food_price":self.food.price, "comment": self.comment, "id": self.id, "status": self.status}
+        dict = {"food": self.food.id, "food_name": self.food.name, "food_price": self.food.price,
+                "comment": self.comment, "id": self.id, "status": self.status}
         return dict
 
 
@@ -109,6 +112,14 @@ class TableOrder(models.Model):
     time = models.DateTimeField(auto_now=False, blank=True, null=True)
     status = models.TextField(default=table_order_states["client_created"])
     id = models.TextField(primary_key=True)
+
+    def to_cost_date(self):
+        total = 0
+        for order in self.orders.all():
+            total += order.food.price
+        dict = {self.time.__str__(): total}
+
+        return dict
 
     def to_dict(self):
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,

@@ -12,5 +12,7 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), {'template_name': 'accounts/templates/registration/logout.html'},
         name='logout'),
     url(r'^manager/$', views.manager,name='manager'),
+    url(r'^get_all_orders_cost_date/$', views.get_all_orders_cost_date, name='get_all_orders_cost_date'),
+
 
 ]

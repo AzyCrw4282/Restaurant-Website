@@ -42,9 +42,38 @@ function show_stats() {
     var container = document.getElementById("statistics_container");
     container.style.display = "block";
 }
+function get_all_orders_cost_date(){
+    /**
+     * returns list of date:price of all orders e.g.:
+     * [{date1:price},{date2:price},{date3:price}]
+      */
+    $.ajax({
+        url: 'get_all_orders_cost_date/',
+        dataType: 'json',
+        type: 'GET',
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                try {
+                    return(JSON.parse(data['message']));
+                } catch (e) {
+                    //    data is empty
+                }
+            } else {
+                console.log("NO DATA")
+
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
 
 function show_chart() {
     var ctx = document.getElementById('order_chart').getContext('2d');
+    //list of labels (total prices)
+    //list of data (by day?)
+    //list of colours rgba(r,g,b,opacity)
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {

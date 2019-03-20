@@ -60,6 +60,13 @@ def manager(request):
         request, 'accounts/templates/manager.html', context={})
 
 
+def get_all_orders_cost_date(request):
+    if request.method == 'GET':
+        list = []
+        for object in TableOrder.objects.all():
+            list.append(object.to_cost_date())
+        return JsonResponse(json.dumps(list))
+
 def create_waiter_group(request):
     '''
     this function auto creates the waiter group with the relevant permissions

@@ -9,7 +9,7 @@ EXEMPT_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
 if hasattr(settings, 'LOGIN_EXEMPT_URLS'):
     EXEMPT_URLS += [re.compile(url) for url in settings.LOGIN_EXEMPT_URLS]
 
-STAFF_URLS = [re.compile(settings.LOGIN_URL.lstrip('/'))]
+STAFF_URLS =[]
 if hasattr(settings, 'STAFF_URLS'):
     STAFF_URLS += [re.compile(url) for url in settings.STAFF_URLS]
 
@@ -33,14 +33,14 @@ class LoginRequiredMiddleware:
         print("STAFF URLS: ",STAFF_URLS)
 
         url_is_exempt = any(url.match(path) for url in EXEMPT_URLS)
-        url_is_for_staff=any(url.match(path) for url in STAFF_URLS)
+        url_is_for_staff_only=any(url.match(path) for url in STAFF_URLS)
         print("THIS IS EXEMPT ONLY URL", url_is_exempt)
-        print("THIS IS AN STAFF URL", url_is_for_staff)
+        print("THIS IS AN STAFF URL", url_is_for_staff_only)
 
         if path == reverse('accounts:logout').lstrip('/'):
             print('logout matched')
             logout(request)
-        if not(request.user.is_staff) and url_is_for_staff:
+        if not(request.user.is_staff) and url_is_for_staff_only:
             print("STAFF NOT AUTHENTICATED")
             return views.menu_redirect(request)
 

@@ -150,13 +150,11 @@ print(MEDIA_ROOT)
 
 #
 STAFF_URLS={
-    r'^manager/*$',
-    r'^manager/[\s\S]*',
+    r'^accounts/manager/[\s\S]*',
 }
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/waiter/'
 LOGIN_EXEMPT_URLS = {
-    r'^menu/*$',
     r'^menu/[\s\S]*',
 }
 

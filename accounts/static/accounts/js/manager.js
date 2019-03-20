@@ -42,11 +42,12 @@ function show_stats() {
     var container = document.getElementById("statistics_container");
     container.style.display = "block";
 }
-function get_all_orders_cost_date(){
+function update_profit_time_chart() {
     /**
      * returns list of date:price of all orders e.g.:
      * [{date1:price},{date2:price},{date3:price}]
-      */
+     */
+    console.log("getting data ");
     $.ajax({
         url: 'get_all_orders_cost_date/',
         dataType: 'json',
@@ -54,7 +55,8 @@ function get_all_orders_cost_date(){
         success: function (data) {
             if (JSON.parse(data["success"]) == "1") {
                 try {
-                    return(JSON.parse(data['message']));
+                    console.log("SUCCESS ");
+                    process_data_for_profit_time_chart(JSON.parse(data['message']));
                 } catch (e) {
                     //    data is empty
                 }
@@ -64,12 +66,15 @@ function get_all_orders_cost_date(){
             }
         },
         error: function (data) {
+            console.log(data)
         }
     });
-
 }
-
+function process_data_for_profit_time_chart(data){
+    console.log(data)
+}
 function show_chart() {
+    update_profit_time_chart()
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
     //list of data (by day?)

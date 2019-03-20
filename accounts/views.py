@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from datetime import datetime
 from django.http import JsonResponse
 import json
+from datetime import datetime, timedelta
 import uuid
 
 with open('config.json') as json_data_file:
@@ -65,7 +66,12 @@ def get_all_orders_cost_date(request):
         list = []
         for object in TableOrder.objects.all():
             list.append(object.to_cost_date())
-        return JsonResponse(json.dumps(list))
+        response = {
+            'success': True,
+            'message': json.dumps(list)  # Dumps data and creates a string
+        }
+        return JsonResponse(response)  # Response returned to ajax call
+
 
 def create_waiter_group(request):
     '''
@@ -146,3 +152,20 @@ def delete_account(request):
             new_user.delete()
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
+
+
+def purge_unconfirmed_orders(request):
+    print("PURGING irrelevant")
+    try:
+        orders = TableOrder.objects.filter(posting_date__gte=datetime.now() - timedelta(days=1))
+        orders.objects.filter(status="client_created").delete()
+    except Exception as e:
+        print("NOT DELETED: ", e)
+
+
+def purge_all_orders_by_days(request):
+    print("PURGING by days")
+    try:
+        TableOrder.objects.filter(posting_date__gte=datetime.now() - timedelta(days=request.POST["days"])).delete()
+    except Exception as e:
+        print("NOT DELETED: ", e)

@@ -376,25 +376,25 @@ function populate_popup(data) {
 }
 
 /**
- * This function places every food item in the correct food category.
- *
+ * This function creates sections that separates the food sections.
+ * places every food item in the correct food category.
  * @param categories this is all the different food types.
  */
 
 function add_section_for_each_food_category(categories) {
-    for (var i in categories) {
+    for (var i in categories) { //for each food category there will be an allocated space that will contain cards.
         var cat = categories[i];
         var food_section = document.createElement("SECTION");
         food_section.className = "food_card_container";
 
         var separator = document.createElement("div");
         separator.className = "food_card_separator";
-        separator.innerText = cat["name"].toUpperCase();
-        food_section.id = cat["name"];
+        separator.innerText = cat["name"].toUpperCase(); //each different section will be for an allocated category.
+        food_section.id = cat["name"]; //each
 
         document.getElementById("categories").appendChild(separator);
 
-        document.getElementById("categories").appendChild(section);
+        document.getElementById("categories").appendChild(food_section);
     }
 }
 

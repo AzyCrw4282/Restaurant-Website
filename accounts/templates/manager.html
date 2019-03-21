@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'accounts/css/manager.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'accounts/css/manager_tab.css' %}" type="text/css"/>
+    <div class="tabs_header" id="tabs_header">
+        <a style="text-decoration:none;" onclick="show_stats()">Statistics</a>
+        <a style="text-decoration:none;" onclick="show_accounts()">Accounts</a>
 
+    </div>
     <div class="main_containter">
-        <div class="tabs_header" id="tabs_header">
-            <a style="text-decoration:none;" onclick="show_stats()">Statistics</a>
-            <a style="text-decoration:none;" onclick="show_accounts()">Accounts</a>
 
-        </div>
         Weclome Staff
         Page for Statistics
         Page for account management
@@ -76,13 +76,26 @@
             <div class="user_manage_container">
                 <div class="user_manage_container_banner">
                     <div style="float:left">
-                         <h3>Users</h3>
+                        <h3>Users</h3>
                     </div>
                     <div class="user_manage_container_add_user_btn">
                         <h2>+</h2>
                     </div>
+                </div>
+                <div class="user_manage_container_table">
                     <div class="user_manage_container_row">
-                        <div class="user_manage_container_row_delete_btn">X</div>
+                        <div class="user_manage_container_row_cell">
+                            <div class="user_manage_container_row_delete_btn">X</div>
+                        </div>
+                        <div class="user_manage_container_row_id">12</div>
+                        <div class="user_manage_container_row_name">Octavio</div>
+                        <div class="user_manage_container_row_email">octavio.delser@gmail.com</div>
+                        <div class="user_manage_container_row_group">waiter</div>
+                    </div>
+                    <div class="user_manage_container_row">
+                        <div class="user_manage_container_row_cell">
+                            <div class="user_manage_container_row_delete_btn">X</div>
+                        </div>
                         <div class="user_manage_container_row_id">12</div>
                         <div class="user_manage_container_row_name">Octavio</div>
                         <div class="user_manage_container_row_email">octavio.delser@gmail.com</div>
@@ -90,7 +103,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
 
     </div>
 

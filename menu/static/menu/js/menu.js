@@ -50,23 +50,24 @@ function load_data(data) {
         food_info_dict[id] = info_dict; //each food information should have a respective id.
     }
 
-    add_filter_options(food_info_dict);
+    add_filter_options(food_info_dict); //should be a filter option for each information.
 
     load_food_cards_into_sections(foods, food_categories, food_info_dict); //each section will be made up of food category and its food and the foods information.
 }
 
 /**
- *
- * @param food_info_dict
+ *This method makes a checkbox for each food information,allows filter to occur.
+ * @param food_info_dict this is all the different types of information.
  */
 
 
 function add_filter_options(food_info_dict) {
     var select = document.getElementById("drop_down_filter");
+
+    //iterates over all the information for each food and creates a dropdown check box for it.
     for (var i in food_info_dict) {
         var cat_dict = food_info_dict[i];
         var name = cat_dict["name"];
-        // console.log(name);
         var option = document.createElement("a");
 
         var checkbox = document.createElement("input");
@@ -85,8 +86,8 @@ function add_filter_options(food_info_dict) {
 }
 
 /**
- *
- * @param checkbox
+ * This function checks whether or not the checkbox is checked.
+ * @param checkbox represents the actual checkbox.
  * @returns {Function}
  */
 
@@ -102,7 +103,7 @@ function click_checkbox(checkbox) {
 }
 
 /**
- *
+ *Applys the changes when the checkbox is clicked it will display all the food items with those food information.
  * @param checkbox
  * @returns {Function}
  */

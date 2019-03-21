@@ -197,14 +197,20 @@ function process_data_for_profit_time_chart() {
     border_colours.push("rgba(0,255,140,1)");
     //push left overs
 
+    var sum = y_values.reduce(function(a, b) { return a + b; }, 0);
+    var average_per_tick=sum/x_labels.length;
+    var av = chart.querySelector('output[name="average"]');
+    var tot = chart.querySelector('output[name="total"]');
+    av.value="Average-per-tick: "+average_per_tick.toString();
+    tot.value="Sum: "+sum.toString();
     // console.log("showing chart");
     // console.log(x_labels);
     // console.log(y_values);
     // console.log(border_colours);
-    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse())
+    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse(),time_step,time_spread)
 }
 var profit_price_chart=null;
-function show_chart(type, x_labels, y_values, colours, border_colours) {
+function show_chart(type, x_labels, y_values, colours, border_colours,period,period_multiple) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
@@ -227,7 +233,17 @@ function show_chart(type, x_labels, y_values, colours, border_colours) {
         },
         options: {
             scales: {
+                xAxes:[{
+                    scaleLabel:{
+                        display:true,
+                        labelString:'time-period per tick:  '+period_multiple.toString() +" "+period
+                    },
+                }],
                 yAxes: [{
+                    scaleLabel:{
+                        display:true,
+                        labelString:'profit ($)'
+                    },
                     ticks: {
                         beginAtZero: true
                     }

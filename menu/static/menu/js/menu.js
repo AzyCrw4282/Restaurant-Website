@@ -30,7 +30,7 @@ function user_is_authenticated() {
 
 //========  LOADING DATA =============
 /**
- *
+ *This function
  * @param data
  */
 
@@ -39,7 +39,7 @@ function load_data(data) {
     var food_information = data["food_information_list"];
     var food_categories = data["category_list"];
     var foods = data["food_list"];
-    load_tab_shortcut_buttons(food_categories);
+    load_tab_shortcut_buttons(food_categories); //
     add_section_for_each_food_category(food_categories);
     var food_info_dict = {};
     for (var i in food_information) {
@@ -89,7 +89,7 @@ function add_filter_options(food_info_dict) {
 
 function click_checkbox(checkbox) {
     return function () {
-        //clicking the checkbox again so it unclicks itself
+        //clicking the checkbox again so it un-clicks itself
         if (!(checkbox.checked)) {
             checkbox.checked = true;
         } else {
@@ -141,26 +141,25 @@ function update_filter(checkbox) {
     }
 }
 
+/**
+ * This function displays the tabs at the top of the page which are the different categories.
+ * @param categories represents the different food types that can be displayed.
+ */
+
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
-    var div = document.getElementById("links_wrapper");
-    for (var i in categories) {
+    var tab_links = document.getElementById("links_wrapper");
+    for (var i in categories) { //iterates over all the categories
         var cat = categories[i];
-        var cat_name = cat["name"];
-        // <a style="text-decoration:none;" href="#sides">Sides</a>
+        var cat_name = cat["name"]; //represents all the different category name.
         var a = document.createElement("a");
         a.className = "shortcut_anchor";
         a.style = "text-decoration:none;";
-        a.href = "#" + cat_name;
+        a.href = "#" + cat_name; //there is a link to each different category.
         a.innerHTML += cat_name.toUpperCase();
-        div.appendChild(a);
+        tab_links.appendChild(a);
     }
-    // var a = document.createElement("a");
-    // a.style = "text-decoration:none;";
-    // a.innerHTML += "BASKET";
-    // a.href = "#basket";
-    // a.id = "basket";
-    div.appendChild(a);
+    tab_links.appendChild(a); //each different category will have a link.
 }
 
 /**
@@ -247,8 +246,8 @@ function add_card(card, info_dict) {
         var inside_body = create_tag("p", "", "", "", "", "" + allergy_content);
         var popup_box_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
 
-        allergy_button.onmouseover = allergy_popup_display_on(allergy_name, id);
-        allergy_button.onmouseleave = allergy_popup_display_off(allergy_name, id);
+        allergy_button.onmouseover = allergy_popup_display_on(allergy_name, id); //when the mouse is over the allergy_buttons it will display the popup.
+        allergy_button.onmouseleave = allergy_popup_display_off(allergy_name, id);//when the mouse is away the allergy_buttons it will display the popup.
 
         card_img_border.appendChild(popup_box_content);
         popup_box_content.appendChild(popup_box_header);
@@ -260,9 +259,12 @@ function add_card(card, info_dict) {
 
     }
 
-    desc_button.onmouseover = desc_popup_display_on(id);
-    desc_button.onmouseleave = desc_popup_display_off(id);
+    desc_button.onmouseover = desc_popup_display_on(id); //when the mouse is over the i it will display the popup.
+    desc_button.onmouseleave = desc_popup_display_off(id); //when the mouse is away from the i button it will not show the popup.
 
+
+    //The popup that is displayed when the user hovers over the i button.
+    //this creates the html elements that is needed for the popup.
     var info_popup_box = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
     var info_popup_header = create_tag("div", "", "", "food_desc_content_header", "", "");
     var info_popup_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
@@ -272,6 +274,8 @@ function add_card(card, info_dict) {
     var desc_displays = create_tag("p", "", "", "", "", "" + desc);
     var desc_popup_footer = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
 
+
+    //this makes the popup be displayed on the card,this makes sure it shows up around the card_img_border div.
     card_img_border.appendChild(info_popup_box);
     info_popup_box.appendChild(info_popup_header);
     info_popup_header.appendChild(info_popup_close);
@@ -284,6 +288,12 @@ function add_card(card, info_dict) {
     return food_card;
 }
 
+/**
+ * When the mouse hovers over the allergy buttons,it changes the display of the popup to block.
+ * @param allergy_name this is for each 
+ * @param id
+ * @returns {Function}
+ */
 function allergy_popup_display_on(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
@@ -365,16 +375,22 @@ function populate_popup(data) {
 
 }
 
+/**
+ * This function places every food item in the correct food category.
+ *
+ * @param categories this is all the different food types.
+ */
+
 function add_section_for_each_food_category(categories) {
     for (var i in categories) {
         var cat = categories[i];
-        var section = document.createElement("SECTION");
-        section.className = "food_card_container";
+        var food_section = document.createElement("SECTION");
+        food_section.className = "food_card_container";
 
         var separator = document.createElement("div");
         separator.className = "food_card_separator";
         separator.innerText = cat["name"].toUpperCase();
-        section.id = cat["name"];
+        food_section.id = cat["name"];
 
         document.getElementById("categories").appendChild(separator);
 

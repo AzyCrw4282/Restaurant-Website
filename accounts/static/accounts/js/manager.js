@@ -168,15 +168,17 @@ function process_data_for_profit_time_chart() {
     var border_colours = [];
 
 
-    console.log(base_date);
-    //data is ordered by oldest first;, we need newest first.
-
-    console.log(offset_time_by(base_date, time_step, time_spread));
-    console.log(data);
+    // console.log(base_date);
+    // //data is ordered by oldest first;, we need newest first.
+    //
+    // console.log(offset_time_by(base_date, time_step, time_spread));
+    // console.log(data);
 
     // split the data into the list for each increment until all data has been processed:
     var total_price = 0;
     var counter = 0;
+    var old_base_date=new Date(base_date.valueOf());
+
     for (var i = 0; i < data.length; i += 1) {
         //prevent overloading the graph with too much data
         if (increments <= 0) {
@@ -187,22 +189,27 @@ function process_data_for_profit_time_chart() {
         var time = list[0];
         var price = list[1];
         var date = new Date(time);
-        if (date > base_date) {
+        // console.log(date);
+        if (date > base_date && date<old_base_date) {
             // console.log(list);
             counter += 1;
             total_price += price;
-        } else {
+        } else if (date<base_date){
             increments -= 1;
             y_values.push(total_price);
             x_labels.push(base_date.toLocaleString());
             colours.push("rgba(0,255,140,0.2)");
             border_colours.push("rgba(0,255,140,1)");
+            old_base_date=new Date(base_date.valueOf());
             base_date = offset_time_by(base_date, time_step, time_spread);
+            // console.log(old_base_date);
+            // console.log(base_date);
+            // console.log("---");
             i -= 1;
             total_price = 0
         }
     }
-    console.log(counter);
+    console.log(total_price);
     y_values.push(total_price);
     x_labels.push(base_date.toLocaleString());
     colours.push("rgba(0,255,140,0.2)");

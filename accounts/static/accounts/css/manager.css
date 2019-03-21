@@ -97,6 +97,9 @@
     height: 100%;
     width: 100px;
 }
+.add_user_form{
+    display:absolute;
+}
 .user_manage_container_row_cell{
     display:table-cell;
 }

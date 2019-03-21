@@ -3,7 +3,9 @@ from menu.models import TableOrder
 from menu.models import Order
 from django.http import JsonResponse
 
+import random
 import json
+
 
 # Create your views here.
 with open('config.json') as json_data_file:
@@ -18,6 +20,7 @@ SUCCESSFUL_RESPONSE = {
     'success': True,
     'message': 'SUCCESS'
 }
+
 
 def db_objects_to_list_of_dicts(objects):
     '''
@@ -38,7 +41,7 @@ def chef(request):
     data.update({"table_orders": []})
     table_order_list = data["table_orders"]
     for table_order in table_orders:
-        print("STATUS",table_order.status)
+        print("STATUS", table_order.status)
         if table_order.status == table_order_states["waiter_confirmed"]:
             table_order_items = table_order.orders.all()
             # convert to dict:
@@ -62,7 +65,7 @@ def get_order_states(request):
     if request.method == 'GET':
         response_dict = {}
         # SENDING ALL THE ORDERS TO THE CHEFS
-        relevant_orders=TableOrder.objects.filter(status="waiter_confirmed")
+        relevant_orders = TableOrder.objects.filter(status="waiter_confirmed")
 
         for table_order in relevant_orders:
 
@@ -74,11 +77,13 @@ def get_order_states(request):
         }
 
         return JsonResponse(response)  # Response returned to ajax call
+
+
 def get_table_order_states(request):
     if request.method == 'GET':
         response_list = []
         # SENDING ALL THE ORDERS TO THE CHEFS
-        relevant_orders=TableOrder.objects.filter(status="waiter_confirmed")
+        relevant_orders = TableOrder.objects.filter(status="waiter_confirmed")
         for table_order in relevant_orders.all():
             response_list.append(table_order.id)
         print(response_list)

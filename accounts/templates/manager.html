@@ -46,6 +46,15 @@
                         <option value="line">line</option>
                     </select>
                     <button onclick="update_profit_time_chart()">Refresh</button>
+                    Generate 1000 fake orders (removable)
+                    <form onsubmit="return false">
+                        {% csrf_token %}
+
+                        <button onclick="generate_random_orders()">Generate</button>
+                        Delete fake orders
+                        <button onclick="delete_fake_orders()">Generate</button>
+
+                    </form>
                 </div>
             </div>
         </div>

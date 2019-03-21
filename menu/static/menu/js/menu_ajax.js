@@ -32,11 +32,7 @@ function delete_food_from_order(order_id) {
                 update_menu_popup_data();
             },
         });
-
-
     }
-
-
 }
 
 function submit_order() {

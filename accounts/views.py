@@ -9,11 +9,12 @@ from django.core.files import File
 from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
-from datetime import datetime
 from django.http import JsonResponse
 import json
-from datetime import datetime, timedelta
 import uuid
+
+import random
+from datetime import timedelta, datetime
 
 with open('config.json') as json_data_file:
     data = json.load(json_data_file)
@@ -169,3 +170,51 @@ def purge_all_orders_by_days(request):
         TableOrder.objects.filter(posting_date__gte=datetime.now() - timedelta(days=request.POST["days"])).delete()
     except Exception as e:
         print("NOT DELETED: ", e)
+
+
+def delete_fake_orders(request):
+    relevant_orders = TableOrder.objects.all().filter(status="fake")
+    for order in relevant_orders:
+        order.delete()
+    return JsonResponse(SUCCESSFUL_RESPONSE)
+
+
+def random_date(start, end):
+    """
+    This function belongs to https://stackoverflow.com/questions/553303/generate-a-random-date-between-two-other-dates
+    It is just used to generate random orders
+    This function will return a random datetime between two datetime
+    objects.
+    """
+    delta = end - start
+    micro_seconds = 1000000 * 60 * 60 * 24 * delta.days
+    random_micro = random.randrange(0, micro_seconds)
+    return start + timedelta(microseconds=random_micro)
+
+
+def generate_random_orders(request):
+    # no limit for now but easily imposed if required, will simply generate 100 fake orders.
+    try:
+        d1 = datetime.strptime('6/1/2018 1:30 PM', '%m/%d/%Y %I:%M %p')
+        d2 = datetime.strptime('3/1/2019 4:50 AM', '%m/%d/%Y %I:%M %p')
+        all_tables = Table.objects.all()
+        all_foods = Food.objects.all()
+        date_list = []
+        for i in range(0, 1000):
+            date_list.append(random_date(d1, d2))
+
+        for rand_date in sorted(date_list):
+            table = random.choice(all_tables)
+            table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
+            table_order.save()
+            print(table_order.time)
+            for j in range(0, random.randrange(2, 10)):
+                order = Order.objects.create(food=random.choice(all_foods))
+                order.save()
+                table_order.orders.add(order)
+            table_order.save()
+        return JsonResponse(SUCCESSFUL_RESPONSE)
+
+    except Exception as e:
+        print("failed to generate ", e)
+        return JsonResponse(UNSUCCESSFUL_RESPONSE)

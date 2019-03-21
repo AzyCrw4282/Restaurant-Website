@@ -88,7 +88,6 @@ function offset_time_by(date, time_step, time_spread) {
         case "months":
             var m = date.getMonth();
             date.setMonth(m - time_spread);
-            console.log(date);
             // If still in same month, set date to last day of
             // previous month'
             if (date.getMonth() == m) {
@@ -128,14 +127,10 @@ function process_data_for_profit_time_chart(data) {
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
     //double check variables to prevent issues.
-    if(!(increments>0 && time_spread >0)){
+    if (!(increments > 0 && time_spread > 0)) {
         console.log("INFINITE LOOP PREVENTION");
         return;
     }
-    console.log(increments);
-    console.log(graph_type);
-    console.log(time_step);
-    console.log(time_spread);
     //list of x values (the times)
     var x_labels = [];
     //list of y_values (the total price for each step
@@ -147,29 +142,29 @@ function process_data_for_profit_time_chart(data) {
     var base_date = new Date(Date.now());
     console.log(base_date);
     //data is ordered by oldest first;, we need newest first.
-    data = data.reverse();
+    data=data.reverse() ;
     console.log(offset_time_by(base_date, time_step, time_spread));
     console.log(data);
 
     // split the data into the list for each increment until all data has been processed:
     var total_price = 0;
+    var counter=0;
     for (var i = 0; i < data.length; i += 1) {
         //prevent overloading the graph with too much data
-        if (increments<=0){
+        if (increments <= 0) {
             break;
         }
-        increments-=1;
 
         var list = data[i];
         var time = list[0];
         var price = list[1];
-        console.log("PRICE" + price.toString());
         var date = new Date(time);
         if (date > base_date) {
+            // console.log(list);
+            counter+=1;
             total_price += price;
         } else {
-            console.log("inloop: ");
-            console.log(base_date);
+            increments -= 1;
             y_values.push(total_price);
             x_labels.push(base_date.toLocaleString());
             colours.push("rgba(0,255,140,0.2)");
@@ -179,6 +174,7 @@ function process_data_for_profit_time_chart(data) {
             total_price = 0
         }
     }
+    console.log(counter);
     y_values.push(total_price);
     x_labels.push(base_date.toLocaleString());
     colours.push("rgba(0,255,140,0.2)");
@@ -189,10 +185,10 @@ function process_data_for_profit_time_chart(data) {
     console.log(x_labels);
     console.log(y_values);
     console.log(border_colours);
-    show_chart(graph_type,x_labels, y_values, colours, border_colours)
+    show_chart(graph_type, x_labels, y_values, colours, border_colours)
 }
 
-function show_chart(type,x_labels, y_values, colours, border_colours) {
+function show_chart(type, x_labels, y_values, colours, border_colours) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
@@ -219,5 +215,38 @@ function show_chart(type,x_labels, y_values, colours, border_colours) {
                 }]
             }
         }
+    });
+}
+
+function generate_random_orders() {
+
+    $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'generate_random_orders/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        },
+        success: function (data) {
+            console.log(data);
+            update_profit_time_chart();
+        },
+    });
+}
+
+
+function delete_fake_orders() {
+
+    $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'delete_fake_orders/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+        },
+        success: function (data) {
+            console.log(data);
+            update_profit_time_chart()
+        },
     });
 }

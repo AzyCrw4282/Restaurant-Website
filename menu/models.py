@@ -109,7 +109,7 @@ class Order(models.Model):
 class TableOrder(models.Model):
     orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    time = models.DateTimeField(auto_now=True, blank=True, null=True)
+    time = models.DateTimeField(default=datetime.now(),auto_now=False, blank=True, null=True)
     status = models.TextField(default=table_order_states["client_created"])
     id = models.TextField(primary_key=True)
 

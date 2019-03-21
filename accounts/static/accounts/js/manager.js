@@ -77,6 +77,7 @@ function update_profit_time_chart() {
 }
 
 function offset_time_by(date, time_step, time_spread) {
+
     /**
      * date (time to be offset)
      * time_step (value to be offset (hours/days/year e.t.c.)
@@ -86,7 +87,8 @@ function offset_time_by(date, time_step, time_spread) {
     switch (time_step) {
         case "months":
             var m = date.getMonth();
-            date.setMonth(date.getMonth() - time_step);
+            date.setMonth(m - time_spread);
+            console.log(date);
             // If still in same month, set date to last day of
             // previous month'
             if (date.getMonth() == m) {
@@ -96,26 +98,22 @@ function offset_time_by(date, time_step, time_spread) {
             }
             break;
         case "minutes":
-            milliseconds = 1000 * 60;
-            date -= milliseconds * time_spread;
+            date.setMinutes(date.getMinutes() - time_spread);
 
             break;
         case "hours":
-            milliseconds = 1000 * 60 * 60;
-            date.setHours(date.getHours() - time_step);
-            date -= milliseconds * time_spread;
+            date.setHours(date.getHours() - time_spread);
 
             break;
         case "days":
-            milliseconds = 1000 * 60 * 60 * 24;
-            date -= milliseconds * time_spread;
+            date.setHours(date.getHours() - 24 * time_spread);
+
             break;
         case "weeks":
-            milliseconds = 1000 * 60 * 60 * 24 * 7;
-            date -= milliseconds * time_spread;
+            date.setHours(date.getHours() - 7 * 24 * time_spread);
             break;
         default:
-            console.log("error with key: "+time_step);
+            console.log("error with key: " + time_spread);
 
     }
     return date;
@@ -129,6 +127,11 @@ function process_data_for_profit_time_chart(data) {
     var graph_type = chart.querySelector('select[name="graph_type"]').value;
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
+    //double check variables to prevent issues.
+    if(!(increments>0 && time_spread >0)){
+        console.log("INFINITE LOOP PREVENTION");
+        return;
+    }
     console.log(increments);
     console.log(graph_type);
     console.log(time_step);
@@ -139,59 +142,71 @@ function process_data_for_profit_time_chart(data) {
     var y_values = [];
     //list of colours for each bar or whatever
     var colours = [];
+    var border_colours = [];
 
-    get_time_offset(time_step, time_spread);
-    var date_offset = offset;
     var base_date = new Date(Date.now());
     console.log(base_date);
     //data is ordered by oldest first;, we need newest first.
     data = data.reverse();
+    console.log(offset_time_by(base_date, time_step, time_spread));
     console.log(data);
-    for (var i in data) {
+
+    // split the data into the list for each increment until all data has been processed:
+    var total_price = 0;
+    for (var i = 0; i < data.length; i += 1) {
+        //prevent overloading the graph with too much data
+        if (increments<=0){
+            break;
+        }
+        increments-=1;
+
         var list = data[i];
         var time = list[0];
         var price = list[1];
+        console.log("PRICE" + price.toString());
         var date = new Date(time);
-        console.log(date);
-        console.log(date.getFullYear());
-        console.log(month_names[date.getMonth()]);
-        console.log(date.getDay());
-        console.log(date.getHours());
-        console.log(price);
-
-
+        if (date > base_date) {
+            total_price += price;
+        } else {
+            console.log("inloop: ");
+            console.log(base_date);
+            y_values.push(total_price);
+            x_labels.push(base_date.toLocaleString());
+            colours.push("rgba(0,255,140,0.2)");
+            border_colours.push("rgba(0,255,140,1)");
+            base_date = offset_time_by(base_date, time_step, time_spread);
+            i -= 1;
+            total_price = 0
+        }
     }
+    y_values.push(total_price);
+    x_labels.push(base_date.toLocaleString());
+    colours.push("rgba(0,255,140,0.2)");
+    border_colours.push("rgba(0,255,140,1)");
+    //push left overs
+
+    console.log("showing chart");
+    console.log(x_labels);
+    console.log(y_values);
+    console.log(border_colours);
+    show_chart(graph_type,x_labels, y_values, colours, border_colours)
 }
 
-function show_chart() {
-    update_profit_time_chart();
+function show_chart(type,x_labels, y_values, colours, border_colours) {
+    // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
     //list of data (by day?)
     //list of colours rgba(r,g,b,opacity)
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: type,
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: x_labels,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                label: 'Price-Time',
+                data: y_values,
+                backgroundColor: colours,
+                borderColor: colours,
                 borderWidth: 1
             }]
         },

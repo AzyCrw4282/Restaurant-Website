@@ -30,8 +30,9 @@ function user_is_authenticated() {
 
 //========  LOADING DATA =============
 /**
- *This function
- * @param data
+ *This function allocates the data which are lists and allows to use that data in functions.
+ * Gives the functions access to the lists.
+ * @param data represents the data required in the other functions.
  */
 
 function load_data(data) {
@@ -39,17 +40,19 @@ function load_data(data) {
     var food_information = data["food_information_list"];
     var food_categories = data["category_list"];
     var foods = data["food_list"];
-    load_tab_shortcut_buttons(food_categories); //
-    add_section_for_each_food_category(food_categories);
+    load_tab_shortcut_buttons(food_categories); //the list of categories will be put in the correct section in the menu.
+    add_section_for_each_food_category(food_categories); //allows to section the menu page by accessing the food category list.
+
     var food_info_dict = {};
-    for (var i in food_information) {
+    for (var i in food_information) { //for every food there will be an information, this loops over it.
         var info_dict = food_information[i];
         var id = info_dict["id"];
-        food_info_dict[id] = info_dict;
+        food_info_dict[id] = info_dict; //each food information should have a respective id.
     }
+
     add_filter_options(food_info_dict);
 
-    load_food_cards_into_sections(foods, food_categories, food_info_dict);
+    load_food_cards_into_sections(foods, food_categories, food_info_dict); //each section will be made up of food category and its food and the foods information.
 }
 
 /**
@@ -398,9 +401,14 @@ function add_section_for_each_food_category(categories) {
     }
 }
 
+/**
+ *
+ * @param food_list
+ * @param food_categories
+ * @param food_info_dict
+ */
+
 function load_food_cards_into_sections(food_list, food_categories, food_info_dict) {
-    //load_header_tabs(categories);
-    // categories is a dictionary
     var category_dict = {};
     for (var i in food_categories) {
         var category = food_categories[i];
@@ -409,6 +417,7 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
         var cat_name = category["name"];
         category_dict[cat_id] = cat_name;
     }
+
     for (var i in food_list) {
         var food = food_list[i];
 

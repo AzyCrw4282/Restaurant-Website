@@ -20,7 +20,7 @@
 
 /**
  * This method gives customer access to the menu, initially set to false.
- * @type {boolean} when authenticated is true, user is redirected to menu page.
+ * @type {boolean} when autheniticated is true, user is redirected to menu page.
  */
 
 var authenticated = false;
@@ -30,8 +30,9 @@ function user_is_authenticated() {
 
 //========  LOADING DATA =============
 /**
- *
- * @param data
+ *This function allocates the data which are lists and allows to use that data in functions.
+ * Gives the functions access to the lists.
+ * @param data represents the data required in the other functions.
  */
 
 function load_data(data) {
@@ -39,17 +40,19 @@ function load_data(data) {
     var food_information = data["food_information_list"];
     var food_categories = data["category_list"];
     var foods = data["food_list"];
-    load_tab_shortcut_buttons(food_categories);
-    add_section_for_each_food_category(food_categories);
+    load_tab_shortcut_buttons(food_categories); //the list of categories will be put in the correct section in the menu.
+    add_section_for_each_food_category(food_categories); //allows to section the menu page by accessing the food category list.
+
     var food_info_dict = {};
-    for (var i in food_information) {
+    for (var i in food_information) { //for every food there will be an information, this loops over it.
         var info_dict = food_information[i];
         var id = info_dict["id"];
-        food_info_dict[id] = info_dict;
+        food_info_dict[id] = info_dict; //each food information should have a respective id.
     }
+
     add_filter_options(food_info_dict);
 
-    load_food_cards_into_sections(foods, food_categories, food_info_dict);
+    load_food_cards_into_sections(foods, food_categories, food_info_dict); //each section will be made up of food category and its food and the foods information.
 }
 
 /**
@@ -89,7 +92,7 @@ function add_filter_options(food_info_dict) {
 
 function click_checkbox(checkbox) {
     return function () {
-        //clicking the checkbox again so it unclicks itself
+        //clicking the checkbox again so it un-clicks itself
         if (!(checkbox.checked)) {
             checkbox.checked = true;
         } else {
@@ -141,31 +144,29 @@ function update_filter(checkbox) {
     }
 }
 
+/**
+ * This function displays the tabs at the top of the page which are the different categories.
+ * @param categories represents the different food types that can be displayed.
+ */
+
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
-    var div = document.getElementById("links_wrapper");
-    for (var i in categories) {
+    var tab_links = document.getElementById("links_wrapper");
+    for (var i in categories) { //iterates over all the categories
         var cat = categories[i];
-        var cat_name = cat["name"];
-        // <a style="text-decoration:none;" href="#sides">Sides</a>
+        var cat_name = cat["name"]; //represents all the different category name.
         var a = document.createElement("a");
         a.className = "shortcut_anchor";
         a.style = "text-decoration:none;";
-        a.href = "#" + cat_name;
+        a.href = "#" + cat_name; //there is a link to each different category.
         a.innerHTML += cat_name.toUpperCase();
-        div.appendChild(a);
+        tab_links.appendChild(a);
     }
-    // var a = document.createElement("a");
-    // a.style = "text-decoration:none;";
-    // a.innerHTML += "BASKET";
-    // a.href = "#basket";
-    // a.id = "basket";
-    div.appendChild(a);
+    tab_links.appendChild(a); //each different category will have a link.
 }
 
 /**
- * Creates a card for each Food item from the Food table, by loading the information from the database
- * and displays the information
+ * Creates a card for each Food item by adding the relevant food information from the food table.
  * @param card
  * @param info_dict
  * @returns {HTMLElement} this will be the card
@@ -177,7 +178,6 @@ function add_card(card, info_dict) {
     var information = [];
 
     //iterates over the information
-
     for (var i in information_list) {
         var id = information_list[i];
         information.push(info_dict[id])
@@ -188,105 +188,114 @@ function add_card(card, info_dict) {
     var price = card["price"];
     var id = card["id"];
 
-    var div_1 = create_tag("div", "", "", "food_card", id, "");
+    //creates the html elements in the card with the specific tags.
+    var food_card = create_tag("div", "", "", "food_card", id, "");
     var heading = create_tag("h3", "", "", "", id, "" + food_name);
     var desc_button = create_tag("button", "", "", "food_allergy_buttons", "desc_button" + id, "i");
     desc_button.style.cssFloat = 'right';
     desc_button.style.background = '#0F31C0';
-    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
-    var div_3 = create_tag("div", "", "", "", "", "");
-    var div_4 = create_tag("div", "", "", "", "", "");
+    var card_img_border = create_tag("div", "", "", "food_card_img_border", "", "");
+    card_img_border.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    var comment_section = create_tag("div", "", "", "", "", "");
+    var order_button_section = create_tag("div", "", "", "", "", "");
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
     var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price);
 
+
+    //only when the user is authenticated, there will be a delete button.
     if (authenticated) {
         var delete_button = create_tag("button", "", "", "food_card_button", "", "delete");
-        delete_button.onclick = delete_food_from_menu(id);
+        delete_button.onclick = delete_food_from_menu(id); //deletes specific food when the delete button is pressed.
     }
 
-    orderBtn.onclick = add_food_to_order(id, textField.id);
+    orderBtn.onclick = add_food_to_order(id, textField.id); //takes the id of the card and the
 
     if (authenticated) {
-        div_4.appendChild(delete_button);
+        order_button_section.appendChild(delete_button);
     }
-    div_1.appendChild(heading);
-    div_2.appendChild(desc_button);
-    div_3.appendChild(textField);
-    div_4.appendChild(orderBtn);
-    div_1.appendChild(div_2);
-    div_1.appendChild(div_3);
-    div_1.appendChild(div_4);
+
+    //when the html elements are created by appending each html element to one another it defines the structure for the elements.
+    food_card.appendChild(heading);
+    card_img_border.appendChild(desc_button);
+    comment_section.appendChild(textField);
+    order_button_section.appendChild(orderBtn);
+    food_card.appendChild(card_img_border);
+    food_card.appendChild(comment_section);
+    food_card.appendChild(order_button_section);
 
 
+    //iterates over the information in the food table and for each information a button is created, with the relevant information.
     for (var i in information) {
         var allergy_name = information[i]["name"];
         var allergy_content = information[i]["ingredients"];
 
+       //the button will only display the first letter of the information.
         var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name + id, "" + allergy_name[0]);
-        allergy_button.value = allergy_name;
-        allergy_button.name = "card_allergy_button_" + "option" + information[i]["id"];
-        div_2.appendChild(allergy_button);
+
+        allergy_button.value = allergy_name; //all the names in the food.information
+        allergy_button.name = "card_allergy_button_" + "option" + information[i]["id"]; //sets the name of the button to that specific food's information.
+        card_img_border.appendChild(allergy_button);
 
 
+        //creates a popup that displays all the information when user hovers over
         var popup_box_content = create_tag("div", "", "", "food_allergy_info_content", "content_popup" + allergy_name + id, "");
         var popup_box_header = create_tag("div", "", "", "food_allergy_info_content_header", "", "");
         var close_button = create_tag("span", "", "", "food_allergy_info_content_close", "close_button" + allergy_name + id, "");
 
 
         var heading_popup = create_tag("h2", "", "", "", "", "" + allergy_name);
-        var popupbox_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
+        var popup_box_body = create_tag("div", "", "", "food_allergy_info_content_body", "", "");
         var inside_body = create_tag("p", "", "", "", "", "" + allergy_content);
-        var popupbox_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
+        var popup_box_footer = create_tag("div", "", "", "food_allergy_info_content_footer", "", "");
 
-        allergy_button.onmouseover = allergy_popup_display_on(allergy_name, id);
-        allergy_button.onmouseleave = allergy_popup_display_off(allergy_name, id);
+        allergy_button.onmouseover = allergy_popup_display_on(allergy_name, id); //when the mouse is over the allergy_buttons it will display the popup.
+        allergy_button.onmouseleave = allergy_popup_display_off(allergy_name, id);//when the mouse is away the allergy_buttons it will display the popup.
 
-        div_2.appendChild(popup_box_content);
+        card_img_border.appendChild(popup_box_content);
         popup_box_content.appendChild(popup_box_header);
         popup_box_header.appendChild(close_button);
         popup_box_header.appendChild(heading_popup);
-        popup_box_content.appendChild(popupbox_body);
-        popupbox_body.appendChild(inside_body);
-        popup_box_content.appendChild(popupbox_footer);
-
+        popup_box_content.appendChild(popup_box_body);
+        popup_box_body.appendChild(inside_body);
+        popup_box_content.appendChild(popup_box_footer);
 
     }
 
-    desc_button.onmouseover = desc_popup_display_on(id);
-    desc_button.onmouseleave = desc_popup_display_off(id);
-
-    var info_1 = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
-    var info_2 = create_tag("div", "", "", "food_desc_content_header", "", "");
-    var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+    desc_button.onmouseover = desc_popup_display_on(id); //when the mouse is over the i it will display the popup.
+    desc_button.onmouseleave = desc_popup_display_off(id); //when the mouse is away from the i button it will not show the popup.
 
 
-    var info_3 = create_tag("h2", "", "", "", "", ""+food_name);
-    var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
-    var info_5 = create_tag("p", "", "", "", "", "" + desc);
-    var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
+    //The popup that is displayed when the user hovers over the i button.
+    //this creates the html elements that is needed for the popup.
+    var info_popup_box = create_tag("div", "", "", "food_desc_content", "desc_popup" + id, "");
+    var info_popup_header = create_tag("div", "", "", "food_desc_content_header", "", "");
+    var info_popup_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
+
+    var desc_heading_popup = create_tag("h2", "", "", "", "", ""+food_name);
+    var desc_popup_body = create_tag("div", "", "", "food_desc_content_body", "", "");
+    var desc_displays = create_tag("p", "", "", "", "", "" + desc);
+    var desc_popup_footer = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
 
 
+    //this makes the popup be displayed on the card,this makes sure it shows up around the card_img_border div.
+    card_img_border.appendChild(info_popup_box);
+    info_popup_box.appendChild(info_popup_header);
+    info_popup_header.appendChild(info_popup_close);
+    info_popup_header.appendChild(desc_heading_popup);
+    info_popup_box.appendChild(desc_popup_body);
+    desc_popup_body.appendChild(desc_displays);
+    info_popup_box.appendChild(desc_popup_footer);
 
 
-    div_2.appendChild(info_1);
-    info_1.appendChild(info_2);
-    info_2.appendChild(info_close);
-    info_2.appendChild(info_3);
-    info_1.appendChild(info_4);
-    info_4.appendChild(info_5);
-    info_1.appendChild(info_6);
-
-
-    return div_1;
+    return food_card;
 }
 
 /**
- *
- * @param allergy_name and id
-     * @returns {Function}
-     * this function displays the content of the allergen box when the user hovers over it
+ * When the mouse hovers over the allergy buttons,it changes the display of the popup to block.
+ * @param allergy_name this is for each 
+ * @param id
+ * @returns {Function}
  */
 function allergy_popup_display_on(allergy_name, id) {
     return function () {
@@ -294,12 +303,7 @@ function allergy_popup_display_on(allergy_name, id) {
         x.style.display = "block";
     }
 }
-/**
- *
- * @param allergy_name and id
-     * @returns {Function}
-     * this function stops displaying the content of the allergen box when the user stops hovering over it
- */
+
 function allergy_popup_display_off(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
@@ -307,12 +311,6 @@ function allergy_popup_display_off(allergy_name, id) {
     }
 }
 
-/**
- *
- * @param id
-     * @returns {Function}
-     * this function displays the pop up when the user hovers over it
- */
 function desc_popup_display_on(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -320,12 +318,6 @@ function desc_popup_display_on(id) {
     }
 }
 
-/**
- *
- * @param id
-     * @returns {Function}
-     * this function stops displaying the pop up when the user stops hovering over it
- */
 function desc_popup_display_off(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -333,12 +325,7 @@ function desc_popup_display_off(id) {
     }
 }
 
-/**
- *
- * @param id
-     * @returns {Function}
-     * this function displays the pop up when the user hovers over it
- */
+
 function desc_popup(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -353,11 +340,7 @@ function desc_popup(id) {
     }
 
 }
-/**
- *
- * @param data
-     * this function populates the pop with the data
- */
+
 function populate_popup(data) {
     //  let list = document.createElement("ul");
     // list.className = "card";
@@ -396,38 +379,36 @@ function populate_popup(data) {
 }
 
 /**
- *
- * @param data
-     * adds a section and a link for every food category the waiter adds
+ * This function creates sections that separates the food sections.
+ * places every food item in the correct food category.
+ * @param categories this is all the different food types.
  */
 
 function add_section_for_each_food_category(categories) {
-    for (var i in categories) {
+    for (var i in categories) { //for each food category there will be an allocated space that will contain cards.
         var cat = categories[i];
-        var section = document.createElement("SECTION");
-        section.className = "food_card_container";
+        var food_section = document.createElement("SECTION");
+        food_section.className = "food_card_container";
 
         var separator = document.createElement("div");
         separator.className = "food_card_separator";
-        separator.innerText = cat["name"].toUpperCase();
-        section.id = cat["name"];
+        separator.innerText = cat["name"].toUpperCase(); //each different section will be for an allocated category.
+        food_section.id = cat["name"]; //each
 
         document.getElementById("categories").appendChild(separator);
 
-        document.getElementById("categories").appendChild(section);
+        document.getElementById("categories").appendChild(food_section);
     }
 }
 
-
 /**
  *
- * @param data
-     * loads the food cards into the assigned food category sections
+ * @param food_list
+ * @param food_categories
+ * @param food_info_dict
  */
 
 function load_food_cards_into_sections(food_list, food_categories, food_info_dict) {
-    //load_header_tabs(categories);
-    // categories is a dictionary
     var category_dict = {};
     for (var i in food_categories) {
         var category = food_categories[i];
@@ -436,6 +417,7 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
         var cat_name = category["name"];
         category_dict[cat_id] = cat_name;
     }
+
     for (var i in food_list) {
         var food = food_list[i];
 
@@ -449,10 +431,7 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
 
 /**
  *
- * @param data
-     *
  */
-
 
 
 $("#popup_button_minimize").click(function () {

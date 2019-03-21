@@ -61,7 +61,7 @@ function update_profit_time_chart() {
             if (JSON.parse(data["success"]) == "1") {
                 try {
                     console.log("SUCCESS ");
-                    process_data_for_profit_time_chart(JSON.parse(data['message']));
+                    update_profit_time_chart_data(JSON.parse(data['message']));
                 } catch (e) {
                     //    data is empty
                 }
@@ -116,16 +116,32 @@ function offset_time_by(date, time_step, time_spread) {
 
     }
     return date;
-
 }
 
-function process_data_for_profit_time_chart(data) {
+var profit_time_chart_data = [];
+
+function update_profit_time_chart_data(data) {
+    profit_time_chart_data = data.reverse();
+    process_data_for_profit_time_chart(profit_time_chart_data);
+}
+
+function process_data_for_profit_time_chart() {
+    var data = profit_time_chart_data;
     console.log("PROCESSING DATA");
     var chart = document.getElementById("profit_time_chart");
     var increments = chart.querySelector('input[name="increments"]').value;
     var graph_type = chart.querySelector('select[name="graph_type"]').value;
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
+    var base_date =  chart.querySelector('input[name="start_date"]').value;
+    console.log("DATE_");
+    console.log(base_date);
+    if(!base_date){
+        console.log("success");
+        base_date=Date.now();
+
+    }
+    base_date=new Date(base_date);
     //double check variables to prevent issues.
     if (!(increments > 0 && time_spread > 0)) {
         console.log("INFINITE LOOP PREVENTION");
@@ -139,16 +155,16 @@ function process_data_for_profit_time_chart(data) {
     var colours = [];
     var border_colours = [];
 
-    var base_date = new Date(Date.now());
+
     console.log(base_date);
     //data is ordered by oldest first;, we need newest first.
-    data=data.reverse() ;
+
     console.log(offset_time_by(base_date, time_step, time_spread));
     console.log(data);
 
     // split the data into the list for each increment until all data has been processed:
     var total_price = 0;
-    var counter=0;
+    var counter = 0;
     for (var i = 0; i < data.length; i += 1) {
         //prevent overloading the graph with too much data
         if (increments <= 0) {
@@ -161,7 +177,7 @@ function process_data_for_profit_time_chart(data) {
         var date = new Date(time);
         if (date > base_date) {
             // console.log(list);
-            counter+=1;
+            counter += 1;
             total_price += price;
         } else {
             increments -= 1;
@@ -181,20 +197,23 @@ function process_data_for_profit_time_chart(data) {
     border_colours.push("rgba(0,255,140,1)");
     //push left overs
 
-    console.log("showing chart");
-    console.log(x_labels);
-    console.log(y_values);
-    console.log(border_colours);
-    show_chart(graph_type, x_labels, y_values, colours, border_colours)
+    // console.log("showing chart");
+    // console.log(x_labels);
+    // console.log(y_values);
+    // console.log(border_colours);
+    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse())
 }
-
+var profit_price_chart=null;
 function show_chart(type, x_labels, y_values, colours, border_colours) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
     //list of data (by day?)
     //list of colours rgba(r,g,b,opacity)
-    var myChart = new Chart(ctx, {
+    if(profit_price_chart!=null){
+        profit_price_chart.destroy();
+    }
+    profit_price_chart =new Chart(ctx, {
         type: type,
         data: {
             labels: x_labels,
@@ -202,7 +221,7 @@ function show_chart(type, x_labels, y_values, colours, border_colours) {
                 label: 'Price-Time',
                 data: y_values,
                 backgroundColor: colours,
-                borderColor: colours,
+                borderColor: border_colours,
                 borderWidth: 1
             }]
         },
@@ -216,6 +235,7 @@ function show_chart(type, x_labels, y_values, colours, border_colours) {
             }
         }
     });
+
 }
 
 function generate_random_orders() {

@@ -8,3 +8,15 @@
     width:100%;
     height:100%;
 }
+.profit_time_chart{
+    margin:auto;
+    width:1000px;
+    height:1000px;
+}
+.graph_results{
+    display: block;
+}
+.graph_options{
+    display: block;
+
+}

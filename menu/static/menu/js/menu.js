@@ -294,7 +294,7 @@ function add_card(card, info_dict) {
 
 /**
  * When the mouse hovers over the allergy buttons,it changes the display of the popup to block.
- * @param allergy_name this is for each 
+ * @param allergy_name this is for each button
  * @param id
  * @returns {Function}
  */
@@ -305,12 +305,25 @@ function allergy_popup_display_on(allergy_name, id) {
     }
 }
 
+/**
+ * when the mouse is not hovering over the allergy buttons it will change the display of the popup to none.
+ * @param allergy_name for each button
+ * @param id each different food information id will display different information
+ * @returns {Function}
+ */
+
 function allergy_popup_display_off(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
         x.style.display = "none";
     }
 }
+
+/**
+ *When the mouse is hovering over the i it will display the popup.
+ * @param id this represents how every food card will have a different information.
+ * @returns {Function}
+ */
 
 function desc_popup_display_on(id) {
     return function () {
@@ -319,6 +332,12 @@ function desc_popup_display_on(id) {
     }
 }
 
+/**
+ *When the mouse is hovering over the i it will display the popup.
+ * @param id this represents how every food card will have a different information.
+ * @returns {Function}
+ */
+
 function desc_popup_display_off(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -326,26 +345,32 @@ function desc_popup_display_off(id) {
     }
 }
 
+// /**
+//  *
+//  * @param id
+//  * @returns {Function}
+//  */
+// function desc_popup(id) {
+//     return function () {
+//         var x = document.getElementById("desc_popup" + id);
+//         var desc_button = document.getElementById("desc_button" + id);
+//         var span = document.getElementById("desc_close_button" + id);
+//
+//         x.style.display = "block";
+//         span.onclick = function () {
+//             x.style.display = "none";
+//         }
+//
+//     }
+//
+// }
 
-function desc_popup(id) {
-    return function () {
-        var x = document.getElementById("desc_popup" + id);
-        var desc_button = document.getElementById("desc_button" + id);
-        var span = document.getElementById("desc_close_button" + id);
-
-        x.style.display = "block";
-        span.onclick = function () {
-            x.style.display = "none";
-        }
-
-    }
-
-}
+/**
+ *
+ * @param data
+ */
 
 function populate_popup(data) {
-    //  let list = document.createElement("ul");
-    // list.className = "card";
-    // list.innerHTML = "<li>" + foodname + "</li>";
     var table_order = data["table_order"];
     var basket_item_container = document.getElementById("basket_item_container");
     while (basket_item_container.firstChild) {

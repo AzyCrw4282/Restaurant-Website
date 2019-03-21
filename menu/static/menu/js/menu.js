@@ -366,8 +366,8 @@ function desc_popup_display_off(id) {
 // }
 
 /**
- *
- * @param data
+ *This function for each food table displays there total order, as well as their status of the order.
+ * @param data represents the tables order information.
  */
 
 function populate_popup(data) {
@@ -384,17 +384,15 @@ function populate_popup(data) {
         var basket_item_p = document.createElement("p");
 
         var order = order_list[order_id];
-        // console.log(order);
+
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
 
         var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"] + ": " + order["comment"]);
         var li_price = create_tag("span", "", "", "basket_item_price", "", "" + order["food_price"]);
-        // var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
         delete_button.onclick = delete_food_from_order(order["id"]);
         basket_item_p.appendChild(delete_button);
         basket_item_p.appendChild(li_name);
         basket_item_p.appendChild(li_price);
-        // basket_item_div.appendChild(delete_button);
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
@@ -428,10 +426,10 @@ function add_section_for_each_food_category(categories) {
 }
 
 /**
- *
- * @param food_list
- * @param food_categories
- * @param food_info_dict
+ *This function puts the cards in the correct category depending on the dictionaries.
+ * @param food_list represents all the food items.
+ * @param food_categories all the different types a food can be.
+ * @param food_info_dict for each food item it also has information.
  */
 
 function load_food_cards_into_sections(food_list, food_categories, food_info_dict) {
@@ -456,7 +454,8 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
 }
 
 /**
- *
+ *This function is for when the customer clicks on the different button it will show more
+ * information.
  */
 
 

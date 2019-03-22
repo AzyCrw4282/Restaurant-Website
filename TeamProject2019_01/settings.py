@@ -149,10 +149,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 print(MEDIA_ROOT)
 
 #
+STAFF_URLS={
+    r'^accounts/manager/[\s\S]*',
+}
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/waiter/'
 LOGIN_EXEMPT_URLS = {
-    r'^menu/*$',
     r'^menu/[\s\S]*',
 }
 

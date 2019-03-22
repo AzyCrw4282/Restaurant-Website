@@ -222,9 +222,9 @@ function click_checkbox(checkbox) {
 }
 
 //Pending cards
-function add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
+function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
 
-    var pending_list = document.getElementById("pending_list");
+    var card_list;
     // console.log("static: ");
     // console.log("creating pendingcard");
 
@@ -239,18 +239,15 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
     var panel_title_text = document.createElement('a');
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#pending_list");
-    panel_title_text.href = "#pending" + table_order_id;
     panel_title_text.innerHTML = "Table: " + table_order_table_number;
     panel_title_text.className = "order_text";
 
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "pending" + table_order_id, "");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "", "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
 
     //Creating card divs
-    var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
+    var border = create_tag("div", "", "", "text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
     var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
     var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
@@ -265,6 +262,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
     var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
@@ -284,13 +282,74 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
     override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
 
+    deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
     confirm_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+    //Specific card conditions
+    switch (table_order_state) {
+        case "client_confirmed":
+            card_list = document.getElementById("pending_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#pending_list");
+            panel_title_text.href = "#pending" + table_order_id;
+            panel_content_top.id = "pending" + table_order_id;
+            border.classList.add("card");
+            deliver_button.style.display = "none";
+            break;
+        case "waiter_confirmed":
+            card_list = document.getElementById("kitchen_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#kitchen_list");
+            panel_title_text.href = "#kitchen" + table_order_id;
+            panel_content_top.id = "kitchen" + table_order_id;
+            border.classList.add("cardkitchen");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            deliver_button.style.display = "none";
+            break;
+        case "chef_confirmed":
+            card_list = document.getElementById("ready_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#ready_list");
+            panel_title_text.href = "#ready" + table_order_id;
+            panel_content_top.id = "ready" + table_order_id;
+            border.classList.add("cardready");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            break;
+        case "chef_canceled":
+            card_list = document.getElementById("ready_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#ready_list");
+            panel_title_text.href = "#ready" + table_order_id;
+            panel_content_top.id = "ready" + table_order_id;
+            border.classList.add("cardready");
+            confirm_button.style.display = "none";
+            deliver_button.style.display = "none";
+            cancel_button.text = "Archive";
+            break;
+        case "archived":
+            card_list = document.getElementById("archive_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#archive_list");
+            panel_title_text.href = "#archive" + table_order_id;
+            panel_content_top.id = "archive" + table_order_id;
+            panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+            border.classList.add("cardkitchen");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            deliver_button.style.display = "none";
+            break;
+    }
+
+
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
     cardbody.appendChild(comment_box);
     cardbody.appendChild(confirm_button);
+    cardbody.appendChild(deliver_button);
     cardbody.appendChild(cancel_button);
 
     override_content.appendChild(override_to_pending);
@@ -314,7 +373,9 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     top_of_panel.appendChild(panel_header);
     top_of_panel.appendChild(panel_content_top);
 
-    pending_list.appendChild(top_of_panel);
+
+
+    card_list.appendChild(top_of_panel);
 
 
 }

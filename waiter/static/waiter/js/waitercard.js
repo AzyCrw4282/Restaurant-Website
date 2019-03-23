@@ -1,13 +1,10 @@
-/* Data structure should loaded in as Order( _id , Menu_id , Table_id , Customer_id , time_of_order, state )
- * (from schema.txt)
- * Example how it's supposed to display in the waitercard.html/And the backup reference dummy html waiterver2
- *
- *
+/**
+ * Function loads the tables used by the rest of the functions.
+ * Taking 2 tables listing orders and tables as parameters, it loads the tables in to filter
+ * and parses the order_list and generates cards for them. Also reloads after an interval.
+ * @param order_list List of orders from the database, parsed for order cards
+ * @param table_list List of existing tables (the physical kind) in the database.
  */
-
-
-var tempOrder = [];
-
 function load_data(order_list, table_list) {
     console.log(order_list);
     load_cards(order_list);

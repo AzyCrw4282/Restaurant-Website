@@ -88,7 +88,12 @@ function move_card_on_click(table_order_id, table_order_comment, table_order_tim
     }
 }
 
-
+/**
+ * Function is used to enable a notification on the page.
+ * Changes the color of the tab to red for the notification.
+ *
+ * @param table_order_state
+ */
 function turn_on_notification(table_order_state) {
     // print("turning on notification");
     var state = table_order_state;
@@ -102,6 +107,14 @@ function turn_on_notification(table_order_state) {
     }
 }
 
+/**
+ * load_cards takes the list of orders and iterates over them parsing the information to cards.
+ * The function iterates over the list of orders assigning the column values to variables on each entry.
+ * After assigning the values to variables, the function checks whether a notification should be sent
+ * by checking if an existing card's state has changed.
+ * After this the card is generated with the add_card method.
+ * @param table_orders Table of orders in the database.
+ */
 function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];

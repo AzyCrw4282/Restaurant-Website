@@ -1,7 +1,7 @@
 /**
  * Function loads the tables used by the rest of the functions.
  * Taking 2 tables listing orders and tables as parameters, it loads the tables in to filter
- * and parses the order_list and generates cards for them. Also reloads after an interval.
+ * and parses the order_list and generates the inital cards for them. Also reloads after an interval.
  * @param order_list List of orders from the database, parsed for order cards
  * @param table_list List of existing tables (the physical kind) in the database.
  */
@@ -16,6 +16,10 @@ function load_data(order_list, table_list) {
     }, 5000);
 }
 
+/**
+ * Function takes the table orders order_list table and regenerates the order card to display.
+ * @param data Order list from the database.
+ */
 function update_cards(data) {
     // print("UPDATING CARDS");
 
@@ -25,7 +29,18 @@ function update_cards(data) {
     load_cards(table_orders);
 }
 
-
+/**
+ * Function is used to move cards in real time without having to reload the page.
+ * The function works by taking all the information of the order card as a paramaters,
+ * deleting the card then regenerating it with the new changed state (or the same).
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_current_state
+ * @param table_order_new_state
+ */
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     var del_card = document.getElementById(table_order_id);
     del_card.innerHTML = "";
@@ -54,6 +69,17 @@ function move_card(table_order_id, table_order_comment, table_order_time, table_
 
 }
 
+/**
+ * Aggregate function for onclicks, that changes sets the order state and moves the displayed card.
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_current_state
+ * @param table_order_new_state
+ * @returns {Function}
+ */
 function move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     return function () {
         console.log("CHANGING STATE OF ORDER");
@@ -61,6 +87,7 @@ function move_card_on_click(table_order_id, table_order_comment, table_order_tim
         move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state)
     }
 }
+
 
 function turn_on_notification(table_order_state) {
     // print("turning on notification");

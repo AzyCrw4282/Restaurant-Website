@@ -13,7 +13,7 @@ from django.http import JsonResponse
 import json
 import uuid
 
-with open('config.json') as json_data_file:
+with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 

@@ -153,15 +153,15 @@ STAFF_URLS={
     r'^accounts/manager/[\s\S]*',
 }
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/waiter/'
+LOGIN_REDIRECT_URL = '/accounts/authenticated/'
 LOGIN_EXEMPT_URLS = {
     r'^menu/[\s\S]*',
 }
 
 
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'TeamProject2019_01@gmail.com'
-# EMAIL_HOST_PASSWORD = 'password'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'TeamProject201901@gmail.com'
+EMAIL_HOST_PASSWORD = 'TP@20191'
 django_heroku.settings(locals())

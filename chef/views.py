@@ -8,7 +8,7 @@ import json
 
 
 # Create your views here.
-with open('config.json') as json_data_file:
+with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 
@@ -34,7 +34,7 @@ def db_objects_to_list_of_dicts(objects):
     return list
 
 
-def chef(request):
+def main_page(request):
     # pass the order item's to the waiter
     table_orders = TableOrder.objects.all()
     data = {}

@@ -41,21 +41,24 @@ $(document).scroll(function () {
 
     }
 });
-function turn_off_all_containers(){
-     var container = document.getElementById("statistics_container");
+
+function turn_off_all_containers() {
+    var container = document.getElementById("statistics_container");
     container.style.display = "none";
-    var accounts=document.getElementById("accounts_container");
-    accounts.style.display="none";
+    var accounts = document.getElementById("accounts_container");
+    accounts.style.display = "none";
 }
+
 function show_stats() {
     turn_off_all_containers();
     var container = document.getElementById("statistics_container");
     container.style.display = "block";
 }
-function show_accounts(){
+
+function show_accounts() {
     turn_off_all_containers();
-    var accounts=document.getElementById("accounts_container");
-    accounts.style.display="block";
+    var accounts = document.getElementById("accounts_container");
+    accounts.style.display = "block";
 
 }
 
@@ -145,15 +148,15 @@ function process_data_for_profit_time_chart() {
     var graph_type = chart.querySelector('select[name="graph_type"]').value;
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
-    var base_date =  chart.querySelector('input[name="start_date"]').value;
+    var base_date = chart.querySelector('input[name="start_date"]').value;
     console.log("DATE_");
     console.log(base_date);
-    if(!base_date){
+    if (!base_date) {
         console.log("success");
-        base_date=Date.now();
+        base_date = Date.now();
 
     }
-    base_date=new Date(base_date);
+    base_date = new Date(base_date);
     //double check variables to prevent issues.
     if (!(increments > 0 && time_spread > 0)) {
         console.log("INFINITE LOOP PREVENTION");
@@ -177,7 +180,7 @@ function process_data_for_profit_time_chart() {
     // split the data into the list for each increment until all data has been processed:
     var total_price = 0;
     var counter = 0;
-    var old_base_date=new Date(base_date.valueOf());
+    var old_base_date = new Date(base_date.valueOf());
 
     for (var i = 0; i < data.length; i += 1) {
         //prevent overloading the graph with too much data
@@ -190,17 +193,17 @@ function process_data_for_profit_time_chart() {
         var price = list[1];
         var date = new Date(time);
         // console.log(date);
-        if (date > base_date && date<old_base_date) {
+        if (date > base_date && date < old_base_date) {
             // console.log(list);
             counter += 1;
             total_price += price;
-        } else if (date<base_date){
+        } else if (date < base_date) {
             increments -= 1;
             y_values.push(total_price);
             x_labels.push(base_date.toLocaleString());
             colours.push("rgba(0,255,140,0.2)");
             border_colours.push("rgba(0,255,140,1)");
-            old_base_date=new Date(base_date.valueOf());
+            old_base_date = new Date(base_date.valueOf());
             base_date = offset_time_by(base_date, time_step, time_spread);
             // console.log(old_base_date);
             // console.log(base_date);
@@ -216,29 +219,33 @@ function process_data_for_profit_time_chart() {
     border_colours.push("rgba(0,255,140,1)");
     //push left overs
 
-    var sum = y_values.reduce(function(a, b) { return a + b; }, 0);
-    var average_per_tick=sum/x_labels.length;
+    var sum = y_values.reduce(function (a, b) {
+        return a + b;
+    }, 0);
+    var average_per_tick = sum / x_labels.length;
     var av = chart.querySelector('output[name="average"]');
     var tot = chart.querySelector('output[name="total"]');
-    av.value="Average-per-tick: "+average_per_tick.toString();
-    tot.value="Sum: "+sum.toString();
+    av.value = "Average-per-tick: " + average_per_tick.toString();
+    tot.value = "Sum: " + sum.toString();
     // console.log("showing chart");
     // console.log(x_labels);
     // console.log(y_values);
     // console.log(border_colours);
-    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse(),time_step,time_spread)
+    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse(), time_step, time_spread)
 }
-var profit_price_chart=null;
-function show_chart(type, x_labels, y_values, colours, border_colours,period,period_multiple) {
+
+var profit_price_chart = null;
+
+function show_chart(type, x_labels, y_values, colours, border_colours, period, period_multiple) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     //list of labels (total prices)
     //list of data (by day?)
     //list of colours rgba(r,g,b,opacity)
-    if(profit_price_chart!=null){
+    if (profit_price_chart != null) {
         profit_price_chart.destroy();
     }
-    profit_price_chart =new Chart(ctx, {
+    profit_price_chart = new Chart(ctx, {
         type: type,
         data: {
             labels: x_labels,
@@ -252,16 +259,16 @@ function show_chart(type, x_labels, y_values, colours, border_colours,period,per
         },
         options: {
             scales: {
-                xAxes:[{
-                    scaleLabel:{
-                        display:true,
-                        labelString:'time-period per tick:  '+period_multiple.toString() +" "+period
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time-period per tick:  ' + period_multiple.toString() + " " + period
                     },
                 }],
                 yAxes: [{
-                    scaleLabel:{
-                        display:true,
-                        labelString:'profit ($)'
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'profit ($)'
                     },
                     ticks: {
                         beginAtZero: true
@@ -288,7 +295,34 @@ function generate_random_orders() {
         },
     });
 }
+function add_user(full_name,email,account_group) {
+     $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'create_account/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "group_name":account_group,
+            "user_name":full_name,
+            "email":email,
+        },
+        success: function (data) {
+            console.log(data);
+            update_profit_time_chart()
+        },
+    });
+}
 
+function submit_add_user_form() {
+    var accounts_container = document.getElementById("accounts_container");
+    var add_user_form = accounts_container.querySelector('form[name="add_user_form"]');
+    console.log(add_user_form);
+    var full_name = add_user_form.querySelector('input[name="full_name"]').value;
+    var email = add_user_form.querySelector('input[name="email"]').value;
+    var account_group= add_user_form.querySelector('select[name="group_name"]').value;
+    console.log(full_name+email+account_group);
+    add_user(full_name,email,account_group);
+}
 
 function delete_fake_orders() {
 
@@ -304,4 +338,16 @@ function delete_fake_orders() {
             update_profit_time_chart()
         },
     });
+}
+
+function show_add_user_form() {
+    var add_user_form = document.getElementById("add_user_form");
+    if (add_user_form.style.display == "none") {
+        add_user_form.style.display = "block";
+    } else if (add_user_form.style.display == "block") {
+        add_user_form.style.display = "none";
+    } else {
+        add_user_form.style.display = "block";
+
+    }
 }

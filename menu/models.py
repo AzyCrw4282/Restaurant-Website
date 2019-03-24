@@ -33,7 +33,7 @@ import uuid
 # a constant system for max length should be looked into
 
 # Table( _id  )
-with open('config.json') as json_data_file:
+with open('../config.json') as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 order_states = data["order_states"]

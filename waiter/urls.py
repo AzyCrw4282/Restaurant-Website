@@ -5,8 +5,9 @@ from django.conf.urls.static import static
 from . import views, db_insert
 from django.views.generic import RedirectView
 from django.contrib import admin
+app_name = 'waiter'
 urlpatterns = [
-                  path('',views.waiter, name='waiter'),
+                  path('',views.main_page, name="main_page"),
                   # temporary url's for populating database, this should be done from user's requests e.t.c.
                   url(r'^delete_food/$', views.delete_food, name='delete_food'),
 

@@ -1,5 +1,5 @@
 # THIS IS A PYTHON FILE FOR HANDELING GENERAL REQUESTS FROM URL'S
-
+from hashlib import md5
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
@@ -10,13 +10,15 @@ from menu.models import Table, FoodInformation, Order, Food, FoodCategory, Table
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
+from django.core.mail import send_mail
 import json
 import uuid
+import string
 
 import random
 from datetime import timedelta, datetime
 
-with open('../config.json') as json_data_file:
+with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 
@@ -43,7 +45,16 @@ def db_objects_to_list_of_dicts(objects):
         list.append(db_object.to_dict())
     return list
 
+def login_redirect(request):
+    user=request.user
 
+    if user.groups.filter(name="waiter"):
+        return HttpResponseRedirect(reverse("waiter:main_page"))
+    if user.groups.filter(name="chef"):
+        return HttpResponseRedirect(reverse("chef:main_page"))
+    if user.is_staff:
+        return(manager(request))
+    return HttpResponseRedirect(reverse("menu:welcome_page"))
 def manager(request):
     '''
     manager page, needs to see:
@@ -74,71 +85,86 @@ def get_all_orders_cost_date(request):
         return JsonResponse(response)  # Response returned to ajax call
 
 
-def create_waiter_group(request):
+def check_if_exists_waiter_group():
     '''
     this function auto creates the waiter group with the relevant permissions
+    Permissions at this stage are not required given that
+    waiter can simply not have staff status.
     :param request:
     :return:
     '''
-    if request.method == 'POST':
-        try:
-            group = Group.objects.get_or_create(name="waiter")
-
-            create_table_order_pm = ContentType.objects.get_for_model(model=TableOrder)
-            alter_menu_pm = ContentType.objects.get_for_model(model=Food)
-            alter_menu_pm1 = ContentType.objects.get_for_model(model=FoodInformation)
-            alter_menu_pm2 = ContentType.objects.get_for_model(model=FoodCategory)
-            alter_menu_pm3 = ContentType.objects.get_for_model(model=Table)
-            alter_menu_pm4 = ContentType.objects.get_for_model(model=Order)
-            group.permissions.add(create_table_order_pm)
-            group.permissions.add(alter_menu_pm)
-            group.permissions.add(alter_menu_pm1)
-            group.permissions.add(alter_menu_pm2)
-            group.permissions.add(alter_menu_pm3)
-            group.permissions.add(alter_menu_pm4)
-            group.save()
-            print("SUCCESSFULLY CREATED GROUP")
-        except Exception as e:
-            print("FAILED TO CREATE GROUP: ", e)
-    pass
+    print("CREATING WAITER GROUP")
+    Group.objects.get_or_create(name="waiter")
 
 
-def create_chef_group(request):
+def create_chef_group():
     '''
-    this function auto creates the waiter group with the relevant permissions
+    creates a chef group if needed, no permissions required as chef
+    is logged in, this should be implemented if there is time, however
+    it does not affect security as url's are protected and chef does not have
+    administrator status.
     :param request:
     :return:
     '''
-    if request.method == 'POST':
-        try:
-            group = Group.objects.get_or_create(name="chef")
-            create_table_order_pm = ContentType.objects.get_for_model(model=TableOrder)
-            group.permissions.add(create_table_order_pm)
-            group.save()
-            print("SUCCESSFULLY CREATED GROUP")
-        except Exception as e:
-            print("FAILED TO CREATE GROUP: ", e)
-    pass
+    print("CREATING GROUP CHEF")
+    Group.objects.get_or_create(name="chef")
 
+
+def randomString(stringLength):
+    '''
+    This function is coppied to generate a random string.
+    (for the password)
+    url: https://pynative.com/python-generate-random-string/
+    :param stringLength:
+    :return:
+    '''
+    """Generate a random string of fixed length """
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
 
 def create_account(request):
     '''
-    auto create an account with relevant provided details
-
+    auto create an account with relevant provided details,
+    send email with password and link to login page.
     :param request:
     :return:
     '''
+    print("CREATING ACCOUNT")
     if request.method == 'POST':
         try:
             group_name = request.POST["group_name"]
+            user_name = request.POST["user_name"]
+            email = request.POST["email"]
+            password=randomString(6)
+            # this is so the user does not need to create groups manually or go through permissions,
+            # it is a quick hack as the strucuture is simple
+            if group_name=="waiter" or group_name== "chef":
+                try:
+                    group = Group.objects.get(name=group_name)
+                except:
+                    if group_name=="waiter":
+                        check_if_exists_waiter_group()
+                    else:
+                        create_chef_group(request)
             group = Group.objects.get(name=group_name)
-            new_user = User.objects.create()
+
+            new_user = User.objects.create(username=user_name,email=email)
+            new_user.set_password(password)
             new_user.is_staff = False
             new_user.save()
             group.user_set.add(new_user)
             group.save()
+            send_mail('Oaxaca Registration Details',
+                      "Please follow the privided link with password to log in: Link: "+reverse("accounts:login")+" Password: "+password,
+                      'TeamProject201901@gmail.com',
+                      [email],
+                      fail_silently=False)
+            response=SUCCESSFUL_RESPONSE
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
+            response=UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
+
 
 
 def delete_account(request):

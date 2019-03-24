@@ -78,21 +78,21 @@
                     <div style="float:left">
                         <h3>Users</h3>
                     </div>
-                    <div onclick="show_add_user_form()" class="user_manage_container_add_user_btn">
+                    <div onclick="show_add_user_form()" id="user_manage_container_add_user_btn"
+                         class="user_manage_container_add_user_btn">
                         <h2>+</h2>
-                        <div class="add_user_form" id="add_user_form">
-                            <form onsubmit="return false">
-                                {% csrf_token %}
-                                <select name="group_name">
-                                    <option value="waiter">waiter</option>
-                                    <option value="chef">chef</option>
-                                </select>
-                                <input name="full_name" type="text" placeholder="full name">
-                                <input name="email" type="text" placeholder="email">
-
-
-                            </form>
-                        </div>
+                    </div>
+                    <div class="add_user_form" id="add_user_form">
+                        <form name="add_user_form" onsubmit="return false">
+                            {% csrf_token %}
+                            <select name="group_name">
+                                <option value="waiter">waiter</option>
+                                <option value="chef">chef</option>
+                            </select>
+                            <input name="full_name" type="text" placeholder="full name">
+                            <input name="email" type="text" placeholder="email">
+                            <button onclick="submit_add_user_form()">Create</button>
+                        </form>
                     </div>
                 </div>
                 <div class="user_manage_container_table">

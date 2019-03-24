@@ -152,15 +152,10 @@ function load_cards(table_orders) {
 
 /**
  * This function loads the different tables as options to the table filter.
- * This works by parsing over the table orders and loading the tables from orders into the dropdown
+ * This works by parsing over the existing tables and loading the tables into the dropdown
  * as options.
  *
- * This is gonna be really slow when we start approaching higher numbers or orders, only fix
- * would be to change the way /waiter/ loads the data into and get tables as a seperate entity but
- * might require significant refactoring. I'm not sure how exactly to it too.
- *
- * TODO: Fix scaling by only loading tables directly from the database (refactor loading data)
- * @param table_orders List of orders pulled from database.
+ * @param table_list List of tables pulled from database.
  */
 function table_filter_options(table_list) {
     var filter = document.getElementById("table_filter_content");
@@ -183,6 +178,14 @@ function table_filter_options(table_list) {
     }
 }
 
+/**
+ * Function updates the displayed cards based on the filter options in the list.
+ * When the function is called, it checks the checkbox parameter and iterates over all cards
+ * either showing or displaying the cards according to the checkbox value.
+ *
+ * @param checkbox
+ * @returns {Function}
+ */
 function update_table_filter(checkbox) {
     return function () {
         var set_display = "none";
@@ -211,7 +214,11 @@ function update_table_filter(checkbox) {
     }
 }
 
-
+/**
+ * Function ensures the checkbox is working as intended.
+ * @param checkbox
+ * @returns {Function}
+ */
 function click_checkbox(checkbox) {
     return function () {
         //clicking the checkbox again so it unclicks itself
@@ -223,7 +230,19 @@ function click_checkbox(checkbox) {
     }
 }
 
-//Pending cards
+/**
+ * Function generates an order card on to the page.
+ * The function takes the parameters given and generates the default card with the information.
+ * The function first assigns divs to variables with the create_tag method using the info.
+ * After this the function uses the state of the order to determine the type of card, where it's placed
+ * and a few css changes related to the type.
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_state
+ */
 function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
 
     var card_list;

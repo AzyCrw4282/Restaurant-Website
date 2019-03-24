@@ -401,7 +401,17 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
 
 }
 
-
+/**
+ * Utility function to create html tags.
+ * Function creates a tag with DOM and applies any given parameters to it before returning it.
+ * @param tag_name
+ * @param href
+ * @param src
+ * @param tag_class
+ * @param id
+ * @param text
+ * @returns {HTMLElement}
+ */
 function create_tag(tag_name, href, src, tag_class, id, text) {
     var tag = document.createElement(tag_name);
     if (href.length > 0) {
@@ -424,17 +434,17 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
     if (href.length > 0) {
         tag.href = href;
     }
-    /*this might work?
-    if (data-toggle.length > 0) {
-        tag.data-toggle = data-toggle;
-    }
-    if (data-parent.length > 0) {
-        tag.data-parent = data-parent;
-    }*/
     return tag;
 
 }
 
+/**
+ * Enables the functionality of tabs in the waiter page.
+ * The function links the changes in css and elements displayed when switching tabs.
+ * @param evt
+ * @param tabname
+ * @param id
+ */
 function tab(evt, tabname, id) {
     //reset the bg colour if it is red.
     var i, tabcontent, tablinks;
@@ -452,6 +462,7 @@ function tab(evt, tabname, id) {
     tab.style.backgroundColor = "white";
     evt.currentTarget.className += " active";
 }
+
 
 // update if external changes detected:
 function update_table_order_states(table_order_states) {

@@ -295,22 +295,110 @@ function generate_random_orders() {
         },
     });
 }
-function add_user(full_name,email,account_group) {
-     $.ajax({
+
+function add_user(full_name, email, account_group) {
+    add_account_to_page({"username": full_name, "email": email, "group_name": account_group, "id": "reload plz"});
+    $.ajax({
         //Post request made here
         type: "post",
         url: 'create_account/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "group_name":account_group,
-            "user_name":full_name,
-            "email":email,
+            "group_name": account_group,
+            "user_name": full_name,
+            "email": email,
         },
         success: function (data) {
-            console.log(data);
-            update_profit_time_chart()
+
         },
     });
+}
+
+function delete_account_from_page(id) {
+    console.log("DELETING ACCOUNT");
+    document.getElementById("user_" + id).style.display = "none";
+}
+
+function add_account_to_page(user) {
+    /**
+     * function adds row to html accounts table
+     * @param user={"id":id, "username":username, "email":email, "group_name":group_name,}
+     * @type {HTMLElement}
+     */
+    var accounts_container = document.getElementById("accounts_container");
+    var user_table = accounts_container.querySelector('form[name="delete_user_form"]');
+    var row = document.createElement("div");
+    row.id = "user_" + user["id"];
+    row.className = "user_manage_container_row";
+    var delete_btn_cell = document.createElement("div");
+    delete_btn_cell.className = "user_manage_container_row_cell";
+    var delete_btn = document.createElement("div");
+    delete_btn.innerText = "X";
+    delete_btn.className = "user_manage_container_row_delete_btn";
+    var id = document.createElement("div");
+    id.innerText = user["id"];
+    id.className = "user_manage_container_row_id";
+    var username = document.createElement("div");
+    username.innerText = user["username"];
+    username.className = "user_manage_container_row_name";
+    var email = document.createElement("div");
+    email.innerText = user["email"];
+    email.className = "user_manage_container_row_email";
+    var group_name = document.createElement("div");
+    group_name.innerText = user["group_name"];
+    group_name.className = "user_manage_container_row_group";
+
+    delete_btn.onclick = delete_account(user["id"]);
+
+    delete_btn_cell.appendChild(delete_btn);
+    row.appendChild(delete_btn_cell);
+    row.appendChild(id);
+    row.appendChild(username);
+    row.appendChild(email);
+    row.appendChild(group_name);
+    user_table.appendChild(row)
+}
+
+function delete_account(id) {
+    return function () {
+        $.ajax({
+            //Post request made here
+            type: "post",
+            url: 'delete_account/',
+            data: {
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+                "id": id,
+            },
+            success: function (data) {
+                delete_account_from_page(id);
+            },
+        });
+    }
+}
+
+
+
+function load_user_table(user_list) {
+    console.log(user_list);
+    var accounts_container = document.getElementById("accounts_container");
+    var user_table = accounts_container.querySelector('form[name="delete_user_form"]');
+    for (var i in user_list) {
+        var user = user_list[i];
+        add_account_to_page(user)
+
+    }
+
+
+//                      <div id=user_id class="user_manage_container_row">
+//                         <div class="user_manage_container_row_cell">
+//                             <div class="user_manage_container_row_delete_btn">X</div>
+//                         </div>
+//                         <div class="user_manage_container_row_id">12</div>
+//                         <div class="user_manage_container_row_name">Octavio</div>
+//                         <div class="user_manage_container_row_email">octavio.delser@gmail.com</div>
+//                         <div class="user_manage_container_row_group">waiter</div>
+//                     </div>
+
 }
 
 function submit_add_user_form() {
@@ -319,9 +407,9 @@ function submit_add_user_form() {
     console.log(add_user_form);
     var full_name = add_user_form.querySelector('input[name="full_name"]').value;
     var email = add_user_form.querySelector('input[name="email"]').value;
-    var account_group= add_user_form.querySelector('select[name="group_name"]').value;
-    console.log(full_name+email+account_group);
-    add_user(full_name,email,account_group);
+    var account_group = add_user_form.querySelector('select[name="group_name"]').value;
+    console.log(full_name + email + account_group);
+    add_user(full_name, email, account_group);
 }
 
 function delete_fake_orders() {

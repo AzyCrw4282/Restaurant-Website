@@ -31,7 +31,6 @@ SUCCESSFUL_RESPONSE = {
     'message': 'SUCCESS'
 }
 
-user = User.objects.get(id=1)
 
 
 def db_objects_to_list_of_dicts(objects):
@@ -53,8 +52,9 @@ def login_redirect(request):
     if user.groups.filter(name="chef"):
         return HttpResponseRedirect(reverse("chef:main_page"))
     if user.is_staff:
-        return(manager(request))
+        return(HttpResponseRedirect(reverse("accounts:manager")))
     return HttpResponseRedirect(reverse("menu:welcome_page"))
+
 def manager(request):
     '''
     manager page, needs to see:
@@ -67,10 +67,22 @@ def manager(request):
     :return:
     '''
     tables = Table.objects.all()
+    data={"user_list":[]}
+    for user in User.objects.all():
+        group_name=""
+        if user.is_staff:
+            group_name="admin"
+        if user.groups.filter(name="waiter"):
+            group_name="waiter"
+
+        if user.groups.filter(name="chef"):
+            group_name="chef"
+
+        data["user_list"].append({"group_name":group_name,"id":user.id,"username":user.username,"email":user.email,"full_name":user.get_full_name()})
     for table in tables:
         print("AVAILABLE TABLES:", table.id, ": ", table.number)
     return render(
-        request, 'accounts/templates/manager.html', context={})
+        request, 'accounts/templates/manager.html', context=data)
 
 
 def get_all_orders_cost_date(request):
@@ -145,7 +157,7 @@ def create_account(request):
                     if group_name=="waiter":
                         check_if_exists_waiter_group()
                     else:
-                        create_chef_group(request)
+                        create_chef_group()
             group = Group.objects.get(name=group_name)
 
             new_user = User.objects.create(username=user_name,email=email)
@@ -155,7 +167,7 @@ def create_account(request):
             group.user_set.add(new_user)
             group.save()
             send_mail('Oaxaca Registration Details',
-                      "Please follow the privided link with password to log in: Link: "+reverse("accounts:login")+" Password: "+password,
+                      "Please follow the privided link with username and password to log in: Link: "+"http://project-oaxaca.herokuapp.com"+reverse("accounts:login")+"Username: "+ user_name+" Password: "+password,
                       'TeamProject201901@gmail.com',
                       [email],
                       fail_silently=False)
@@ -175,10 +187,14 @@ def delete_account(request):
     '''
     if request.method == 'POST':
         try:
-            new_user = request.POST["user_id"]
-            new_user.delete()
+            print("DELTING ACCOUNT: ",request.POST["id"])
+            user = User.objects.get(id=request.POST["id"])
+            user.delete()
+            response=SUCCESSFUL_RESPONSE
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
+            response=UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
 
 
 def purge_unconfirmed_orders(request):
@@ -244,3 +260,10 @@ def generate_random_orders(request):
     except Exception as e:
         print("failed to generate ", e)
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
+
+
+# def view_profile(request):
+#     args = {'user': request.user}
+#     return render(request, 'accounts/templates/registration/profile.html', args)
+#
+

@@ -1,38 +1,28 @@
 <!DOCTYPE html>
 <html>
+{% extends 'chef/templates/base.html' %}
 {% load staticfiles %}
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'chef/css/kitchenView.css' %}" type="text/css"/>
-    <title>Kitchen View</title>
-</head>
-
-<body>
+{% block body %}
     <script src="{% static 'chef/js/kitchen.js' %}"></script>
     <script src="{% static 'chef/js/kitchen_ajax.js' %}"></script>
-
-<div class="banner">
-    <img id="banner" src="../static/chef/img/Banner.png" class="center"/>
-</div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 
-<div class="header" id="header">
-</div>
-
-<div class="main" id="main">
-    <form onsubmit="return false">
-        {% csrf_token %}
-    <div id="card_container">
-
+    <div class="header" id="header">
     </div>
-    </form>
-</div>
-<script>
-    load_data({{ table_orders |safe }})
-</script>
 
-</body>
+    <div class="main" id="main">
+        <form onsubmit="return false">
+            {% csrf_token %}
+            <div id="card_container">
+
+            </div>
+        </form>
+    </div>
+    <script>
+        load_data({{ table_orders |safe }})
+    </script>
+{% endblock %}
+
 </html>

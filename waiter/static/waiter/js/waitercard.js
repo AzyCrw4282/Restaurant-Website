@@ -171,6 +171,7 @@ function table_filter_options(table_list) {
         table_filter_checkbox.setAttribute("type", "checkbox");
         table_filter_checkbox.id = "checkbox_" + table_number;
         table_filter_checkbox.value = table_number.toString();
+        table_filter_checkbox.checked=true;
         table_filter_option.innerText = "Table" + table_number;
         //click the checkbox twice to counter act.
         table_filter_checkbox.onclick = click_checkbox(table_filter_checkbox);

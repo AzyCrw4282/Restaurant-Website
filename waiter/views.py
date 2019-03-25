@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
-from menu.models import Food, TableOrder, FoodCategory, FoodInformation,Table
+from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -42,21 +42,21 @@ def main_page(request):
     table_orders = TableOrder.objects.all()
     data = {}
     data.update({"table_orders": []})
-    data.update({"table_list":db_objects_to_list_of_dicts(Table.objects.all())})
-    table_order_list = data["table_orders"]
-    for table_order in table_orders:
-        if not table_order.status == table_order_states["client_created"]:
-            table_order_items = table_order.orders.all()
-            # convert to dict:
-            temp_dict = table_order.to_dict()
-            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.orders.all())
-            total_price = 0
-            for order_item in table_order_items:
-                total_price += order_item.food.price
-            temp_dict.update({"total_price": total_price, "table_number": table_order.table.number})
-            table_order_list.append(temp_dict)
-            # replace the order items (id's to the object dictionaries)
-            # calc total price
+    data.update({"table_list": db_objects_to_list_of_dicts(Table.objects.all())})
+    # table_order_list = data["table_orders"]
+    # for table_order in table_orders:
+    #     if not table_order.status == table_order_states["client_created"]:
+    #         table_order_items = table_order.orders.all()
+    #         # convert to dict:
+    #         temp_dict = table_order.to_dict()
+    #         temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.orders.all())
+    #         total_price = 0
+    #         for order_item in table_order_items:
+    #             total_price += order_item.food.price
+    #         temp_dict.update({"total_price": total_price, "table_number": table_order.table.number})
+    #         table_order_list.append(temp_dict)
+    #         # replace the order items (id's to the object dictionaries)
+    #         # calc total price
 
     print("printing data", data)
     return render(request, "waiter/templates/Waiterver2.html", data)
@@ -150,7 +150,13 @@ def get_table_order_list(request):
     if request.method == 'GET':
         print("GETTING TABLE ORDER STATES: ")
         # pass the order item's to the waiter
-        table_orders = TableOrder.objects.all().exclude(status="client_created")
+        table_orders = TableOrder.objects.all().filter(
+            status__in=["client_confirmed",
+                       "waiter_confirmed",
+                       "waiter_canceled",
+                       "waiter_delivered",
+                       "chef_confirmed",
+                       "chef_canceled"])
         data = {}
         data.update({"table_orders": []})
         table_order_list = data["table_orders"]

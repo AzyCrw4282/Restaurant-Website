@@ -1,6 +1,8 @@
-Please perform the following steps to run the tests on your system.
+THE BELLOW IS NOT ADEQUATE.
+Plese create a script to run the test cases,
+Ensure it runs on linux.
 
-pip install selenium
+Please perform the following steps to run the tests on your system.
 
 *** Please delete the empty __init.py__ in the root directory as it causes error during run-time
 

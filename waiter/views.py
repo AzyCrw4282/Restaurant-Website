@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
-from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table,ArchivedTableOrder
+from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table, ArchivedTableOrder,Order
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -152,11 +152,11 @@ def get_table_order_list(request):
         # pass the order item's to the waiter
         table_orders = TableOrder.objects.all().filter(
             status__in=["client_confirmed",
-                       "waiter_confirmed",
-                       "waiter_canceled",
-                       "waiter_delivered",
-                       "chef_confirmed",
-                       "chef_canceled"])
+                        "waiter_confirmed",
+                        "waiter_canceled",
+                        "waiter_delivered",
+                        "chef_confirmed",
+                        "chef_canceled"])
         data = {}
         data.update({"table_orders": []})
         table_order_list = data["table_orders"]
@@ -197,36 +197,77 @@ def delete_food(request):
 
 def change_table_order_state(request):
     '''
-    changes the state of an order,
-    if the state is being changed to archived then the object
-    is deleted and added to the archived model
-    The archived model does not have foreign keys as
-    it should not be tied to any items on the menu...
-    If the model is being reverted from archived, this will
-    be done with success or failure depending on the existance
-    of the foreign keys.
+    Changes the state of the order, archiving and attemts to restore it if necessary.
+    This is a hack, unfortunately solving the issue was more important than doing it well with the time left.
     :param request:
     :return:
     '''
     if request.method == 'POST':
         print("changing state of table order")
         try:
-            table_order_id=request.POST["table_order_id"]
-            status_to_change_to= request.POST["state"]
-            if status_to_change_to=="archived":
+            table_order_id = request.POST["table_order_id"]
+            status_to_change_to = request.POST["state"]
+            if status_to_change_to == "archived":
                 # if it is being changed to archived
                 try:
                     table_order = TableOrder.objects.get(id=table_order_id)
-                    table_order_json=table_order.to_archived()
-                    archived_order=ArchivedTableOrder.objects.create(json_table_order=table_order_json,id=table_order.id)
+                    table_order_json = table_order.to_archived()
+                    archived_order = ArchivedTableOrder.objects.create(json_table_order=table_order_json,
+                                                                       id=table_order.id)
                     archived_order.save()
+                    print("SUCCESSFUL archiving of order")
+
+                    response = SUCCESSFUL_RESPONSE
                 except Exception as e:
-                    print("failed to convert to archived: ",e)
+                    print("failed to convert to archived: ", e)
             else:
                 # if it is restoring from archived or being changed to something other than archived.
                 try:
+                    # if it is a non-archived table order simply change the state
                     table_order = TableOrder.objects.get(id=table_order_id)
-                    
+                    table_order.status=status_to_change_to
+                    table_order.save()
+                    response=SUCCESSFUL_RESPONSE
+                    print("SUCCESSFUL status change of order")
+
+                except Exception as e:
+                    try:
+                        # if it is an archived order requireing restoration:
+                        if status_to_change_to!="archived":
+
+                            archived_table_order = ArchivedTableOrder.objects.get(id=table_order_id)
+                            #unpack the data
+                            data=archived_table_order.to_dict()
+                            # data in format:
+                            # TableOrder.to_archived
+                            orders=data["orders"]
+                            table_id: data["table"]
+                            time=data["time"]
+                            status=data["status"]
+                            id=data["id"]
+                            # try reconstructin all the orders then the table order
+                            try:
+                                table=Table.objects.get(id=table_id)
+                                table_order_restored=TableOrder.objects.create(id=id,status=status,time=time,table=table)
+                                table_order_restored.save()
+                                for order_data in orders:
+                                    food=Food.objects.get(id=order_data["food"])
+                                    order_status=order_data["status"]
+                                    comment=order_data["comment"]
+                                    ord_id=data["id"]
+                                    obj=Order.objects.create(food=food,status=order_status,comment=comment,id=ord_id)
+                                    obj.save()
+                                    table_order_restored.orders.add(obj)
+                                    table_order_restored.save()
+                                print("SUCCESSFUL Restoration of order")
+                                response=SUCCESSFUL_RESPONSE
+                            except Exception as e:
+                                print("Failed to unarchive Table Order: ",e)
+                    except Exception as e:
+                        table_order = None
+                        print("TABLE ORDER DOES NOT EXIST")
+
+
             print("STATE CHANGED TO: ", table_order.status)
             table_order.save()
         except Exception as e:

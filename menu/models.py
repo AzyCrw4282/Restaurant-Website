@@ -131,7 +131,7 @@ class TableOrder(models.Model):
         :return:
         '''
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
-                "id": self.id}
+                "id": self.id,"table_number":self.table.number}
         for order in self.orders.all():
             dict["orders"].append(order.to_dict())
         return json.dumps(dict)

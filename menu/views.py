@@ -236,3 +236,4 @@ def delete_table_order(request, table_order_id):
             table_order.delete()
         except:
             print("System failed to delete")
+

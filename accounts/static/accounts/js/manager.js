@@ -27,6 +27,25 @@ function banner() {
     });
 }
 
+function delete_old_table_orders() {
+    var container= document.getElementById("database_management");
+    var num_days= container.querySelector('input[name="delete_archived_days"]').value;
+    $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'delete_old_table_orders/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "days": num_days
+        },
+        success: function (data) {
+            console.log(data);
+            update_profit_time_chart();
+        },
+    });
+
+}
+
 
 $(document).scroll(function () {
     // console.log($(window).scrollTop());
@@ -375,7 +394,6 @@ function delete_account(id) {
         });
     }
 }
-
 
 
 function load_user_table(user_list) {

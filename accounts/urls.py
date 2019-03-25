@@ -14,6 +14,7 @@ urlpatterns = [
         name='logout'),
     url(r'^manager/$', views.manager, name='manager'),
     url(r'^manager/create_account/$', views.create_account, name='create_account'),
+    url(r'^manager/delete_account/$', views.delete_account, name='delete_account'),
 
     url(r'^manager/get_all_orders_cost_date/$', views.get_all_orders_cost_date,
         name='get_all_orders_cost_date'),

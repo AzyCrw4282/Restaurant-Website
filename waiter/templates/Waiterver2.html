@@ -1,70 +1,73 @@
-<!DOCTYPE html>
 <html lang="en">
-{% load static %}
+{% extends 'waiter/templates/base.html' %}
+{% load staticfiles %}
+{% block body %}
+    <link rel="stylesheet" href="{% static 'waiter/css/Waiterver2.css' %}" type="text/css"/>
+    <link rel=" stylesheet" href="{% static 'waiter/css/bootstrap-grid.css' %}" type="text/css"/>
+    <link rel=" stylesheet" href="{% static 'waiter/css/bootstrap-reboot.css' %}" type="text/css"/>
+    <link rel=" stylesheet" href="{% static 'waiter/css/bootstrap.css' %}" type="text/css"/>
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-<body>
-<link rel="stylesheet" href="{% static 'waiter/css/Waiterver2.css' %}" type="text/css"/>
-<link rel=" stylesheet" href="{% static 'waiter/css/bootstrap-grid.css' %}" type="text/css"/>
-<link rel=" stylesheet" href="{% static 'waiter/css/bootstrap-reboot.css' %}" type="text/css"/>
-<link rel=" stylesheet" href="{% static 'waiter/css/bootstrap.css' %}" type="text/css"/>
-
-<link rel="stylesheet" href="{% static 'waiter/css/waitercard.css' %}" type="text/css"/>
-<script src="{% static 'waiter/js/bootstrap.bundle.js' %}"></script>
-<script src="{% static 'waiter/js/waitercard.js' %}"></script>
-<script src="{% static 'waiter/js/bootstrap.js' %}"></script>
-<script src="{% static 'waiter/js/waiter_ajax.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'waiter/css/waitercard.css' %}" type="text/css"/>
+    <script src="{% static 'waiter/js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'waiter/js/waitercard.js' %}"></script>
+    <script src="{% static 'waiter/js/bootstrap.js' %}"></script>
+    <script src="{% static 'waiter/js/waiter_ajax.js' %}"></script>
 
 
-<div class="tab">
-    <button id='tab_link_client_confirmed' class="tablinks" onclick="tab(event,'pending','tab_link_client_confirmed')">Pending Orders</button>
-    <button id='tab_link_waiter_confirmed' class="tablinks" onclick="tab(event,'kitchen','tab_link_waiter_confirmed')">Kitchen</button>
-    <button id='tab_link_chef_confirmed' class="tablinks" onclick="tab(event,'ready','tab_link_chef_confirmed')">Order Ready</button>
-    <button id='tab_link_archived' class="tablinks" onclick="tab(event,'archive','tab_link_archived')">Archive</button>
-    <div class="table_filter_dropdown">
-    <button class="table_filter_button" id="table_filter_button">Select Tables</button>
-    <div class="table_filter_content" id="table_filter_content">
-    </div>
-    </div>
-</div>
-<form onsubmit="return false">
-    {% csrf_token %}
-
-    <!-- Tab 1 -->
-    <div id="pending" class="tabcontent">
-        <div class="panel-group" id="pending_list">
-
-
+    <div class="tab" style="top:100px">
+        <button id='tab_link_client_confirmed' class="tablinks"
+                onclick="tab(event,'pending','tab_link_client_confirmed')">Pending Orders
+        </button>
+        <button id='tab_link_waiter_confirmed' class="tablinks"
+                onclick="tab(event,'kitchen','tab_link_waiter_confirmed')">Kitchen
+        </button>
+        <button id='tab_link_chef_confirmed' class="tablinks" onclick="tab(event,'ready','tab_link_chef_confirmed')">
+            Order Ready
+        </button>
+        <button id='tab_link_archived' class="tablinks" onclick="tab(event,'archive','tab_link_archived')">Archive
+        </button>
+        <div class="table_filter_dropdown">
+            <button class="table_filter_button" id="table_filter_button">Select Tables</button>
+            <div class="table_filter_content" id="table_filter_content">
+            </div>
         </div>
     </div>
+    <form onsubmit="return false">
+        {% csrf_token %}
 
-    <!-- Tab 2  -->
-    <div id="kitchen" class="tabcontent">
-        <div class="panel-group" id="kitchen_list">
+        <!-- Tab 1 -->
+        <div id="pending" class="tabcontent">
+            <div class="panel-group" id="pending_list">
 
+
+            </div>
         </div>
-    </div>
 
-    <!-- Tab 3 -->
-    <div id="ready" class="tabcontent">
-        <div class="panel-group" id="ready_list">
+        <!-- Tab 2  -->
+        <div id="kitchen" class="tabcontent">
+            <div class="panel-group" id="kitchen_list">
 
+            </div>
         </div>
-    </div>
 
-    <!-- Tab 4 -->
-    <div id="archive" class="tabcontent">
-        <div class="panel-group" id="archive_list">
+        <!-- Tab 3 -->
+        <div id="ready" class="tabcontent">
+            <div class="panel-group" id="ready_list">
 
+            </div>
         </div>
-    </div>
 
-</form>
-<script>
-    load_data({{ table_orders |safe }},{{ table_list |safe }})
-</script>
+        <!-- Tab 4 -->
+        <div id="archive" class="tabcontent">
+            <div class="panel-group" id="archive_list">
 
-</body>
+            </div>
+        </div>
+
+    </form>
+    <script>
+        load_data({{ table_orders |safe }}, {{ table_list |safe }})
+    </script>
+
+{% endblock %}
 </html>

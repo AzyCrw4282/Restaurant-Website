@@ -34,37 +34,37 @@ from django.http import JsonResponse
 #       {"id":int,"comment":comment }
 #   ]
 # }
-
-
-#To be deleted
-def add_table_order(request, table_id):
-    print("Post request details: " + request.POST)
-    # expecting: name, price, category_id, description, picture)
-    if request.method == 'POST':
-        try:
-            temp = TableOrder.objects.create(
-                table_id=table_id,
-                time=request.POST['time'],
-            )
-            temp.save()
-            for order in request.POST['orders']:
-                temp_order = Order.objects.create(
-                    food_id=order["id"],
-                    comment=order["comment"],
-                )
-                temp_order.save()
-                temp.orders.add(temp_order)
-            response = {
-                'status': 1,
-                'message': 'added food'
-            }
-        except Exception as e:
-            print("EXCEPTION THROWN: ", e)
-
-            response = {
-                'status': 0,
-                'message': 'Oops something went wrong - ' + str(e)
-            }
-        return JsonResponse(response)
-    else:
-        pass
+#
+#
+# #To be deleted
+# def add_table_order(request, table_id):
+#     print("Post request details: " + request.POST)
+#     # expecting: name, price, category_id, description, picture)
+#     if request.method == 'POST':
+#         try:
+#             temp = TableOrder.objects.create(
+#                 table_id=table_id,
+#                 time=request.POST['time'],
+#             )
+#             temp.save()
+#             for order in request.POST['orders']:
+#                 temp_order = Order.objects.create(
+#                     food_id=order["id"],
+#                     comment=order["comment"],
+#                 )
+#                 temp_order.save()
+#                 temp.orders.add(temp_order)
+#             response = {
+#                 'status': 1,
+#                 'message': 'added food'
+#             }
+#         except Exception as e:
+#             print("EXCEPTION THROWN: ", e)
+#
+#             response = {
+#                 'status': 0,
+#                 'message': 'Oops something went wrong - ' + str(e)
+#             }
+#         return JsonResponse(response)
+#     else:
+#         pass

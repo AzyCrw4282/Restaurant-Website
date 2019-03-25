@@ -43,10 +43,10 @@ def main_page(request):
     for table_order in table_orders:
         print("STATUS", table_order.status)
         if table_order.status == table_order_states["waiter_confirmed"]:
-            table_order_items = table_order.orders.all()
+            table_order_items = table_order.order_set.all()
             # convert to dict:
             temp_dict = table_order.to_dict()
-            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.orders.all())
+            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.order_set.all())
             total_price = 0
             for order_item in table_order_items:
                 total_price += order_item.food.price
@@ -68,8 +68,7 @@ def get_order_states(request):
         relevant_orders = TableOrder.objects.filter(status="waiter_confirmed")
 
         for table_order in relevant_orders:
-
-            for order in table_order.orders.all():
+            for order in table_order.order_set.all():
                 response_dict.update({order.id: order.status})
         response = {
             'success': True,

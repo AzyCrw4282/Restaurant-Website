@@ -110,15 +110,18 @@ def get_menu_popup_data(request, table_order_id):
 
     try:
         table_order = TableOrder.objects.get(id=table_order_id)
-        table_order_items = table_order.orders.all()
+        table_order_items = table_order.order_set.all()
+
         # convert to dict:
         response_dict = {"table_order": table_order.to_dict()}
         # replace the order items (id's to the object dictionaries)
         temp = response_dict["table_order"]
         temp["orders"] = db_objects_to_list_of_dicts(table_order_items)
+        print(temp["orders"])
         # calc total price
         total_price = 0
         for order_item in table_order_items:
+            print(order_item)
             total_price += order_item.food.price
         response_dict["table_order"].update({'total_price': total_price})
 
@@ -183,9 +186,8 @@ def add_food_to_order(request, table_order_id):
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
-                    comment=request.POST['comment'],
+                    comment=request.POST['comment'],table_order=table_order
                 )
-                table_order.orders.add(order)
                 response = SUCCESSFUL_RESPONSE
             else:
                 response = UNSUCCESSFUL_RESPONSE
@@ -211,7 +213,7 @@ def delete_food_from_order(request, table_order_id):
     try:
         table_order = TableOrder.objects.get(id=table_order_id)
         if table_order.status == table_order_states["client_created"]:
-            order = table_order.orders.get(id=request.POST["order_id"])
+            order = table_order.order_set.get(id=request.POST["order_id"])
             order.delete()
             return JsonResponse(SUCCESSFUL_RESPONSE)
         else:
@@ -236,3 +238,4 @@ def delete_table_order(request, table_order_id):
             table_order.delete()
         except:
             print("System failed to delete")
+

@@ -214,7 +214,7 @@ function update_table_order_list(table_order_list) {
 
                 update_cards(data);//To populate called here
             } else {
-                console.log("NO DATA")
+                // console.log("NO DATA")
             }
         },
         error: function (data) {

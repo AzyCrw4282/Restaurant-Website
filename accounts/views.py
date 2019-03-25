@@ -4,19 +4,17 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import reverse, redirect, get_object_or_404
-import os, hashlib
-from django.core.files import File
-from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
+from menu.models import Table, Order, Food, ArchivedTableOrder, TableOrder
 from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
 from django.http import JsonResponse
 from django.core.mail import send_mail
+from datetime import timedelta, datetime
+
 import json
 import uuid
 import string
 
 import random
-from datetime import timedelta, datetime
 
 with open("config.json") as json_data_file:
     data = json.load(json_data_file)
@@ -32,7 +30,6 @@ SUCCESSFUL_RESPONSE = {
 }
 
 
-
 def db_objects_to_list_of_dicts(objects):
     '''
     converts multiple db objects to a list of its dictionaries
@@ -44,16 +41,18 @@ def db_objects_to_list_of_dicts(objects):
         list.append(db_object.to_dict())
     return list
 
+
 def login_redirect(request):
-    user=request.user
+    user = request.user
 
     if user.groups.filter(name="waiter"):
         return HttpResponseRedirect(reverse("waiter:main_page"))
     if user.groups.filter(name="chef"):
         return HttpResponseRedirect(reverse("chef:main_page"))
     if user.is_staff:
-        return(HttpResponseRedirect(reverse("accounts:manager")))
+        return (HttpResponseRedirect(reverse("accounts:manager")))
     return HttpResponseRedirect(reverse("menu:welcome_page"))
+
 
 def manager(request):
     '''
@@ -67,18 +66,20 @@ def manager(request):
     :return:
     '''
     tables = Table.objects.all()
-    data={"user_list":[]}
+    data = {"user_list": []}
     for user in User.objects.all():
-        group_name=""
+        group_name = ""
         if user.is_staff:
-            group_name="admin"
+            group_name = "admin"
         if user.groups.filter(name="waiter"):
-            group_name="waiter"
+            group_name = "waiter"
 
         if user.groups.filter(name="chef"):
-            group_name="chef"
+            group_name = "chef"
 
-        data["user_list"].append({"group_name":group_name,"id":user.id,"username":user.username,"email":user.email,"full_name":user.get_full_name()})
+        data["user_list"].append(
+            {"group_name": group_name, "id": user.id, "username": user.username, "email": user.email,
+             "full_name": user.get_full_name()})
     for table in tables:
         print("AVAILABLE TABLES:", table.id, ": ", table.number)
     return render(
@@ -134,6 +135,7 @@ def randomString(stringLength):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
 
+
 def create_account(request):
     '''
     auto create an account with relevant provided details,
@@ -147,36 +149,36 @@ def create_account(request):
             group_name = request.POST["group_name"]
             user_name = request.POST["user_name"]
             email = request.POST["email"]
-            password=randomString(6)
+            password = randomString(6)
             # this is so the user does not need to create groups manually or go through permissions,
             # it is a quick hack as the strucuture is simple
-            if group_name=="waiter" or group_name== "chef":
+            if group_name == "waiter" or group_name == "chef":
                 try:
                     group = Group.objects.get(name=group_name)
                 except:
-                    if group_name=="waiter":
+                    if group_name == "waiter":
                         check_if_exists_waiter_group()
                     else:
                         create_chef_group()
             group = Group.objects.get(name=group_name)
 
-            new_user = User.objects.create(username=user_name,email=email)
+            new_user = User.objects.create(username=user_name, email=email)
             new_user.set_password(password)
             new_user.is_staff = False
             new_user.save()
             group.user_set.add(new_user)
             group.save()
             send_mail('Oaxaca Registration Details',
-                      "Please follow the privided link with username and password to log in: Link: "+"http://project-oaxaca.herokuapp.com"+reverse("accounts:login")+"Username: "+ user_name+" Password: "+password,
+                      "Please follow the privided link with username and password to log in: Link: " + "http://project-oaxaca.herokuapp.com" + reverse(
+                          "accounts:login") + "Username: " + user_name + " Password: " + password,
                       'TeamProject201901@gmail.com',
                       [email],
                       fail_silently=False)
-            response=SUCCESSFUL_RESPONSE
+            response = SUCCESSFUL_RESPONSE
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
-            response=UNSUCCESSFUL_RESPONSE
+            response = UNSUCCESSFUL_RESPONSE
         return JsonResponse(response)
-
 
 
 def delete_account(request):
@@ -187,13 +189,13 @@ def delete_account(request):
     '''
     if request.method == 'POST':
         try:
-            print("DELTING ACCOUNT: ",request.POST["id"])
+            print("DELTING ACCOUNT: ", request.POST["id"])
             user = User.objects.get(id=request.POST["id"])
             user.delete()
-            response=SUCCESSFUL_RESPONSE
+            response = SUCCESSFUL_RESPONSE
         except Exception as e:
             print("FAILED TO CREATE USER:", e)
-            response=UNSUCCESSFUL_RESPONSE
+            response = UNSUCCESSFUL_RESPONSE
         return JsonResponse(response)
 
 
@@ -215,9 +217,10 @@ def purge_all_orders_by_days(request):
 
 
 def delete_fake_orders(request):
-    relevant_orders = TableOrder.objects.all().filter(status="fake")
+    relevant_orders = TableOrder.objects.all()
     for order in relevant_orders:
-        order.delete()
+        if order.status not in table_order_states:
+            order.delete()
     return JsonResponse(SUCCESSFUL_RESPONSE)
 
 
@@ -251,10 +254,8 @@ def generate_random_orders(request):
             table_order.save()
             print(table_order.time)
             for j in range(0, random.randrange(2, 10)):
-                order = Order.objects.create(food=random.choice(all_foods))
+                order = Order.objects.create(table_order=table_order,food=random.choice(all_foods))
                 order.save()
-                table_order.orders.add(order)
-            table_order.save()
         return JsonResponse(SUCCESSFUL_RESPONSE)
 
     except Exception as e:
@@ -262,8 +263,37 @@ def generate_random_orders(request):
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
+def delete_old_table_orders(request):
+    '''
+    deletes all table orders older than specified number of days
+    since the user has created them.
+    :param request: Post contains days: int
+    :return:
+    '''
+    if request.method == 'POST':
+        try:
+            days = int(request.POST["days"])
+            print("DELETING ORDERS OLDER THAN: ", days)
+            relevant_orders = ArchivedTableOrder.objects.all()
+            delete_before_date = datetime.now() - timedelta(days=days)
+            for order in relevant_orders:
+                data = order.to_dict()
+                time_string = data["time"]
+                # remove colon as this is a python bug:
+                # we are removing in days, time zone does not matter
+                time_string = time_string[:-6]
+                print("TIME DELTA: ", time_string)
+                print("time:", delete_before_date)
+                time = datetime.strptime(time_string, '%Y-%m-%d %H:%M:%S.%f')
+                print("CONVERTED TIME:", time)
+                if time < delete_before_date:
+                    order.delete()
+
+        except Exception as e:
+            print("FAILED TO DELETE TABLE ORDERS: ", e)
+    return JsonResponse(SUCCESSFUL_RESPONSE)
+
 # def view_profile(request):
 #     args = {'user': request.user}
 #     return render(request, 'accounts/templates/registration/profile.html', args)
 #
-

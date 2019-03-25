@@ -97,13 +97,19 @@ function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];
         var table_order_id = table_order["id"];
+        var table_order_table_number=table_order["table_number"];
+        //continue if the order id is not checked:
+        var checked=document.getElementById("checkbox_" + table_order_table_number).checked;
+        console.log(checked);
+        if (checked==false){
+            continue
+        }
         // if the order exists on the template already delete it:
         // NOT VERY NICE BUT EFFECTIVE IF THE BROWSER IS MODERN
 
 
         var table_order_comment = table_order["comment"];
         var table_order_time = table_order["time"];
-        var table_order_table_number = table_order["table_number"];
         var table_order_order_list = table_order["orders"];
         var table_order_state = table_order["status"]; //However the state of the order needs to be loaded
         var potential_div = document.getElementById(table_order_id);

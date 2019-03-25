@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
-from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table
+from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table,ArchivedTableOrder
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import timedelta, datetime
 
@@ -196,11 +196,37 @@ def delete_food(request):
 
 
 def change_table_order_state(request):
+    '''
+    changes the state of an order,
+    if the state is being changed to archived then the object
+    is deleted and added to the archived model
+    The archived model does not have foreign keys as
+    it should not be tied to any items on the menu...
+    If the model is being reverted from archived, this will
+    be done with success or failure depending on the existance
+    of the foreign keys.
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         print("changing state of table order")
         try:
-            table_order = TableOrder.objects.get(id=request.POST["table_order_id"])
-            table_order.status = request.POST["state"]
+            table_order_id=request.POST["table_order_id"]
+            status_to_change_to= request.POST["state"]
+            if status_to_change_to=="archived":
+                # if it is being changed to archived
+                try:
+                    table_order = TableOrder.objects.get(id=table_order_id)
+                    table_order_json=table_order.to_archived()
+                    archived_order=ArchivedTableOrder.objects.create(json_table_order=table_order_json,id=table_order.id)
+                    archived_order.save()
+                except Exception as e:
+                    print("failed to convert to archived: ",e)
+            else:
+                # if it is restoring from archived or being changed to something other than archived.
+                try:
+                    table_order = TableOrder.objects.get(id=table_order_id)
+                    
             print("STATE CHANGED TO: ", table_order.status)
             table_order.save()
         except Exception as e:

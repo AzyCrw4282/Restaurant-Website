@@ -102,6 +102,13 @@ class Order(models.Model):
                 "comment": self.comment, "id": self.id, "status": self.status}
         return dict
 
+# Archived table order
+class ArchivedTableOrder(models.Model):
+    json_table_order=models.TextField(max_length=2000)
+    id = models.TextField(primary_key=True)
+    def to_dict(self):
+        dict = json.loads(self.json_table_order)
+        return dict
 
 # TableOrder ( _id , orders:MtM(Order),Table_id, time, status)
 class TableOrder(models.Model):
@@ -118,8 +125,21 @@ class TableOrder(models.Model):
         dict = [self.time.__str__(),total]
 
         return dict
-
+    def to_archived(self):
+        '''
+        returns all information required to save an archived instance of the order
+        :return:
+        '''
+        dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
+                "id": self.id}
+        for order in self.orders.all():
+            dict["orders"].append(order.to_dict())
+        return json.dumps(dict)
     def to_dict(self):
+        '''
+        returns all the information on this model in a dictionary format.
+        :return:
+        '''
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
                 "id": self.id}
         for order in self.orders.all():

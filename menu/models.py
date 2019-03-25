@@ -91,16 +91,6 @@ class Food(models.Model):
         return dict
 
 
-# Order( _id , Food_id  ,comment , status)
-class Order(models.Model):
-    food = models.ForeignKey(Food, on_delete=models.CASCADE)
-    comment = models.CharField(default="", max_length=200)
-    status = models.TextField(default=order_states["cooking"])
-
-    def to_dict(self):
-        dict = {"food": self.food.id, "food_name": self.food.name, "food_price": self.food.price,
-                "comment": self.comment, "id": self.id, "status": self.status}
-        return dict
 
 # Archived table order
 class ArchivedTableOrder(models.Model):
@@ -112,7 +102,6 @@ class ArchivedTableOrder(models.Model):
 
 # TableOrder ( _id , orders:MtM(Order),Table_id, time, status)
 class TableOrder(models.Model):
-    orders = models.ManyToManyField(Order)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
     time = models.DateTimeField(default=datetime.now(),auto_now=False, blank=True, null=True)
     status = models.TextField(default=table_order_states["client_created"])
@@ -120,7 +109,7 @@ class TableOrder(models.Model):
 
     def to_cost_date(self):
         total = 0
-        for order in self.orders.all():
+        for order in self.order_set.all():
             total += order.food.price
         dict = [self.time.__str__(),total]
 
@@ -130,10 +119,11 @@ class TableOrder(models.Model):
         returns all information required to save an archived instance of the order
         :return:
         '''
-        dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
+        dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": "archived",
                 "id": self.id,"table_number":self.table.number}
-        for order in self.orders.all():
+        for order in self.order_set.all():
             dict["orders"].append(order.to_dict())
+
         return json.dumps(dict)
     def to_dict(self):
         '''
@@ -142,9 +132,21 @@ class TableOrder(models.Model):
         '''
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
                 "id": self.id}
-        for order in self.orders.all():
+        for order in self.order_set.all():
             dict["orders"].append(order.id)
         return dict
+# Order( _id , Food_id  ,comment , status)
+class Order(models.Model):
+    table_order = models.ForeignKey(TableOrder,on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
+    comment = models.CharField(default="", max_length=200)
+    status = models.TextField(default=order_states["cooking"])
+
+    def to_dict(self):
+        dict = {"food": self.food.id, "food_name": self.food.name, "food_price": self.food.price,
+                "comment": self.comment, "id": self.id, "status": self.status,"table_order":self.table_order.id}
+        return dict
+
 
 # Table( _id  )
 #

@@ -217,9 +217,10 @@ def purge_all_orders_by_days(request):
 
 
 def delete_fake_orders(request):
-    relevant_orders = TableOrder.objects.all().filter(status="fake")
+    relevant_orders = TableOrder.objects.all()
     for order in relevant_orders:
-        order.delete()
+        if order.status not in table_order_states:
+            order.delete()
     return JsonResponse(SUCCESSFUL_RESPONSE)
 
 
@@ -253,10 +254,8 @@ def generate_random_orders(request):
             table_order.save()
             print(table_order.time)
             for j in range(0, random.randrange(2, 10)):
-                order = Order.objects.create(food=random.choice(all_foods))
+                order = Order.objects.create(table_order=table_order,food=random.choice(all_foods))
                 order.save()
-                table_order.orders.add(order)
-            table_order.save()
         return JsonResponse(SUCCESSFUL_RESPONSE)
 
     except Exception as e:

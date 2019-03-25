@@ -279,7 +279,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
     var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
@@ -378,7 +378,7 @@ function add_cardkitchen(table_order_id, table_order_comment, table_order_time, 
     var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
     var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
@@ -476,7 +476,7 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
     var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
@@ -575,7 +575,7 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
     var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
@@ -672,7 +672,7 @@ function add_cardarchive(table_order_id, table_order_comment, table_order_time, 
     var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
     var override_to_archive = create_tag("a", "#", "", "", "", "archive");
 
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "customer_confirmed");
+    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
     override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");

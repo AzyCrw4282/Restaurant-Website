@@ -28,22 +28,22 @@ class LoginRequiredMiddleware:
         # if not request.user.is_authenticated:
         #     if not any(url.match(path) for url in EXEMPT_URLS):
         #         return redirect(settings.LOGIN_URL)
-        print("CURRENT URL: ",path)
-        print("EXEMPT URLS: ",EXEMPT_URLS)
-        print("STAFF URLS: ",STAFF_URLS)
+        # print("CURRENT URL: ",path)
+        # print("EXEMPT URLS: ",EXEMPT_URLS)
+        # print("STAFF URLS: ",STAFF_URLS)
 
         url_is_exempt = any(url.match(path) for url in EXEMPT_URLS)
         url_is_for_staff_only=any(url.match(path) for url in STAFF_URLS)
-        print("THIS IS EXEMPT ONLY URL", url_is_exempt)
-        print("THIS IS AN STAFF URL", url_is_for_staff_only)
+        # print("THIS IS EXEMPT ONLY URL", url_is_exempt)
+        # print("THIS IS AN STAFF URL", url_is_for_staff_only)
 
         if path == reverse('accounts:logout').lstrip('/'):
-            print('logout matched')
+            # print('logout matched')
             logout(request)
         if not(request.user.is_staff) and url_is_for_staff_only:
-            print("STAFF NOT AUTHENTICATED")
+            # print("STAFF NOT AUTHENTICATED")
             return views.menu_redirect(request)
 
         if not(request.user.is_authenticated) and not(url_is_exempt):
-            print("redirect initiated")
+            # print("redirect initiated")
             return views.menu_redirect(request)

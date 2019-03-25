@@ -135,7 +135,7 @@ def delete_unarchived_table_orders(request):
 
 def get_table_order_list(request):
     if request.method == 'GET':
-        print("GETTING TABLE ORDER STATES: ")
+        # print("GETTING TABLE ORDER STATES: ")
         # pass the order item's to the waiter
         table_orders = TableOrder.objects.all().filter(
             status__in=["client_confirmed",
@@ -148,10 +148,10 @@ def get_table_order_list(request):
         data.update({"table_orders": []})
         table_order_list = data["table_orders"]
         for table_order in table_orders:
-            table_order_items = table_order.orders.all()
+            table_order_items = table_order.order_set.all()
             # convert to dict:
             temp_dict = table_order.to_dict()
-            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.orders.all())
+            temp_dict["orders"] = db_objects_to_list_of_dicts(table_order.order_set.all())
             total_price = 0
             for order_item in table_order_items:
                 total_price += order_item.food.price
@@ -216,12 +216,10 @@ def recover_archived_table_order(table_order_id,status_to_recover_to):
             food = Food.objects.get(id=order_data["food"])
             order_status = order_data["status"]
             comment = order_data["comment"]
-            ord_id = data["id"]
+            ord_id = order_data["id"]
             obj = Order.objects.create(food=food, status=order_status, comment=comment,
-                                       id=ord_id)
+                                       id=ord_id,table_order=table_order_restored)
             obj.save()
-            table_order_restored.orders.add(obj)
-            table_order_restored.save()
         print("SUCCESSFUL Restoration of order")
         archived_table_order.delete()
     except Exception as e:

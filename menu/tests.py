@@ -1,12 +1,11 @@
 from selenium import webdriver
 from time import sleep
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+#All tests were performed locally and hence some are hard-coded, please change to fir your own configuration.
+#For test requirements check running_test_cases txt file
 
 #This class will include test for menu interactions by the customer
 class welcome_menu_TestCase(unittest.TestCase):
@@ -29,7 +28,7 @@ class welcome_menu_TestCase(unittest.TestCase):
 		driver.get("http://localhost:8000/menu/")
 		driver.find_element_by_id("table_code").click()
 		driver.find_element_by_id("table_code").clear()
-		driver.find_element_by_id("table_code").send_keys("978")
+		driver.find_element_by_id("table_code").send_keys("978")#Hard coded value, change it to fit your configuration
 
 		#Assertion test to see that appropriate table value was entered to authorise a user
 		self.assertEqual(len(driver.find_element_by_id("table_code").get_attribute("value"))>0,True,"Check table order exists") # 1 & 2
@@ -42,7 +41,7 @@ class welcome_menu_TestCase(unittest.TestCase):
 		sleep(2)
 
 		#This will select and add to order with comments
-		driver.find_element_by_class_name("food_card_button").click()
+		driver.find_element_by_class_name("food_card_button").click()#Hard coded value, change it to fit your configuration
 		driver.find_element_by_id("2comment").click()
 		driver.find_element_by_id("2comment").clear()
 		driver.find_element_by_id("2comment").send_keys("extra Chilli")
@@ -80,25 +79,25 @@ class welcome_menu_TestCase(unittest.TestCase):
 
 		#The test below is an alternative way to perform it mainly using xpath, but was later excluded as it wasn't reliable.
 		"""
-		def test_ordering(self):
-			driver = self.driver
-			driver.get("http://localhost:8000/menu/")
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Login'])[1]/following::div[1]").click()
-			driver.find_element_by_id("table_code").click()
-			driver.find_element_by_id("table_code").clear()
-			driver.find_element_by_id("table_code").send_keys("123")
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Welcome To Oaxaca'])[1]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[1]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[1]/following::button[1]").click()
-			driver.find_element_by_id("4comment").click()
-			driver.find_element_by_id("4comment").clear()
-			driver.find_element_by_id("4comment").send_keys("More creamy")
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[3]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[4]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[5]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[6]/following::button[1]").click()
-			driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[6]/following::button[1]").click()
-			driver.find_element_by_id("submit_order").click()
+		
+		driver = self.driver
+		driver.get("http://localhost:8000/menu/")
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Login'])[1]/following::div[1]").click()
+		driver.find_element_by_id("table_code").click()
+		driver.find_element_by_id("table_code").clear()
+		driver.find_element_by_id("table_code").send_keys("123")
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Welcome To Oaxaca'])[1]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[1]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[1]/following::button[1]").click()
+		driver.find_element_by_id("4comment").click()
+		driver.find_element_by_id("4comment").clear()
+		driver.find_element_by_id("4comment").send_keys("More creamy")
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[3]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[4]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[5]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[6]/following::button[1]").click()
+		driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='delete'])[6]/following::button[1]").click()
+		driver.find_element_by_id("submit_order").click()
 		"""
 
 	# Error handling to see if a given element exists on the page

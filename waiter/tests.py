@@ -1,13 +1,13 @@
 
 from selenium import webdriver
 from time import sleep
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 from selenium.webdriver.common.action_chains import ActionChains
+
+#All tests were performed locally and hence some are hard-coded, please change to fir your own configuration.
+#For test requirements check running_test_cases txt file
 
 
 #Test below will include all waiter interactions
@@ -32,10 +32,10 @@ class WaiterTests(unittest.TestCase):
 		#This will authorise the waiter to login
 		driver.find_element_by_id("id_username").click()
 		driver.find_element_by_id("id_username").clear()
-		driver.find_element_by_id("id_username").send_keys("azky123")
+		driver.find_element_by_id("id_username").send_keys("azky123")#Hard coded value, change it to fit your configuration
 		driver.find_element_by_id("id_password").click()
 		driver.find_element_by_id("id_password").clear()
-		driver.find_element_by_id("id_password").send_keys("azky123")
+		driver.find_element_by_id("id_password").send_keys("azky123")#Hard coded value, change it to fit your configuration
 		driver.find_element_by_xpath(
 			"(.//*[normalize-space(text()) and normalize-space(.)='Welcome'])[1]/following::form[1]").click()
 		driver.find_element_by_xpath(
@@ -47,10 +47,10 @@ class WaiterTests(unittest.TestCase):
 		driver.find_element_by_id("table_id").click()
 		driver.find_element_by_id("table_id").click()
 		driver.find_element_by_id("table_id").clear()
-		driver.find_element_by_id("table_id").send_keys("123")
+		driver.find_element_by_id("table_id").send_keys("123")#Hard coded value, change it to fit your configuration
 		driver.find_element_by_id("table_number").click()
 		driver.find_element_by_id("table_number").clear()
-		driver.find_element_by_id("table_number").send_keys("123")
+		driver.find_element_by_id("table_number").send_keys("123")#Hard coded value, change it to fit your configuration
 		driver.find_element_by_xpath(
 			"(.//*[normalize-space(text()) and normalize-space(.)='Add Information'])[1]/following::button[1]").click()
 		sleep(5)
@@ -60,7 +60,7 @@ class WaiterTests(unittest.TestCase):
 		driver.find_element_by_id("tab_link_client_confirmed").click()
 		sleep(2)
 		#river.find_element_by_link_text("Table: 123").click()
-		driver.find_element_by_partial_link_text("Table: 123").click()
+		driver.find_element_by_partial_link_text("Table: 123").click()#Hard coded value, change it to fit your configuration
 		sleep(2)
 
 		#This will hover over the button to show the availbale options

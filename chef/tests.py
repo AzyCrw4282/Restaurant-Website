@@ -1,12 +1,12 @@
-
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
+
+#All tests were performed locally and hence some are hard-coded, please change to fir your own configuration.
+#For test requirements check running_test_cases txt file
+
 
 #Test below will cover msot chef interactions
 class ChefNewOne(unittest.TestCase):
@@ -29,10 +29,10 @@ class ChefNewOne(unittest.TestCase):
 
         driver.find_element_by_id("id_username").click()
         driver.find_element_by_id("id_username").clear()
-        driver.find_element_by_id("id_username").send_keys("azky123")
+        driver.find_element_by_id("id_username").send_keys("azky123")#Hard coded value, change it to fit your configuration
         driver.find_element_by_id("id_password").click()
         driver.find_element_by_id("id_password").clear()
-        driver.find_element_by_id("id_password").send_keys("azky123")
+        driver.find_element_by_id("id_password").send_keys("azky123")#Hard coded value, change it to fit your configuration
         driver.find_element_by_xpath(
             "(.//*[normalize-space(text()) and normalize-space(.)='Welcome'])[1]/following::form[1]").click()
         driver.find_element_by_xpath(

@@ -1,3 +1,8 @@
+/**
+ * When user clicks on the different tabs, it will take the user to that specific section
+ * in the menu.
+ *
+ */
 function banner() {
     $(document).ready(function () {
 
@@ -7,6 +12,8 @@ function banner() {
             if (this.hash !== "") {
                 event.preventDefault();
                 var hashlocation = this.hash;
+
+                //will scroll to the specific location stored in the hashlocation.
 
                 $('html, body').animate({
                     scrollTop: $(hashlocation).offset().top - heightofbanner

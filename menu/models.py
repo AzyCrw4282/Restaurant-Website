@@ -116,8 +116,11 @@ class TableOrder(models.Model):
         returns all information required to save an archived instance of the order
         :return:
         '''
+        waiter_username="none"
+        if (self.waiter != None):
+            waiter_username = self.waiter.waiter.username
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": "archived",
-                "id": self.id, "table_number": self.table.number, "waiter": self.waiter.waiter.username}
+                "id": self.id, "table_number": self.table.number, "waiter": waiter_username}
         for order in self.order_set.all():
             dict["orders"].append(order.to_dict())
 
@@ -128,8 +131,12 @@ class TableOrder(models.Model):
         returns all the information on this model in a dictionary format.
         :return:
         '''
+        waiter_username="none"
+
+        if(self.waiter !=None):
+            waiter_username=self.waiter.waiter.username
         dict = {"orders": [], "table": self.table.id, "time": self.time.__str__(), "status": self.status,
-                "id": self.id, "waiter": self.waiter.waiter.username}
+                "id": self.id, "waiter": waiter_username}
         for order in self.order_set.all():
             dict["orders"].append(order.id)
         return dict

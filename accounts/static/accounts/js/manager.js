@@ -241,7 +241,7 @@ function create_data_sets() {
         total_sum += sum
     }
 
-    var average_per_tick = sum / increments;
+    var average_per_tick = total_sum / increments;
     var av = chart.querySelector('output[name="average"]');
     var tot = chart.querySelector('output[name="total"]');
     av.value = "Average-per-tick: " + average_per_tick.toString();

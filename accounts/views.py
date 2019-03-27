@@ -136,20 +136,36 @@ def randomString(stringLength):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
 
-def add_user_to_waiter_group(user):
-    pass
-def add_user_to_chef_group(user):
-    pass
-def add_user_to_group(user,group):
+def add_waiter_relation(user):
+    waiter=Waiter(waiter=user)
+    waiter.save()
+    for table in Table.objects.all():
+        waiter.tables.add(table)
+    waiter.save()
+
+def add_user_to_group(user,group_name):
     '''
     adds a user to an existing group
     :param user:
-    :param group:
+    :param group_name:
     :return:
     '''
-
-
-
+    group=Group.objects.get_or_create(name=group_name)
+    group.user_set.add(user)
+    if group_name=="waiter":
+        add_waiter_relation(user)
+def add_to_group(request):
+    '''
+    adds a user to a group
+    :param request:
+    :return: 
+    '''
+def remove_from_group(request):
+    '''
+    removes a user from a group
+    :param request:
+    :return:
+    '''
 def create_account(request):
     '''
     auto create an account with relevant provided details,
@@ -166,22 +182,11 @@ def create_account(request):
             password = randomString(6)
             # this is so the user does not need to create groups manually or go through permissions,
             # it is a quick hack as the strucuture is simple
-            if group_name == "waiter" or group_name == "chef":
-                try:
-                    group = Group.objects.get(name=group_name)
-                except:
-                    if group_name == "waiter":
-                        check_if_exists_waiter_group()
-                    else:
-                        create_chef_group()
-            group = Group.objects.get(name=group_name)
-
             new_user = User.objects.create(username=user_name, email=email)
             new_user.set_password(password)
             new_user.is_staff = False
             new_user.save()
-            group.user_set.add(new_user)
-            group.save()
+            add_user_to_group(new_user,group_name)
             send_mail('Oaxaca Registration Details',
                       "Please follow the privided link with username and password to log in: Link: " + "http://project-oaxaca.herokuapp.com" + reverse(
                           "accounts:login") + "Username: " + user_name + " Password: " + password,

@@ -63,7 +63,7 @@
 
     </form>
     <script>
-        load_data({{ table_orders |safe }}, {{ table_list |safe }})
+        load_data({{ table_orders |safe }}, {{ table_list |safe }},{{ user_tables|safe }})
     </script>
 
 {% endblock %}

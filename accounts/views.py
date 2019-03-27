@@ -295,7 +295,7 @@ def random_date(start, end):
 
 def generate_random_orders(request):
     '''
-    generates 5000 random orders into archive between two dates
+    generates 500 random orders into archive within the last two days
     :param request:
     :return:
     '''

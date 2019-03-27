@@ -60,6 +60,12 @@ def main_page(request):
 
 # Need to distinguish between removing single order and cancelling whole table order
 def get_order_states(request):
+    '''
+    returns a list of order states where the status is cooking or cooked
+    in the relevant format.
+    :param request:
+    :return:
+    '''
     if request.method == 'GET':
         response_dict = {}
         # SENDING ALL THE ORDERS TO THE CHEFS
@@ -77,6 +83,12 @@ def get_order_states(request):
 
 
 def get_table_order_states(request):
+    '''
+    returns a list of table order states where the status is waiter confirmed (chef specific)
+    in the relevant format.
+    :param request:
+    :return: JsonResponse
+    '''
     if request.method == 'GET':
         response_list = []
         # SENDING ALL THE ORDERS TO THE CHEFS
@@ -92,6 +104,11 @@ def get_table_order_states(request):
 
 
 def change_order_state(request):
+    '''
+    Changes the state of an order to the requested status (from the chef)
+    :param request: order_id
+    :return:
+    '''
     if request.method == 'POST':
         print("changing state of order")
         try:
@@ -104,6 +121,11 @@ def change_order_state(request):
 
 
 def change_table_order_state(request):
+    '''
+    Changes the state of a Table order to the requested state (from the chef)
+    :param request: table_order_id
+    :return:
+    '''
     if request.method == 'POST':
         print("changing state of table order")
         try:

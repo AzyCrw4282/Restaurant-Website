@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from . import views
 from TeamProject2019_01.views import menu_redirect
 from waiter import views as waiter_views
-from . import db_insert
 
 app_name = 'menu'
 urlpatterns = [

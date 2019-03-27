@@ -13,6 +13,7 @@
  .main {
      margin-top:2em;
  }
+
  .card {
      display: inline-block;
      padding-top: 50px;
@@ -55,22 +56,12 @@
      height:60%;
      width:85%;
      position: relative;
+     overflow:hidden;
+     overflow-y:scroll;
  }
 
  li {
-
      font-size:40px;
- }
-
- ul {
-
-     font-family:Raelway;
-     list-style-type: none;
- }
-
- nav ul{
-     overflow:hidden;
-     overflow-y:scroll;
  }
 
  button.cancel {
@@ -121,8 +112,6 @@ button.done{
 
  }
 
-
-
 h4 {
     font-size: 20px;
     font-family: Arial;
@@ -137,8 +126,10 @@ h4 {
 
 /* Remove margins and padding from the list */
 ul {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family:Raelway;
+    list-style-type: none;
 }
 
 /* Style the list items */
@@ -189,28 +180,7 @@ ul li.checked::before {
   width: 7px;
 }
 
-/* Style the close button */
-.close {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 12px 16px 12px 16px;
-}
-
-.close:hover {
-  background-color: #f44336;
-  color: white;
-}
 
 
 
-/* Clear floats after the header */
-.header:after {
-  content: "";
-  display: table;
-  clear: both;
-}
 
-.addBtn:hover {
-  background-color: #bbb;
-}

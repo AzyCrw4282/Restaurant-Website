@@ -50,23 +50,24 @@ function load_data(data) {
         food_info_dict[id] = info_dict; //each food information should have a respective id.
     }
 
-    add_filter_options(food_info_dict);
+    add_filter_options(food_info_dict); //should be a filter option for each information.
 
     load_food_cards_into_sections(foods, food_categories, food_info_dict); //each section will be made up of food category and its food and the foods information.
 }
 
 /**
- *
- * @param food_info_dict
+ *This method makes a checkbox for each food information,allows filter to occur.
+ * @param food_info_dict this is all the different types of information.
  */
 
 
 function add_filter_options(food_info_dict) {
     var select = document.getElementById("drop_down_filter");
+
+    //iterates over all the information for each food and creates a dropdown check box for it.
     for (var i in food_info_dict) {
         var cat_dict = food_info_dict[i];
         var name = cat_dict["name"];
-        // console.log(name);
         var option = document.createElement("a");
 
         var checkbox = document.createElement("input");
@@ -85,8 +86,8 @@ function add_filter_options(food_info_dict) {
 }
 
 /**
- *
- * @param checkbox
+ * This function checks whether or not the checkbox is checked.
+ * @param checkbox represents the actual checkbox.
  * @returns {Function}
  */
 
@@ -102,7 +103,7 @@ function click_checkbox(checkbox) {
 }
 
 /**
- *
+ *Applys the changes when the checkbox is clicked it will display all the food items with those food information.
  * @param checkbox
  * @returns {Function}
  */
@@ -293,7 +294,7 @@ function add_card(card, info_dict) {
 
 /**
  * When the mouse hovers over the allergy buttons,it changes the display of the popup to block.
- * @param allergy_name this is for each 
+ * @param allergy_name this is for each button
  * @param id
  * @returns {Function}
  */
@@ -304,12 +305,25 @@ function allergy_popup_display_on(allergy_name, id) {
     }
 }
 
+/**
+ * when the mouse is not hovering over the allergy buttons it will change the display of the popup to none.
+ * @param allergy_name for each button
+ * @param id each different food information id will display different information
+ * @returns {Function}
+ */
+
 function allergy_popup_display_off(allergy_name, id) {
     return function () {
         var x = document.getElementById("content_popup" + allergy_name + id);
         x.style.display = "none";
     }
 }
+
+/**
+ *When the mouse is hovering over the i it will display the popup.
+ * @param id this represents how every food card will have a different information.
+ * @returns {Function}
+ */
 
 function desc_popup_display_on(id) {
     return function () {
@@ -318,6 +332,12 @@ function desc_popup_display_on(id) {
     }
 }
 
+/**
+ *When the mouse is hovering over the i it will display the popup.
+ * @param id this represents how every food card will have a different information.
+ * @returns {Function}
+ */
+
 function desc_popup_display_off(id) {
     return function () {
         var x = document.getElementById("desc_popup" + id);
@@ -325,26 +345,32 @@ function desc_popup_display_off(id) {
     }
 }
 
+// /**
+//  *
+//  * @param id
+//  * @returns {Function}
+//  */
+// function desc_popup(id) {
+//     return function () {
+//         var x = document.getElementById("desc_popup" + id);
+//         var desc_button = document.getElementById("desc_button" + id);
+//         var span = document.getElementById("desc_close_button" + id);
+//
+//         x.style.display = "block";
+//         span.onclick = function () {
+//             x.style.display = "none";
+//         }
+//
+//     }
+//
+// }
 
-function desc_popup(id) {
-    return function () {
-        var x = document.getElementById("desc_popup" + id);
-        var desc_button = document.getElementById("desc_button" + id);
-        var span = document.getElementById("desc_close_button" + id);
-
-        x.style.display = "block";
-        span.onclick = function () {
-            x.style.display = "none";
-        }
-
-    }
-
-}
+/**
+ *This function for each food table displays there total order, as well as their status of the order.
+ * @param data represents the tables order information.
+ */
 
 function populate_popup(data) {
-    //  let list = document.createElement("ul");
-    // list.className = "card";
-    // list.innerHTML = "<li>" + foodname + "</li>";
     var table_order = data["table_order"];
     var basket_item_container = document.getElementById("basket_item_container");
     while (basket_item_container.firstChild) {
@@ -358,17 +384,15 @@ function populate_popup(data) {
         var basket_item_p = document.createElement("p");
 
         var order = order_list[order_id];
-        // console.log(order);
+
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
 
         var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"] + ": " + order["comment"]);
         var li_price = create_tag("span", "", "", "basket_item_price", "", "" + order["food_price"]);
-        // var li_comment = create_tag("li", "", "", "", "", "" + order["comment"]);
         delete_button.onclick = delete_food_from_order(order["id"]);
         basket_item_p.appendChild(delete_button);
         basket_item_p.appendChild(li_name);
         basket_item_p.appendChild(li_price);
-        // basket_item_div.appendChild(delete_button);
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
@@ -402,10 +426,10 @@ function add_section_for_each_food_category(categories) {
 }
 
 /**
- *
- * @param food_list
- * @param food_categories
- * @param food_info_dict
+ *This function puts the cards in the correct category depending on the dictionaries.
+ * @param food_list represents all the food items.
+ * @param food_categories all the different types a food can be.
+ * @param food_info_dict for each food item it also has information.
  */
 
 function load_food_cards_into_sections(food_list, food_categories, food_info_dict) {
@@ -430,7 +454,8 @@ function load_food_cards_into_sections(food_list, food_categories, food_info_dic
 }
 
 /**
- *
+ *This function is for when the customer clicks on the different button it will show more
+ * information.
  */
 
 

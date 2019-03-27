@@ -23,7 +23,7 @@ function load_data(data) {
     }
     add_filter_options(food_info_dict);
     load_food_cards_into_sections(foods, food_categories, food_info_dict);
-     setInterval(function () {
+    setInterval(function () {
         update_menu_popup_data();
     }, 30000);
 }
@@ -110,6 +110,13 @@ function update_filter(checkbox) {
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
     var div = document.getElementById("links_wrapper");
+    var a = document.createElement("a");
+    a.style = "text-decoration:none;";
+    a.innerHTML += "BASKET";
+    a.href = "#basket";
+    a.id = "basket";
+    a.onclick = hide_order_popup();
+    div.appendChild(a);
     for (var i in categories) {
         var cat = categories[i];
         var cat_name = cat["name"];
@@ -121,14 +128,45 @@ function load_tab_shortcut_buttons(categories) {
         a.innerHTML += cat_name.toUpperCase();
         div.appendChild(a);
     }
-    // var a = document.createElement("a");
-    // a.style = "text-decoration:none;";
-    // a.innerHTML += "BASKET";
-    // a.href = "#basket";
-    // a.id = "basket";
-    div.appendChild(a);
+
+
 }
 
+function hide_order_popup_html() {
+    var basket = document.getElementById("order_popup");
+    console.log(basket.style.display);
+    console.log(basket);
+    if (basket.style.display) {
+        console.log("yes")
+    } else {
+        basket.style.display = "block"
+    }
+    if (basket.style.display == "block") {
+        basket.style.display = "none"
+    } else {
+        basket.style.display = "block";
+    }
+}
+
+
+function hide_order_popup() {
+    return function () {
+        var basket = document.getElementById("order_popup");
+        console.log(basket.style.display);
+        console.log(basket);
+        if (basket.style.display) {
+            console.log("yes")
+        } else {
+            basket.style.display = "block"
+        }
+        if (basket.style.display == "block") {
+            basket.style.display = "none"
+        } else {
+            basket.style.display = "block";
+        }
+    }
+
+}
 
 function add_card(card, info_dict) {
     // console.log("LOADING CARD");
@@ -337,10 +375,10 @@ function populate_popup(data) {
     var total_tag = document.getElementById("order_total");
     total_tag.innerText = "Total: " + total_price;
     var button = document.getElementById("submit_order");
-    if(order_submitted=="client_created"){
-            button.innerText = "Submit";
-    }else{
-        button.innerText="Thank you";
+    if (order_submitted == "client_created") {
+        button.innerText = "Submit";
+    } else {
+        button.innerText = "Thank you";
     }
 
 }

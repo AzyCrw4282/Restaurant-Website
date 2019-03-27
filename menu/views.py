@@ -36,16 +36,18 @@ def db_objects_to_list_of_dicts(objects):
 
 # ======= NORMAL HTTP REQUESTS: =======================
 def welcome_page(request):
-    tables = Table.objects.all()
-
+    '''
+    serves the welcome page
+    :param request:
+    :return:
+    '''
     return render(
         request, 'menu/templates/welcome_page.html', context={})
 
 
 def menu_unsafe(request, table_id):
     """
-    if table id is valid redirect user to menu safe with new order id
-    otherwise redirect the user to the welcome page.
+    determines if the table id provide is relevant by creating a new table order with it.
     :param request:
     :return: menu.html with data (rendered)
     """

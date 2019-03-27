@@ -57,6 +57,9 @@
                         <option value="stacked">stacked</option>
                         <option value="normal">normal</option>
                     </select>
+                    <select onchange="create_data_sets()" name="waiter_list" multiple>
+
+                    </select>
                     get most recent data:
                     <button onclick="update_profit_time_chart()">Refresh</button>
                     Generate 1000 fake orders (removable)
@@ -108,7 +111,7 @@
 
         </div>
         <script type="text/javascript">
-            load_user_table({{ user_list| safe }},{{ group_list| safe }});
+            load_user_table({{ user_list| safe }}, {{ group_list| safe }});
         </script>
         <div id="database_management" class="database_management">
             Delete orders older than number of days:

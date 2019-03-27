@@ -163,6 +163,7 @@ function update_profit_time_chart_data(data) {
     for (var i = 0; i < data.length; i += 1) {
         var dict = data[i];
         var waiter_username = dict["waiter"];
+
         var time = dict["time"];
         var total = dict["total"];
         if (waiter_username in profit_time_chart_data) {
@@ -170,6 +171,20 @@ function update_profit_time_chart_data(data) {
         } else {
             profit_time_chart_data[waiter_username] = [{"time": time, "total": total}];
         }
+    }
+
+    var chart = document.getElementById("profit_time_chart");
+    var option_list = chart.querySelector('select[name="waiter_list"]');
+    console.log(option_list);
+    while (option_list.firstChild) {
+        option_list.removeChild(option_list.firstChild);
+    }
+    for (var i in profit_time_chart_data) {
+        var waiter_option = document.createElement("option");
+        waiter_option.innerText = i;
+        waiter_option.value = i;
+        waiter_option.selected=true;
+        option_list.appendChild(waiter_option);
     }
 
     console.log();
@@ -184,29 +199,30 @@ function create_data_sets() {
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
     var base_date = chart.querySelector('input[name="start_date"]').value;
-    var waiters = ["octavio_1", "octavio_2", "ugne"];
+    var waiters = [];
+    var waiter_selected_list = chart.querySelector('select[name="waiter_list"]');
+    var children = waiter_selected_list.children;
+    for (var i = 0; i < children.length; i += 1) {
+        if (children[i].selected) {
+            waiters.push(children[i].value);
+        }
+    }
     var style = chart.querySelector('select[name="display_style"]').value;
 
-    console.log("DATE_");
-    console.log(base_date);
     if (!base_date) {
-        console.log("success");
         base_date = Date.now();
     }
     base_date = new Date(base_date);
     //double check variables to prevent issues.
     if (!(increments > 0 && time_spread > 0)) {
-        console.log("INFINITE LOOP PREVENTION");
         return;
     }
 
     // split the data into the list for each increment until all data has been processed:
     // get the list of usernames
     var data_sets = [];
-    console.log("GETTING DATE LIST");
     var date_list = get_date_list(increments, base_date, time_step, time_spread);
     date_list.reverse();
-    console.log(date_list);
     for (var i = 0; i < waiters.length; i += 1) {
         var waiter_username = waiters[i];
         if (waiter_username in profit_time_chart_data) {
@@ -232,7 +248,7 @@ function create_data_sets() {
     tot.value = "Sum: " + total_sum.toString();
     //type, data_set_list,labels, period, period_multiple
     var labels = format_date_list(date_list);
-    show_chart(graph_type,style, data_sets, labels, time_step, time_spread)
+    show_chart(graph_type, style, data_sets, labels, time_step, time_spread)
 }
 
 function format_date_list(date_list) {
@@ -312,7 +328,7 @@ function create_dataset(data, date_list, label) {
 }
 
 
-function show_chart(type,style, data_set_list, labels, period, period_multiple) {
+function show_chart(type, style, data_set_list, labels, period, period_multiple) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
     if (profit_price_chart != null) {
@@ -341,9 +357,9 @@ function show_chart(type,style, data_set_list, labels, period, period_multiple) 
             }]
         }
     };
-    if(style=="stacked"){
-        chart_options.scales.xAxes[0]["stacked"]=true;
-        chart_options.scales.yAxes[0]["stacked"]=true;
+    if (style == "stacked") {
+        chart_options.scales.xAxes[0]["stacked"] = true;
+        chart_options.scales.yAxes[0]["stacked"] = true;
     }
     profit_price_chart = new Chart(ctx, {
         type: type,

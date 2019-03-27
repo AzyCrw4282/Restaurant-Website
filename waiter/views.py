@@ -49,7 +49,6 @@ def main_page(request):
         for table in request.user.waiter.tables.all():
             user_tables.update({table.id:table.number})
         data.update({"user_tables":user_tables})
-        print("printing data", data)
         return render(request, "waiter/templates/Waiterver2.html", data)
     except:
         print("User does not have the waiter relation:")

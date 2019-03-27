@@ -1,13 +1,8 @@
 # THIS IS A PYTHON FILE FOR HANDELING GENERAL REQUESTS FROM URL'S
 
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
-from django.shortcuts import reverse, redirect, get_object_or_404
-import os, hashlib
-from django.core.files import File
 from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
-
 from datetime import datetime
 from django.http import JsonResponse
 import json
@@ -42,8 +37,7 @@ def db_objects_to_list_of_dicts(objects):
 # ======= NORMAL HTTP REQUESTS: =======================
 def welcome_page(request):
     tables = Table.objects.all()
-    for table in tables:
-        print("AVAILABLE TABLES:", table.id, ": ", table.number)
+
     return render(
         request, 'menu/templates/welcome_page.html', context={})
 
@@ -55,9 +49,7 @@ def menu_unsafe(request, table_id):
     :param request:
     :return: menu.html with data (rendered)
     """
-    if request.method == 'POST':
-        print("TABLE ID: ", table_id)
-    print("TABLE ID: ", table_id)
+
     # checking authenticity of the table code by creating a table order with the table foreign key table_id
     try:
         table_order = TableOrder.objects.create(
@@ -77,15 +69,12 @@ def menu_safe(request, table_order_id):
     :return: menu.html with data (rendered)
     """
 
-    if request.method == 'POST':
-        print("TABLE ID: ", table_order_id)
-    print("TABLE ID: ", table_order_id)
+
     try:
         TableOrder.objects.get(id=table_order_id)
     except:
         return HttpResponseRedirect("/menu/")
 
-    print("called menu")
     response_dict = {
         "food_list": db_objects_to_list_of_dicts(Food.objects.all()),
         "category_list": db_objects_to_list_of_dicts(FoodCategory.objects.all()),
@@ -95,6 +84,7 @@ def menu_safe(request, table_order_id):
     context = {"category_list": response_json}
     return render(
         request, 'menu/templates/menu.html', context)
+
 
 
 def get_menu_popup_data(request, table_order_id):
@@ -117,15 +107,12 @@ def get_menu_popup_data(request, table_order_id):
         # replace the order items (id's to the object dictionaries)
         temp = response_dict["table_order"]
         temp["orders"] = db_objects_to_list_of_dicts(table_order_items)
-        print(temp["orders"])
         # calc total price
         total_price = 0
         for order_item in table_order_items:
-            print(order_item)
             total_price += order_item.food.price
         response_dict["table_order"].update({'total_price': total_price})
 
-        print(response_dict)
         response = {
             'success': True,
             'message': json.dumps(response_dict)  # Dumps data and creates a string
@@ -154,7 +141,6 @@ def submit_order(request, table_order_id):
             table_order.status = table_order_states["client_confirmed"]
             table_order.time = datetime.now()
             table_order.save()
-            print("SUCCESSFUL redirecting...")
             #     UPDATE THE WAITER HERE?
         return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 
@@ -186,7 +172,7 @@ def add_food_to_order(request, table_order_id):
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
-                    comment=request.POST['comment'],table_order=table_order
+                    comment=request.POST['comment'], table_order=table_order
                 )
                 response = SUCCESSFUL_RESPONSE
             else:
@@ -238,4 +224,3 @@ def delete_table_order(request, table_order_id):
             table_order.delete()
         except:
             print("System failed to delete")
-

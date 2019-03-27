@@ -1,18 +1,3 @@
-// Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-// categories={
-//      "mains": [
-//             {"name": "Tacos with cereal", "price": "£5"},
-//             {"name": "Tacos", "price": "£2"},
-//             {"name": "Tacos with toast", "price": "£3"}],
-//      }
-// the schema is:
-// # FoodCategory( _id, name)
-//#  Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-//
-// sorting is probably faster server side, so we will expect
-// this is an function gets the context passed to the html and checks
-//it's relevance and readability
-
 // SECTION STRUCTURE OF THIS FILE:
 // ACCESS POINT (LOADING DATA FROM HTML)
 // CREATING HTML ELEMENTS FOR THE PAGE
@@ -37,10 +22,10 @@ function load_data(data) {
         food_info_dict[id] = info_dict;
     }
     add_filter_options(food_info_dict);
-
     load_food_cards_into_sections(foods, food_categories, food_info_dict);
-
-
+     setInterval(function () {
+        update_menu_popup_data();
+    }, 30000);
 }
 
 
@@ -234,9 +219,6 @@ function add_card(card, info_dict) {
     }
 
 
-
-
-
     desc_button.onmouseover = desc_popup_display_on(id);
     desc_button.onmouseleave = desc_popup_display_off(id);
 
@@ -245,12 +227,10 @@ function add_card(card, info_dict) {
     var info_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
 
 
-    var info_3 = create_tag("h2", "", "", "", "", ""+food_name);
+    var info_3 = create_tag("h2", "", "", "", "", "" + food_name);
     var info_4 = create_tag("div", "", "", "food_desc_content_body", "", "");
     var info_5 = create_tag("p", "", "", "", "", "" + desc);
     var info_6 = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
-
-
 
 
     div_2.appendChild(info_1);
@@ -315,10 +295,12 @@ function desc_popup(id) {
 
 }
 
+
 function populate_popup(data) {
     //  let list = document.createElement("ul");
     // list.className = "card";
     // list.innerHTML = "<li>" + foodname + "</li>";
+
     var table_order = data["table_order"];
     var basket_item_container = document.getElementById("basket_item_container");
     while (basket_item_container.firstChild) {
@@ -327,11 +309,18 @@ function populate_popup(data) {
     var order_submitted = table_order["status"];
     var order_list = table_order["orders"];
     var total_price = table_order["total_price"];
-
-    for (var order_id in order_list) {//For each order create it in the popup list
+    console.log(order_list);
+    for (var i in order_list) {//For each order create it in the popup list
         var basket_item_p = document.createElement("p");
 
-        var order = order_list[order_id];
+
+        var order = order_list[i];
+        console.log(order["status"]);
+        if (order["status"] == "cooking") {
+            basket_item_p.style.backgroundColor = "#ffb7b7"
+        } else {
+            basket_item_p.style.backgroundColor = "#ccffcc"
+        }
         // console.log(order);
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
 
@@ -348,7 +337,11 @@ function populate_popup(data) {
     var total_tag = document.getElementById("order_total");
     total_tag.innerText = "Total: " + total_price;
     var button = document.getElementById("submit_order");
-    button.innerText = "Submit Order (status: " + order_submitted + ")";
+    if(order_submitted=="client_created"){
+            button.innerText = "Submit";
+    }else{
+        button.innerText="Thank you";
+    }
 
 }
 

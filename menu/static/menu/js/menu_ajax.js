@@ -1,8 +1,6 @@
 //======== AJAX REQUESTS ================================
 function delete_food_from_menu(id) {
-
     return function () {
-
         $.ajax({
             //Post request made here
             type: "post",
@@ -12,9 +10,9 @@ function delete_food_from_menu(id) {
                 "food_id": id
             }
         })
-
     }
 }
+
 
 
 function delete_food_from_order(order_id) {

@@ -41,7 +41,6 @@ def main_page(request):
     data.update({"table_orders": []})
     table_order_list = data["table_orders"]
     for table_order in table_orders:
-        print("STATUS", table_order.status)
         if table_order.status == table_order_states["waiter_confirmed"]:
             table_order_items = table_order.order_set.all()
             # convert to dict:
@@ -55,7 +54,6 @@ def main_page(request):
             # replace the order items (id's to the object dictionaries)
             # calc total price
 
-    print("printing data", data)
 
     return render(request, "chef/templates/KitchenView.html", {"table_orders": data})
 
@@ -85,7 +83,6 @@ def get_table_order_states(request):
         relevant_orders = TableOrder.objects.filter(status="waiter_confirmed")
         for table_order in relevant_orders.all():
             response_list.append(table_order.id)
-        print(response_list)
         response = {
             'success': True,
             'message': json.dumps(response_list)  # Dumps data and creates a string

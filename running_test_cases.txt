@@ -1,14 +1,12 @@
-THE BELLOW IS NOT ADEQUATE.
-Plese create a script to run the test cases,
-Ensure it runs on linux.
-
 Please perform the following steps to run the tests on your system.
 
-*** Please delete the empty __init.py__ in the root directory as it causes error during run-time
+1) Run the script file 'run_test_cases.sh'
 
-Give createDB access to your user( in our case team1user). This can be performed via pgadmin or psql
+2) Give createDB access to your user( in our case team1user). This can be performed via pgadmin or psql
 
-Run python manage.py runserver And then in a differ shell run the tests via python manage.py test. This will automate the test and show it running.
+3) Download a suitable driver from here - > https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+4) Run python manage.py runserver and then in a different shell run the tests via python manage.py test. This will automate the test and show it running.
 The current code is configured to work with chrome and you may modify the code to work with any other browsers.
 
-***if you get the  chromedriver missing error then please refer to this link ***https://stackoverflow.com/a/40208762/6505847
+***if you get the chrome driver missing error then please refer to this link *** https://stackoverflow.com/a/40208762/6505847

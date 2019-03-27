@@ -21,9 +21,11 @@ $(document).scroll(function() {
    if($(window).scrollTop() === 0) {
      $(".banner").show();
      $(".tabs_header").css('top', "100px");
+     $(".order_popup").css('top',"175px");
    }else if( !($(window).scrollTop() === 0)) {
        $(".banner").hide();
        $(".tabs_header").css('top', "0px");
+       $(".order_popup").css('top',"75px");
    }
 });
 

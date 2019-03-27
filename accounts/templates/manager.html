@@ -104,7 +104,7 @@
 
         </div>
         <script type="text/javascript">
-            load_user_table({{ user_list| safe }});
+            load_user_table({{ user_list| safe }},{{ group_list| safe }});
         </script>
         <div id="database_management" class="database_management">
             Delete orders older than number of days:

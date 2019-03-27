@@ -28,10 +28,45 @@
     background-color: #ccc;
 }
 
-/* Style the tab content */
+/* Style th e tab content */
 .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
 }
+.table_filter_content {
+  display:none;
+  position: absolute;
+  background-color: #C00000;
+  width:100%;
+  overflow: auto;
+  top:100%;
+  z-index: 2;
+  color:white;
+  padding-left: 8px;
+  padding-right: 8px;
+
+}
+.table_filter_content input {
+  float:right;
+}
+.table_filter_content a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  display: block;
+}
+.table_filter_content:hover {
+  background-color: #FF0000;
+}
+.table_filter_dropdown {
+  position: absolute;
+  display: inline-block;
+}
+.table_filter_dropdown:hover .table_filter_content {
+  display:block;
+
+}
+
+

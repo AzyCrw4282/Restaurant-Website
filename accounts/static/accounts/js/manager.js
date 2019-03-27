@@ -28,8 +28,8 @@ function banner() {
 }
 
 function delete_old_table_orders() {
-    var container= document.getElementById("database_management");
-    var num_days= container.querySelector('input[name="delete_archived_days"]').value;
+    var container = document.getElementById("database_management");
+    var num_days = container.querySelector('input[name="delete_archived_days"]').value;
     $.ajax({
         //Post request made here
         type: "post",
@@ -338,10 +338,10 @@ function delete_account_from_page(id) {
     document.getElementById("user_" + id).style.display = "none";
 }
 
-function add_account_to_page(user) {
+function add_account_to_page(user, all_groups) {
     /**
      * function adds row to html accounts table
-     * @param user={"id":id, "username":username, "email":email, "group_name":group_name,}
+     * @param user={"id":id, "username":username, "email":email, "group_list":[name_1,name_2,name_3],}
      * @type {HTMLElement}
      */
     var accounts_container = document.getElementById("accounts_container");
@@ -363,19 +363,113 @@ function add_account_to_page(user) {
     var email = document.createElement("div");
     email.innerText = user["email"];
     email.className = "user_manage_container_row_email";
-    var group_name = document.createElement("div");
-    group_name.innerText = user["group_name"];
-    group_name.className = "user_manage_container_row_group";
+    // insert the group select here
+    //<div class="group_list_content">
+    //             <button class="table_filter_button" id="table_filter_button">Select Tables</button>
+    //             <div class="group_list_dropdown" id="table_filter_content">
+    //             </div>
+    // </div>
+
+    var group_list_dropdown = document.createElement("div");
+    group_list_dropdown.className = "group_list_dropdown";
+    group_list_dropdown.innerText = "Groups";
+    console.log(user);
+    console.log("ALL GROUPS: ");
+    console.log(all_groups);
+    for (var i in all_groups) {
+        var group_list_content = document.createElement("div");
+        group_list_content.className = "group_list_content";
+        var group_name = all_groups[i];
+        console.log(group_name);
+        var group_option = document.createElement("a");
+        var group_checkbox = document.createElement("input");
+        group_checkbox.setAttribute("type", "checkbox");
+        group_checkbox.id = "checkbox_" + group_name;
+        group_checkbox.checked = false;
+        console.log(user["group_list"]);
+        console.log(group_name);
+        if (user["group_list"].indexOf(group_name)>=0) {
+            console.log("HORRAY");
+            group_checkbox.checked = true;
+        }
+        group_option.innerText = group_name;
+        //click the checkbox twice to counter act.
+        group_checkbox.onclick = click_checkbox(group_checkbox);
+        group_option.appendChild(group_checkbox);
+        //actually control the selection of the checkbox
+        group_option.onclick = update_user_group(group_checkbox, group_name, username.innerText);
+        group_list_content.appendChild(group_option);
+        group_list_dropdown.appendChild(group_list_content);
+
+    }
 
     delete_btn.onclick = delete_account(user["id"]);
-
     delete_btn_cell.appendChild(delete_btn);
     row.appendChild(delete_btn_cell);
     row.appendChild(id);
     row.appendChild(username);
     row.appendChild(email);
-    row.appendChild(group_name);
+    row.appendChild(group_list_dropdown);
     user_table.appendChild(row)
+}
+
+function remove_user_from_group(group_name, user_name) {
+    $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'remove_from_group/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "user_name": user_name,
+            "group_name": group_name
+        },
+        success: function (data) {
+            console.log(data);
+
+        },
+    });
+}
+
+function add_user_to_group(group_name, user_name) {
+    $.ajax({
+        //Post request made here
+        type: "post",
+        url: 'add_to_group/',
+        data: {
+            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "user_name": user_name,
+            "group_name": group_name
+        },
+        success: function (data) {
+            console.log(data);
+        },
+    });
+}
+
+function update_user_group(checkbox, group_name, user_name) {
+    return function () {
+        console.log("UPDATING");
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+            add_user_to_group(group_name, user_name)
+        } else {
+            checkbox.checked = false;
+            remove_user_from_group(group_name, user_name)
+        }
+
+    }
+}
+
+
+function click_checkbox(checkbox) {
+    return function () {
+        //clicking the checkbox again so it unclicks itself
+        if (!(checkbox.checked)) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
+    }
 }
 
 function delete_account(id) {
@@ -396,13 +490,13 @@ function delete_account(id) {
 }
 
 
-function load_user_table(user_list) {
+function load_user_table(user_list, all_groups) {
     console.log(user_list);
     var accounts_container = document.getElementById("accounts_container");
     var user_table = accounts_container.querySelector('form[name="delete_user_form"]');
     for (var i in user_list) {
         var user = user_list[i];
-        add_account_to_page(user)
+        add_account_to_page(user, all_groups)
 
     }
 

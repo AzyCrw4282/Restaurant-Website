@@ -5,11 +5,12 @@ from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import reverse, redirect, get_object_or_404
 from menu.models import Table, Order, Food, ArchivedTableOrder, TableOrder
+from .models import Waiter
 from django.contrib.auth.models import Group, Permission
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from datetime import timedelta, datetime
-
+from waiter.views import archive_table_order
 import json
 import uuid
 import string
@@ -66,19 +67,18 @@ def manager(request):
     :return:
     '''
     tables = Table.objects.all()
-    data = {"user_list": []}
+    all_groups = []
+    for group in Group.objects.all():
+        all_groups.append(group.name)
+    data = {"group_list": all_groups, "user_list": []}
+    print(all_groups)
     for user in User.objects.all():
-        group_name = ""
-        if user.is_staff:
-            group_name = "admin"
-        if user.groups.filter(name="waiter"):
-            group_name = "waiter"
-
-        if user.groups.filter(name="chef"):
-            group_name = "chef"
-
+        groups = user.groups.all()
+        group_list = []
+        for group in groups:
+            group_list.append(group.name)
         data["user_list"].append(
-            {"group_name": group_name, "id": user.id, "username": user.username, "email": user.email,
+            {"group_list": group_list, "id": user.id, "username": user.username, "email": user.email,
              "full_name": user.get_full_name()})
     for table in tables:
         print("AVAILABLE TABLES:", table.id, ": ", table.number)
@@ -98,31 +98,6 @@ def get_all_orders_cost_date(request):
         return JsonResponse(response)  # Response returned to ajax call
 
 
-def check_if_exists_waiter_group():
-    '''
-    this function auto creates the waiter group with the relevant permissions
-    Permissions at this stage are not required given that
-    waiter can simply not have staff status.
-    :param request:
-    :return:
-    '''
-    print("CREATING WAITER GROUP")
-    Group.objects.get_or_create(name="waiter")
-
-
-def create_chef_group():
-    '''
-    creates a chef group if needed, no permissions required as chef
-    is logged in, this should be implemented if there is time, however
-    it does not affect security as url's are protected and chef does not have
-    administrator status.
-    :param request:
-    :return:
-    '''
-    print("CREATING GROUP CHEF")
-    Group.objects.get_or_create(name="chef")
-
-
 def randomString(stringLength):
     '''
     This function is coppied to generate a random string.
@@ -134,6 +109,87 @@ def randomString(stringLength):
     """Generate a random string of fixed length """
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
+
+
+def add_waiter_relation(user):
+    '''
+    adds a waiter one to one relation (group property)
+    :param user:
+    :return:
+    '''
+    waiter = Waiter(waiter=user)
+    waiter.save()
+    for table in Table.objects.all():
+        waiter.tables.add(table)
+    waiter.save()
+
+
+def add_user_to_group(user, group_name):
+    '''
+    adds a user to an existing group
+    :param user:
+    :param group_name:
+    :return:
+    '''
+    group, boolean = Group.objects.get_or_create(name=group_name)
+    print(group)
+
+    group.user_set.add(user)
+    if group_name == "waiter":
+        add_waiter_relation(user)
+
+
+def remove_user_from_group(user, group_name):
+    '''
+    removes user from a group
+    :param user:
+    :param group_name:
+    :return:
+    '''
+    group = Group.objects.get(name=group_name)
+    print(group)
+    group.user_set.remove(user)
+    if group_name == "waiter":
+        user.waiter.delete()
+
+
+def remove_from_group(request):
+    '''
+    removes a user from a group from a post request
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        try:
+            group_name = request.POST["group_name"]
+            user_name = request.POST["user_name"]
+            print("REMOVING USER FROM ", group_name," user:", user_name)
+            user = User.objects.get(username=user_name)
+            remove_user_from_group(user, group_name)
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("failed to remove user from group", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
+
+
+def add_to_group(request):
+    '''
+    adds a user from a group from a post request
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        try:
+            group_name = request.POST["group_name"]
+            user_name = request.POST["user_name"]
+            user = User.objects.get(username=user_name)
+            add_user_to_group(user, group_name)
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("failed to ad user to group", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
 
 
 def create_account(request):
@@ -152,22 +208,11 @@ def create_account(request):
             password = randomString(6)
             # this is so the user does not need to create groups manually or go through permissions,
             # it is a quick hack as the strucuture is simple
-            if group_name == "waiter" or group_name == "chef":
-                try:
-                    group = Group.objects.get(name=group_name)
-                except:
-                    if group_name == "waiter":
-                        check_if_exists_waiter_group()
-                    else:
-                        create_chef_group()
-            group = Group.objects.get(name=group_name)
-
             new_user = User.objects.create(username=user_name, email=email)
             new_user.set_password(password)
             new_user.is_staff = False
             new_user.save()
-            group.user_set.add(new_user)
-            group.save()
+            add_user_to_group(new_user, group_name)
             send_mail('Oaxaca Registration Details',
                       "Please follow the privided link with username and password to log in: Link: " + "http://project-oaxaca.herokuapp.com" + reverse(
                           "accounts:login") + "Username: " + user_name + " Password: " + password,
@@ -200,6 +245,11 @@ def delete_account(request):
 
 
 def purge_unconfirmed_orders(request):
+    '''
+    deletes all unconfirmed orders older than 1 day
+    :param request:
+    :return:
+    '''
     print("PURGING irrelevant")
     try:
         orders = TableOrder.objects.filter(posting_date__gte=datetime.now() - timedelta(days=1))
@@ -209,6 +259,11 @@ def purge_unconfirmed_orders(request):
 
 
 def purge_all_orders_by_days(request):
+    '''
+    deletes all orders allder than specified number of days
+    :param request:
+    :return:
+    '''
     print("PURGING by days")
     try:
         TableOrder.objects.filter(posting_date__gte=datetime.now() - timedelta(days=request.POST["days"])).delete()
@@ -217,6 +272,11 @@ def purge_all_orders_by_days(request):
 
 
 def delete_fake_orders(request):
+    '''
+    deletes all orders that have a status not specified in the config file
+    :param request:
+    :return:
+    '''
     relevant_orders = TableOrder.objects.all()
     for order in relevant_orders:
         if order.status not in table_order_states:
@@ -238,14 +298,19 @@ def random_date(start, end):
 
 
 def generate_random_orders(request):
+    '''
+    generates 5000 random orders into archive between two dates
+    :param request:
+    :return:
+    '''
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
-        d1 = datetime.strptime('6/1/2018 1:30 PM', '%m/%d/%Y %I:%M %p')
-        d2 = datetime.strptime('3/1/2019 4:50 AM', '%m/%d/%Y %I:%M %p')
+        d1 = datetime.strptime('6/1/19981:30 PM', '%m/%d/%Y %I:%M %p')
+        d2 = datetime.strptime('6/1/2000 4:50 AM', '%m/%d/%Y %I:%M %p')
         all_tables = Table.objects.all()
         all_foods = Food.objects.all()
         date_list = []
-        for i in range(0, 1000):
+        for i in range(0, 5000):
             date_list.append(random_date(d1, d2))
 
         for rand_date in sorted(date_list):
@@ -254,8 +319,10 @@ def generate_random_orders(request):
             table_order.save()
             print(table_order.time)
             for j in range(0, random.randrange(2, 10)):
-                order = Order.objects.create(table_order=table_order,food=random.choice(all_foods))
+                order = Order.objects.create(table_order=table_order, food=random.choice(all_foods))
                 order.save()
+            archive_table_order(table_order)
+
         return JsonResponse(SUCCESSFUL_RESPONSE)
 
     except Exception as e:

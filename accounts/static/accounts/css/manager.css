@@ -131,3 +131,44 @@
     color: white;
     background-color: #8f0000;
 }
+
+.group_list_dropdown {
+    vertical-align: middle;
+    width: 100px;
+    display: table-cell;
+}
+
+.group_list_dropdown:hover .group_list_content {
+    display: block;
+}
+
+
+.group_list_content {
+    display: none;
+    position: relative;
+    background-color: #C00000;
+    width: 100%;
+    overflow: auto;
+    top: 0%;
+    z-index: 2;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+
+.group_list_content input {
+    float: right;
+}
+
+.group_list_content a {
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.group_list_content:hover {
+    background-color: #FF0000;
+}
+

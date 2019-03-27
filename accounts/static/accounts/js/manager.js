@@ -152,15 +152,31 @@ function offset_time_by(date, time_step, time_spread) {
     return date;
 }
 
-var profit_time_chart_data = [];
+var profit_time_chart_data = {};
+//format:
+// {"waiter":[{"time":time, "total":total},{},{}],{}}
 
 function update_profit_time_chart_data(data) {
-    profit_time_chart_data = data.reverse();
-    process_data_for_profit_time_chart(profit_time_chart_data);
+    console.log(data);
+    profit_time_chart_data = {};
+    //data=[{"total":total,"time":time,"waiter":waiter},{}]
+    for (var i = 0; i < data.length; i += 1) {
+        var dict = data[i];
+        var waiter_username = dict["waiter"];
+        var time = dict["time"];
+        var total = dict["total"];
+        if (waiter_username in profit_time_chart_data) {
+            profit_time_chart_data[waiter_username].push({"time": time, "total": total});
+        } else {
+            profit_time_chart_data[waiter_username] = [{"time": time, "total": total}];
+        }
+    }
+
+    console.log();
+    create_data_sets();
 }
 
-function process_data_for_profit_time_chart() {
-    var data = profit_time_chart_data;
+function create_data_sets() {
     console.log("PROCESSING DATA");
     var chart = document.getElementById("profit_time_chart");
     var increments = chart.querySelector('input[name="increments"]').value;
@@ -168,12 +184,14 @@ function process_data_for_profit_time_chart() {
     var time_step = chart.querySelector('select[name="time_step"]').value;
     var time_spread = chart.querySelector('input[name="time_spread"]').value;
     var base_date = chart.querySelector('input[name="start_date"]').value;
+    var waiters = ["octavio_1", "octavio_2", "ugne"];
+    var style = chart.querySelector('select[name="display_style"]').value;
+
     console.log("DATE_");
     console.log(base_date);
     if (!base_date) {
         console.log("success");
         base_date = Date.now();
-
     }
     base_date = new Date(base_date);
     //double check variables to prevent issues.
@@ -181,120 +199,156 @@ function process_data_for_profit_time_chart() {
         console.log("INFINITE LOOP PREVENTION");
         return;
     }
-    //list of x values (the times)
-    var x_labels = [];
-    //list of y_values (the total price for each step
-    var y_values = [];
-    //list of colours for each bar or whatever
-    var colours = [];
-    var border_colours = [];
-
-
-    // console.log(base_date);
-    // //data is ordered by oldest first;, we need newest first.
-    //
-    // console.log(offset_time_by(base_date, time_step, time_spread));
-    // console.log(data);
 
     // split the data into the list for each increment until all data has been processed:
-    var total_price = 0;
-    var counter = 0;
-    var old_base_date = new Date(base_date.valueOf());
+    // get the list of usernames
+    var data_sets = [];
+    console.log("GETTING DATE LIST");
+    var date_list = get_date_list(increments, base_date, time_step, time_spread);
+    date_list.reverse();
+    console.log(date_list);
+    for (var i = 0; i < waiters.length; i += 1) {
+        var waiter_username = waiters[i];
+        if (waiter_username in profit_time_chart_data) {
+            var data = profit_time_chart_data[waiter_username];
 
-    for (var i = 0; i < data.length; i += 1) {
-        //prevent overloading the graph with too much data
-        if (increments <= 0) {
-            break;
-        }
+            var data_set = create_dataset(data, date_list, waiter_username);
 
-        var list = data[i];
-        var time = list[0];
-        var price = list[1];
-        var date = new Date(time);
-        // console.log(date);
-        if (date > base_date && date < old_base_date) {
-            // console.log(list);
-            counter += 1;
-            total_price += price;
-        } else if (date < base_date) {
-            increments -= 1;
-            y_values.push(total_price);
-            x_labels.push(base_date.toLocaleString());
-            colours.push("rgba(0,255,140,0.2)");
-            border_colours.push("rgba(0,255,140,1)");
-            old_base_date = new Date(base_date.valueOf());
-            base_date = offset_time_by(base_date, time_step, time_spread);
-            // console.log(old_base_date);
-            // console.log(base_date);
-            // console.log("---");
-            i -= 1;
-            total_price = 0
+            data_sets.push(data_set);
         }
     }
-    console.log(total_price);
-    y_values.push(total_price);
-    x_labels.push(base_date.toLocaleString());
-    colours.push("rgba(0,255,140,0.2)");
-    border_colours.push("rgba(0,255,140,1)");
-    //push left overs
+    var total_sum = 0;
+    for (var i = 0; i < data_sets.length; i += 1) {
+        var sum = data_sets[i].data.reduce(function (a, b) {
+            return a + b;
+        }, 0);
+        total_sum += sum
+    }
 
-    var sum = y_values.reduce(function (a, b) {
-        return a + b;
-    }, 0);
-    var average_per_tick = sum / x_labels.length;
+    var average_per_tick = sum / increments;
     var av = chart.querySelector('output[name="average"]');
     var tot = chart.querySelector('output[name="total"]');
     av.value = "Average-per-tick: " + average_per_tick.toString();
-    tot.value = "Sum: " + sum.toString();
-    // console.log("showing chart");
-    // console.log(x_labels);
-    // console.log(y_values);
-    // console.log(border_colours);
-    show_chart(graph_type, x_labels.reverse(), y_values.reverse(), colours.reverse(), border_colours.reverse(), time_step, time_spread)
+    tot.value = "Sum: " + total_sum.toString();
+    //type, data_set_list,labels, period, period_multiple
+    var labels = format_date_list(date_list);
+    show_chart(graph_type,style, data_sets, labels, time_step, time_spread)
+}
+
+function format_date_list(date_list) {
+    var formatted = [];
+    for (var i = 0; i < date_list.length; i += 1) {
+        var date = new Date(date_list[i]);
+        formatted.push(date.toLocaleString())
+    }
+    return formatted;
 }
 
 var profit_price_chart = null;
 
-function show_chart(type, x_labels, y_values, colours, border_colours, period, period_multiple) {
+function get_date_list(increments, base_date, time_step, time_spread) {
+    var date_list = [];
+
+    while (increments > 0) {
+        increments -= 1;
+        date_list.push(base_date.toString());
+        base_date = offset_time_by(base_date, time_step, time_spread);
+    }
+    return date_list;
+}
+
+function generate_() {
+
+}
+
+function create_dataset(data, date_list, label) {
+
+    // console.log(data);
+    // console.log(date_list);
+    var data_list = [];
+    var data_dict = {};
+    var random_r = Math.floor((Math.random() * 254) + 1);
+    var random_g = Math.floor((Math.random() * 254) + 1);
+    var random_b = Math.floor((Math.random() * 254) + 1);
+
+    var background_colour = "rgba(" + random_r.toString() + "," + random_g.toString() + "," + random_b.toString() + ",0.6)";
+    var border_colour = "rgba(0,100,100,1)";
+    // console.log("SORTING +++++++++++++++++++++++++++++++++")
+    for (var k = 0; k < date_list.length; k += 1) {
+        data_dict[date_list[k]] = 0;
+        var older_date = new Date(date_list[k]);
+        var newer_date = new Date(date_list[k + 1]);
+        // console.log("GETTING DATES BETWEEN: ");
+        // console.log(older_date);
+        // console.log(newer_date);
+        for (var i = 0; i < data.length; i += 1) {
+            //prevent overloading the graph with too much data
+            var list = data[i];
+            var time = list["time"];
+            var price = list["total"];
+            var date = new Date(time);
+            if (date > older_date && date < newer_date) {
+                // console.log(date);
+
+                data_dict[date_list[k]] += price
+            }
+        }
+    }
+    // console.log(data_dict);
+    for (var k in data_dict) {
+        data_list.push(data_dict[k])
+    }
+
+
+    // console.log(data_list);
+
+    return {
+        label: label,
+        data: data_list,
+        backgroundColor: background_colour,
+        borderColor: border_colour,
+        borderWidth: 1
+    }
+}
+
+
+function show_chart(type,style, data_set_list, labels, period, period_multiple) {
     // update_profit_time_chart();
     var ctx = document.getElementById('order_chart').getContext('2d');
-    //list of labels (total prices)
-    //list of data (by day?)
-    //list of colours rgba(r,g,b,opacity)
     if (profit_price_chart != null) {
         profit_price_chart.destroy();
     }
+    var user_data = {
+        labels: labels,
+        datasets: data_set_list
+    };
+    var chart_options = {
+        scales: {
+            xAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'time-period per tick:  ' + period_multiple.toString() + " " + period
+                },
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'profit ($)'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+    if(style=="stacked"){
+        chart_options.scales.xAxes[0]["stacked"]=true;
+        chart_options.scales.yAxes[0]["stacked"]=true;
+    }
     profit_price_chart = new Chart(ctx, {
         type: type,
-        data: {
-            labels: x_labels,
-            datasets: [{
-                label: 'Price-Time',
-                data: y_values,
-                backgroundColor: colours,
-                borderColor: border_colours,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'time-period per tick:  ' + period_multiple.toString() + " " + period
-                    },
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'profit ($)'
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
+        data: user_data,
+        options: chart_options
     });
 
 }
@@ -373,23 +427,18 @@ function add_account_to_page(user, all_groups) {
     var group_list_dropdown = document.createElement("div");
     group_list_dropdown.className = "group_list_dropdown";
     group_list_dropdown.innerText = "Groups";
-    console.log(user);
-    console.log("ALL GROUPS: ");
-    console.log(all_groups);
+
     for (var i in all_groups) {
         var group_list_content = document.createElement("div");
         group_list_content.className = "group_list_content";
         var group_name = all_groups[i];
-        console.log(group_name);
         var group_option = document.createElement("a");
         var group_checkbox = document.createElement("input");
         group_checkbox.setAttribute("type", "checkbox");
         group_checkbox.id = "checkbox_" + group_name;
         group_checkbox.checked = false;
-        console.log(user["group_list"]);
-        console.log(group_name);
-        if (user["group_list"].indexOf(group_name)>=0) {
-            console.log("HORRAY");
+
+        if (user["group_list"].indexOf(group_name) >= 0) {
             group_checkbox.checked = true;
         }
         group_option.innerText = group_name;

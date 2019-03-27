@@ -197,7 +197,7 @@ def delete_food(request):
             return
 
 
-def archive_table_order(table_order_id):
+def archive_table_order(table_order_id,user):
     '''
     archives a table order into a separate db model
     and deletes the active one.
@@ -205,6 +205,9 @@ def archive_table_order(table_order_id):
     :return:
     '''
     table_order = TableOrder.objects.get(id=table_order_id)
+    table_order.waiter=user
+    table_order.save()
+    # set the waiter that archived the order as
     table_order_json = table_order.to_archived()
     archived_order = ArchivedTableOrder.objects.create(json_table_order=table_order_json,
                                                        id=table_order.id)
@@ -251,8 +254,7 @@ def recover_archived_table_order(table_order_id, status_to_recover_to):
 
 def change_table_order_state(request):
     '''
-    Changes the state of the order, archiving and attempts to restore it if necessary.
-    This is a hack, unfortunately solving the issue was more important than doing it well with the time left.
+    Changes the state of an order, archives it if necessary.
     :param request:
     :return:
     '''
@@ -264,7 +266,7 @@ def change_table_order_state(request):
             if status_to_change_to == "archived":
                 # if it is being changed to archived
                 try:
-                    archive_table_order(table_order_id)
+                    archive_table_order(table_order_id,request.user.waiter)
                     response = SUCCESSFUL_RESPONSE
                 except Exception as e:
                     response = UNSUCCESSFUL_RESPONSE

@@ -136,7 +136,18 @@ def randomString(stringLength):
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
 
-def add_user_to_waiter_grou(user):
+def add_user_to_waiter_group(user):
+    pass
+def add_user_to_chef_group(user):
+    pass
+def add_user_to_group(user,group):
+    '''
+    adds a user to an existing group
+    :param user:
+    :param group:
+    :return:
+    '''
+
 
 
 def create_account(request):

@@ -8,10 +8,10 @@
 
 var tempOrder = [];
 
-function load_data(order_list, table_list) {
+function load_data(order_list, table_list,user_tables) {
     console.log(order_list);
     load_cards(order_list);
-    table_filter_options(table_list);
+    table_filter_options(table_list,user_tables);
     // get_and_update_table_order_states();
     setInterval(function () {
         update_table_order_list();
@@ -97,11 +97,11 @@ function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];
         var table_order_id = table_order["id"];
-        var table_order_table_number=table_order["table_number"];
+        var table_order_table_number = table_order["table_number"];
         //continue if the order id is not checked:
-        var checked=document.getElementById("checkbox_" + table_order_table_number).checked;
+        var checked = document.getElementById("checkbox_" + table_order_table_number).checked;
         console.log(checked);
-        if (checked==false){
+        if (checked == false) {
             continue
         }
         // if the order exists on the template already delete it:
@@ -166,38 +166,43 @@ function load_cards(table_orders) {
  * TODO: Fix scaling by only loading tables directly from the database (refactor loading data)
  * @param table_orders List of orders pulled from database.
  */
-function table_filter_options(table_list) {
+function table_filter_options(table_list, user_tables) {
     var filter = document.getElementById("table_filter_content");
     for (var i in table_list) {
-        var table_order = table_list[i];
-        var table_number = table_order["number"];
-
+        var table = table_list[i];
+        var table_number = table["number"];
+        var table_id = table["id"];
         var table_filter_option = document.createElement("a");
         var table_filter_checkbox = document.createElement("input");
         table_filter_checkbox.setAttribute("type", "checkbox");
         table_filter_checkbox.id = "checkbox_" + table_number;
         table_filter_checkbox.value = table_number.toString();
-        table_filter_checkbox.checked=true;
+        if (user_tables[table_id]) {
+            table_filter_checkbox.checked = true;
+        }
         table_filter_option.innerText = "Table" + table_number;
         //click the checkbox twice to counter act.
         table_filter_checkbox.onclick = click_checkbox(table_filter_checkbox);
         table_filter_option.appendChild(table_filter_checkbox);
         //actually control the selection of the checkbox
-        table_filter_option.onclick = update_table_filter(table_filter_checkbox);
+        table_filter_option.onclick = update_table_filter(table_filter_checkbox, table_id);
         filter.appendChild(table_filter_option);
     }
 }
 
-function update_table_filter(checkbox) {
+function update_table_filter(checkbox, table_id) {
     return function () {
         var set_display = "none";
         console.log("UPDATING");
         var display = "none";
         if (!(checkbox.checked)) {
             checkbox.checked = true;
+            select_table(table_id);
             display = "block";
         } else {
             checkbox.checked = false;
+            deselect_table(table_id);
+
         }
         //For some reason the bellow does not work? so alternative was used.
         // var order_cards = document.getElementsByName("top_table_" + checkbox.value);

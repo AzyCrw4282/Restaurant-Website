@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import reverse, redirect, get_object_or_404
 from menu.models import Table, Order, Food, ArchivedTableOrder, TableOrder
-from .models import Waiter
+from menu.models import Waiter
 from django.contrib.auth.models import Group, Permission
 from django.http import JsonResponse
 from django.core.mail import send_mail
@@ -89,8 +89,8 @@ def manager(request):
 def get_all_orders_cost_date(request):
     if request.method == 'GET':
         list = []
-        for object in TableOrder.objects.all():
-            list.append(object.to_cost_date())
+        for object in ArchivedTableOrder.objects.all():
+            list.append(object.to_chart_data())
         response = {
             'success': True,
             'message': json.dumps(list)  # Dumps data and creates a string
@@ -140,7 +140,7 @@ def add_user_to_group(user, group_name):
 
 
 def remove_user_from_group(user, group_name):
-    '''
+    '''0 PM' does not match format '%m/%d/%Y %I:%M %p
     removes user from a group
     :param user:
     :param group_name:
@@ -305,23 +305,26 @@ def generate_random_orders(request):
     '''
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
-        d1 = datetime.strptime('6/1/19981:30 PM', '%m/%d/%Y %I:%M %p')
-        d2 = datetime.strptime('6/1/2000 4:50 AM', '%m/%d/%Y %I:%M %p')
+        d1 = datetime.now()-timedelta(days=2)
+        d2 = datetime.now()
         all_tables = Table.objects.all()
-        all_foods = Food.objects.all()
-        date_list = []
-        for i in range(0, 5000):
-            date_list.append(random_date(d1, d2))
 
+        date_list = []
+        for i in range(0, 500):
+            date_list.append(random_date(d1, d2))
+        print("date list created")
+        print(sorted(date_list))
         for rand_date in sorted(date_list):
             table = random.choice(all_tables)
             table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
             table_order.save()
             print(table_order.time)
+
+
             for j in range(0, random.randrange(2, 10)):
-                order = Order.objects.create(table_order=table_order, food=random.choice(all_foods))
+                order = Order.objects.create(table_order=table_order, food=random.choice(Food.objects.all()))
                 order.save()
-            archive_table_order(table_order)
+            archive_table_order(table_order.id,random.choice(Waiter.objects.all()))
 
         return JsonResponse(SUCCESSFUL_RESPONSE)
 

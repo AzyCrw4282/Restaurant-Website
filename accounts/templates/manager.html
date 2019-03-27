@@ -34,24 +34,31 @@
                 </div>
                 <div class="graph_options">
                     X-increments:
-                    <input onchange="process_data_for_profit_time_chart()" name="increments" type="number"
+                    <input onchange="create_data_sets()" name="increments" type="number"
                            placeholder="x_increments" value="30">
                     Time_spread:
-                    <input onchange="process_data_for_profit_time_chart()" name="time_spread" type="number"
+                    <input onchange="create_data_sets()" name="time_spread" type="number"
                            placeholder="time_spread" value="1">
                     start_date:
-                    <input onchange="process_data_for_profit_time_chart()" name="start_date" type="date"
+                    <input onchange="create_data_sets()" name="start_date" type="date"
                            placeholder="start_date" value="01-01-2019">
-                    <select onchange="process_data_for_profit_time_chart()" name="time_step">
+                    <select onchange="create_data_sets()" name="time_step">
                         <option value="days">days</option>
                         <option value="minutes">minutes</option>
                         <option value="hours">hours</option>
                         <option value="weeks">weeks</option>
                         <option value="months">months</option>
                     </select>
-                    <select onchange="process_data_for_profit_time_chart()" name="graph_type">
+                    <select onchange="create_data_sets()" name="graph_type">
                         <option value="bar">bar</option>
                         <option value="line">line</option>
+                    </select>
+                    <select onchange="create_data_sets()" name="display_style">
+                        <option value="stacked">stacked</option>
+                        <option value="normal">normal</option>
+                    </select>
+                    <select onchange="create_data_sets()" name="waiter_list" multiple>
+
                     </select>
                     get most recent data:
                     <button onclick="update_profit_time_chart()">Refresh</button>
@@ -104,7 +111,7 @@
 
         </div>
         <script type="text/javascript">
-            load_user_table({{ user_list| safe }},{{ group_list| safe }});
+            load_user_table({{ user_list| safe }}, {{ group_list| safe }});
         </script>
         <div id="database_management" class="database_management">
             Delete orders older than number of days:

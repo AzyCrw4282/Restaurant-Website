@@ -190,7 +190,8 @@ def archive_table_order(table_order_id):
     archived_order.save()
     table_order.delete()
 
-def recover_archived_table_order(table_order_id,status_to_recover_to):
+
+def recover_archived_table_order(table_order_id, status_to_recover_to):
     '''
     tries to recover an order from an archived state to an active state
     :param table_order_id:
@@ -201,7 +202,7 @@ def recover_archived_table_order(table_order_id,status_to_recover_to):
     # unpack the data
     data = archived_table_order.to_dict()
     orders = data["orders"]
-    table_id=data["table"]
+    table_id = data["table"]
     time = data["time"]
     id = data["id"]
     print("GOT DATA")
@@ -218,16 +219,18 @@ def recover_archived_table_order(table_order_id,status_to_recover_to):
             comment = order_data["comment"]
             ord_id = order_data["id"]
             obj = Order.objects.create(food=food, status=order_status, comment=comment,
-                                       id=ord_id,table_order=table_order_restored)
+                                       id=ord_id, table_order=table_order_restored)
             obj.save()
         print("SUCCESSFUL Restoration of order")
         archived_table_order.delete()
     except Exception as e:
-        print("failed to add all orders",e)
+        print("failed to add all orders", e)
         table_order_restored.delete()
+
+
 def change_table_order_state(request):
     '''
-    Changes the state of the order, archiving and attemts to restore it if necessary.
+    Changes the state of the order, archiving and attempts to restore it if necessary.
     This is a hack, unfortunately solving the issue was more important than doing it well with the time left.
     :param request:
     :return:
@@ -259,15 +262,15 @@ def change_table_order_state(request):
                     try:
                         # if it is an archived order requireing restoration:
                         if status_to_change_to != "archived":
-                            recover_archived_table_order(table_order_id,status_to_change_to)
+                            recover_archived_table_order(table_order_id, status_to_change_to)
                             response = SUCCESSFUL_RESPONSE
                         else:
-                            response=UNSUCCESSFUL_RESPONSE
+                            response = UNSUCCESSFUL_RESPONSE
                     except Exception as e:
                         response = UNSUCCESSFUL_RESPONSE
                         print("Failed to unarchive Table Order: ", e)
         except Exception as e:
-            print("FAILED TO GET DATA? ",e)
+            print("FAILED TO GET DATA? ", e)
             response = UNSUCCESSFUL_RESPONSE
 
         return JsonResponse(response)

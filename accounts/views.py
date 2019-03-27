@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
 from django.shortcuts import reverse, redirect, get_object_or_404
 from menu.models import Table, Order, Food, ArchivedTableOrder, TableOrder
+from .models import Waiter
 from django.contrib.auth.models import Group, Permission
 from django.http import JsonResponse
 from django.core.mail import send_mail
@@ -134,6 +135,8 @@ def randomString(stringLength):
     """Generate a random string of fixed length """
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(stringLength))
+
+def add_user_to_waiter_grou(user):
 
 
 def create_account(request):

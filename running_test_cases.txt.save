@@ -1,0 +1,13 @@
+This is not adequate, Please revise this.
+Create a script to run the testcases on a linux device.
+
+Please perform the following steps to run the tests on your system.
+
+*** Please delete the empty __init.py__ in the root directory as it causes error during run-time
+
+Give createDB access to your user( in our case team1user). This can be performed via pgadmin or psql
+
+Run python manage.py runserver And then in a differ shell run the tests via python manage.py test. This will automate the test and show it running.
+The current code is configured to work with chrome and you may modify the code to work with any other browsers.
+
+***if you get the  chromedriver missing error then please refer to this link ***https://stackoverflow.com/a/40208762/6505847

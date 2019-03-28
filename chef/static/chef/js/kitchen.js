@@ -1,7 +1,18 @@
+/**
+ * This function is used to call the load cards function.
+ * This function takes one parameter table_order_list which is then passed on to the function load card.
+ * @param table_order_list - represents order data from customer as a list
+ */
+
 function load_data(table_order_list) {
     load_cards(table_order_list);
 }
 
+
+/**
+ * This function is used to retrieve and send data to the add card function.
+ * @param data - represents an list passed on from the load_data function.
+ */
 
 function load_cards(data) {
     setInterval(function () {
@@ -24,9 +35,11 @@ function load_cards(data) {
     }
 }
 
-//SEND A REQUEST FOR ALL ID'S EVERY COUPLE SECONDS CHECK IF THEY ARE
-//ALL HERE ON THE PAGE OR IF SOME ARE MISSING ON THE PAGE OR IN THE REQUEST
-//IF THERE ARE ANY ABNORMALITIES REQUEST A RELOAD OF THE PAGE.
+
+/**
+ * This function is used to request a reload of the page if an id is missing or not should all correct id's be present.
+ * @param card_id_list - this represents the list of card id's.
+ */
 
 function update_table_order_cards(card_id_list) {
 //    check if an update is required if it is reload page
@@ -48,6 +61,13 @@ function update_table_order_cards(card_id_list) {
     }
 }
 
+
+/**
+ * This function is used to implement the "to-do list" feature, allowing the chef's to tick of food items that have been cooked.
+ * This function not only visually ticks off what parts of the order have been complete but also updates this information in the database.
+ * @param order_dict- this represents a dictionary filled with order data.
+ */
+
 function update_order_list_items(order_dict) {
 
     for (var key in order_dict) {
@@ -67,6 +87,17 @@ function update_order_list_items(order_dict) {
 
     }
 }
+
+
+/**
+ * This function is used to create the card.
+ * This function works by using js dom to create the elements of the card allowing them to then be appended to the kitchen page, with the correct order data.
+ * @param table_order_id - this represents a table id.
+ * @param table_order_comment - this represents a food comment from the customer.
+ * @param table_order_time - this is used to represent the time of order displayed on the page.
+ * @param table_order_table_number - this represents the order number linked to the table.
+ * @param table_order_order_list - this represents a list of food ordered by the customer.
+ */
 
 function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list) {
     console.log("adding card");

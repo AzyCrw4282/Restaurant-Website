@@ -43,6 +43,12 @@ function submit_order() {
 }
 
 
+function pay_order(){
+
+
+}
+
+
 function add_food_to_order(food_id, comment_id) {
     return function () {
         var comment = document.getElementById(comment_id).value;
@@ -93,7 +99,28 @@ function update_menu_popup_data() {
     });
 
 }
+function update_menu_popup_data_payment() {
+    $.ajax({
+        url: 'get_menu_popup_data/',
+        dataType: 'json',
+        type: 'GET',
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                try {
+                    populate_popup_payment(JSON.parse(data['message']));
+                } catch (e) {
+                    //    data is empty
+                }
+            } else {
+                console.log("NO DATA")
 
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
 
 
 

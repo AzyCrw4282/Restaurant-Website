@@ -55,6 +55,16 @@
     border-radius: 5px;
 
 }
+
+.basket_pay_button {
+    background-color: #3cc034;
+    color: white;
+    border-radius: 5px;
+    margin-left: 145px;
+
+
+}
+
 .order_popup_button_hide{
     float:right;
     width: 40%;

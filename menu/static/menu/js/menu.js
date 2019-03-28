@@ -168,6 +168,10 @@ function hide_order_popup() {
 
 }
 
+function redirect_user_payment() {
+    window.location += 'payment_redirect/'
+}
+
 function add_card(card, info_dict) {
     // console.log("LOADING CARD");
     var information_list = card['information'];
@@ -195,6 +199,9 @@ function add_card(card, info_dict) {
     desc_button.style.background = '#0F31C0';
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    div_2.style.backgroundRepeat="no-repeat";
+    div_2.style.backgroundSize="300px 300px";
+
     // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");
@@ -373,7 +380,7 @@ function populate_popup(data) {
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "Total: " + total_price;
+    total_tag.innerText = "£" + (Math.floor(total_price * 100) / 100).toString();
     var button = document.getElementById("submit_order");
     if (order_submitted == "client_created") {
         button.innerText = "Submit";

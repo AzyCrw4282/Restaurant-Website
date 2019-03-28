@@ -107,7 +107,7 @@ def add_information_to_food(request):
                     if information in food.information.all():
                         food.information.remove(information)
                     else:
-                        food.information.remove(information)
+                        food.information.add(information)
 
                 food.save()
             print("SUCCESSSSSSSSS")

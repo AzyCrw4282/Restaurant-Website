@@ -59,6 +59,9 @@ function create_data_sets() {
     if (!base_date) {
         base_date = Date.now();
     }
+    if (base_date == "") {
+        base_date = Date.now();
+    }
     base_date = new Date(base_date);
     //double check variables to prevent issues.
     if (!(increments > 0 && time_spread > 0)) {
@@ -147,7 +150,6 @@ function create_dataset(data, date_list, label) {
         borderWidth: 1
     }
 }
-
 
 
 function show_chart(type, style, data_set_list, labels, period, period_multiple) {

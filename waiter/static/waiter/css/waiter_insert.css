@@ -1,0 +1,30 @@
+h1 {
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+    text-align: center;
+    color: #C00000;
+}
+
+body {
+ font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+
+}
+h2{
+    font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
+    text-align: left;
+}
+
+
+button{
+
+  background-color: #C00000;
+  color:white;
+  padding: 5px 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#id_picture{ background-color: #C00000;
+  color:white;
+  padding: 5px 5px;
+  font-size: 16px;
+  cursor: pointer;}

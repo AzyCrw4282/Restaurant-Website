@@ -1,12 +1,9 @@
 {% extends 'menu/templates/base.html' %}
 {% load staticfiles %}
 {% block head %}
-    THIS IS AN EXAMPLE TO INSERT STUFF INTO THE DATABASE, NOT SURE IF IT WORKS FULLY
-    AS I'M NOT DOING HTML OR JAVASCRIPT
 {% endblock %}
 {% block body %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
             integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
             crossorigin="anonymous"></script>
@@ -15,7 +12,20 @@
             crossorigin="anonymous"></script>
     <script src="{% static 'waiter/js/insert_stuff.js' %}"></script>
     <script src="{% static 'waiter/js/waiter_ajax.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'waiter/css/waiter_insert.css' %}" type="text/css"/>
 
+    <h1>Insert Food and Drink Items Into the Waiter Page</h1>
+
+<h2>Add a food Category</h2>
+    <form onsubmit="return false">
+        {% csrf_token %}
+        Enter food category name:
+        <input type='text' aria-label="enter name:" id="food_category_name"/>
+        <button class="add_food_category" onclick="add_food_category()">Submit</button>
+    </form>
+
+
+    <h2>Insert a food item</h2>
     {# //Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )#}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -23,72 +33,33 @@
         <button type="submit">Add Food</button>
     </form>
 
-    // FoodCategory( _id, name)
-    <form onsubmit="return false">
-        {% csrf_token %}
-        <br>
-        add category<br>
-        enter food category name: <br>
-        <input type='text' aria-label="enter name:" id="food_category_name"/>
-        <button class="add_food_category" onclick="add_food_category()">Submit</button>
-    </form>
 
-    # FoodInformation( _id, name,ingredients)
+    <h2>Add Food Information</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ food_information_form.as_p }}
         <button type="submit">Add Information</button>
     </form>
-    food info to choice list
-    <form onsubmit="return false">
-        {% csrf_token %}
-        <br>
-        add a table <br>
-        enter table_code and table_number: <br>
-        <input type='text' aria-label="enter table_code:" id="table_id"/>
-        <input type='text' aria-label="enter table number:" id="table_number"/>
 
-        <button class="add_table" onclick="add_table()">Submit</button>
-    </form>
-    Table(  code (id), table_number, )
     <form onsubmit="return false">
         {% csrf_token %}
-        <br>
-        add a table <br>
-        enter table_code and table_number: <br>
+        <h2>Add a Table</h2>
+        Enter table code and table number: <br>
         <input type='text' aria-label="enter table_code:" id="table_id"/>
         <input type='text' aria-label="enter table number:" id="table_number"/>
 
         <button class="add_table" onclick="add_table()">Submit</button>
     </form>
 
-    Customer ( _id , name , Table_id)
-    <form onsubmit="return false">
+<form onsubmit="return false">
         {% csrf_token %}
-        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test"
-                id="food_information_option_list">
-        </select>
-        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test"
-                id="food_option_list">
-        </select>
-        <script>
-            food_to_information_choice({{ food_information_list |safe }}, {{ food_dict |safe }});
-
-        </script>
-        <button class="add_customer" onclick="food_information_choice_submit    ()">Submit</button>
-    </form>
-
-    Order( _id , food_id , Table_id , Customer_id , time )
-    <form onsubmit="return false">
-        {% csrf_token %}
-        <br>
-        add an order <br>
-        enter food id: <br>
+        <h2>Add an Order</h2>
+        Enter order id: <br>
         <input type='number' aria-label="food_id:" id="order_food_id"/><br>
 
-        enter customer id: <br>
+        Enter customer id: <br>
         <input type='number' aria-label="customer_id:" id="order_customer_id"/><br>
-        enter date time local: <br>
+        Enter date time local: <br>
         <input type='datetime-local' aria-label="order_time:" id="order_time"/>
         <button class="add_order" onclick="add_order()">Submit</button>
     </form>

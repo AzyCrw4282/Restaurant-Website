@@ -298,18 +298,18 @@ def random_date(start, end):
 
 def generate_random_orders(request):
     '''
-    generates 500 random orders into archive within the last two days
+    generates 1000 random orders into archive within the last month
     :param request:
     :return:
     '''
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
-        d1 = datetime.now() - timedelta(days=2)
+        d1 = datetime.now() - timedelta(days=30)
         d2 = datetime.now()
         all_tables = Table.objects.all()
 
         date_list = []
-        for i in range(0, 500):
+        for i in range(0, 1000):
             date_list.append(random_date(d1, d2))
 
         for rand_date in sorted(date_list):

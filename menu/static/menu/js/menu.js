@@ -199,6 +199,9 @@ function add_card(card, info_dict) {
     desc_button.style.background = '#0F31C0';
     var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
     div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    div_2.style.backgroundRepeat="no-repeat";
+    div_2.style.backgroundSize="300px 300px";
+
     // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
     var div_3 = create_tag("div", "", "", "", "", "");
     var div_4 = create_tag("div", "", "", "", "", "");

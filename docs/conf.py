@@ -13,8 +13,6 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 # import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
 
 import os
 import sys
@@ -22,6 +20,12 @@ import django
 sys.path.insert(0, os.path.abspath('..'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'TeamProject2019_01.settings'
 django.setup()
+
+
+# import sys
+# sys.path.insert(0, os.path.abspath('.'))
+
+
 # -- Project information -----------------------------------------------------
 
 project = 'TeamProject2019_01'
@@ -31,7 +35,7 @@ author = 'Group 1'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0'
+release = '1.1'
 
 
 # -- General configuration ---------------------------------------------------

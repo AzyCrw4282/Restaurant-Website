@@ -1,14 +1,14 @@
 # THIS IS A PYTHON FILE FOR HANDELING GENERAL REQUESTS FROM URL'S
 
 from django.shortcuts import render
-from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
 from datetime import datetime
 from django.http import JsonResponse
 import json
 import uuid
 
-with open("config.json") as json_data_file:
+with open("../config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 

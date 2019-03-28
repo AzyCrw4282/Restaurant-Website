@@ -27,14 +27,6 @@ menu.apps module
     :undoc-members:
     :show-inheritance:
 
-menu.db\_insert module
-----------------------
-
-.. automodule:: menu.db_insert
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 menu.forms module
 -----------------
 

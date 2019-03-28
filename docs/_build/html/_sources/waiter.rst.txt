@@ -20,14 +20,6 @@ waiter.apps module
     :undoc-members:
     :show-inheritance:
 
-waiter.db\_insert module
-------------------------
-
-.. automodule:: waiter.db_insert
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 waiter.forms module
 -------------------
 

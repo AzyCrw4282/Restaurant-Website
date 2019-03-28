@@ -101,6 +101,7 @@ def get_all_orders_cost_date(request):
         except Exception as e:
             return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
+
 def randomString(stringLength):
     '''
     This function is coppied to generate a random string.
@@ -296,9 +297,10 @@ def random_date(start, end):
     random_micro = random.randrange(0, micro_seconds)
     return start + timedelta(microseconds=random_micro)
 
-def generate():
+
+def generate(days_delta):
     try:
-        d1 = datetime.now() - timedelta(days=30)
+        d1 = datetime.now() - timedelta(days=days_delta)
         d2 = datetime.now()
         all_tables = Table.objects.all()
 
@@ -306,7 +308,7 @@ def generate():
         for i in range(0, 1000):
             date_list.append(random_date(d1, d2))
 
-        for rand_date in sorted(date_list):
+        for rand_date in date_list:
             table = random.choice(all_tables)
             table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
             table_order.save()
@@ -317,6 +319,8 @@ def generate():
             archive_table_order(table_order.id, random.choice(Waiter.objects.all()))
     except Exception as e:
         pass
+
+
 def generate_random_orders(request):
     '''
     generates 1000 random orders into archive within the last month
@@ -325,7 +329,8 @@ def generate_random_orders(request):
     '''
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
-        thread1 = threading.Thread(target=generate(), args=())
+        days_delata = request.POST["days_delta"]
+        thread1 = threading.Thread(target=generate(), args=(days_delata))
         thread1.start()
         return JsonResponse(SUCCESSFUL_RESPONSE)
 

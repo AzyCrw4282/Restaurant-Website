@@ -73,8 +73,9 @@
                     Generate 1000 fake orders (removable)
                     <form onsubmit="return false">
                         {% csrf_token %}
-
-                        <button onclick="generate_random_orders()">Generate</button>
+                        <input name="days_delta_generate" type="number"
+                           placeholder="days_delta to today" value="">
+                        <button onclick="generate_random_orders_call()">Generate</button>
                         Delete fake orders
                         <button onclick="delete_fake_orders()">Delete</button>
 

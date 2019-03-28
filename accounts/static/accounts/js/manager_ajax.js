@@ -44,7 +44,7 @@ function update_profit_time_chart() {
         }
     });
 }
-function generate_random_orders() {
+function generate_random_orders(days_delta) {
 
     $.ajax({
         //Post request made here
@@ -52,6 +52,7 @@ function generate_random_orders() {
         url: 'generate_random_orders/',
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+            "days_delta":days_delta
         },
         success: function (data) {
             console.log(data);

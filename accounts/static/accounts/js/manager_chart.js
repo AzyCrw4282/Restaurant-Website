@@ -100,7 +100,11 @@ function create_data_sets() {
     var labels = format_date_list(date_list);
     show_chart(graph_type, style, data_sets, labels, time_step, time_spread)
 }
-
+function generate_random_orders_call(){
+    var chart = document.getElementById("profit_time_chart");
+    var days_delta = chart.querySelector('input[name="days_delta_generate"]').value;
+    generate_random_orders(days_delta);
+}
 function create_dataset(data, date_list, label) {
 
     // console.log(data);

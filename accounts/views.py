@@ -87,15 +87,18 @@ def manager(request):
 
 def get_all_orders_cost_date(request):
     if request.method == 'GET':
-        list = []
-        for object in ArchivedTableOrder.objects.all():
-            list.append(object.to_chart_data())
-        response = {
-            'success': True,
-            'message': json.dumps(list)  # Dumps data and creates a string
-        }
-        return JsonResponse(response)  # Response returned to ajax call
+        try:
 
+            list = []
+            for object in ArchivedTableOrder.objects.all():
+                list.append(object.to_chart_data())
+            response = {
+                'success': True,
+                'message': json.dumps(list)  # Dumps data and creates a string
+            }
+            return JsonResponse(response)  # Response returned to ajax call
+        except Exception as e:
+            return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 def randomString(stringLength):
     '''
@@ -211,7 +214,7 @@ def create_account(request):
             add_user_to_group(new_user, group_name)
             send_mail('Oaxaca Registration Details',
                       "Please follow the privided link with username and password to log in: Link: " + "http://project-oaxaca.herokuapp.com" + reverse(
-                          "accounts:login") + "Username: " + user_name + " Password: " + password,
+                          "accounts:login") + " \n Username: " + user_name + " \n Password: " + password,
                       'TeamProject201901@gmail.com',
                       [email],
                       fail_silently=False)

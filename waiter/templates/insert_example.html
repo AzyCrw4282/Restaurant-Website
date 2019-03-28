@@ -64,6 +64,15 @@
     </form>
     <form onsubmit="return false">
         {% csrf_token %}
+        Delete food information item:
+        <select id="food_information_option_delete_list">
+
+        </select>
+
+        <button class="add_customer" onclick="food_information_delete()">Submit</button>
+    </form>
+    <form onsubmit="return false">
+        {% csrf_token %}
         <h2>Add a Table</h2>
         Enter table code and table number: <br>
         <input type='text' aria-label="enter table_code:" id="table_id"/>
@@ -84,7 +93,10 @@
         <input type='datetime-local' aria-label="order_time:" id="order_time"/>
         <button class="add_order" onclick="add_order()">Submit</button>
     </form>
+
     <script type="text/javascript">
+        load_food_info_delete_list({{ food_information_list |safe }});
+
         load_categories({{ category_list| safe }});
     </script>
 

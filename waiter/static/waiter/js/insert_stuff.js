@@ -39,6 +39,26 @@ function load_categories(data) {
 
 }
 
+function food_information_delete() {
+    var select_information = document.getElementById('food_information_option_delete_list');
+    delete_food_information(select_information.value);
+
+}
+
+function load_food_info_delete_list(data) {
+
+    console.log(data);
+    var select_information = document.getElementById('food_information_option_delete_list');
+    for (var i = 0; i < data.length; i += 1) {
+        var cat = data[i];
+        var opt = document.createElement("option");
+        opt.innerText = cat["name"];
+        opt.value = cat["id"];
+        select_information.appendChild(opt);
+    }
+
+}
+
 function delete_food_category_id() {
     var select_information = document.getElementById('delete_food_category_name');
     delete_food_category(select_information.value);

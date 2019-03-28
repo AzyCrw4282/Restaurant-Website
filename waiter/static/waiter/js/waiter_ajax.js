@@ -90,7 +90,10 @@ function delete_food_information(food_information_id) {
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "food_information_id": food_information_id
-        }
+        },success: function (data) {
+            console.log(data);
+            location.reload()
+        },
     })
 }
 

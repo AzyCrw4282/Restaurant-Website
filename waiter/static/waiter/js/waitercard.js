@@ -1,13 +1,10 @@
-/* Data structure should loaded in as Order( _id , Menu_id , Table_id , Customer_id , time_of_order, state )
- * (from schema.txt)
- * Example how it's supposed to display in the waitercard.html/And the backup reference dummy html waiterver2
- *
- *
+/**
+ * Function loads the tables used by the rest of the functions.
+ * Taking 2 tables listing orders and tables as parameters, it loads the tables in to filter
+ * and parses the order_list and generates the inital cards for them. Also reloads after an interval.
+ * @param order_list List of orders from the database, parsed for order cards
+ * @param table_list List of existing tables (the physical kind) in the database.
  */
-
-
-var tempOrder = [];
-
 function load_data(order_list, table_list, user_tables) {
     console.log(order_list);
     console.log("TABLE LIST:");
@@ -22,6 +19,10 @@ function load_data(order_list, table_list, user_tables) {
     }, 1000);
 }
 
+/**
+ * Function takes the table orders order_list table and regenerates the order card to display.
+ * @param data Order list from the database.
+ */
 function update_cards(data) {
     // print("UPDATING CARDS");
 
@@ -31,7 +32,18 @@ function update_cards(data) {
     load_cards(table_orders);
 }
 
-
+/**
+ * Function is used to move cards in real time without having to reload the page.
+ * The function works by taking all the information of the order card as a paramaters,
+ * deleting the card then regenerating it with the new changed state (or the same).
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_current_state
+ * @param table_order_new_state
+ */
 function move_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     var del_card = document.getElementById(table_order_id);
     del_card.innerHTML = "";
@@ -55,26 +67,22 @@ function move_card(table_order_id, table_order_comment, table_order_time, table_
     }
     console.log("Deleted card from " + table_order_current_state);
     del_card_parent.removeChild(del_card);
-
-    switch (table_order_new_state) {
-        case "client_confirmed":
-            add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_new_state);
-            break;
-        case "waiter_confirmed":
-            add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_new_state);
-            break;
-        case "chef_confirmed":
-            add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_new_state);
-            break;
-        case "archived":
-            add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_new_state);
-            break;
-
-    }
+    add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_new_state);
     console.log("Added new card to " + table_order_new_state)
 
 }
 
+/**
+ * Aggregate function for onclicks, that changes sets the order state and moves the displayed card.
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_current_state
+ * @param table_order_new_state
+ * @returns {Function}
+ */
 function move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_current_state, table_order_new_state) {
     return function () {
         console.log("CHANGING STATE OF ORDER");
@@ -83,6 +91,12 @@ function move_card_on_click(table_order_id, table_order_comment, table_order_tim
     }
 }
 
+/**
+ * Function is used to enable a notification on the page.
+ * Changes the color of the tab to red for the notification.
+ *
+ * @param table_order_state
+ */
 function turn_on_notification(table_order_state) {
     // print("turning on notification");
     var state = table_order_state;
@@ -96,6 +110,14 @@ function turn_on_notification(table_order_state) {
     }
 }
 
+/**
+ * load_cards takes the list of orders and iterates over them parsing the information to cards.
+ * The function iterates over the list of orders assigning the column values to variables on each entry.
+ * After assigning the values to variables, the function checks whether a notification should be sent
+ * by checking if an existing card's state has changed.
+ * After this the card is generated with the add_card method.
+ * @param table_orders Table of orders in the database.
+ */
 function load_cards(table_orders) {
     for (var i in table_orders) {
         var table_order = table_orders[i];
@@ -130,28 +152,8 @@ function load_cards(table_orders) {
             turn_on_notification(table_order_state);
 
         }
-
-
-        //Conditionals so cards are loaded into the correct places
         // console.log("State:" + table_order_state);
-
-        switch (table_order_state) {
-            case "client_confirmed":
-                add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
-                break;
-            case "waiter_confirmed":
-                add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
-                break;
-            case "chef_confirmed":
-                add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
-                break;
-            case "chef_canceled":
-                add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
-                break;
-            case "archived":
-                add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
-                break;
-        }
+        add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state);
     }
 }
 
@@ -159,15 +161,10 @@ function load_cards(table_orders) {
 
 /**
  * This function loads the different tables as options to the table filter.
- * This works by parsing over the table orders and loading the tables from orders into the dropdown
+ * This works by parsing over the existing tables and loading the tables into the dropdown
  * as options.
  *
- * This is gonna be really slow when we start approaching higher numbers or orders, only fix
- * would be to change the way /waiter/ loads the data into and get tables as a seperate entity but
- * might require significant refactoring. I'm not sure how exactly to it too.
- *
- * TODO: Fix scaling by only loading tables directly from the database (refactor loading data)
- * @param table_orders List of orders pulled from database.
+ * @param table_list List of tables pulled from database.
  */
 function table_filter_options(table_list, user_tables) {
     var filter = document.getElementById("table_filter_content");
@@ -193,6 +190,14 @@ function table_filter_options(table_list, user_tables) {
     }
 }
 
+/**
+ * Function updates the displayed cards based on the filter options in the list.
+ * When the function is called, it checks the checkbox parameter and iterates over all cards
+ * either showing or displaying the cards according to the checkbox value.
+ *
+ * @param checkbox
+ * @returns {Function}
+ */
 function update_table_filter(checkbox, table_id) {
     return function () {
         var set_display = "none";
@@ -224,7 +229,11 @@ function update_table_filter(checkbox, table_id) {
     }
 }
 
-
+/**
+ * Function ensures the checkbox is working as intended.
+ * @param checkbox
+ * @returns {Function}
+ */
 function click_checkbox(checkbox) {
     return function () {
         //clicking the checkbox again so it unclicks itself
@@ -236,10 +245,22 @@ function click_checkbox(checkbox) {
     }
 }
 
-//Pending cards
-function add_cardpending(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
+/**
+ * Function generates an order card on to the page.
+ * The function takes the parameters given and generates the default card with the information.
+ * The function first assigns divs to variables with the create_tag method using the info.
+ * After this the function uses the state of the order to determine the type of card, where it's placed
+ * and a few css changes related to the type.
+ * @param table_order_id
+ * @param table_order_comment
+ * @param table_order_time
+ * @param table_order_table_number
+ * @param table_order_order_list
+ * @param table_order_state
+ */
+function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
 
-    var pending_list = document.getElementById("pending_list");
+    var card_list;
     // console.log("static: ");
     // console.log("creating pendingcard");
 
@@ -254,18 +275,15 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     /*it might be broken. in pure html it would be written like
     /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
     var panel_title_text = document.createElement('a');
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#pending_list");
-    panel_title_text.href = "#pending" + table_order_id;
     panel_title_text.innerHTML = "Table: " + table_order_table_number;
     panel_title_text.className = "order_text";
 
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "pending" + table_order_id, "");
+    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "", "");
     var panel_body = create_tag("div", "", "", "panel-body", "", "");
 
 
     //Creating card divs
-    var border = create_tag("div", "", "", "card text-center border border-secondary", "", "");
+    var border = create_tag("div", "", "", "text-center border border-secondary", "", "");
     var cardbody = create_tag("div", "", "", "card-body", "", "");
     var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
     var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
@@ -280,6 +298,7 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
     var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
     var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
+    var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
     var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
     var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
 
@@ -299,308 +318,74 @@ function add_cardpending(table_order_id, table_order_comment, table_order_time, 
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
     override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
 
+    deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
     confirm_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
     cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
+
+    //Specific card conditions
+    switch (table_order_state) {
+        case "client_confirmed":
+            card_list = document.getElementById("pending_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#pending_list");
+            panel_title_text.href = "#pending" + table_order_id;
+            panel_content_top.id = "pending" + table_order_id;
+            border.classList.add("card");
+            deliver_button.style.display = "none";
+            break;
+        case "waiter_confirmed":
+            card_list = document.getElementById("kitchen_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#kitchen_list");
+            panel_title_text.href = "#kitchen" + table_order_id;
+            panel_content_top.id = "kitchen" + table_order_id;
+            border.classList.add("cardkitchen");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            deliver_button.style.display = "none";
+            break;
+        case "chef_confirmed":
+            card_list = document.getElementById("ready_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#ready_list");
+            panel_title_text.href = "#ready" + table_order_id;
+            panel_content_top.id = "ready" + table_order_id;
+            border.classList.add("cardready");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            break;
+        case "chef_canceled":
+            card_list = document.getElementById("ready_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#ready_list");
+            panel_title_text.href = "#ready" + table_order_id;
+            panel_content_top.id = "ready" + table_order_id;
+            border.classList.add("cardready");
+            confirm_button.style.display = "none";
+            deliver_button.style.display = "none";
+            cancel_button.text = "Archive";
+            break;
+        case "archived":
+            card_list = document.getElementById("archive_list");
+            panel_title_text.setAttribute("data-toggle", "collapse");
+            panel_title_text.setAttribute("data-parent", "#archive_list");
+            panel_title_text.href = "#archive" + table_order_id;
+            panel_content_top.id = "archive" + table_order_id;
+            panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
+            border.classList.add("cardkitchen");
+            confirm_button.style.display = "none";
+            cancel_button.style.display = "none";
+            deliver_button.style.display = "none";
+            break;
+    }
+
+
     cardbody.appendChild(order_num_head);
     cardbody.appendChild(order_table_head);
     cardbody.appendChild(list_of_items);
     cardbody.appendChild(comment_box);
     cardbody.appendChild(confirm_button);
-    cardbody.appendChild(cancel_button);
-
-    override_content.appendChild(override_to_pending);
-    override_content.appendChild(override_to_in_kitchen);
-    override_content.appendChild(override_to_ready);
-    override_content.appendChild(override_to_cancelled);
-    override_content.appendChild(override_to_archive);
-    override_dropdown.appendChild(override_button);
-    override_dropdown.appendChild(override_content);
-
-    border.appendChild(cardbody);
-    border.appendChild(footer);
-    border.appendChild(override_dropdown);
-
-    panel_title.appendChild(panel_title_text);
-    panel_header.appendChild(panel_title);
-
-    panel_body.appendChild(border);
-    panel_content_top.appendChild(panel_body);
-
-    top_of_panel.appendChild(panel_header);
-    top_of_panel.appendChild(panel_content_top);
-
-    pending_list.appendChild(top_of_panel);
-
-
-}
-
-//Orders in kitchen
-function add_cardkitchen(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
-
-
-    var pending_list = document.getElementById("kitchen_list");
-    // console.log("static: ");
-    // console.log("creating kitchencard");
-
-    //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
-    top_of_panel.value = table_order_state;
-    top_of_panel.name = "top_table_" + table_order_table_number;
-
-    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
-    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
-
-    /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
-    /*it might be broken. in pure html it would be written like
-    /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement('a');
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#kitchen_list");
-    panel_title_text.href = "#kitchen" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number;
-    panel_title_text.className = "order_text";
-
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "kitchen" + table_order_id, "");
-    var panel_body = create_tag("div", "", "", "panel-body", "", "");
-
-    //Creating card divs
-    var border = create_tag("div", "", "", "cardkitchen text-center border border-dark", "", "");
-    var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
-    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
-    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
-    for (var i in table_order_order_list) {
-        var order_item = table_order_order_list[i];
-        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
-        list_of_items.appendChild(order_item_tag);
-
-    }
-
-    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
-    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
-    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
-
-    //Status Override
-    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
-    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
-    var override_content = create_tag("div", "", "", "override-content", "", "");
-    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
-    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
-    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
-    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
-    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
-
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
-    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
-    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
-    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
-    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-
-
-    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
-    cardbody.appendChild(order_num_head);
-    cardbody.appendChild(order_table_head);
-    cardbody.appendChild(list_of_items);
-    cardbody.appendChild(comment_box);
-    //cardbody.appendChild(confirm_button);
-    //cardbody.appendChild(cancel_button);
-
-    override_content.appendChild(override_to_pending);
-    override_content.appendChild(override_to_in_kitchen);
-    override_content.appendChild(override_to_ready);
-    override_content.appendChild(override_to_cancelled);
-    override_content.appendChild(override_to_archive);
-    override_dropdown.appendChild(override_button);
-    override_dropdown.appendChild(override_content);
-
-    border.appendChild(cardbody);
-    border.appendChild(footer);
-    border.appendChild(override_dropdown);
-
-    panel_title.appendChild(panel_title_text);
-    panel_header.appendChild(panel_title);
-
-    panel_body.appendChild(border);
-    panel_content_top.appendChild(panel_body);
-
-    top_of_panel.appendChild(panel_header);
-    top_of_panel.appendChild(panel_content_top);
-
-    pending_list.appendChild(top_of_panel);
-
-}
-
-//Order ready cards
-function add_cardready(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
-
-    var pending_list = document.getElementById("ready_list");
-    // console.log("static: ");
-    // console.log("creating readycard");
-
-    //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
-    top_of_panel.value = table_order_state;
-    top_of_panel.name = "top_table_" + table_order_table_number;
-
-    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
-    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
-
-    /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
-    /*it might be broken. in pure html it would be written like
-    /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement("a");
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#ready_list");
-    panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number;
-    panel_title_text.className = "order_text";
-
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
-    var panel_body = create_tag("div", "", "", "panel-body", "", "");
-
-    //Creating card divs
-    var border = create_tag("div", "", "", "cardready text-center border border-ready", "", "");
-    var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
-    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
-    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
-    for (var i in table_order_order_list) {
-        var order_item = table_order_order_list[i];
-        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
-        list_of_items.appendChild(order_item_tag);
-
-    }
-
-    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
-    var deliver_button = create_tag("a", "#", "", "btn btn-primary w-100", "", "Delivered");
-    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
-
-    //Status Override
-    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
-    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
-    var override_content = create_tag("div", "", "", "override-content", "", "");
-    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
-    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
-    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
-    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
-    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
-
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
-    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
-    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
-    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
-    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-    deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-
-    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
-    cardbody.appendChild(order_num_head);
-    cardbody.appendChild(order_table_head);
-    cardbody.appendChild(list_of_items);
-    cardbody.appendChild(comment_box);
     cardbody.appendChild(deliver_button);
-    //cardbody.appendChild(cancel_button);
-
-    override_content.appendChild(override_to_pending);
-    override_content.appendChild(override_to_in_kitchen);
-    override_content.appendChild(override_to_ready);
-    override_content.appendChild(override_to_cancelled);
-    override_content.appendChild(override_to_archive);
-    override_dropdown.appendChild(override_button);
-    override_dropdown.appendChild(override_content);
-
-    border.appendChild(cardbody);
-    border.appendChild(footer);
-    border.appendChild(override_dropdown);
-
-    panel_title.appendChild(panel_title_text);
-    panel_header.appendChild(panel_title);
-
-    panel_body.appendChild(border);
-    panel_content_top.appendChild(panel_body);
-
-    top_of_panel.appendChild(panel_header);
-    top_of_panel.appendChild(panel_content_top);
-
-    pending_list.appendChild(top_of_panel);
-}
-
-//Orders cancelled by kitchen
-function add_cardkitchencancel(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
-
-    var pending_list = document.getElementById("ready_list");
-    // console.log("static: ");
-    // console.log("creating readycard");
-
-    //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
-    top_of_panel.value = table_order_state;
-    top_of_panel.name = "top_table_" + table_order_table_number;
-
-    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
-
-    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
-
-    /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
-    /*it might be broken. in pure html it would be written like
-    /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement("a");
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#ready_list");
-    panel_title_text.href = "#ready" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number;
-    panel_title_text.className = "order_text";
-
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "ready" + table_order_id, "");
-    var panel_body = create_tag("div", "", "", "panel-body", "", "");
-
-    //Creating card divs
-    var border = create_tag("div", "", "", "cardready text-center border border-secondary", "", "");
-    var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
-    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
-    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
-    for (var i in table_order_order_list) {
-        var order_item = table_order_order_list[i];
-        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
-        list_of_items.appendChild(order_item_tag);
-
-    }
-
-    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
-    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
-    var cancel_button = create_tag("a", "#", "", "btn w-100 btn-secondary", "", "Archive");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
-
-    //Status Override
-    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
-    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
-    var override_content = create_tag("div", "", "", "override-content", "", "");
-    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
-    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
-    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
-    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
-    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
-
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
-    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
-    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
-    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
-    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-
-
-    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived")
-    cardbody.appendChild(order_num_head);
-    cardbody.appendChild(order_table_head);
-    cardbody.appendChild(list_of_items);
-    cardbody.appendChild(comment_box);
-    //cardbody.appendChild(confirm_button);
     cardbody.appendChild(cancel_button);
 
     override_content.appendChild(override_to_pending);
@@ -624,109 +409,24 @@ function add_cardkitchencancel(table_order_id, table_order_comment, table_order_
     top_of_panel.appendChild(panel_header);
     top_of_panel.appendChild(panel_content_top);
 
-    pending_list.appendChild(top_of_panel);
+
+
+    card_list.appendChild(top_of_panel);
+
+
 }
 
-//Archived Orders
-function add_cardarchive(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
-    // var temp_holder=document.createElement("div");
-    var pending_list = document.getElementById("archive_list");
-    // console.log("static: ");
-    // console.log("creating archivecard");
-
-    //Panel group divs
-    var top_of_panel = create_tag("div", "", "", "panel panel-default", "" + table_order_id, "");
-
-
-    var panel_header = create_tag("div", "", "", "panel-heading", "", "");
-
-    var panel_title = create_tag("h4", "", "", "panel-title", "", "");
-
-    /*This part might break, this tag is a custom <a> tag with bootstrap attributes. I think it's being created properly but
-    /*it might be broken. in pure html it would be written like
-    /* <a data-toggle="collapse" data-parent="#pending_list" href="#pending1">Order 1</a> */
-    var panel_title_text = document.createElement("a");
-    panel_title_text.setAttribute("data-toggle", "collapse");
-    panel_title_text.setAttribute("data-parent", "#archive_list");
-    panel_title_text.href = "#archive" + table_order_id;
-    panel_title_text.innerHTML = "Table: " + table_order_table_number + " Time: " + table_order_time;
-    panel_title_text.className = "order_text";
-
-    var panel_content_top = create_tag("div", "", "", "panel-collapse collapse in", "archive" + table_order_id, "");
-    var panel_body = create_tag("div", "", "", "panel-body", "", "");
-
-    //Creating card divs
-    var border = create_tag("div", "", "", "cardkitchen text-center border border-secondary", "", "");
-    var cardbody = create_tag("div", "", "", "card-body", "", "");
-    var order_num_head = create_tag("h5", "", "", "border-bottom border-dark", "", "order number: " + table_order_id);
-    var order_table_head = create_tag("h5", "", "", "card-title border-bottom border-dark", "", "table number: " + table_order_table_number);
-    var list_of_items = create_tag("ol", "", "", "text-left", "", "");
-    for (var i in table_order_order_list) {
-        var order_item = table_order_order_list[i];
-        var order_item_tag = create_tag("li", "", "", "", "", "" + order_item["food_name"] + ": " + order_item["comment"]);
-        list_of_items.appendChild(order_item_tag);
-
-    }
-
-    //In the current schema there's no storage for any comments for orders, should this be changed? Box created anyway
-    var comment_box = create_tag("p", "", "", "text-monospace", "", "" + table_order_comment);
-    //var confirm_button = create_tag("a", "#", "", "btn btn-primary w-50", "", "Confirm");
-    //var cancel_button = create_tag("a", "#", "", "btn w-50 btn-secondary", "", "Cancel");
-    var footer = create_tag("div", "", "", "card-footer text-muted", "", "" + table_order_time);
-
-    //Status Override
-    var override_dropdown = create_tag("div", "", "", "override_drop", "", "");
-    var override_button = create_tag("button", "", "", "override_button", "", "Status Override");
-    var override_content = create_tag("div", "", "", "override-content", "", "");
-    var override_to_pending = create_tag("a", "#", "", "", "", "Pending");
-    var override_to_in_kitchen = create_tag("a", "#", "", "", "", "In Kitchen");
-    var override_to_ready = create_tag("a", "#", "", "", "", "Order Ready");
-    var override_to_cancelled = create_tag("a", "#", "", "", "", "Cancelled");
-    var override_to_archive = create_tag("a", "#", "", "", "", "archive");
-
-    override_to_pending.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "client_confirmed");
-    override_to_in_kitchen.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "waiter_confirmed");
-    override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
-    override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
-    override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-
-
-    //confirm_button.onclick=change_table_order_state(table_order_id,"waiter_confirmed");
-    //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");
-    cardbody.appendChild(order_num_head);
-    cardbody.appendChild(order_table_head);
-    cardbody.appendChild(list_of_items);
-    cardbody.appendChild(comment_box);
-    //cardbody.appendChild(confirm_button);
-    //cardbody.appendChild(cancel_button);
-
-    override_content.appendChild(override_to_pending);
-    override_content.appendChild(override_to_in_kitchen);
-    override_content.appendChild(override_to_ready);
-    override_content.appendChild(override_to_cancelled);
-    override_content.appendChild(override_to_archive);
-    override_dropdown.appendChild(override_button);
-    override_dropdown.appendChild(override_content);
-
-    border.appendChild(cardbody);
-    border.appendChild(footer);
-    border.appendChild(override_dropdown);
-
-    panel_title.appendChild(panel_title_text);
-    panel_header.appendChild(panel_title);
-
-    panel_body.appendChild(border);
-    panel_content_top.appendChild(panel_body);
-
-    top_of_panel.appendChild(panel_header);
-    top_of_panel.appendChild(panel_content_top);
-    top_of_panel.value = table_order_state;
-    top_of_panel.name = "top_table_" + table_order_table_number;
-    // print(top_of_panel.name);
-
-    pending_list.appendChild(top_of_panel);
-}
-
+/**
+ * Utility function to create html tags.
+ * Function creates a tag with DOM and applies any given parameters to it before returning it.
+ * @param tag_name
+ * @param href
+ * @param src
+ * @param tag_class
+ * @param id
+ * @param text
+ * @returns {HTMLElement}
+ */
 function create_tag(tag_name, href, src, tag_class, id, text) {
     var tag = document.createElement(tag_name);
     if (href.length > 0) {
@@ -749,17 +449,17 @@ function create_tag(tag_name, href, src, tag_class, id, text) {
     if (href.length > 0) {
         tag.href = href;
     }
-    /*this might work?
-    if (data-toggle.length > 0) {
-        tag.data-toggle = data-toggle;
-    }
-    if (data-parent.length > 0) {
-        tag.data-parent = data-parent;
-    }*/
     return tag;
 
 }
 
+/**
+ * Enables the functionality of tabs in the waiter page.
+ * The function links the changes in css and elements displayed when switching tabs.
+ * @param evt
+ * @param tabname
+ * @param id
+ */
 function tab(evt, tabname, id) {
     //reset the bg colour if it is red.
     var i, tabcontent, tablinks;
@@ -777,6 +477,7 @@ function tab(evt, tabname, id) {
     tab.style.backgroundColor = "white";
     evt.currentTarget.className += " active";
 }
+
 
 // update if external changes detected:
 function update_table_order_states(table_order_states) {

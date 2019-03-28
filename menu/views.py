@@ -187,6 +187,12 @@ def add_food_to_order(request, table_order_id):
     else:
         pass
 
+def payment_redirect(request, table_order_id):
+
+
+    return render(
+        request, 'menu/templates/payment_redirect.html', context={})
+
 
 # =========== DELETE FROM DB FUNCTIONS:=========================
 

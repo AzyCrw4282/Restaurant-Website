@@ -23,4 +23,10 @@ urlpatterns = [
                       name='delete_food_from_order'),
                   url(r'^table_order/(?P<table_order_id>[^/]+)/add_food_to_order/$', views.add_food_to_order,
                       name='add_food_to_order'),
+                  url(r'^table_order/(?P<table_order_id>[^/]+)/payment_redirect/$', views.payment_redirect,
+                      name='payment_redirect'),
+                  url(r'^table_order/(?P<table_order_id>[^/]+)/payment_redirect/get_menu_popup_data/',
+                      views.get_menu_popup_data,
+                      name='get_menu_popup_data_payment')
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

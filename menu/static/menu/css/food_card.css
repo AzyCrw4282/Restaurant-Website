@@ -1,10 +1,11 @@
 
 .food_card_container {
-    margin:auto;
+    margin: auto;
     width: 1535px;
     display: block;
 
 }
+
 .food_card {
     display: inline-block;
     box-shadow: 0 4px 4px 0 grey;
@@ -16,20 +17,24 @@
     background: #ffffff;
     z-index: -2;
 }
+
 .food_card p {
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
     font-size: 20px;
 }
+
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
 .food_card h1, h2, h3 {
     font-family: "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, "sans-serif";
     text-align: center;
     color: #C00000;
 }
+
 .food_card_button {
     display: block;
     width: 99%;
@@ -49,7 +54,6 @@
 }
 
 
-
 .food_card_img_border {
     width: 300px;
     height: 300px;
@@ -63,8 +67,8 @@
 .food_card_img {
     width: 99%;
     height: auto;
-    position:relative;
-    z-index:0;
+    position: relative;
+    z-index: 0;
 }
 
 
@@ -74,14 +78,14 @@
     height: 60px;
 
 }
+
 .food_card_main_container {
     padding-top: 175px;
 }
 
 
-
 .food_allergy_buttons {
-    margin:5px;
+    margin: 5px;
     float: left;
     background: #C00000;
     text-align: center;
@@ -101,18 +105,18 @@
 
 .food_allergy_info_content {
     position: absolute;
-    top:70%;
     background-color: #fefefe;
-    width:100%;
+    width: 100%;
     display: none;
     border-radius: 5px;
+    bottom: 0;
+
 }
 
 .food_desc_content {
     position: absolute;
-    top:70%;
     background-color: #fefefe;
-    width:100%;
+    width: 100%;
     display: none;
     border-radius: 5px;
 }

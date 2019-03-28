@@ -380,7 +380,7 @@ function populate_popup(data) {
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "$" + (Math.floor(total_price * 100) / 100).toString();
+    total_tag.innerText = "£" + (Math.floor(total_price * 100) / 100).toString();
     var button = document.getElementById("submit_order");
     if (order_submitted == "client_created") {
         button.innerText = "Submit";

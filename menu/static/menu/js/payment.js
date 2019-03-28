@@ -25,7 +25,7 @@ function populate_popup_payment(data) {
         basket_item_product_name.innerText = order["food_name"];
         var basket_item_span = document.createElement("span");
         basket_item_span.className = "price";
-        basket_item_span.innerText = "$" + order["food_price"];
+        basket_item_span.innerText = "£" + order["food_price"];
         basket_item_p.appendChild(basket_item_product_name);
         basket_item_p.appendChild(basket_item_span);
         basket_item_container.appendChild(basket_item_p);
@@ -35,7 +35,7 @@ function populate_popup_payment(data) {
     var total_p = document.getElementById("cart_total_price");
     console.log(total_p);
 
-    total_p.innerText = "$"+(Math.floor(total_price*100)/100).toString();
+    total_p.innerText = "£"+(Math.floor(total_price*100)/100).toString();
 }
 function redirect_waiting(){
     var url=window.location.toString().split('/');

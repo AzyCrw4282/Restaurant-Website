@@ -102,10 +102,13 @@ def add_information_to_food(request):
             print(information_list)
             for food_id in food_list:
                 food = Food.objects.get(id=food_id)
-                food.information.clear()
                 for information_id in information_list:
                     information = FoodInformation.objects.get(id=information_id)
-                    food.information.add(information)
+                    if information in food.information.all():
+                        food.information.remove(information)
+                    else:
+                        food.information.remove(information)
+
                 food.save()
             print("SUCCESSSSSSSSS")
             return JsonResponse(SUCCESSFUL_RESPONSE)

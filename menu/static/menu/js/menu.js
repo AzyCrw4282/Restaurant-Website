@@ -9,6 +9,7 @@
  */
 
 var authenticated = false;
+
 function user_is_authenticated() {
     authenticated = true;
 }
@@ -158,7 +159,7 @@ function load_tab_shortcut_buttons(categories) {
         a.style = "text-decoration:none;";
         a.href = "#" + cat_name; //there is a link to each different category.
         a.innerHTML += cat_name.toUpperCase();
-        tab_links.appendChild(a);
+        div.appendChild(a);
     }
 
 
@@ -233,14 +234,14 @@ function add_card(card, info_dict) {
     desc_button.style.cssFloat = 'right';
     desc_button.style.background = '#0F31C0';
 
-    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
-    div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
-    div_2.style.backgroundRepeat="no-repeat";
-    div_2.style.backgroundSize="300px 300px";
+    var card_img_border = create_tag("div", "", "", "food_card_img_border", "", "");
+    card_img_border.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    card_img_border.style.backgroundRepeat = "no-repeat";
+    card_img_border.style.backgroundSize = "300px 300px";
 
     // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
-    var div_3 = create_tag("div", "", "", "", "", "");
-    var div_4 = create_tag("div", "", "", "", "", "");
+    var comment_section = create_tag("div", "", "", "", "", "");
+    var order_button_section = create_tag("div", "", "", "", "", "");
 
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
@@ -274,7 +275,7 @@ function add_card(card, info_dict) {
         var allergy_name = information[i]["name"];
         var allergy_content = information[i]["ingredients"];
 
-       //the button will only display the first letter of the information.
+        //the button will only display the first letter of the information.
         var allergy_button = create_tag("button", "", "", "food_allergy_buttons", "allergy_button" + allergy_name + id, "" + allergy_name[0]);
 
         allergy_button.value = allergy_name; //all the names in the food.information
@@ -316,7 +317,7 @@ function add_card(card, info_dict) {
     var info_popup_header = create_tag("div", "", "", "food_desc_content_header", "", "");
     var info_popup_close = create_tag("span", "", "", "food_desc_content_close", "desc_close_button" + id, "");
 
-    var desc_heading_popup = create_tag("h2", "", "", "", "", ""+food_name);
+    var desc_heading_popup = create_tag("h2", "", "", "", "", "" + food_name);
     var desc_popup_body = create_tag("div", "", "", "food_desc_content_body", "", "");
     var desc_displays = create_tag("p", "", "", "", "", "" + desc);
     var desc_popup_footer = create_tag("div", "", "", "food_allergy_desc_content_footer", "", "");
@@ -435,9 +436,7 @@ function populate_popup(data) {
         } else {
             basket_item_p.style.backgroundColor = "#ccffcc"
         }
-        
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
-
         var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"] + ": " + order["comment"]);
         var li_price = create_tag("span", "", "", "basket_item_price", "", "" + order["food_price"]);
         delete_button.onclick = delete_food_from_order(order["id"]);
@@ -446,6 +445,7 @@ function populate_popup(data) {
         basket_item_p.appendChild(li_price);
         basket_item_container.appendChild(basket_item_p);
     }
+
     var total_tag = document.getElementById("order_total");
     total_tag.innerText = "£" + (Math.floor(total_price * 100) / 100).toString();
     var button = document.getElementById("submit_order");

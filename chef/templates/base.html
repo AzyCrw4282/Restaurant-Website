@@ -1,0 +1,26 @@
+<html lang="en">
+{% load static %}
+{% block head %}
+    <meta charset="utf-8">
+    <title>Oaxaca Welcome</title>
+    <link rel="stylesheet" href="{% static 'chef/css/kitchenView.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'chef/css/banner.css' %}" type="text/css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{% static 'chef/js/banner.js' %}"></script>
+    <script>
+        banner()
+    </script>
+
+    <div id="banner" class="banner">
+        <div class="links_bar">
+            <a href="/accounts/logout" id="login_link">Logout</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
+</html>

@@ -1,0 +1,125 @@
+.tab {
+    top: 100px;
+    margin-top: 100px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style th e tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.table_filter_content {
+    display: none;
+    position: absolute;
+    background-color: #C00000;
+    width: 100%;
+    overflow: auto;
+    top: 100%;
+    z-index: 2;
+    color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+
+.table_filter_content input {
+    float: right;
+}
+
+.table_filter_content a {
+
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.table_filter_content a:hover {
+    background-color: #FF0000;
+}
+
+.table_filter_dropdown {
+    position: absolute;
+    display: inline-block;
+}
+
+.table_filter_dropdown:hover .table_filter_content {
+    display: block;
+
+}
+
+
+.order_text {
+    color: #C00000;
+}
+
+.override_button {
+    background-color: #C00000;
+    color: white;
+    padding: 5px 5px;
+    font-size: 16px;
+    border: none;
+    max-height: 40px;
+}
+
+.override_drop {
+    position: relative;
+    display: inline-block;
+}
+
+.override-content {
+    display: none;
+    position: absolute;
+    background-color: #C00000;
+
+    z-index: 1;
+}
+
+.override-content a {
+    color: white;
+    padding: 12px 16px;
+    display: block;
+
+}
+
+.override-content a:hover {
+    background-color: #FF0000;
+}
+
+.override_drop:hover .override-content {
+    display: block;
+
+}
+
+.override_drop:hover .override_button {
+    background-color: #FF0000
+}
+

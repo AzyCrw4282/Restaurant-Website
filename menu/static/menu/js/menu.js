@@ -1,18 +1,3 @@
-// Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-// categories={
-//      "mains": [
-//             {"name": "Tacos with cereal", "price": "£5"},
-//             {"name": "Tacos", "price": "£2"},
-//             {"name": "Tacos with toast", "price": "£3"}],
-//      }
-// the schema is:
-// # FoodCategory( _id, name)
-//#  Food( _id, name,price, category_id , allergy: MtM(FoodAllergies) )
-//
-// sorting is probably faster server side, so we will expect
-// this is an function gets the context passed to the html and checks
-//it's relevance and readability
-
 // SECTION STRUCTURE OF THIS FILE:
 // ACCESS POINT (LOADING DATA FROM HTML)
 // CREATING HTML ELEMENTS FOR THE PAGE
@@ -50,9 +35,13 @@ function load_data(data) {
         food_info_dict[id] = info_dict; //each food information should have a respective id.
     }
 
-    add_filter_options(food_info_dict); //should be a filter option for each information.
 
+    add_filter_options(food_info_dict); //should be a filter option for each information.
     load_food_cards_into_sections(foods, food_categories, food_info_dict); //each section will be made up of food category and its food and the foods information.
+    setInterval(function () {
+        update_menu_popup_data();
+    }, 30000);
+
 }
 
 /**
@@ -152,8 +141,16 @@ function update_filter(checkbox) {
 
 //============= CREATING HTML ELEMENTS==============
 function load_tab_shortcut_buttons(categories) {
-    var tab_links = document.getElementById("links_wrapper");
-    for (var i in categories) { //iterates over all the categories
+
+    var div = document.getElementById("links_wrapper");
+    var a = document.createElement("a");
+    a.style = "text-decoration:none;";
+    a.innerHTML += "BASKET";
+    a.href = "#basket";
+    a.id = "basket";
+    a.onclick = hide_order_popup();
+    div.appendChild(a);
+    for (var i in categories) {
         var cat = categories[i];
         var cat_name = cat["name"]; //represents all the different category name.
         var a = document.createElement("a");
@@ -163,7 +160,24 @@ function load_tab_shortcut_buttons(categories) {
         a.innerHTML += cat_name.toUpperCase();
         tab_links.appendChild(a);
     }
-    tab_links.appendChild(a); //each different category will have a link.
+
+
+}
+
+function hide_order_popup_html() {
+    var basket = document.getElementById("order_popup");
+    console.log(basket.style.display);
+    console.log(basket);
+    if (basket.style.display) {
+        console.log("yes")
+    } else {
+        basket.style.display = "block"
+    }
+    if (basket.style.display == "block") {
+        basket.style.display = "none"
+    } else {
+        basket.style.display = "block";
+    }
 }
 
 /**
@@ -172,6 +186,29 @@ function load_tab_shortcut_buttons(categories) {
  * @param info_dict
  * @returns {HTMLElement} this will be the card
  */
+
+function hide_order_popup() {
+    return function () {
+        var basket = document.getElementById("order_popup");
+        console.log(basket.style.display);
+        console.log(basket);
+        if (basket.style.display) {
+            console.log("yes")
+        } else {
+            basket.style.display = "block"
+        }
+        if (basket.style.display == "block") {
+            basket.style.display = "none"
+        } else {
+            basket.style.display = "block";
+        }
+    }
+
+}
+
+function redirect_user_payment() {
+    window.location += 'payment_redirect/'
+}
 
 function add_card(card, info_dict) {
     var information_list = card['information'];
@@ -195,10 +232,16 @@ function add_card(card, info_dict) {
     var desc_button = create_tag("button", "", "", "food_allergy_buttons", "desc_button" + id, "i");
     desc_button.style.cssFloat = 'right';
     desc_button.style.background = '#0F31C0';
-    var card_img_border = create_tag("div", "", "", "food_card_img_border", "", "");
-    card_img_border.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
-    var comment_section = create_tag("div", "", "", "", "", "");
-    var order_button_section = create_tag("div", "", "", "", "", "");
+
+    var div_2 = create_tag("div", "", "", "food_card_img_border", "", "");
+    div_2.style.backgroundImage = "url('" + "/menu/media/" + src + "')";
+    div_2.style.backgroundRepeat="no-repeat";
+    div_2.style.backgroundSize="300px 300px";
+
+    // var img = create_tag("IMG", "", "/menu/media/" + src, "food_card_img", "", "");
+    var div_3 = create_tag("div", "", "", "", "", "");
+    var div_4 = create_tag("div", "", "", "", "", "");
+
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
     var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price);
@@ -370,7 +413,9 @@ function desc_popup_display_off(id) {
  * @param data represents the tables order information.
  */
 
+
 function populate_popup(data) {
+
     var table_order = data["table_order"];
     var basket_item_container = document.getElementById("basket_item_container");
     while (basket_item_container.firstChild) {
@@ -379,12 +424,18 @@ function populate_popup(data) {
     var order_submitted = table_order["status"];
     var order_list = table_order["orders"];
     var total_price = table_order["total_price"];
-
-    for (var order_id in order_list) {//For each order create it in the popup list
+    console.log(order_list);
+    for (var i in order_list) {//For each order create it in the popup list
         var basket_item_p = document.createElement("p");
 
-        var order = order_list[order_id];
-
+        var order = order_list[i];
+        console.log(order["status"]);
+        if (order["status"] == "cooking") {
+            basket_item_p.style.backgroundColor = "#ffb7b7"
+        } else {
+            basket_item_p.style.backgroundColor = "#ccffcc"
+        }
+        
         var delete_button = create_tag("button", "", "", "basket_delete_buttons", "", "X");
 
         var li_name = create_tag("a", "", "", "basket_item_name", "", order["food_name"] + ": " + order["comment"]);
@@ -396,9 +447,13 @@ function populate_popup(data) {
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "Total: " + total_price;
+    total_tag.innerText = "£" + (Math.floor(total_price * 100) / 100).toString();
     var button = document.getElementById("submit_order");
-    button.innerText = "Submit Order (status: " + order_submitted + ")";
+    if (order_submitted == "client_created") {
+        button.innerText = "Submit";
+    } else {
+        button.innerText = "Thank you";
+    }
 
 }
 

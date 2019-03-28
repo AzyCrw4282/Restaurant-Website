@@ -1,8 +1,6 @@
 //======== AJAX REQUESTS ================================
 function delete_food_from_menu(id) {
-
     return function () {
-
         $.ajax({
             //Post request made here
             type: "post",
@@ -12,9 +10,9 @@ function delete_food_from_menu(id) {
                 "food_id": id
             }
         })
-
     }
 }
+
 
 
 function delete_food_from_order(order_id) {
@@ -32,11 +30,7 @@ function delete_food_from_order(order_id) {
                 update_menu_popup_data();
             },
         });
-
-
     }
-
-
 }
 
 function submit_order() {
@@ -46,6 +40,12 @@ function submit_order() {
     //     var date_time = date + ' ' + time;
     console.log("submitting order");
     window.location += "submit_order/"
+}
+
+
+function pay_order(){
+
+
 }
 
 
@@ -99,7 +99,28 @@ function update_menu_popup_data() {
     });
 
 }
+function update_menu_popup_data_payment() {
+    $.ajax({
+        url: 'get_menu_popup_data/',
+        dataType: 'json',
+        type: 'GET',
+        success: function (data) {
+            if (JSON.parse(data["success"]) == "1") {
+                try {
+                    populate_popup_payment(JSON.parse(data['message']));
+                } catch (e) {
+                    //    data is empty
+                }
+            } else {
+                console.log("NO DATA")
 
+            }
+        },
+        error: function (data) {
+        }
+    });
+
+}
 
 
 

@@ -1,0 +1,421 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>waiter package &#8212; TeamProject2019_01 1.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="waiter-package">
+<h1>waiter package<a class="headerlink" href="#waiter-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-waiter.admin">
+<span id="waiter-admin-module"></span><h2>waiter.admin module<a class="headerlink" href="#module-waiter.admin" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-waiter.apps">
+<span id="waiter-apps-module"></span><h2>waiter.apps module<a class="headerlink" href="#module-waiter.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="waiter.apps.WaiterConfig">
+<em class="property">class </em><code class="descclassname">waiter.apps.</code><code class="descname">WaiterConfig</code><span class="sig-paren">(</span><em>app_name</em>, <em>app_module</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.apps.WaiterConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="attribute">
+<dt id="waiter.apps.WaiterConfig.name">
+<code class="descname">name</code><em class="property"> = 'waiter'</em><a class="headerlink" href="#waiter.apps.WaiterConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-waiter.forms">
+<span id="waiter-forms-module"></span><h2>waiter.forms module<a class="headerlink" href="#module-waiter.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="waiter.forms.FoodForm">
+<em class="property">class </em><code class="descclassname">waiter.forms.</code><code class="descname">FoodForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.forms.FoodForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="waiter.forms.FoodForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#waiter.forms.FoodForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="waiter.forms.FoodForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['name', 'price', 'description', 'picture', 'category', 'display']</em><a class="headerlink" href="#waiter.forms.FoodForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#waiter.forms.FoodForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="menu.html#menu.models.Food" title="menu.models.Food"><code class="xref py py-class docutils literal notranslate"><span class="pre">menu.models.Food</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = {'category': &lt;django.forms.models.ModelChoiceField object&gt;, 'description': &lt;django.forms.fields.CharField object&gt;, 'display': &lt;django.forms.fields.BooleanField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'picture': &lt;django.forms.fields.ImageField object&gt;, 'price': &lt;django.forms.fields.FloatField object&gt;}</em><a class="headerlink" href="#waiter.forms.FoodForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#waiter.forms.FoodForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodForm.media">
+<code class="descname">media</code><a class="headerlink" href="#waiter.forms.FoodForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="waiter.forms.FoodForm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>commit=True</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.forms.FoodForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save this form’s self.instance object if commit=True. Otherwise, add
+a save_m2m() method to the form which can be called after the instance
+is saved manually at a later time. Return the model instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="waiter.forms.FoodInformationForm">
+<em class="property">class </em><code class="descclassname">waiter.forms.</code><code class="descname">FoodInformationForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em>, <em>renderer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.forms.FoodInformationForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="waiter.forms.FoodInformationForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#waiter.forms.FoodInformationForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="waiter.forms.FoodInformationForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['name', 'ingredients']</em><a class="headerlink" href="#waiter.forms.FoodInformationForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodInformationForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#waiter.forms.FoodInformationForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="menu.html#menu.models.FoodInformation" title="menu.models.FoodInformation"><code class="xref py py-class docutils literal notranslate"><span class="pre">menu.models.FoodInformation</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodInformationForm.base_fields">
+<code class="descname">base_fields</code><em class="property"> = {'ingredients': &lt;django.forms.fields.CharField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#waiter.forms.FoodInformationForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodInformationForm.declared_fields">
+<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#waiter.forms.FoodInformationForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="waiter.forms.FoodInformationForm.media">
+<code class="descname">media</code><a class="headerlink" href="#waiter.forms.FoodInformationForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="waiter.forms.FoodInformationForm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>commit=True</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.forms.FoodInformationForm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save this form’s self.instance object if commit=True. Otherwise, add
+a save_m2m() method to the form which can be called after the instance
+is saved manually at a later time. Return the model instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-waiter.models">
+<span id="waiter-models-module"></span><h2>waiter.models module<a class="headerlink" href="#module-waiter.models" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-waiter.tests">
+<span id="waiter-tests-module"></span><h2>waiter.tests module<a class="headerlink" href="#module-waiter.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="waiter.tests.WaiterTests">
+<em class="property">class </em><code class="descclassname">waiter.tests.</code><code class="descname">WaiterTests</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.close_alert_and_get_its_text">
+<code class="descname">close_alert_and_get_its_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.close_alert_and_get_its_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.is_alert_present">
+<code class="descname">is_alert_present</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.is_alert_present" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.is_element_present">
+<code class="descname">is_element_present</code><span class="sig-paren">(</span><em>how</em>, <em>what</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.is_element_present" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.tearDown">
+<code class="descname">tearDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.tearDown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for deconstructing the test fixture after testing it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="waiter.tests.WaiterTests.test_waiter_tests">
+<code class="descname">test_waiter_tests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#waiter.tests.WaiterTests.test_waiter_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-waiter.urls">
+<span id="waiter-urls-module"></span><h2>waiter.urls module<a class="headerlink" href="#module-waiter.urls" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="waiter.urls.path">
+<code class="descclassname">waiter.urls.</code><code class="descname">path</code><span class="sig-paren">(</span><em>route</em>, <em>view</em>, <em>kwargs=None</em>, <em>name=None</em>, <em>*</em>, <em>Pattern=&lt;class 'django.urls.resolvers.RoutePattern'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.urls.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-waiter.views">
+<span id="waiter-views-module"></span><h2>waiter.views module<a class="headerlink" href="#module-waiter.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="waiter.views.add_food">
+<code class="descclassname">waiter.views.</code><code class="descname">add_food</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_food" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.add_food_category">
+<code class="descclassname">waiter.views.</code><code class="descname">add_food_category</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_food_category" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.add_food_information">
+<code class="descclassname">waiter.views.</code><code class="descname">add_food_information</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_food_information" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.add_information_to_food">
+<code class="descclassname">waiter.views.</code><code class="descname">add_information_to_food</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_information_to_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to add an information propert to a food item
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.add_table">
+<code class="descclassname">waiter.views.</code><code class="descname">add_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.archive_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">archive_table_order</code><span class="sig-paren">(</span><em>table_order_id</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.archive_table_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>archives a table order into a separate db model
+and deletes the active one.
+:param table_order_id:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.change_table_order_state">
+<code class="descclassname">waiter.views.</code><code class="descname">change_table_order_state</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.change_table_order_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the state of an order, archives it if necessary.
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.confirm_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">confirm_table_order</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.confirm_table_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.db_objects_to_list_of_dicts">
+<code class="descclassname">waiter.views.</code><code class="descname">db_objects_to_list_of_dicts</code><span class="sig-paren">(</span><em>objects</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.db_objects_to_list_of_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts multiple db objects to a list of its dictionaries
+:param objects:
+:return: [{obj1}{obj2}{objN}]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_food">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_food</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_food" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes specified food item from db
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_food_category">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_food_category</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_food_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes a food category specified in the request
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_food_information">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_food_information</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_food_information" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_table">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_table_order</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_table_order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.delete_unarchived_table_orders">
+<code class="descclassname">waiter.views.</code><code class="descname">delete_unarchived_table_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_unarchived_table_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes all unarchived orders
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.deselect_table">
+<code class="descclassname">waiter.views.</code><code class="descname">deselect_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.deselect_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>waiter request to deselect a table
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.get_table_order_list">
+<code class="descclassname">waiter.views.</code><code class="descname">get_table_order_list</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.get_table_order_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a list of all orders but the client created ones,
+in the relevant format.
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.insert_stuff">
+<code class="descclassname">waiter.views.</code><code class="descname">insert_stuff</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.insert_stuff" title="Permalink to this definition">¶</a></dt>
+<dd><p>function for inserting items into the menu,
+using forms only.
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.main_page">
+<code class="descclassname">waiter.views.</code><code class="descname">main_page</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.main_page" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.recover_archived_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">recover_archived_table_order</code><span class="sig-paren">(</span><em>table_order_id</em>, <em>status_to_recover_to</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.recover_archived_table_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>tries to recover an order from an archived state to an active state
+:param table_order_id:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.select_table">
+<code class="descclassname">waiter.views.</code><code class="descname">select_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.select_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>waiter request to select a table
+:param request:
+:return:</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-waiter">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-waiter" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TeamProject2019_01</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Group 1.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/waiter.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

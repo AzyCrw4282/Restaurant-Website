@@ -1,18 +1,14 @@
 # THIS IS A PYTHON FILE FOR HANDELING GENERAL REQUESTS FROM URL'S
 
 from django.shortcuts import render
-from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse
-from django.shortcuts import reverse, redirect, get_object_or_404
-import os, hashlib
-from django.core.files import File
+from django.http import HttpResponseRedirect
 from menu.models import Table, FoodInformation, Order, Food, FoodCategory, TableOrder
-
 from datetime import datetime
 from django.http import JsonResponse
 import json
 import uuid
 
-with open('config.json') as json_data_file:
+with open("../config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 
@@ -28,7 +24,7 @@ SUCCESSFUL_RESPONSE = {
 
 def db_objects_to_list_of_dicts(objects):
     '''
-    converts multiple db objects to a list of it's dictionaries
+    converts multiple db objects to a list of its dictionaries
     :param objects:
     :return:
     '''
@@ -40,29 +36,22 @@ def db_objects_to_list_of_dicts(objects):
 
 # ======= NORMAL HTTP REQUESTS: =======================
 def welcome_page(request):
-    table_list = db_objects_to_list_of_dicts(Table.objects.all())
-
-    #     create a unique id as a temp solution for now and redirect the person to uuid/menu :D
-    #     right now this is generated automatically,
-    #   this should be done by some code the user can enter? discuss with client?
-    tables = Table.objects.all()
-    for table in tables:
-        print("AVAILABLE TABLES:", table.id, ": ", table.number)
+    '''
+    serves the welcome page
+    :param request:
+    :return:
+    '''
     return render(
         request, 'menu/templates/welcome_page.html', context={})
 
 
 def menu_unsafe(request, table_id):
-    # if user lands on this page it means that he may have a valid table code but no table order associated with it yet,
-    # so create a table order and redirect him after checking validity of table id.
     """
-    Serves Main menu screen with relevant data
+    determines if the table id provide is relevant by creating a new table order with it.
     :param request:
     :return: menu.html with data (rendered)
     """
-    if request.method == 'POST':
-        print("TABLE ID: ", table_id)
-    print("TABLE ID: ", table_id)
+
     # checking authenticity of the table code by creating a table order with the table foreign key table_id
     try:
         table_order = TableOrder.objects.create(
@@ -76,33 +65,28 @@ def menu_unsafe(request, table_id):
 
 
 def menu_safe(request, table_order_id):
-    # if user lands on this page it means that he has a valid table code but no order associated with hime het,
-    # so create a table order and redirect him.
     """
     Serves Main menu screen with relevant data
     :param request:
     :return: menu.html with data (rendered)
     """
-    if request.method == 'POST':
-        print("TABLE ID: ", table_order_id)
-    print("TABLE ID: ", table_order_id)
+
+
     try:
         TableOrder.objects.get(id=table_order_id)
     except:
         return HttpResponseRedirect("/menu/")
 
-    print("called menu")
-
     response_dict = {
         "food_list": db_objects_to_list_of_dicts(Food.objects.all()),
         "category_list": db_objects_to_list_of_dicts(FoodCategory.objects.all()),
         "food_information_list": db_objects_to_list_of_dicts(FoodInformation.objects.all())}
-
     # converting to json
     response_json = json.dumps(response_dict)
     context = {"category_list": response_json}
     return render(
         request, 'menu/templates/menu.html', context)
+
 
 
 def get_menu_popup_data(request, table_order_id):
@@ -118,7 +102,8 @@ def get_menu_popup_data(request, table_order_id):
 
     try:
         table_order = TableOrder.objects.get(id=table_order_id)
-        table_order_items = table_order.orders.all()
+        table_order_items = table_order.order_set.all()
+
         # convert to dict:
         response_dict = {"table_order": table_order.to_dict()}
         # replace the order items (id's to the object dictionaries)
@@ -130,7 +115,6 @@ def get_menu_popup_data(request, table_order_id):
             total_price += order_item.food.price
         response_dict["table_order"].update({'total_price': total_price})
 
-        print(response_dict)
         response = {
             'success': True,
             'message': json.dumps(response_dict)  # Dumps data and creates a string
@@ -144,8 +128,14 @@ def get_menu_popup_data(request, table_order_id):
         return JsonResponse(UNSUCCESSFUL_RESPONSE)
 
 
-# =========== INSET INTO DB FUNCTIONS ==========================
+# =========== INSERT INTO DB FUNCTIONS ==========================
 def submit_order(request, table_order_id):
+    '''
+    This function changes the status of the order to confirmed.
+    :param request:
+    :param table_order_id:
+    :return:
+    '''
     print("CALLED SUBMIT ORDER")
     try:
         table_order = TableOrder.objects.get(id=table_order_id)
@@ -153,7 +143,6 @@ def submit_order(request, table_order_id):
             table_order.status = table_order_states["client_confirmed"]
             table_order.time = datetime.now()
             table_order.save()
-            print("SUCCESSFUL redirecting...")
             #     UPDATE THE WAITER HERE?
         return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
 
@@ -161,6 +150,8 @@ def submit_order(request, table_order_id):
         print("FAIlED to submit order: ", e)
         print("redirecting")
         return HttpResponseRedirect("/menu/table_order/" + table_order_id + "/")
+
+
 def add_food_to_order(request, table_order_id):
     """
     Adds an order item to an existing table-order
@@ -183,9 +174,8 @@ def add_food_to_order(request, table_order_id):
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
-                    comment=request.POST['comment'],
+                    comment=request.POST['comment'], table_order=table_order
                 )
-                table_order.orders.add(order)
                 response = SUCCESSFUL_RESPONSE
             else:
                 response = UNSUCCESSFUL_RESPONSE
@@ -197,15 +187,27 @@ def add_food_to_order(request, table_order_id):
     else:
         pass
 
+def payment_redirect(request, table_order_id):
+
+
+    return render(
+        request, 'menu/templates/payment_redirect.html', context={})
+
 
 # =========== DELETE FROM DB FUNCTIONS:=========================
 
 def delete_food_from_order(request, table_order_id):
+    '''
+    removes a food from the table order relation
+    :param request:
+    :param table_order_id:
+    :return:
+    '''
     print("DELETING FOOD ORDER ITEM")
     try:
         table_order = TableOrder.objects.get(id=table_order_id)
         if table_order.status == table_order_states["client_created"]:
-            order = table_order.orders.get(id=request.POST["order_id"])
+            order = table_order.order_set.get(id=request.POST["order_id"])
             order.delete()
             return JsonResponse(SUCCESSFUL_RESPONSE)
         else:
@@ -227,7 +229,6 @@ def delete_table_order(request, table_order_id):
     if request.method == 'POST':
         try:
             table_order = TableOrder.objects.get(id=table_order_id)
-
             table_order.delete()
         except:
             print("System failed to delete")

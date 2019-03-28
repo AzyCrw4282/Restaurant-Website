@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{# Objects expected: #}
+{#category_list -- see explanation in load_category_items in menu/js/menu.js#}
+<html lang="en">
+{% extends 'accounts/templates/base.html' %}
+{% load staticfiles %}
+{% block body %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager_tab.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager_accounts.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager_chart.css' %}" type="text/css"/>
+
+    <script src="{% static 'accounts/js/manager.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_accounts.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_ajax.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_chart.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_helper_functions.js' %}"></script>
+    <script src="{% static 'accounts/js/banner.js' %}"></script>
+
+    <div class="tabs_header" id="tabs_header">
+        <a style="text-decoration:none;" onclick="show_stats()">Statistics</a>
+        <a style="text-decoration:none;" onclick="show_accounts()">Accounts</a>
+
+    </div>
+    <div class="main_containter">
+
+        Weclome Staff
+        Page for Statistics
+        Page for account management
+        <div class="statistics_container" id="statistics_container">
+            <div class="profit_time_chart" id="profit_time_chart">
+                <canvas id="order_chart" width="600" height="400">
+
+                </canvas>
+                <div class="graph_results" id="graph_results">
+                    <output name="average">Average:</output>
+                    <output name="total">Total:</output>
+                </div>
+                <div class="graph_options">
+                    X-increments:
+                    <input onchange="create_data_sets()" name="increments" type="number"
+                           placeholder="x_increments" value="30">
+                    Time_spread:
+                    <input onchange="create_data_sets()" name="time_spread" type="number"
+                           placeholder="time_spread" value="1">
+                    start_date:
+                    <input onchange="create_data_sets()" name="start_date" type="date"
+                           placeholder="start_date" value="01-01-2019">
+                    <select onchange="create_data_sets()" name="time_step">
+                        <option value="days">days</option>
+                        <option value="minutes">minutes</option>
+                        <option value="hours">hours</option>
+                        <option value="weeks">weeks</option>
+                        <option value="months">months</option>
+                    </select>
+                    <select onchange="create_data_sets()" name="graph_type">
+                        <option value="bar">bar</option>
+                        <option value="line">line</option>
+                    </select>
+                    <select onchange="create_data_sets()" name="display_style">
+                        <option value="stacked">stacked</option>
+                        <option value="normal">normal</option>
+                    </select>
+                    <select onchange="create_data_sets()" name="waiter_list" multiple>
+
+                    </select>
+                    get most recent data:
+                    <button onclick="update_profit_time_chart()">Refresh</button>
+                    Generate 1000 fake orders (removable)
+                    <form onsubmit="return false">
+                        {% csrf_token %}
+
+                        <button onclick="generate_random_orders()">Generate</button>
+                        Delete fake orders
+                        <button onclick="delete_fake_orders()">Delete</button>
+
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript">
+                update_profit_time_chart();
+            </script>
+        </div>
+        <div id="accounts_container" class="accounts_container">
+            This page is for account management
+            option to automatically create the waiter group if it
+            <div class="user_manage_container">
+                <div class="user_manage_container_banner">
+                    <div style="float:left">
+                        <h3>Users</h3>
+                    </div>
+                    <div onclick="show_add_user_form()" id="user_manage_container_add_user_btn"
+                         class="user_manage_container_add_user_btn">
+                        <h2>+</h2>
+                    </div>
+                    <div class="add_user_form" id="add_user_form">
+                        <form name="add_user_form" onsubmit="return false">
+                            {% csrf_token %}
+                            <select name="group_name">
+                                <option value="waiter">waiter</option>
+                                <option value="chef">chef</option>
+                            </select>
+                            <input name="full_name" type="text" placeholder="full name">
+                            <input name="email" type="text" placeholder="email">
+                            <button onclick="submit_add_user_form()">Create</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="user_manage_container_table">
+                    <form name="delete_user_form" onsubmit="return false">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+            load_user_table({{ user_list| safe }}, {{ group_list| safe }});
+        </script>
+        <div id="database_management" class="database_management">
+            Delete orders older than number of days:
+            <input name="delete_archived_days" placeholder="num days">
+            <button name="delete_archived_submit" onclick="delete_old_table_orders()">Delete</button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
+
+</html>
+{#  <div class="welcome_message_container container">#}
+{#            <h2 class="welcome_message_2" style="font-size:60px" >WELCOME TO OAXACA</h2>#}
+{#        </div>#}
+{#        <input id="table_code" class="table_code_input float-right" placeholder="Please enter your code."> </input>#}
+{##}

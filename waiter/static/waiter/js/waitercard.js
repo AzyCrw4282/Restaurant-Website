@@ -19,7 +19,7 @@ function load_data(order_list, table_list, user_tables) {
     setInterval(function () {
         update_table_order_list();
         // update_filter(table_list);
-    }, 5000);
+    }, 1000);
 }
 
 function update_cards(data) {

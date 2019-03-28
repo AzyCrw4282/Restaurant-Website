@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 {# Objects expected: #}
 {#category_list -- see explanation in load_category_items in menu/js/menu.js#}
-<html lang="en">
 {% extends 'menu/templates/base.html' %}
 {% load staticfiles %}
 {% block body %}
-{#   LOADING SCRIPTS #}
-<script src="{% static 'menu/js/welcome_page.js' %}"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="../static/menu/css/welcome_page.css" type="text/css"/>
+    {#   LOADING SCRIPTS #}
+    <script src="{% static 'menu/js/welcome_page.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/menu/css/welcome_page.css" type="text/css"/>
+    <div class="welcome_bg_image">
+    <div class="welcome_container">
 
 
-<div class="welcome_bg_image">
-
-    <div class="welcome_title">
-        <a href="/accounts/login" style="text-decoration:none">
+        <div class="welcome_title">
+            <a href="/accounts/login" style="text-decoration:none">
 
             <span class="welcome_span">
             Welcome To Oaxaca
         </span>
-        </a>
-
-    </div>
-    <div class="welcome_container">
- </div>
-        <div class="input_code">
-
-            <input id="table_code" class="table_code_input" placeholder="Please enter your code.">
-
-        <div class="submit_button">
-            <button class="welcome_button" onclick="redirect_user()">Submit</button>
+            </a>
 
         </div>
 
+        <div class="input_container">
+            <div class="table_code_input">
+                <input id="table_code" placeholder="Please enter your code.">
+            </div>
 
+            <button id = "submit_code"class="welcome_button" onclick="redirect_user()">Submit</button>
 
-</div>
+            <script type="text/javascript">
+                var input = document.getElementById("table_code");
+
+                // Execute a function when the user releases a key on the keyboard
+                input.addEventListener("keyup", function (event) {
+                    // Number 13 is the "Enter" key on the keyboard
+                    if (event.keyCode === 13) {
+                        // Cancel the default action, if needed
+                        event.preventDefault();
+                        // Trigger the button element with a click
+                        document.getElementById("submit_code").click();
+                    }
+                });
+            </script>
+        </div>
+
+    </div>
+
 {% endblock %}
 
-</html>
+
 {#  <div class="welcome_message_container container">#}
 {#            <h2 class="welcome_message_2" style="font-size:60px" >WELCOME TO OAXACA</h2>#}
 {#        </div>#}

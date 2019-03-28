@@ -5,14 +5,22 @@
 {% extends 'accounts/templates/base.html' %}
 {% load staticfiles %}
 {% block body %}
-    <script src="{% static 'accounts/js/manager.js' %}"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-
     <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'accounts/css/manager.css' %}" type="text/css"/>
     <link rel="stylesheet" href="{% static 'accounts/css/manager_tab.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager_accounts.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'accounts/css/manager_chart.css' %}" type="text/css"/>
+
+    <script src="{% static 'accounts/js/manager.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_accounts.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_ajax.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_chart.js' %}"></script>
+    <script src="{% static 'accounts/js/manager_helper_functions.js' %}"></script>
+    <script src="{% static 'accounts/js/banner.js' %}"></script>
+
     <div class="tabs_header" id="tabs_header">
         <a style="text-decoration:none;" onclick="show_stats()">Statistics</a>
         <a style="text-decoration:none;" onclick="show_accounts()">Accounts</a>

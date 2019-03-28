@@ -495,8 +495,6 @@ function add_cardready(table_order_id, table_order_comment, table_order_time, ta
     override_to_ready.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_confirmed");
     override_to_cancelled.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "chef_canceled");
     override_to_archive.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
-
-
     deliver_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
 
     //cancel_button.onclick=change_table_order_state(table_order_id,"waiter_canceled");

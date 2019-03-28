@@ -15,7 +15,7 @@ SUCCESSFUL_RESPONSE = {
     'message': 'SUCCESS'
 }
 
-with open("../config.json") as json_data_file:
+with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
 

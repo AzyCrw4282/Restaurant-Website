@@ -66,6 +66,7 @@ function add_filter_options(food_info_dict) {
         checkbox.onclick = click_checkbox(checkbox);
         option.value = name.toString();
         option.innerText = name;
+        option.checked=true;
         option.appendChild(checkbox);
         option.onclick = update_filter(checkbox);
 

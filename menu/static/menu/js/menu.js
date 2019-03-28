@@ -247,7 +247,7 @@ function add_card(card, info_dict) {
     var commentForm = create_tag("form", "", "", "", "", "");
     var textField = create_tag("input", "", "", "", id + "comment", "");
     textField.placeholder="Personalize";
-    var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price);
+    var orderBtn = create_tag("button", "", "", "food_card_button", "", "Add to Order " + price +"$");
 
 
     //only when the user is authenticated, there will be a delete button.

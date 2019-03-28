@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
 from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table, ArchivedTableOrder, Order
-from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
-from datetime import timedelta, datetime
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 import json
 
@@ -18,9 +17,6 @@ SUCCESSFUL_RESPONSE = {
 with open("config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
-
-
-
 
 
 def db_objects_to_list_of_dicts(objects):
@@ -45,14 +41,16 @@ def main_page(request):
         # send all the archived orders once as they will not be queried upon later (hopefully this is ok?)
         # this could be done perhaps with ajax over multiple requests but there is not time for that now.
         data.update({"table_orders": db_objects_to_list_of_dicts(ArchivedTableOrder.objects.all())})
-        user_tables={}
+        user_tables = {}
         for table in request.user.waiter.tables.all():
-            user_tables.update({table.id:table.number})
-        data.update({"user_tables":user_tables})
+            user_tables.update({table.id: table.number})
+        data.update({"user_tables": user_tables})
         return render(request, "waiter/templates/Waiterver2.html", data)
     except:
         print("User does not have the waiter relation:")
         return HttpResponseRedirect(reverse("menu:welcome_page"))
+
+
 def insert_stuff(request):
     '''
     function for inserting items into the menu,
@@ -196,7 +194,7 @@ def delete_food(request):
             return
 
 
-def archive_table_order(table_order_id,user):
+def archive_table_order(table_order_id, user):
     '''
     archives a table order into a separate db model
     and deletes the active one.
@@ -204,7 +202,7 @@ def archive_table_order(table_order_id,user):
     :return:
     '''
     table_order = TableOrder.objects.get(id=table_order_id)
-    table_order.waiter=user
+    table_order.waiter = user
     table_order.save()
     # set the waiter that archived the order as
     table_order_json = table_order.to_archived()
@@ -265,7 +263,7 @@ def change_table_order_state(request):
             if status_to_change_to == "archived":
                 # if it is being changed to archived
                 try:
-                    archive_table_order(table_order_id,request.user.waiter)
+                    archive_table_order(table_order_id, request.user.waiter)
                     response = SUCCESSFUL_RESPONSE
                 except Exception as e:
                     response = UNSUCCESSFUL_RESPONSE
@@ -296,12 +294,13 @@ def change_table_order_state(request):
             response = UNSUCCESSFUL_RESPONSE
         return JsonResponse(response)
 
+
 def deselect_table(request):
     '''
-        waiter request to deselect a table
-        :param request:
-        :return:
-        '''
+    waiter request to deselect a table
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         try:
             table = Table.objects.get(id=request.POST["table_id"])
@@ -310,7 +309,7 @@ def deselect_table(request):
             response = SUCCESSFUL_RESPONSE
         except Exception as e:
             response = UNSUCCESSFUL_RESPONSE
-            print("failed to add table for user",e)
+            print("failed to add table for user", e)
         return JsonResponse(response)
 
 
@@ -322,15 +321,13 @@ def select_table(request):
     '''
     if request.method == 'POST':
         try:
-            table=Table.objects.get(id=request.POST["table_id"])
+            table = Table.objects.get(id=request.POST["table_id"])
 
             request.user.waiter.tables.add(table)
             # print(request.user.waiter.tables.all())
 
-            response=SUCCESSFUL_RESPONSE
+            response = SUCCESSFUL_RESPONSE
         except Exception as e:
-            response=UNSUCCESSFUL_RESPONSE
+            response = UNSUCCESSFUL_RESPONSE
             print("failed to add table for user")
         return JsonResponse(response)
-
-

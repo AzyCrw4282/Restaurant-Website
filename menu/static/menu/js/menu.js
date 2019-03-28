@@ -168,6 +168,10 @@ function hide_order_popup() {
 
 }
 
+function redirect_user_payment() {
+    window.location += 'payment_redirect/'
+}
+
 function add_card(card, info_dict) {
     // console.log("LOADING CARD");
     var information_list = card['information'];
@@ -373,7 +377,7 @@ function populate_popup(data) {
         basket_item_container.appendChild(basket_item_p);
     }
     var total_tag = document.getElementById("order_total");
-    total_tag.innerText = "Total: " + total_price;
+    total_tag.innerText = "$" + (Math.floor(total_price * 100) / 100).toString();
     var button = document.getElementById("submit_order");
     if (order_submitted == "client_created") {
         button.innerText = "Submit";

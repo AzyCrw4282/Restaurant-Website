@@ -25,7 +25,8 @@ urlpatterns = [
                       name='add_food_to_order'),
                   url(r'^table_order/(?P<table_order_id>[^/]+)/payment_redirect/$', views.payment_redirect,
                       name='payment_redirect'),
-                  url(r'^table_order/(?P<table_order_id>[^/]+)/payment_redirect/get_menu_popup_data,', views.get_menu_popup_data,
+                  url(r'^table_order/(?P<table_order_id>[^/]+)/payment_redirect/get_menu_popup_data/',
+                      views.get_menu_popup_data,
                       name='get_menu_popup_data_payment')
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

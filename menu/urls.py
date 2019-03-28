@@ -3,8 +3,8 @@ from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
 from . import views
-from TeamProject2019_01.views import menu_redirect
 from waiter import views as waiter_views
+from TeamProject2019_01.views import menu_redirect
 
 app_name = 'menu'
 urlpatterns = [

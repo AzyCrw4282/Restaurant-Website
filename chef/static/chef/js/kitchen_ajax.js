@@ -1,3 +1,9 @@
+/**
+ * This function is used to change the state of the table order in the backend.
+ * @param table_order_id - this represents a value for the id for the order linked to a table.
+ * @param state - this represents a value for the state of the food i.e cooked.
+ * @returns {Function}
+ */
 
 function change_table_order_state(table_order_id, state) {
     return function () {
@@ -20,7 +26,12 @@ function change_table_order_state(table_order_id, state) {
 
 }
 
-
+/**
+ * This function is used to change the state of the order in the back end
+ * @param order_id - this represents a value for the id of the order.
+ * @param state - this represents a value for the state of the food i.e, cooked.
+ * @returns {Function}
+ */
 
 function change_order_state(order_id, state) {
     return function () {
@@ -43,6 +54,7 @@ function change_order_state(order_id, state) {
     }
 
 }
+
 
 function update_table_order_states() {
 //    returns a dictionary the id being the order id and the state as per the config file
@@ -72,7 +84,6 @@ function update_table_order_states() {
         }
     });
 }
-
 
 function update_order_states() {
 //    returns a dictionary the id being the order id and the state as per the config file

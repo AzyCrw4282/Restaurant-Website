@@ -73,9 +73,9 @@ body, html {
 }
 
 .submit_button {
-    width:140px;
+    width:200px;
     position: relative;
-    margin: 0 auto;
+    margin: auto;
 
 }
 
@@ -91,8 +91,8 @@ body, html {
     font-family: Arial;
     font-weight: bold;
     text-decoration: none;
-    height: 70px;
-    width: 150px;
+    height: 100px;
+    width: 250px;
 
 }
 

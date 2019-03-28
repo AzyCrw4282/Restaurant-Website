@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from .forms import FoodForm, FoodInformationForm
 from menu.models import Food, TableOrder, FoodCategory, FoodInformation, Table, ArchivedTableOrder, Order
-from django.http import Http404, StreamingHttpResponse, HttpResponseRedirect, HttpResponse, JsonResponse
-from datetime import timedelta, datetime
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+from django.http import HttpResponse
+from django.http import JsonResponse
+
 import json
 
 UNSUCCESSFUL_RESPONSE = {
@@ -15,12 +17,9 @@ SUCCESSFUL_RESPONSE = {
     'message': 'SUCCESS'
 }
 
-with open("config.json") as json_data_file:
+with open("../config.json") as json_data_file:
     data = json.load(json_data_file)
 table_order_states = data["table_order_states"]
-
-
-
 
 
 def db_objects_to_list_of_dicts(objects):
@@ -45,14 +44,16 @@ def main_page(request):
         # send all the archived orders once as they will not be queried upon later (hopefully this is ok?)
         # this could be done perhaps with ajax over multiple requests but there is not time for that now.
         data.update({"table_orders": db_objects_to_list_of_dicts(ArchivedTableOrder.objects.all())})
-        user_tables={}
+        user_tables = {}
         for table in request.user.waiter.tables.all():
-            user_tables.update({table.id:table.number})
-        data.update({"user_tables":user_tables})
+            user_tables.update({table.id: table.number})
+        data.update({"user_tables": user_tables})
         return render(request, "waiter/templates/Waiterver2.html", data)
     except:
         print("User does not have the waiter relation:")
         return HttpResponseRedirect(reverse("menu:welcome_page"))
+
+
 def insert_stuff(request):
     '''
     function for inserting items into the menu,
@@ -125,10 +126,12 @@ def delete_food_category(request):
         try:
             id = request.POST["food_category_id"]
             FoodCategory.objects.get(id=id).delete()
+            response = SUCCESSFUL_RESPONSE
 
         except Exception as e:
-
             print("FAILED TO DELETE CATEGORY: ", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
 
 
 def delete_unarchived_table_orders(request):
@@ -138,8 +141,14 @@ def delete_unarchived_table_orders(request):
     :return:
     '''
     if request.method == 'POST':
-        relevant_orders = TableOrder.objects.all().exclude(status="archived")
-        relevant_orders.delete()
+        try:
+            relevant_orders = TableOrder.objects.all().exclude(status="archived")
+            relevant_orders.delete()
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("FAILED TO DELETE archived ORDERS: ", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
 
 
 def get_table_order_list(request):
@@ -189,14 +198,14 @@ def delete_food(request):
             food_object = Food.objects.get(id=request.POST['food_id'])
             food_object.delete()
             print("delete successful?")
-            HttpResponseRedirect("/menu/waiter/")
-
+            response=SUCCESSFUL_RESPONSE
         except:
             print("error deleting food ")
-            return
+            response=UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
 
 
-def archive_table_order(table_order_id,user):
+def archive_table_order(table_order_id, user):
     '''
     archives a table order into a separate db model
     and deletes the active one.
@@ -204,7 +213,7 @@ def archive_table_order(table_order_id,user):
     :return:
     '''
     table_order = TableOrder.objects.get(id=table_order_id)
-    table_order.waiter=user
+    table_order.waiter = user
     table_order.save()
     # set the waiter that archived the order as
     table_order_json = table_order.to_archived()
@@ -265,7 +274,7 @@ def change_table_order_state(request):
             if status_to_change_to == "archived":
                 # if it is being changed to archived
                 try:
-                    archive_table_order(table_order_id,request.user.waiter)
+                    archive_table_order(table_order_id, request.user.waiter)
                     response = SUCCESSFUL_RESPONSE
                 except Exception as e:
                     response = UNSUCCESSFUL_RESPONSE
@@ -296,12 +305,13 @@ def change_table_order_state(request):
             response = UNSUCCESSFUL_RESPONSE
         return JsonResponse(response)
 
+
 def deselect_table(request):
     '''
-        waiter request to deselect a table
-        :param request:
-        :return:
-        '''
+    waiter request to deselect a table
+    :param request:
+    :return:
+    '''
     if request.method == 'POST':
         try:
             table = Table.objects.get(id=request.POST["table_id"])
@@ -310,7 +320,7 @@ def deselect_table(request):
             response = SUCCESSFUL_RESPONSE
         except Exception as e:
             response = UNSUCCESSFUL_RESPONSE
-            print("failed to add table for user",e)
+            print("failed to add table for user", e)
         return JsonResponse(response)
 
 
@@ -322,15 +332,175 @@ def select_table(request):
     '''
     if request.method == 'POST':
         try:
-            table=Table.objects.get(id=request.POST["table_id"])
+            table = Table.objects.get(id=request.POST["table_id"])
 
             request.user.waiter.tables.add(table)
             # print(request.user.waiter.tables.all())
 
-            response=SUCCESSFUL_RESPONSE
+            response = SUCCESSFUL_RESPONSE
         except Exception as e:
-            response=UNSUCCESSFUL_RESPONSE
+            response = UNSUCCESSFUL_RESPONSE
             print("failed to add table for user")
         return JsonResponse(response)
 
 
+# Table( _id  )
+def delete_table(request):
+    print("called delete_table")
+    if request.method == 'POST':
+        try:
+            temp = Table.objects.get(id=request.POST["table_id"])
+            temp.delete()
+            response = {
+                'status': 0,
+                'message': 'deleted table'
+            }
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = {
+                'status': 0,
+                'message': 'Oops something went wrong - ' + str(e)
+            }
+        return HttpResponse(response)
+    else:
+        pass
+
+
+# Table( _id  )
+def add_table(request):
+    print("called add_table")
+
+    if request.method == 'POST':
+        try:
+            temp = Table.objects.create(id=request.POST['table_id'], number=request.POST['table_number'])
+
+            temp.save()
+            response = {
+                'status': 0,
+                'message': 'added table'
+            }
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = {
+                'status': 0,
+                'message': 'Oops something went wrong - ' + str(e)
+            }
+        return HttpResponse(response)
+    else:
+        pass
+
+
+# FoodInformation( _id, name)
+def add_food_information(request):
+    print("called add_food_info")
+    if request.method == 'POST':
+        try:
+            temp = FoodInformation(name=request.POST['food_information_name'])
+            temp.save()
+            response = {
+                'status': 1,
+                'message': 'added FoodInfo'
+            }
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = {
+                'status': 0,
+                'message': 'Oops something went wrong - ' + str(e)
+            }
+        return JsonResponse(response)
+    else:
+        pass
+
+
+def delete_food_information(request):
+    print("called delete_food_info")
+    if request.method == 'POST':
+        try:
+            temp = FoodInformation.objects.get(id=request.POST["food_information_id"])
+            temp.delete()
+            response = {
+                'status': 0,
+                'message': 'deleted table'
+            }
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = {
+                'status': 0,
+                'message': 'Oops something went wrong - ' + str(e)
+            }
+        return HttpResponse(response)
+    else:
+        pass
+
+
+# FoodCategory( _id, name)
+def add_food_category(request):
+    print("called add_category")
+    print(request.POST)
+    if request.method == 'POST':  # post request of a form ok
+        try:
+            temp = FoodCategory(name=request.POST['food_category_name'])
+            temp.save()
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
+    else:
+        pass
+
+
+# do this with a standard form because I don't know how to add the picture manually.
+def add_food(request):
+    print("called add_food")
+    # expecting: name, price, category_id, description, picture)
+    if request.method == 'POST':
+        try:
+            temp = Food.objects.create(
+                name=request.POST['food_name'],
+                price=request.POST['food_price'],
+                category_id=request.POST['food_category_id'],
+                description=request.POST['food_description'],
+                picture=request.POST['food_picture']
+            )
+            temp.save()
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+
+            response = UNSUCCESSFUL_RESPONSE
+        return JsonResponse(response)
+    else:
+        pass
+
+
+
+
+def confirm_table_order(request):
+    print("called confirm_table_order")
+    if request.method == 'POST':
+        try:
+            temp = Food.objects.get(id=request.POST["table_id"])
+            temp.delete()
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return HttpResponse(response)
+    else:
+        pass
+
+
+def delete_table_order(request):
+    print("called delete_table_order")
+    if request.method == 'POST':
+        try:
+            temp = Food.objects.get(id=request.POST["table_order_id"])
+            temp.delete()
+            response = SUCCESSFUL_RESPONSE
+        except Exception as e:
+            print("EXCEPTION THROWN: ", e)
+            response = UNSUCCESSFUL_RESPONSE
+        return HttpResponse(response)
+    else:
+        pass

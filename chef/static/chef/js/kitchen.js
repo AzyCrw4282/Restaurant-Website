@@ -6,7 +6,7 @@ function load_data(table_order_list) {
 function load_cards(data) {
     setInterval(function () {
         update_table_order_states()
-    }, 5000);
+    }, 500);
     console.log(data);
     var table_orders = data["table_orders"];
     console.log(table_orders);

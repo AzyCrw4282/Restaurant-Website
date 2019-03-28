@@ -105,17 +105,18 @@
 <dl class="function">
 <dt id="chef.views.change_order_state">
 <code class="descclassname">chef.views.</code><code class="descname">change_order_state</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.change_order_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Changes the state of an order to the requested status (from the chef)
+:param request: order_id
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="chef.views.change_table_order_state">
 <code class="descclassname">chef.views.</code><code class="descname">change_table_order_state</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.change_table_order_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="chef.views.chef">
-<code class="descclassname">chef.views.</code><code class="descname">chef</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.chef" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Changes the state of a Table order to the requested state (from the chef)
+:param request: table_order_id
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="chef.views.db_objects_to_list_of_dicts">
@@ -128,11 +129,24 @@
 <dl class="function">
 <dt id="chef.views.get_order_states">
 <code class="descclassname">chef.views.</code><code class="descname">get_order_states</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.get_order_states" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a list of order states where the status is cooking or cooked
+in the relevant format.
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="chef.views.get_table_order_states">
 <code class="descclassname">chef.views.</code><code class="descname">get_table_order_states</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.get_table_order_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a list of table order states where the status is waiter confirmed (chef specific)
+in the relevant format.
+:param request:
+:return: JsonResponse</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="chef.views.main_page">
+<code class="descclassname">chef.views.</code><code class="descname">main_page</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#chef.views.main_page" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

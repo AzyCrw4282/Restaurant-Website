@@ -259,12 +259,27 @@ is saved manually at a later time. Return the model instance.</p>
 <dl class="function">
 <dt id="waiter.views.add_information_to_food">
 <code class="descclassname">waiter.views.</code><code class="descname">add_information_to_food</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.add_information_to_food" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>function to add an information propert to a food item
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.archive_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">archive_table_order</code><span class="sig-paren">(</span><em>table_order_id</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.archive_table_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>archives a table order into a separate db model
+and deletes the active one.
+:param table_order_id:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.change_table_order_state">
 <code class="descclassname">waiter.views.</code><code class="descname">change_table_order_state</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.change_table_order_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Changes the state of an order, archives it if necessary.
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.db_objects_to_list_of_dicts">
@@ -277,46 +292,73 @@ is saved manually at a later time. Return the model instance.</p>
 <dl class="function">
 <dt id="waiter.views.delete_food">
 <code class="descclassname">waiter.views.</code><code class="descname">delete_food</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_food" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>deletes specified food item from db
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.delete_food_category">
 <code class="descclassname">waiter.views.</code><code class="descname">delete_food_category</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_food_category" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="waiter.views.delete_old_table_orders">
-<code class="descclassname">waiter.views.</code><code class="descname">delete_old_table_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_old_table_orders" title="Permalink to this definition">¶</a></dt>
-<dd><p>deletes all table orders older than specified number of days
-since the user has created them.
-:param request: Post contains days: int
+<dd><p>deletes a food category specified in the request
+:param request:
 :return:</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.delete_unarchived_table_orders">
 <code class="descclassname">waiter.views.</code><code class="descname">delete_unarchived_table_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.delete_unarchived_table_orders" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>deletes all unarchived orders
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.deselect_table">
+<code class="descclassname">waiter.views.</code><code class="descname">deselect_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.deselect_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>waiter request to deselect a table
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.get_table_order_list">
 <code class="descclassname">waiter.views.</code><code class="descname">get_table_order_list</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.get_table_order_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="waiter.views.get_waiter_card_data">
-<code class="descclassname">waiter.views.</code><code class="descname">get_waiter_card_data</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.get_waiter_card_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>returns a list of all orders but the client created ones,
+in the relevant format.
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="waiter.views.insert_stuff">
 <code class="descclassname">waiter.views.</code><code class="descname">insert_stuff</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.insert_stuff" title="Permalink to this definition">¶</a></dt>
+<dd><p>function for inserting items into the menu,
+using forms only.
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.main_page">
+<code class="descclassname">waiter.views.</code><code class="descname">main_page</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.main_page" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="waiter.views.waiter">
-<code class="descclassname">waiter.views.</code><code class="descname">waiter</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.waiter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="waiter.views.recover_archived_table_order">
+<code class="descclassname">waiter.views.</code><code class="descname">recover_archived_table_order</code><span class="sig-paren">(</span><em>table_order_id</em>, <em>status_to_recover_to</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.recover_archived_table_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>tries to recover an order from an archived state to an active state
+:param table_order_id:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="waiter.views.select_table">
+<code class="descclassname">waiter.views.</code><code class="descname">select_table</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#waiter.views.select_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>waiter request to select a table
+:param request:
+:return:</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-waiter">

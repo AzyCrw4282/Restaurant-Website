@@ -44,6 +44,7 @@
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -72,14 +73,14 @@
 </li>
       <li><a href="accounts.html#module-accounts.views">accounts.views (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="accounts.html#accounts.apps.AccountsConfig">AccountsConfig (class in accounts.apps)</a>
 </li>
       <li><a href="waiter.html#waiter.db_insert.add_food">add_food() (in module waiter.db_insert)</a>
 </li>
       <li><a href="waiter.html#waiter.db_insert.add_food_category">add_food_category() (in module waiter.db_insert)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="waiter.html#waiter.db_insert.add_food_information">add_food_information() (in module waiter.db_insert)</a>
 </li>
       <li><a href="menu.html#menu.views.add_food_to_order">add_food_to_order() (in module menu.views)</a>
@@ -88,7 +89,19 @@
 </li>
       <li><a href="waiter.html#waiter.db_insert.add_table">add_table() (in module waiter.db_insert)</a>
 </li>
-      <li><a href="menu.html#menu.db_insert.add_table_order">add_table_order() (in module menu.db_insert)</a>
+      <li><a href="accounts.html#accounts.views.add_to_group">add_to_group() (in module accounts.views)</a>
+</li>
+      <li><a href="accounts.html#accounts.views.add_user_to_group">add_user_to_group() (in module accounts.views)</a>
+</li>
+      <li><a href="accounts.html#accounts.views.add_waiter_relation">add_waiter_relation() (in module accounts.views)</a>
+</li>
+      <li><a href="waiter.html#waiter.views.archive_table_order">archive_table_order() (in module waiter.views)</a>
+</li>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder">ArchivedTableOrder (class in menu.models)</a>
+</li>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.DoesNotExist">ArchivedTableOrder.DoesNotExist</a>
+</li>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.MultipleObjectsReturned">ArchivedTableOrder.MultipleObjectsReturned</a>
 </li>
   </ul></td>
 </tr></table>
@@ -124,8 +137,6 @@
       </ul></li>
       <li><a href="chef.html#module-chef">chef (module)</a>
 </li>
-      <li><a href="chef.html#chef.views.chef">chef() (in module chef.views)</a>
-</li>
       <li><a href="chef.html#module-chef.admin">chef.admin (module)</a>
 </li>
       <li><a href="chef.html#module-chef.apps">chef.apps (module)</a>
@@ -157,10 +168,6 @@
       <li><a href="waiter.html#waiter.db_insert.confirm_table_order">confirm_table_order() (in module waiter.db_insert)</a>
 </li>
       <li><a href="accounts.html#accounts.views.create_account">create_account() (in module accounts.views)</a>
-</li>
-      <li><a href="accounts.html#accounts.views.create_chef_group">create_chef_group() (in module accounts.views)</a>
-</li>
-      <li><a href="accounts.html#accounts.views.create_waiter_group">create_waiter_group() (in module accounts.views)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -196,19 +203,19 @@
         <li><a href="waiter.html#waiter.views.delete_food">(in module waiter.views)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="waiter.html#waiter.db_insert.delete_food_category">delete_food_category() (in module waiter.db_insert)</a>
 
       <ul>
         <li><a href="waiter.html#waiter.views.delete_food_category">(in module waiter.views)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="menu.html#menu.views.delete_food_from_order">delete_food_from_order() (in module menu.views)</a>
 </li>
       <li><a href="waiter.html#waiter.db_insert.delete_food_information">delete_food_information() (in module waiter.db_insert)</a>
 </li>
-      <li><a href="waiter.html#waiter.views.delete_old_table_orders">delete_old_table_orders() (in module waiter.views)</a>
+      <li><a href="accounts.html#accounts.views.delete_old_table_orders">delete_old_table_orders() (in module accounts.views)</a>
 </li>
       <li><a href="waiter.html#waiter.db_insert.delete_table">delete_table() (in module waiter.db_insert)</a>
 </li>
@@ -223,6 +230,8 @@
       <li><a href="menu.migrations.html#menu.migrations.0001_initial.Migration.dependencies">dependencies (menu.migrations.0001_initial.Migration attribute)</a>
 </li>
       <li><a href="menu.html#menu.models.Food.description">description (menu.models.Food attribute)</a>
+</li>
+      <li><a href="waiter.html#waiter.views.deselect_table">deselect_table() (in module waiter.views)</a>
 </li>
       <li><a href="menu.html#menu.models.Food.display">display (menu.models.Food attribute)</a>
 </li>
@@ -290,17 +299,15 @@
 </li>
       <li><a href="menu.html#menu.models.get_image_path">get_image_path() (in module menu.models)</a>
 </li>
-      <li><a href="menu.html#menu.views.get_menu_popup_data">get_menu_popup_data() (in module menu.views)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="menu.html#menu.views.get_menu_popup_data">get_menu_popup_data() (in module menu.views)</a>
+</li>
       <li><a href="chef.html#chef.views.get_order_states">get_order_states() (in module chef.views)</a>
 </li>
       <li><a href="waiter.html#waiter.views.get_table_order_list">get_table_order_list() (in module waiter.views)</a>
 </li>
       <li><a href="chef.html#chef.views.get_table_order_states">get_table_order_states() (in module chef.views)</a>
-</li>
-      <li><a href="waiter.html#waiter.views.get_waiter_card_data">get_waiter_card_data() (in module waiter.views)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -308,9 +315,11 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="menu.html#menu.models.Food.id">id (menu.models.Food attribute)</a>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.id">id (menu.models.ArchivedTableOrder attribute)</a>
 
       <ul>
+        <li><a href="menu.html#menu.models.Food.id">(menu.models.Food attribute)</a>
+</li>
         <li><a href="menu.html#menu.models.FoodCategory.id">(menu.models.FoodCategory attribute)</a>
 </li>
         <li><a href="menu.html#menu.models.FoodInformation.id">(menu.models.FoodInformation attribute)</a>
@@ -321,13 +330,15 @@
 </li>
         <li><a href="menu.html#menu.models.TableOrder.id">(menu.models.TableOrder attribute)</a>
 </li>
+        <li><a href="menu.html#menu.models.Waiter.id">(menu.models.Waiter attribute)</a>
+</li>
       </ul></li>
       <li><a href="menu.html#menu.models.Food.information">information (menu.models.Food attribute)</a>
 </li>
-      <li><a href="menu.html#menu.models.FoodInformation.ingredients">ingredients (menu.models.FoodInformation attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="menu.html#menu.models.FoodInformation.ingredients">ingredients (menu.models.FoodInformation attribute)</a>
+</li>
       <li><a href="menu.migrations.html#menu.migrations.0001_initial.Migration.initial">initial (menu.migrations.0001_initial.Migration attribute)</a>
 </li>
       <li><a href="waiter.html#waiter.views.insert_stuff">insert_stuff() (in module waiter.views)</a>
@@ -351,11 +362,23 @@
   </ul></td>
 </tr></table>
 
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.json_table_order">json_table_order (menu.models.ArchivedTableOrder attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="TeamProject2019_01.html#TeamProject2019_01.views.login_redirect">login_redirect() (in module TeamProject2019_01.views)</a>
+      <li><a href="accounts.html#accounts.views.login_redirect">login_redirect() (in module accounts.views)</a>
+
+      <ul>
+        <li><a href="TeamProject2019_01.html#TeamProject2019_01.views.login_redirect">(in module TeamProject2019_01.views)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="TeamProject2019_01.html#TeamProject2019_01.middleware.LoginRequiredMiddleware">LoginRequiredMiddleware (class in TeamProject2019_01.middleware)</a>
@@ -366,6 +389,12 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chef.html#chef.views.main_page">main_page() (in module chef.views)</a>
+
+      <ul>
+        <li><a href="waiter.html#waiter.views.main_page">(in module waiter.views)</a>
+</li>
+      </ul></li>
       <li><a href="accounts.html#accounts.views.manager">manager() (in module accounts.views)</a>
 </li>
       <li><a href="menu.html#menu.forms.TableForm.media">media (menu.forms.TableForm attribute)</a>
@@ -381,8 +410,6 @@
       <li><a href="menu.html#module-menu.admin">menu.admin (module)</a>
 </li>
       <li><a href="menu.html#module-menu.apps">menu.apps (module)</a>
-</li>
-      <li><a href="menu.html#module-menu.db_insert">menu.db_insert (module)</a>
 </li>
       <li><a href="menu.html#module-menu.forms">menu.forms (module)</a>
 </li>
@@ -450,9 +477,11 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="menu.html#menu.models.Food.objects">objects (menu.models.Food attribute)</a>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.objects">objects (menu.models.ArchivedTableOrder attribute)</a>
 
       <ul>
+        <li><a href="menu.html#menu.models.Food.objects">(menu.models.Food attribute)</a>
+</li>
         <li><a href="menu.html#menu.models.FoodCategory.objects">(menu.models.FoodCategory attribute)</a>
 </li>
         <li><a href="menu.html#menu.models.FoodInformation.objects">(menu.models.FoodInformation attribute)</a>
@@ -462,6 +491,8 @@
         <li><a href="menu.html#menu.models.Table.objects">(menu.models.Table attribute)</a>
 </li>
         <li><a href="menu.html#menu.models.TableOrder.objects">(menu.models.TableOrder attribute)</a>
+</li>
+        <li><a href="menu.html#menu.models.Waiter.objects">(menu.models.Waiter attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -475,9 +506,11 @@
       <li><a href="menu.html#menu.models.Order.MultipleObjectsReturned">Order.MultipleObjectsReturned</a>
 </li>
       <li><a href="menu.html#menu.models.Food.order_set">order_set (menu.models.Food attribute)</a>
+
+      <ul>
+        <li><a href="menu.html#menu.models.TableOrder.order_set">(menu.models.TableOrder attribute)</a>
 </li>
-      <li><a href="menu.html#menu.models.TableOrder.orders">orders (menu.models.TableOrder attribute)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -516,6 +549,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="accounts.html#accounts.views.random_date">random_date() (in module accounts.views)</a>
 </li>
+      <li><a href="accounts.html#accounts.views.randomString">randomString() (in module accounts.views)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="waiter.html#waiter.views.recover_archived_table_order">recover_archived_table_order() (in module waiter.views)</a>
+</li>
+      <li><a href="accounts.html#accounts.views.remove_from_group">remove_from_group() (in module accounts.views)</a>
+</li>
+      <li><a href="accounts.html#accounts.views.remove_user_from_group">remove_user_from_group() (in module accounts.views)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -530,6 +573,8 @@
         <li><a href="waiter.html#waiter.forms.FoodInformationForm.save">(waiter.forms.FoodInformationForm method)</a>
 </li>
       </ul></li>
+      <li><a href="waiter.html#waiter.views.select_table">select_table() (in module waiter.views)</a>
+</li>
       <li><a href="chef.html#chef.tests.ChefNewOne.setUp">setUp() (chef.tests.ChefNewOne method)</a>
 
       <ul>
@@ -564,6 +609,10 @@
 </li>
       <li><a href="menu.html#menu.models.TableOrder.table_id">table_id (menu.models.TableOrder attribute)</a>
 </li>
+      <li><a href="menu.html#menu.models.Order.table_order">table_order (menu.models.Order attribute)</a>
+</li>
+      <li><a href="menu.html#menu.models.Order.table_order_id">table_order_id (menu.models.Order attribute)</a>
+</li>
       <li><a href="menu.html#menu.forms.TableForm">TableForm (class in menu.forms)</a>
 </li>
       <li><a href="menu.html#menu.forms.TableForm.Meta">TableForm.Meta (class in menu.forms)</a>
@@ -574,12 +623,14 @@
 </li>
       <li><a href="menu.html#menu.models.TableOrder.MultipleObjectsReturned">TableOrder.MultipleObjectsReturned</a>
 </li>
-      <li><a href="menu.html#menu.models.Order.tableorder_set">tableorder_set (menu.models.Order attribute)</a>
+      <li><a href="menu.html#menu.models.Table.tableorder_set">tableorder_set (menu.models.Table attribute)</a>
 
       <ul>
-        <li><a href="menu.html#menu.models.Table.tableorder_set">(menu.models.Table attribute)</a>
+        <li><a href="menu.html#menu.models.Waiter.tableorder_set">(menu.models.Waiter attribute)</a>
 </li>
       </ul></li>
+      <li><a href="menu.html#menu.models.Waiter.tables">tables (menu.models.Waiter attribute)</a>
+</li>
       <li><a href="TeamProject2019_01.html#module-TeamProject2019_01">TeamProject2019_01 (module)</a>
 </li>
       <li><a href="TeamProject2019_01.html#module-TeamProject2019_01.middleware">TeamProject2019_01.middleware (module)</a>
@@ -608,11 +659,15 @@
 </li>
       <li><a href="menu.html#menu.models.TableOrder.time">time (menu.models.TableOrder attribute)</a>
 </li>
-      <li><a href="menu.html#menu.models.TableOrder.to_cost_date">to_cost_date() (menu.models.TableOrder method)</a>
+      <li><a href="menu.html#menu.models.TableOrder.to_archived">to_archived() (menu.models.TableOrder method)</a>
 </li>
-      <li><a href="menu.html#menu.models.Food.to_dict">to_dict() (menu.models.Food method)</a>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.to_chart_data">to_chart_data() (menu.models.ArchivedTableOrder method)</a>
+</li>
+      <li><a href="menu.html#menu.models.ArchivedTableOrder.to_dict">to_dict() (menu.models.ArchivedTableOrder method)</a>
 
       <ul>
+        <li><a href="menu.html#menu.models.Food.to_dict">(menu.models.Food method)</a>
+</li>
         <li><a href="menu.html#menu.models.FoodCategory.to_dict">(menu.models.FoodCategory method)</a>
 </li>
         <li><a href="menu.html#menu.models.FoodInformation.to_dict">(menu.models.FoodInformation method)</a>
@@ -623,6 +678,8 @@
 </li>
         <li><a href="menu.html#menu.models.TableOrder.to_dict">(menu.models.TableOrder method)</a>
 </li>
+        <li><a href="menu.html#menu.models.Waiter.to_dict">(menu.models.Waiter method)</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -630,15 +687,23 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="waiter.html#module-waiter">waiter (module)</a>
+      <li><a href="menu.html#menu.models.Waiter">Waiter (class in menu.models)</a>
 </li>
-      <li><a href="waiter.html#waiter.views.waiter">waiter() (in module waiter.views)</a>
+      <li><a href="menu.html#menu.models.TableOrder.waiter">waiter (menu.models.TableOrder attribute)</a>
+
+      <ul>
+        <li><a href="menu.html#menu.models.Waiter.waiter">(menu.models.Waiter attribute)</a>
 </li>
+        <li><a href="waiter.html#module-waiter">(module)</a>
+</li>
+      </ul></li>
       <li><a href="waiter.html#module-waiter.admin">waiter.admin (module)</a>
 </li>
       <li><a href="waiter.html#module-waiter.apps">waiter.apps (module)</a>
 </li>
       <li><a href="waiter.html#module-waiter.db_insert">waiter.db_insert (module)</a>
+</li>
+      <li><a href="menu.html#menu.models.Waiter.DoesNotExist">Waiter.DoesNotExist</a>
 </li>
       <li><a href="waiter.html#module-waiter.forms">waiter.forms (module)</a>
 </li>
@@ -646,11 +711,21 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="menu.html#menu.models.Waiter.MultipleObjectsReturned">Waiter.MultipleObjectsReturned</a>
+</li>
       <li><a href="waiter.html#module-waiter.tests">waiter.tests (module)</a>
 </li>
       <li><a href="waiter.html#module-waiter.urls">waiter.urls (module)</a>
 </li>
       <li><a href="waiter.html#module-waiter.views">waiter.views (module)</a>
+</li>
+      <li><a href="menu.html#menu.models.TableOrder.waiter_id">waiter_id (menu.models.TableOrder attribute)</a>
+
+      <ul>
+        <li><a href="menu.html#menu.models.Waiter.waiter_id">(menu.models.Waiter attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="menu.html#menu.models.Table.waiter_set">waiter_set (menu.models.Table attribute)</a>
 </li>
       <li><a href="waiter.html#waiter.apps.WaiterConfig">WaiterConfig (class in waiter.apps)</a>
 </li>

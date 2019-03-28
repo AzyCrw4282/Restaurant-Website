@@ -79,7 +79,7 @@ def insert_stuff(request):
     food_information_list = db_objects_to_list_of_dicts(FoodInformation.objects.all())
     food_list = db_objects_to_list_of_dicts(Food.objects.all())
     food_dict = {'food_list': food_list}
-    context = {'food_information_list': food_information_list, 'food_dict': food_dict, 'user': user,
+    context = {'category_list':db_objects_to_list_of_dicts(FoodCategory.objects.all()),'food_information_list': food_information_list, 'food_dict': food_dict, 'user': user,
                'food_form': FoodForm(), 'food_information_form': FoodInformationForm()}
     return render(
         request, 'waiter/templates/insert_example.html', context)

@@ -16,12 +16,21 @@
 
     <h1>Insert Food and Drink Items Into the Waiter Page</h1>
 
-<h2>Add a food Category</h2>
+    <h2>Add a food Category</h2>
     <form onsubmit="return false">
         {% csrf_token %}
         Enter food category name:
         <input type='text' aria-label="enter name:" id="food_category_name"/>
         <button class="add_food_category" onclick="add_food_category()">Submit</button>
+    </form>
+
+    <form onsubmit="return false">
+        {% csrf_token %}
+        Delete Food Category By Name (also same order as insert food item):
+        <select id="delete_food_category_name">
+
+        </select>
+        <button class="add_food_category" onclick="delete_food_category_id()">Submit</button>
     </form>
 
 
@@ -40,7 +49,19 @@
         {{ food_information_form.as_p }}
         <button type="submit">Add Information</button>
     </form>
-
+    <form onsubmit="return false">
+        {% csrf_token %}
+        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test"
+                id="food_information_option_list">
+        </select>
+        <select data-placeholder="Begin typing a name to filter..." multiple class="chosen-select" name="test"
+                id="food_option_list">
+        </select>
+        <script>
+            food_to_information_choice({{ food_information_list |safe }}, {{ food_dict |safe }});
+        </script>
+        <button class="add_customer" onclick="food_information_choice_submit()">Submit</button>
+    </form>
     <form onsubmit="return false">
         {% csrf_token %}
         <h2>Add a Table</h2>
@@ -51,7 +72,7 @@
         <button class="add_table" onclick="add_table()">Submit</button>
     </form>
 
-<form onsubmit="return false">
+    <form onsubmit="return false">
         {% csrf_token %}
         <h2>Add an Order</h2>
         Enter order id: <br>
@@ -63,5 +84,8 @@
         <input type='datetime-local' aria-label="order_time:" id="order_time"/>
         <button class="add_order" onclick="add_order()">Submit</button>
     </form>
+    <script type="text/javascript">
+        load_categories({{ category_list| safe }});
+    </script>
 
 {% endblock %}

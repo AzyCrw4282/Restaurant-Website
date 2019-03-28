@@ -37,7 +37,10 @@ function add_food() {
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
 
-        }
+        },success: function (data) {
+            console.log(data);
+            location.reload()
+        },
     })
 }
 
@@ -75,21 +78,7 @@ function delete_table(table_id) {
 }
 
 
-function add_food_information(food_information_name) {
-    FoodInfo = [
-        {"foodInfo": "food_information_name"}
-    ];
 
-    $.ajax({
-        //Post request made here
-        type: "post",
-        url: 'add_food_information/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_information_name": food_information_name
-        }
-    })
-}
 
 //Unsure on how these id's are being passed
 function delete_food_information(food_information_id) {
@@ -114,7 +103,10 @@ function add_food_category(food_category_name) {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "food_category_name": document.getElementById("food_category_name").value
 
-        }
+        },success: function (data) {
+            console.log(data);
+            location.reload()
+        },
     })
 }
 
@@ -127,34 +119,14 @@ function delete_food_category(food_category_id) {
         data: {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "food_category_id": food_category_id
-        }
+        },success: function (data) {
+            console.log(data);
+            location.reload()
+        },
     })
 }
 
-function delete_food(food_id) {
-    $.ajax({
-        //Post request made here
-        type: "post",
-        url: 'delete_food/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "food_id": food_id
-        }
-    })
-}
 
-function delete_table_order(table_order_id) {
-
-    $.ajax({
-        //Post request made here
-        type: "post",
-        url: 'delete_table_order/',
-        data: {
-            csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-            "table_order_id": table_order_id
-        }
-    })
-}
 
 //========== FUNCTIONS UPDATING THE WAITER PAGE AND ON CLICK EVENTS=================
 
@@ -198,7 +170,11 @@ function add_food_information_to_food(food_li, info_li) {
             csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
             "information_list":JSON.stringify( info_li),
             "food_list": JSON.stringify( food_li)
-        }
+        },
+        success: function (data) {
+            console.log(data);
+            location.reload()
+        },
     });
 }
 

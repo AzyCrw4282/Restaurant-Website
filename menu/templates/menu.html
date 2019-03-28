@@ -9,63 +9,62 @@
 
 {% block body %}
     <table style="width:100%">
-        <td width="80%">
-            <script src="{% static 'menu/js/menu.js' %}"></script>
-            <script src="{% static 'menu/js/menu_ajax.js' %}"></script>
-            <script src="{% static 'menu/js/multiselect.js' %}"></script>
-            <link rel="stylesheet" href="{% static 'menu/css/menu_header.css' %}" type="text/css"/>
-            <link rel="stylesheet" href="{% static 'menu/css/food_card.css' %}" type="text/css"/>
-            <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
-            <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
-            <link rel="stylesheet" href="{% static 'menu/css/food_card_separetor.css' %}" type="text/css"/>
-            <link rel="stylesheet" href="{% static 'menu/css/order_basket.css' %}" type="text/css"/>
 
-            <div class="tabs_header" id="tabs_header">
-                <div class="filter">REFINE
-                    <div class="drop_down_content" id="drop_down_filter">
+        <script src="{% static 'menu/js/menu.js' %}"></script>
+        <script src="{% static 'menu/js/menu_ajax.js' %}"></script>
+        <script src="{% static 'menu/js/multiselect.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'menu/css/menu_header.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/food_card.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/banner.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/style.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/food_card_separetor.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'menu/css/order_basket.css' %}" type="text/css"/>
 
-                    </div>
-                </div>
-                <div class="links_wrapper" id="links_wrapper">
+        <div class="tabs_header" id="tabs_header">
+            <div class="filter">REFINE
+                <div class="drop_down_content" id="drop_down_filter">
 
                 </div>
+            </div>
+            <div class="links_wrapper" id="links_wrapper">
 
             </div>
 
+        </div>
 
-            <form onsubmit="return false">
-                {% csrf_token %}
 
-                <div class="food_card_main_container">
-                    <div class="food_card_container" id="categories">
+        <form onsubmit="return false">
+            {% csrf_token %}
 
-                    </div>
+            <div class="food_card_main_container">
+
+                <div class="food_card_container" id="categories">
+
                 </div>
-
-            </form>
-        </td>
-
-        <td width="20%">
-            <div id="order_popup" class="order_popup">
-                <div class="order_basket_title">
-                    My Basket:
-                </div>
-                <div id="basket_item_container" class="container">
-                </div>
-                <div id="order_total">0.0</div>
-                <button id="submit_order" class="basket_submit_button" onclick="submit_order()"></button>
             </div>
 
-            <script type="text/javascript">
+        </form>
+        <div id="order_popup" class="order_popup">
+            <div class="order_basket_title">
+                My Order:
+                <button class="order_popup_button_hide" onclick=hide_order_popup_html()>Hide</button>
+            </div>
+            <div id="basket_item_container" class="container">
+            </div>
+            <div id="order_total">0.0</div>
+            <button id="submit_order" class="basket_submit_button" onclick="submit_order()"></button>
+        </div>
 
-                if ({{ user.is_authenticated|yesno:"true,false"}}) {
-                    user_is_authenticated()
-                }
-                load_data({{ category_list |safe }});
+        <script type="text/javascript">
+
+            if ({{ user.is_authenticated|yesno:"true,false"}}) {
+                user_is_authenticated()
+            }
+            load_data({{ category_list |safe }});
 
 
-            </script>
-        </td>
+        </script>
+
     </table>
 {% endblock %}
 </html>

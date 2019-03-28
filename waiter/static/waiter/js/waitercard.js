@@ -8,10 +8,13 @@
 
 var tempOrder = [];
 
-function load_data(order_list, table_list,user_tables) {
+function load_data(order_list, table_list, user_tables) {
     console.log(order_list);
+    console.log("TABLE LIST:");
+    console.log(table_list);
+    table_filter_options(table_list, user_tables);
     load_cards(order_list);
-    table_filter_options(table_list,user_tables);
+
     // get_and_update_table_order_states();
     setInterval(function () {
         update_table_order_list();

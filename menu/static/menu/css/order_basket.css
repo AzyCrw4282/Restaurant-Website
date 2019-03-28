@@ -55,11 +55,22 @@
     border-radius: 5px;
 
 }
+.order_popup_button_hide{
+    float:right;
+    width: 40%;
+    height: 75%;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    font-size: 20px;
+}
 
 .order_popup {
+    background-color: white;
     width: 400px;
     color: #C00000;
+    top:175px;
+    right: 0px;
     position: fixed;
-    top: 180px;
     display: block;
 }

@@ -71,33 +71,35 @@
 <div class="section" id="module-accounts.views">
 <span id="accounts-views-module"></span><h2>accounts.views module<a class="headerlink" href="#module-accounts.views" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="accounts.views.create_account">
-<code class="descclassname">accounts.views.</code><code class="descname">create_account</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.create_account" title="Permalink to this definition">¶</a></dt>
-<dd><p>auto create an account with relevant provided details</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="accounts.views.create_chef_group">
-<code class="descclassname">accounts.views.</code><code class="descname">create_chef_group</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.create_chef_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>this function auto creates the waiter group with the relevant permissions
+<dt id="accounts.views.add_to_group">
+<code class="descclassname">accounts.views.</code><code class="descname">add_to_group</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.add_to_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a user from a group from a post request
 :param request:
 :return:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="accounts.views.create_waiter_group">
-<code class="descclassname">accounts.views.</code><code class="descname">create_waiter_group</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.create_waiter_group" title="Permalink to this definition">¶</a></dt>
-<dd><p>this function auto creates the waiter group with the relevant permissions
+<dt id="accounts.views.add_user_to_group">
+<code class="descclassname">accounts.views.</code><code class="descname">add_user_to_group</code><span class="sig-paren">(</span><em>user</em>, <em>group_name</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.add_user_to_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a user to an existing group
+:param user:
+:param group_name:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.add_waiter_relation">
+<code class="descclassname">accounts.views.</code><code class="descname">add_waiter_relation</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.add_waiter_relation" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a waiter one to one relation (group property)
+:param user:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.create_account">
+<code class="descclassname">accounts.views.</code><code class="descname">create_account</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.create_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>auto create an account with relevant provided details,
+send email with password and link to login page.
 :param request:
 :return:</p>
 </dd></dl>
@@ -121,16 +123,36 @@
 <dl class="function">
 <dt id="accounts.views.delete_fake_orders">
 <code class="descclassname">accounts.views.</code><code class="descname">delete_fake_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.delete_fake_orders" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>deletes all orders that have a status not specified in the config file
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.delete_old_table_orders">
+<code class="descclassname">accounts.views.</code><code class="descname">delete_old_table_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.delete_old_table_orders" title="Permalink to this definition">¶</a></dt>
+<dd><p>deletes all table orders older than specified number of days
+since the user has created them.
+:param request: Post contains days: int
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="accounts.views.generate_random_orders">
 <code class="descclassname">accounts.views.</code><code class="descname">generate_random_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.generate_random_orders" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>generates 500 random orders into archive within the last two days
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="accounts.views.get_all_orders_cost_date">
 <code class="descclassname">accounts.views.</code><code class="descname">get_all_orders_cost_date</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.get_all_orders_cost_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.login_redirect">
+<code class="descclassname">accounts.views.</code><code class="descname">login_redirect</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.login_redirect" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -149,12 +171,28 @@ auto create the chef group?
 <dl class="function">
 <dt id="accounts.views.purge_all_orders_by_days">
 <code class="descclassname">accounts.views.</code><code class="descname">purge_all_orders_by_days</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.purge_all_orders_by_days" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>deletes all orders allder than specified number of days
+:param request:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="accounts.views.purge_unconfirmed_orders">
 <code class="descclassname">accounts.views.</code><code class="descname">purge_unconfirmed_orders</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.purge_unconfirmed_orders" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>deletes all unconfirmed orders older than 1 day
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.randomString">
+<code class="descclassname">accounts.views.</code><code class="descname">randomString</code><span class="sig-paren">(</span><em>stringLength</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.randomString" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is coppied to generate a random string.
+(for the password)
+url: <a class="reference external" href="https://pynative.com/python-generate-random-string/">https://pynative.com/python-generate-random-string/</a>
+:param stringLength:
+:return:</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="accounts.views.random_date">
@@ -163,6 +201,24 @@ auto create the chef group?
 It is just used to generate random orders
 This function will return a random datetime between two datetime
 objects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.remove_from_group">
+<code class="descclassname">accounts.views.</code><code class="descname">remove_from_group</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.remove_from_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>removes a user from a group from a post request
+:param request:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="accounts.views.remove_user_from_group">
+<code class="descclassname">accounts.views.</code><code class="descname">remove_user_from_group</code><span class="sig-paren">(</span><em>user</em>, <em>group_name</em><span class="sig-paren">)</span><a class="headerlink" href="#accounts.views.remove_user_from_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>0 PM’ does not match format ‘%m/%d/%Y %I:%M %p
+removes user from a group
+:param user:
+:param group_name:
+:return:</p>
 </dd></dl>
 
 </div>

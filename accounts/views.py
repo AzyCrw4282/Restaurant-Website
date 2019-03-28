@@ -45,13 +45,13 @@ def db_objects_to_list_of_dicts(objects):
 
 def login_redirect(request):
     user = request.user
-
+    if user.is_staff:
+        return (HttpResponseRedirect(reverse("accounts:manager")))
     if user.groups.filter(name="waiter"):
         return HttpResponseRedirect(reverse("waiter:main_page"))
     if user.groups.filter(name="chef"):
         return HttpResponseRedirect(reverse("chef:main_page"))
-    if user.is_staff:
-        return (HttpResponseRedirect(reverse("accounts:manager")))
+
     return HttpResponseRedirect(reverse("menu:welcome_page"))
 
 
@@ -71,7 +71,6 @@ def manager(request):
     for group in Group.objects.all():
         all_groups.append(group.name)
     data = {"group_list": all_groups, "user_list": []}
-    print(all_groups)
     for user in User.objects.all():
         groups = user.groups.all()
         group_list = []
@@ -132,7 +131,6 @@ def add_user_to_group(user, group_name):
     :return:
     '''
     group, boolean = Group.objects.get_or_create(name=group_name)
-    print(group)
 
     group.user_set.add(user)
     if group_name == "waiter":
@@ -147,7 +145,6 @@ def remove_user_from_group(user, group_name):
     :return:
     '''
     group = Group.objects.get(name=group_name)
-    print(group)
     group.user_set.remove(user)
     if group_name == "waiter":
         user.waiter.delete()
@@ -163,7 +160,6 @@ def remove_from_group(request):
         try:
             group_name = request.POST["group_name"]
             user_name = request.POST["user_name"]
-            print("REMOVING USER FROM ", group_name," user:", user_name)
             user = User.objects.get(username=user_name)
             remove_user_from_group(user, group_name)
             response = SUCCESSFUL_RESPONSE
@@ -299,32 +295,29 @@ def random_date(start, end):
 
 def generate_random_orders(request):
     '''
-    generates 5000 random orders into archive between two dates
+    generates 500 random orders into archive within the last two days
     :param request:
     :return:
     '''
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
-        d1 = datetime.now()-timedelta(days=2)
+        d1 = datetime.now() - timedelta(days=2)
         d2 = datetime.now()
         all_tables = Table.objects.all()
 
         date_list = []
         for i in range(0, 500):
             date_list.append(random_date(d1, d2))
-        print("date list created")
-        print(sorted(date_list))
+
         for rand_date in sorted(date_list):
             table = random.choice(all_tables)
             table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
             table_order.save()
-            print(table_order.time)
-
 
             for j in range(0, random.randrange(2, 10)):
                 order = Order.objects.create(table_order=table_order, food=random.choice(Food.objects.all()))
                 order.save()
-            archive_table_order(table_order.id,random.choice(Waiter.objects.all()))
+            archive_table_order(table_order.id, random.choice(Waiter.objects.all()))
 
         return JsonResponse(SUCCESSFUL_RESPONSE)
 

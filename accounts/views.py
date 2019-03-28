@@ -11,6 +11,7 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 from datetime import timedelta, datetime
 from waiter.views import archive_table_order
+import threading
 import json
 import uuid
 import string
@@ -295,14 +296,7 @@ def random_date(start, end):
     random_micro = random.randrange(0, micro_seconds)
     return start + timedelta(microseconds=random_micro)
 
-
-def generate_random_orders(request):
-    '''
-    generates 1000 random orders into archive within the last month
-    :param request:
-    :return:
-    '''
-    # no limit for now but easily imposed if required, will simply generate 100 fake orders.
+def generate():
     try:
         d1 = datetime.now() - timedelta(days=30)
         d2 = datetime.now()
@@ -321,7 +315,18 @@ def generate_random_orders(request):
                 order = Order.objects.create(table_order=table_order, food=random.choice(Food.objects.all()))
                 order.save()
             archive_table_order(table_order.id, random.choice(Waiter.objects.all()))
-
+    except Exception as e:
+        pass
+def generate_random_orders(request):
+    '''
+    generates 1000 random orders into archive within the last month
+    :param request:
+    :return:
+    '''
+    # no limit for now but easily imposed if required, will simply generate 100 fake orders.
+    try:
+        thread1 = threading.Thread(target=generate(), args=())
+        thread1.start()
         return JsonResponse(SUCCESSFUL_RESPONSE)
 
     except Exception as e:

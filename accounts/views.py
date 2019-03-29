@@ -299,26 +299,29 @@ def random_date(start, end):
 
 
 def generate(days_delta):
+    # print("generating: ")
     try:
-        d1 = datetime.now() - timedelta(days=days_delta)
+        # print(days_delta)
+        d1 = datetime.now() - timedelta(days=int(days_delta))
+        # print(d1)
         d2 = datetime.now()
         all_tables = Table.objects.all()
 
         date_list = []
         for i in range(0, 1000):
             date_list.append(random_date(d1, d2))
-
         for rand_date in date_list:
             table = random.choice(all_tables)
             table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
             table_order.save()
-
+            all_foods=Food.objects.all()
             for j in range(0, random.randrange(2, 10)):
-                order = Order.objects.create(table_order=table_order, food=random.choice(Food.objects.all()))
+                order = Order.objects.create(table_order=table_order, food=random.choice(all_foods))
                 order.save()
             archive_table_order(table_order.id, random.choice(Waiter.objects.all()))
     except Exception as e:
-        pass
+
+        print("failed to generate", e)
 
 
 def generate_random_orders(request):
@@ -331,6 +334,7 @@ def generate_random_orders(request):
     try:
         days_delta = request.POST["days_delta"]
         print(days_delta)
+        print("GENERATING:" ,days_delta)
         generate(days_delta)
         return JsonResponse(SUCCESSFUL_RESPONSE)
 

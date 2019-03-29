@@ -260,6 +260,7 @@ function click_checkbox(checkbox) {
  */
 function add_card(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state) {
 
+    // var card_list = document.getElementById("pending_list");
     var card_list;
     // console.log("static: ");
     // console.log("creating pendingcard");
@@ -323,6 +324,7 @@ function add_card(table_order_id, table_order_comment, table_order_time, table_o
     cancel_button.onclick = move_card_on_click(table_order_id, table_order_comment, table_order_time, table_order_table_number, table_order_order_list, table_order_state, "archived");
 
     //Specific card conditions
+    console.log(table_order_state);
     switch (table_order_state) {
         case "client_confirmed":
             card_list = document.getElementById("pending_list");

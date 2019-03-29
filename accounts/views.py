@@ -312,7 +312,7 @@ def generate(days_delta):
             date_list.append(random_date(d1, d2))
         for rand_date in date_list:
             table = random.choice(all_tables)
-            table_order = TableOrder.objects.create(time=rand_date, table=table, status="fake", id=uuid.uuid4())
+            table_order = TableOrder.objects.create(time=rand_date, table=table, status="archived", id=uuid.uuid4())
             table_order.save()
             all_foods=Food.objects.all()
             for j in range(0, random.randrange(2, 10)):

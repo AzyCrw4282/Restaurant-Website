@@ -330,7 +330,8 @@ def generate_random_orders(request):
     # no limit for now but easily imposed if required, will simply generate 100 fake orders.
     try:
         days_delata = request.POST["days_delta"]
-        thread1 = threading.Thread(target=generate(), args=(days_delata))
+        print(days_delata)
+        thread1 = threading.Thread(target=generate(days_delata), args=(days_delata))
         thread1.start()
         return JsonResponse(SUCCESSFUL_RESPONSE)
 

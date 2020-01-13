@@ -3,7 +3,7 @@ function redirect_user() {
     console.log("Order Sent");
     var table_code=document.getElementById("table_code").value;
 
-    window.location+=table_code+"/"
+    window.location+=table_code+"/"//enables it for page redirection and then the url is used to redirect the user.
 }
 
 /* To be used if the implemented method is not right

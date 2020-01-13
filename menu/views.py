@@ -174,7 +174,8 @@ def add_food_to_order(request, table_order_id):
                 # try to create order object that is to be added to the table order
                 order = Order.objects.create(
                     food=Food.objects.get(id=request.POST['food_id']),
-                    comment=request.POST['comment'], table_order=table_order
+                    comment=request.POST['comment'],
+                    table_order=table_order
                 )
                 response = SUCCESSFUL_RESPONSE
             else:
